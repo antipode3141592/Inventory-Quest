@@ -1,0 +1,14 @@
+Id,Name,Weight,Value,Shape,Equippable,Slot,IsContainer,ContainerShape
+apple,Apple,0.4,0.1,square1,N,na,N,na
+ball,Ball,1,0.5,square2,N,na,N,na
+staff1,Rattan Bo,2,1,bar4,Y,2handed,N,na
+staff2,Oak Staff,4,5,bar4,Y,2handed,N,na
+sword1,Steel Sword,3,10,bar3,Y,hand,N,na
+sword2,Fancy Steel Sword,3,20,bar3,Y,hand,N,na
+buckler1,Oak Buckler,5,5,square2,Y,hand,N,na
+necklace1,Silver Necklace,0.1,20,square1,Y,neck,N,na
+necklace2,Gold Necklace,0.1,50,sqaure1,Y,neck,N,na
+towershield1,Tower Shield,10,10,rect23,Y,hand,N,na
+towershield2,Spike Tower Shield,12,20,rect23,Y,hand,N,na
+smallbox1,Small Wooden Box,0.5,1,rect23,N,na,Y,rect34
+largebox1,Large Wooden Box,5,10,rect34,N,na,Y,rect45
