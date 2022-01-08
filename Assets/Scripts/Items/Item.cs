@@ -1,9 +1,6 @@
 ﻿using InventoryQuest;
 using InventoryQuest.Shapes;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using UnityEngine;
 
 namespace Data
@@ -11,13 +8,16 @@ namespace Data
 {
     public class Item
     {
-        public string Id;
+        [SerializeField]
+        public string Id { get; }
+        public string Name;
         public ItemStats ItemStats;
         public Shape ItemShape;
 
-        public Item(string id, ItemStats itemStats, Shape itemShape)
+        public Item(string name, ItemStats itemStats, Shape itemShape)
         {
-            Id = id;
+            Id = Guid.NewGuid().ToString();
+            Name = name;
             ItemStats = itemStats;
             ItemShape = itemShape;
         }

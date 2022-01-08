@@ -14,28 +14,29 @@ namespace InventoryQuest
         public string ItemId;
         public ItemStats MyStats;
         //shape
-        public bool[,] Grid;
+        public GridSquare[,] Grid;
 
-        public List<Content> Contents;
+        public Dictionary<string,Content> Contents;
         public Vector2Int Size;
 
         public Container(ItemStats stats, Vector2Int size)
         {
             MyStats = stats;
             Size = size;
-            Grid = new bool[size.x, size.y];
-            Contents = new List<Content>();
+            Grid = new GridSquare[size.x, size.y];
+            Contents = new Dictionary<string, Content>();
+            
         }
 
-        public float TotalWeight => Contents.Sum(x => x.Item.ItemStats.Weight) + MyStats.Weight;
-        public float TotalWorth => Contents.Sum(x => x.Item.ItemStats.GoldValue) + MyStats.GoldValue;
+        public float TotalWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight) + MyStats.Weight;
+        public float TotalWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue) + MyStats.GoldValue;
 
-        public float ContainedWeight => Contents.Sum(x => x.Item.ItemStats.Weight);
-        public float ContainedWorth => Contents.Sum(x => x.Item.ItemStats.GoldValue);
+        public float ContainedWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight);
+        public float ContainedWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue);
 
         public bool TryPlace(Item item, Vector2Int target)
         {
-            if (IsPointInGrid(target) && !Grid[target.x, target.y])
+            if (IsPointInGrid(target) && !Grid[target.x, target.y].IsOccupied)
             {
                 //to automatically release List
                 using (ListPool<Vector2Int>.Get(out List<Vector2Int> tempPointList))
@@ -44,7 +45,7 @@ namespace InventoryQuest
                     {
                         for (int y = 0; y < item.ItemShape.Size.y; y++)
                         {
-                            if (Grid[target.x + x, target.y + y] && item.ItemShape.CurrentMask.Map[x, y])
+                            if (Grid[target.x + x, target.y + y].IsOccupied && item.ItemShape.CurrentMask.Map[x, y])
                             {
                                 return false;
                             } else if (item.ItemShape.CurrentMask.Map[x, y])
@@ -54,14 +55,21 @@ namespace InventoryQuest
                         }
                     }
                     //place item
-                    Contents.Add(new Content(item, tempPointList));
+                    Contents.Add(item.Id, new Content(item, tempPointList));
                     for (int i = 0; i < tempPointList.Count; i++)
                     {
-                        Grid[tempPointList[i].x, tempPointList[i].y] = true;
+                        Grid[tempPointList[i].x, tempPointList[i].y].IsOccupied = true;
+                        Grid[tempPointList[i].x, tempPointList[i].y].storedItemId = item.Id;
                     }
                     //invoke OnPlace Event, sending 
                 }
-
+                Debug.Log($"Container now contains:");
+                foreach(var content in Contents)
+                {
+                    Debug.Log($"    {content.Value.Item.Name}, {content.Value.Item.ItemStats.GoldValue}, {content.Value.Item.ItemStats.Weight},{content.Value.Item.Id}");
+                }
+                Debug.Log($"Container Total Value: {ContainedWorth}");
+                Debug.Log($"Container Total Weight: {TotalWeight}");
                 return true;
             }
             return false;
@@ -77,11 +85,21 @@ namespace InventoryQuest
             return false;
         }
 
-        public Item Take(Item item)
+        public bool TryTake(out Item item, Vector2Int target)
         {
-            return null;
+            if (IsPointInGrid (target) && Grid[target.x, target.y].IsOccupied)
+            {
+
+            }
+            item = null;
+            return false;
         }
     }
 
+    public struct GridSquare
+    {
+        public string storedItemId;
+        public bool IsOccupied;
+    }
     
 }

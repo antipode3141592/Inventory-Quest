@@ -20,7 +20,7 @@ namespace InventoryQuest.Testing
         public void SetUp()
         {
             var _shape = new Square1();
-            MyItem = new Item(id: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape);
+            MyItem = new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape);
         }
 
         [TearDown]

@@ -18,7 +18,7 @@ namespace InventoryQuest
 
         }
 
-        public Item GetRandomItem() 
+        public Item GetRandomItem(Rarity rarity) 
         {
             throw new NotImplementedException();
         }

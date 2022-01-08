@@ -43,7 +43,7 @@ namespace InventoryQuest
 
         public void AddPieceToLootPile()
         {
-            Item item = _dataSource.GetRandomItem();
+            Item item = _dataSource.GetRandomItem(Rarity.common);
             LootPile.TryPlace(item, new Vector2Int(x: 0, y: 0));
         }
 

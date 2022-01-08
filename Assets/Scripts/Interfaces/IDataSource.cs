@@ -1,8 +1,10 @@
-﻿namespace Data
+﻿using InventoryQuest;
+
+namespace Data
 {
     public interface IDataSource
     {
-        public Item GetRandomItem();
+        public Item GetRandomItem(Rarity rarity);
 
         
 
