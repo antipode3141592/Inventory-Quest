@@ -109,7 +109,8 @@ namespace InventoryQuest.Testing
         [Test]
         public void TryTakeSuccess()
         {
-
+            MyContainer.TryPlace(MyItem, new Vector2Int(x: 0, y: 0));
+            Assert.IsTrue(MyContainer.TryTake(out var item, new Vector2Int(x:0, y:0)));
         }
     }
 }

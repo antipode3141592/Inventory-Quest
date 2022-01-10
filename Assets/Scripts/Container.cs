@@ -19,6 +19,10 @@ namespace InventoryQuest
         public Dictionary<string,Content> Contents;
         public Vector2Int Size;
 
+        public event EventHandler<GridEventArgs> OnGridChanged;
+        public event EventHandler<GridEventArgs> OnGridHighlight;
+        public event EventHandler<ContainerEventArgs> OnContainerChanged;
+
         public Container(ItemStats stats, Vector2Int size)
         {
             MyStats = stats;
@@ -38,9 +42,9 @@ namespace InventoryQuest
         {
             if (IsPointInGrid(target) && !Grid[target.x, target.y].IsOccupied)
             {
-                //to automatically release List
-                using (ListPool<Vector2Int>.Get(out List<Vector2Int> tempPointList))
-                {
+                //using (ListPool<Vector2Int>.Get(out List<Vector2Int> tempPointList))
+                //{
+                List<Vector2Int> tempPointList = ListPool<Vector2Int>.Get();
                     for (int x = 0; x < item.ItemShape.Size.x; x++)
                     {
                         for (int y = 0; y < item.ItemShape.Size.y; y++)
@@ -48,7 +52,8 @@ namespace InventoryQuest
                             if (Grid[target.x + x, target.y + y].IsOccupied && item.ItemShape.CurrentMask.Map[x, y])
                             {
                                 return false;
-                            } else if (item.ItemShape.CurrentMask.Map[x, y])
+                            }
+                            else if (item.ItemShape.CurrentMask.Map[x, y])
                             {
                                 tempPointList.Add(new Vector2Int(x: target.x + x, target.y + y));
                             }
@@ -62,20 +67,41 @@ namespace InventoryQuest
                         Grid[tempPointList[i].x, tempPointList[i].y].storedItemId = item.Id;
                     }
                     //invoke OnPlace Event, sending 
-                }
-                Debug.Log($"Container now contains:");
-                foreach(var content in Contents)
-                {
-                    Debug.Log($"    {content.Value.Item.Name}, {content.Value.Item.ItemStats.GoldValue}, {content.Value.Item.ItemStats.Weight},{content.Value.Item.Id}");
-                }
-                Debug.Log($"Container Total Value: {ContainedWorth}");
-                Debug.Log($"Container Total Weight: {TotalWeight}");
+                    //OnGridChanged?.Invoke(this, new GridEventArgs()
+                //}
+                LogContents();
                 return true;
             }
             return false;
         }
 
-        
+        private void LogContents()
+        {
+            Debug.Log($"Container now contains {Contents.Count} items:");
+            foreach (var content in Contents)
+            {
+                Debug.Log($"....{content.Value.Item.Name}, {content.Value.Item.ItemStats.GoldValue}, {content.Value.Item.ItemStats.Weight},{content.Value.Item.Id}");
+            }
+            Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
+            Debug.Log($"Contained Weight: {ContainedWeight}");
+            Debug.Log($"Total Combined Weight: {TotalWeight}");
+            LogGrid();
+        }
+
+        private void LogGrid()
+        {
+            Debug.Log($"Container Grid:");
+            for (int y = 0; y < Grid.GetLength(1); y++)
+            {
+                string line = "";
+                for (int x = 0; x< Grid.GetLength(0); x++)
+                {
+                    line += Grid[x, y].IsOccupied ? "X" : "0";
+                }
+                Debug.Log($"....{y}: {line}");
+            }
+        }
+
         bool IsPointInGrid (Vector2Int target)
         {
             if (target.x <= Size.x && target.x >= 0 && target.y <= Size.y && target.y >=0)
@@ -89,7 +115,24 @@ namespace InventoryQuest
         {
             if (IsPointInGrid (target) && Grid[target.x, target.y].IsOccupied)
             {
-
+                if (Contents.TryGetValue(key: Grid[target.x, target.y].storedItemId, out Content content))
+                {
+                    item = content.Item;
+                    Debug.Log($"the item {item.Name} at {target.x},{target.y} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    Contents.Remove(key: Grid[target.x, target.y].storedItemId);
+                    foreach (Vector2Int coor in content.GridSpaces)
+                    {
+                        Debug.Log($"....{coor}");
+                        Grid[coor.x, coor.y].IsOccupied = false;
+                        Grid[coor.x, coor.y].storedItemId = "";
+                    }
+                    ListPool<Vector2Int>.Release(content.GridSpaces);
+                    
+                    
+                    OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
+                    LogContents();
+                    return true;
+                }
             }
             item = null;
             return false;
