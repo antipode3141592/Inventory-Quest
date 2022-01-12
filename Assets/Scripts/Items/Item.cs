@@ -21,10 +21,5 @@ namespace Data
             ItemStats = itemStats;
             ItemShape = itemShape;
         }
-
-
-
-        //public virtual void Discard();
-        //public virtual void Pickup();
     }
 }

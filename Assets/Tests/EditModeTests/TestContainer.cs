@@ -1,9 +1,6 @@
-﻿using NUnit.Framework;
-using UnityEngine;
-using Data;
-using InventoryQuest;
-using InventoryQuest.Characters;
+﻿using Data;
 using InventoryQuest.Shapes;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace InventoryQuest.Testing
@@ -12,7 +9,7 @@ namespace InventoryQuest.Testing
     {
         //container
         Container MyContainer;
-        Vector2Int backpackSize = new Vector2Int(x: 10, y: 5);
+        Coor backpackSize = new Coor(5, 10);
         ItemStats backpackStats = new ItemStats("adventure backpack",
                 weight: 2f,
                 goldValue: 5f,
@@ -26,16 +23,25 @@ namespace InventoryQuest.Testing
                  goldValue: .5f,
                  description: "Fuji Apple, the objectively best apple");
 
+        List<Item> MyItems2;
+        ItemStats MyItemStats2 = new ItemStats("thingabob",
+                 weight: 4f,
+                 goldValue: 5f,
+                 description: "a strange shape");
+
 
         [SetUp]
         public void Setup()
         {
             var _shape = new Square1();
+            var _shape2 = new T1(Facing.Right);
             MyItem = new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape);
             MyItems = new List<Item>();
+            MyItems2 = new List<Item>();
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyItems.Add(new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape));
+                MyItems2.Add(new Item(name: MyItemStats2.ItemId, itemStats: MyItemStats2, itemShape: _shape2));
             }
             MyContainer = new Container(stats: backpackStats, size: backpackSize);
         }
@@ -45,6 +51,8 @@ namespace InventoryQuest.Testing
         {
             MyContainer = null;
             MyItem = null;
+            MyItems = null;
+            MyItems2 = null;
         }
 
         [Test]
@@ -71,7 +79,7 @@ namespace InventoryQuest.Testing
         public void TryPlaceSuccess()
         {
             float initialWeight = MyContainer.TotalWeight;
-            MyContainer.TryPlace(MyItem, new Vector2Int(0, 0));
+            MyContainer.TryPlace(MyItem, new Coor(0, 0));
             Assert.AreEqual(expected: initialWeight + MyItem.ItemStats.Weight, actual: MyContainer.TotalWeight);
         }
 
@@ -82,7 +90,7 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (MyItem.ItemStats.Weight * 3);
             for (int i = 0; i < MyTotalItems; i++)
             {
-                MyContainer.TryPlace(MyItems[i], new Vector2Int(0, 0 + i));
+                MyContainer.TryPlace(MyItems[i], new Coor(0, 0 + i));
             }
             Assert.AreEqual(expected: targetWeight, actual: MyContainer.TotalWeight);
         }
@@ -90,27 +98,56 @@ namespace InventoryQuest.Testing
         [Test]
         public void TryPlaceOutOfBounds()
         {
-            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Vector2Int(MyContainer.Size.x+1, 0)));
+            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.Size.row+1, 0)));
         }
 
         [Test]
         public void TryPlaceGridOccupied()
         {
             MyContainer.Grid[0, 0].IsOccupied = true;
-            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Vector2Int(0, 0)));
+            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(0, 0)));
         }
 
         [Test]
         public void TryTakeOutOfBounds()
         {
-            Assert.IsFalse(MyContainer.TryTake(out var item, new Vector2Int(x: MyContainer.Size.x + 1, y: 0)));
+            Assert.IsFalse(MyContainer.TryTake(out var item, new Coor(r: MyContainer.Size.row + 1, c: 0)));
         }
 
         [Test]
         public void TryTakeSuccess()
         {
-            MyContainer.TryPlace(MyItem, new Vector2Int(x: 0, y: 0));
-            Assert.IsTrue(MyContainer.TryTake(out var item, new Vector2Int(x:0, y:0)));
+            MyContainer.TryPlace(MyItem, new Coor(r: 0, c: 0));
+            Assert.IsTrue(MyContainer.TryTake(out var item, new Coor(r:0, c:0)));
+        }
+
+        [Test]
+        public void TryPlaceSeveralT1()
+        {
+            float initialWeight = MyContainer.TotalWeight;
+            float targetWeight = initialWeight + (MyItems2[0].ItemStats.Weight * (float)MyTotalItems);
+            for (int i = 0; i < MyTotalItems; i++)
+            {
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i*2));
+            }
+            Assert.AreEqual(expected: targetWeight, actual: MyContainer.TotalWeight);
+        }
+
+        [Test]
+        public void TryPlaceSeveralAndTake()
+        {
+            float initialWeight = MyContainer.TotalWeight;
+            float targetWeight = initialWeight + (MyItems2[0].ItemStats.Weight * (float)MyTotalItems);
+            for (int i = 0; i < MyTotalItems; i++)
+            {
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i * 2));
+            }
+
+            for (int c = 0; c < MyTotalItems; c++)
+            {
+                MyContainer.TryTake(out var item, new Coor(r: 1, c: c * 2));
+            }
+            Assert.AreEqual(expected: initialWeight, actual: MyContainer.TotalWeight);
         }
     }
 }

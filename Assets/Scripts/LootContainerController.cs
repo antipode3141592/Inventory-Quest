@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
-using UnityEngine;
+﻿using Data;
 
 namespace InventoryQuest
 {
@@ -24,13 +18,13 @@ namespace InventoryQuest
         public bool AddRandomLootToContainer(Rarity rarity)
         {
             Item loot = DataSource.GetRandomItem(rarity: rarity);
-            Vector2Int currentGuess = new Vector2Int(0,0);
-            for (int j = 0; j < MyContainer.Size.y; j++)
+            Coor currentGuess = new Coor(0,0);
+            for (int r = 0; r < MyContainer.Size.row; r++)
             {
-                currentGuess.y = j;
-                for (int i = 0; i < MyContainer.Size.x; i++)
+                currentGuess.row = r;
+                for (int c = 0; c < MyContainer.Size.column; c++)
                 {
-                    currentGuess.x = i;
+                    currentGuess.column = c;
                     if (MyContainer.TryPlace(loot, currentGuess))
                     {
                         return true;

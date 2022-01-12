@@ -1,10 +1,5 @@
 ﻿using Data;
 using InventoryQuest.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -31,20 +26,20 @@ namespace InventoryQuest
                 weight: 2f, 
                 goldValue: 5f, 
                 description: "a basic adventurer's backpack" );
-            Player = new Character(new Container(backpackStats, new Vector2Int(x: 10, y: 5)), playerStats);
+            Player = new Character(new Container(backpackStats, new Coor(r: 5, c: 10)), playerStats);
 
             ItemStats lootPile = new ItemStats("loot pile",
                 weight: 0f,
                 goldValue: 0f,
                 description: "current loot pile");
-            LootPile = new Container(lootPile, new Vector2Int(x: 5, y: 3));
+            LootPile = new Container(lootPile, new Coor(r: 3, c: 5));
 
         }
 
         public void AddPieceToLootPile()
         {
             Item item = _dataSource.GetRandomItem(Rarity.common);
-            LootPile.TryPlace(item, new Vector2Int(x: 0, y: 0));
+            LootPile.TryPlace(item, new Coor(r: 0, c: 0));
         }
 
 

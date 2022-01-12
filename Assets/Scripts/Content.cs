@@ -1,15 +1,14 @@
 ﻿using Data;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace InventoryQuest
 {
     public class Content
     {
         public Item Item;
-        public List<Vector2Int> GridSpaces;
+        public List<Coor> GridSpaces;
 
-        public Content(Item item, List<Vector2Int> occupiedSpaces)
+        public Content(Item item, List<Coor> occupiedSpaces)
         {
             GridSpaces = occupiedSpaces;
             Item = item;

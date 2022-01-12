@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -17,61 +15,60 @@ namespace InventoryQuest
         public GridSquare[,] Grid;
 
         public Dictionary<string,Content> Contents;
-        public Vector2Int Size;
+        public Coor Size;
 
         public event EventHandler<GridEventArgs> OnGridChanged;
         public event EventHandler<GridEventArgs> OnGridHighlight;
         public event EventHandler<ContainerEventArgs> OnContainerChanged;
 
-        public Container(ItemStats stats, Vector2Int size)
+        public Container(ItemStats stats, Coor size)
         {
             MyStats = stats;
             Size = size;
-            Grid = new GridSquare[size.x, size.y];
+            Grid = new GridSquare[size.row, size.column];
             Contents = new Dictionary<string, Content>();
             
         }
 
         public float TotalWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight) + MyStats.Weight;
         public float TotalWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue) + MyStats.GoldValue;
-
         public float ContainedWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight);
         public float ContainedWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue);
 
-        public bool TryPlace(Item item, Vector2Int target)
+        public bool TryPlace(Item item, Coor target)
         {
-            if (IsPointInGrid(target) && !Grid[target.x, target.y].IsOccupied)
+            if (IsPointInGrid(target) && !Grid[target.row, target.column].IsOccupied)
             {
-                //using (ListPool<Vector2Int>.Get(out List<Vector2Int> tempPointList))
-                //{
-                List<Vector2Int> tempPointList = ListPool<Vector2Int>.Get();
-                    for (int x = 0; x < item.ItemShape.Size.x; x++)
+                List<Coor> tempPointList = ListPool<Coor>.Get();
+                for (int r = 0; r < item.ItemShape.Size.row; r++)   
+                {
+                    for (int c = 0; c < item.ItemShape.Size.column; c++)
                     {
-                        for (int y = 0; y < item.ItemShape.Size.y; y++)
+                        Debug.Log($"Current Shape Facing :{item.ItemShape.CurrentFacing}, Size.rows: {item.ItemShape.Size.row}, Size.columns: {item.ItemShape.Size.column}");
+                        Debug.Log($"Current Mask{item.ItemShape.CurrentMask}");
+                        if (Grid[target.row + r, target.column + c].IsOccupied && item.ItemShape.CurrentMask.Map[r, c])
                         {
-                            if (Grid[target.x + x, target.y + y].IsOccupied && item.ItemShape.CurrentMask.Map[x, y])
-                            {
-                                return false;
-                            }
-                            else if (item.ItemShape.CurrentMask.Map[x, y])
-                            {
-                                tempPointList.Add(new Vector2Int(x: target.x + x, target.y + y));
-                            }
+                            Debug.Log($"TryPlace() failed for {item.Name} at point [{target.row + r}, {target.column + c}]");
+                            return false;
+                        }
+                        else if (item.ItemShape.CurrentMask.Map[r, c])
+                        {
+                            tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
                         }
                     }
-                    //place item
-                    Contents.Add(item.Id, new Content(item, tempPointList));
-                    for (int i = 0; i < tempPointList.Count; i++)
-                    {
-                        Grid[tempPointList[i].x, tempPointList[i].y].IsOccupied = true;
-                        Grid[tempPointList[i].x, tempPointList[i].y].storedItemId = item.Id;
-                    }
-                    //invoke OnPlace Event, sending 
-                    //OnGridChanged?.Invoke(this, new GridEventArgs()
-                //}
+                }
+                //place item
+                Contents.Add(item.Id, new Content(item, tempPointList));
+                for (int i = 0; i < tempPointList.Count; i++)
+                {
+                    Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
+                    Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.Id;
+                }
+                LogGrid();
                 LogContents();
                 return true;
             }
+            Debug.Log($"TryPlace() failed for {item.Name} at point [{target.row},{target.column}]");
             return false;
         }
 
@@ -85,48 +82,60 @@ namespace InventoryQuest
             Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
             Debug.Log($"Contained Weight: {ContainedWeight}");
             Debug.Log($"Total Combined Weight: {TotalWeight}");
-            LogGrid();
         }
 
         private void LogGrid()
         {
             Debug.Log($"Container Grid:");
-            for (int y = 0; y < Grid.GetLength(1); y++)
+            for (int r = 0; r < Size.row; r++)
             {
                 string line = "";
-                for (int x = 0; x< Grid.GetLength(0); x++)
+                for (int c = 0; c< Size.column; c++)
                 {
-                    line += Grid[x, y].IsOccupied ? "X" : "0";
+                    line += Grid[r, c].IsOccupied ? "X" : "0";
                 }
-                Debug.Log($"....{y}: {line}");
+                Debug.Log($"....{r}: {line}");
             }
         }
 
-        bool IsPointInGrid (Vector2Int target)
+        private void LogItemShape(Item item)
         {
-            if (target.x <= Size.x && target.x >= 0 && target.y <= Size.y && target.y >=0)
+            Debug.Log($"Item Shape:");
+            for (int r = 0; r < item.ItemShape.Size.row; r++)
+            {
+                string line = "";
+                for (int c = 0; c < item.ItemShape.Size.column; c++)
+                {
+                    line += item.ItemShape.CurrentMask.Map[r,c] ? "X" : "0";
+                }
+            }
+        }
+
+        bool IsPointInGrid (Coor target)
+        {
+            if (target.row <= Size.row && target.row >= 0 && target.column <= Size.column && target.column >=0)
             { 
                 return true; 
             }
             return false;
         }
 
-        public bool TryTake(out Item item, Vector2Int target)
+        public bool TryTake(out Item item, Coor target)
         {
-            if (IsPointInGrid (target) && Grid[target.x, target.y].IsOccupied)
+            if (IsPointInGrid (target) && Grid[target.row, target.column].IsOccupied)
             {
-                if (Contents.TryGetValue(key: Grid[target.x, target.y].storedItemId, out Content content))
+                if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
                 {
                     item = content.Item;
-                    Debug.Log($"the item {item.Name} at {target.x},{target.y} is associated with these {content.GridSpaces.Count} grid spaces:");
-                    Contents.Remove(key: Grid[target.x, target.y].storedItemId);
-                    foreach (Vector2Int coor in content.GridSpaces)
+                    Debug.Log($"the item {item.Name} at {target.row},{target.column} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    Contents.Remove(key: Grid[target.row, target.column].storedItemId);
+                    foreach (Coor coor in content.GridSpaces)
                     {
                         Debug.Log($"....{coor}");
-                        Grid[coor.x, coor.y].IsOccupied = false;
-                        Grid[coor.x, coor.y].storedItemId = "";
+                        Grid[coor.row, coor.column].IsOccupied = false;
+                        Grid[coor.row, coor.column].storedItemId = "";
                     }
-                    ListPool<Vector2Int>.Release(content.GridSpaces);
+                    ListPool<Coor>.Release(content.GridSpaces);
                     
                     
                     OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));

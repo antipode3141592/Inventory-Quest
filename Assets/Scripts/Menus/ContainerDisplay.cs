@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
+﻿using Data;
 using UnityEngine;
 
 namespace InventoryQuest.UI
@@ -18,9 +13,9 @@ namespace InventoryQuest.UI
 
         public void OnContainerUpdate(object sender, ContainerEventArgs e)
         {
-            for (int i = 0; i < e.Container.Size.x; i++)
+            for (int r = 0; r < e.Container.Size.row; r++)
             {
-                for (int j = 0; j < e.Container.Size.y; j++)
+                for (int c = 0; c < e.Container.Size.column; c++)
                 {
 
                 }

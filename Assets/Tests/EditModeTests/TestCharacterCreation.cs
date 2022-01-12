@@ -1,8 +1,6 @@
-﻿using NUnit.Framework;
-using UnityEngine;
-using Data;
-using InventoryQuest;
+﻿using Data;
 using InventoryQuest.Characters;
+using NUnit.Framework;
 
 namespace InventoryQuest.Testing
 {
@@ -10,7 +8,7 @@ namespace InventoryQuest.Testing
     {
         Character Player;
         CharacterStats playerStats = new CharacterStats(10, 10, 10);
-        Vector2Int backpackSize = new Vector2Int(x: 10, y: 5);
+        Coor backpackSize = new Coor(r: 5, c: 10);
         ItemStats backpackStats = new ItemStats("adventure backpack",
                 weight: 2f,
                 goldValue: 5f,
