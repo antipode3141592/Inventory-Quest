@@ -1,6 +1,4 @@
-﻿using InventoryQuest;
-
-namespace Data
+﻿namespace Data
 {
     public interface IDataSource
     {

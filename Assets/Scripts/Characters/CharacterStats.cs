@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,8 +42,23 @@ namespace InventoryQuest
     public class CharacterStat
     {
         public string Name;
-        public int CurrentValue;
-        
+        public float CurrentValue;
+        public float InitialValue;
+
+        public CharacterStat(string name, float currentValue, float initialValue)
+        {
+            Name = name;
+            CurrentValue = currentValue;
+            InitialValue = initialValue;
+        }
     }
 
+    [Serializable]
+    public class DamageResistance
+    {
+        public string Name;
+        public DamageType DamageType;
+        public float CurrentValue;
+        public float InitialValue;
+    }
 }

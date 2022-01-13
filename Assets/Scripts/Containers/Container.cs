@@ -30,28 +30,28 @@ namespace InventoryQuest
             
         }
 
-        public float TotalWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight) + MyStats.Weight;
-        public float TotalWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue) + MyStats.GoldValue;
-        public float ContainedWeight => Contents.Sum(x => x.Value.Item.ItemStats.Weight);
-        public float ContainedWorth => Contents.Sum(x => x.Value.Item.ItemStats.GoldValue);
+        public float TotalWeight => Contents.Sum(x => x.Value.Item.Stats.Weight) + MyStats.Weight;
+        public float TotalWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue) + MyStats.GoldValue;
+        public float ContainedWeight => Contents.Sum(x => x.Value.Item.Stats.Weight);
+        public float ContainedWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue);
 
         public bool TryPlace(Item item, Coor target)
         {
             if (IsPointInGrid(target) && !Grid[target.row, target.column].IsOccupied)
             {
                 List<Coor> tempPointList = ListPool<Coor>.Get();
-                for (int r = 0; r < item.ItemShape.Size.row; r++)   
+                for (int r = 0; r < item.Shape.Size.row; r++)   
                 {
-                    for (int c = 0; c < item.ItemShape.Size.column; c++)
+                    for (int c = 0; c < item.Shape.Size.column; c++)
                     {
-                        Debug.Log($"Current Shape Facing :{item.ItemShape.CurrentFacing}, Size.rows: {item.ItemShape.Size.row}, Size.columns: {item.ItemShape.Size.column}");
-                        Debug.Log($"Current Mask{item.ItemShape.CurrentMask}");
-                        if (Grid[target.row + r, target.column + c].IsOccupied && item.ItemShape.CurrentMask.Map[r, c])
+                        Debug.Log($"Current Shape Facing :{item.Shape.CurrentFacing}, Size.rows: {item.Shape.Size.row}, Size.columns: {item.Shape.Size.column}");
+                        Debug.Log($"Current Mask{item.Shape.CurrentMask}");
+                        if (Grid[target.row + r, target.column + c].IsOccupied && item.Shape.CurrentMask.Map[r, c])
                         {
                             Debug.Log($"TryPlace() failed for {item.Name} at point [{target.row + r}, {target.column + c}]");
                             return false;
                         }
-                        else if (item.ItemShape.CurrentMask.Map[r, c])
+                        else if (item.Shape.CurrentMask.Map[r, c])
                         {
                             tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
                         }
@@ -77,7 +77,7 @@ namespace InventoryQuest
             Debug.Log($"Container now contains {Contents.Count} items:");
             foreach (var content in Contents)
             {
-                Debug.Log($"....{content.Value.Item.Name}, {content.Value.Item.ItemStats.GoldValue}, {content.Value.Item.ItemStats.Weight},{content.Value.Item.Id}");
+                Debug.Log($"....{content.Value.Item.Name}, {content.Value.Item.Stats.GoldValue}, {content.Value.Item.Stats.Weight},{content.Value.Item.Id}");
             }
             Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
             Debug.Log($"Contained Weight: {ContainedWeight}");
@@ -101,12 +101,12 @@ namespace InventoryQuest
         private void LogItemShape(Item item)
         {
             Debug.Log($"Item Shape:");
-            for (int r = 0; r < item.ItemShape.Size.row; r++)
+            for (int r = 0; r < item.Shape.Size.row; r++)
             {
                 string line = "";
-                for (int c = 0; c < item.ItemShape.Size.column; c++)
+                for (int c = 0; c < item.Shape.Size.column; c++)
                 {
-                    line += item.ItemShape.CurrentMask.Map[r,c] ? "X" : "0";
+                    line += item.Shape.CurrentMask.Map[r,c] ? "X" : "0";
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace InventoryQuest
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
-                        Debug.Log($"....{coor}");
+                        Debug.Log($"....{coor.row},{coor.column}");
                         Grid[coor.row, coor.column].IsOccupied = false;
                         Grid[coor.row, coor.column].storedItemId = "";
                     }
@@ -140,18 +140,13 @@ namespace InventoryQuest
                     
                     OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
                     LogContents();
+                    LogGrid();
                     return true;
                 }
             }
             item = null;
             return false;
         }
-    }
-
-    public struct GridSquare
-    {
-        public string storedItemId;
-        public bool IsOccupied;
     }
     
 }

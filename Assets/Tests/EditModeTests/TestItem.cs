@@ -32,48 +32,48 @@ namespace InventoryQuest.Testing
         [Test]
         public void ItemShapeCorrect()
         {
-            Assert.AreEqual(expected: typeof(Square1), actual: MyItem.ItemShape.GetType());
+            Assert.AreEqual(expected: typeof(Square1), actual: MyItem.Shape.GetType());
         }
         
 
         [Test]
         public void ItemShapeRotateCW()
         {
-            Facing initial = MyItem.ItemShape.CurrentFacing;
+            Facing initial = MyItem.Shape.CurrentFacing;
             Facing next = (Facing)(((int)initial + 1) % 4);
-            MyItem.ItemShape.Rotate(1);
-            Assert.AreEqual(expected: next, actual:MyItem.ItemShape.CurrentFacing);
+            MyItem.Shape.Rotate(1);
+            Assert.AreEqual(expected: next, actual:MyItem.Shape.CurrentFacing);
         }
 
         [Test]
         public void ItemShapeRotateCCW()
         {
-            Facing initial = MyItem.ItemShape.CurrentFacing;
+            Facing initial = MyItem.Shape.CurrentFacing;
             Facing next = (Facing)(((int)initial - 1) % 4);
-            MyItem.ItemShape.Rotate(-1);
-            Assert.AreEqual(expected: next, actual: MyItem.ItemShape.CurrentFacing);
+            MyItem.Shape.Rotate(-1);
+            Assert.AreEqual(expected: next, actual: MyItem.Shape.CurrentFacing);
         }
 
         [Test]
         public void ItemShapeRotateCW360()
         {
-            Facing initial = MyItem.ItemShape.CurrentFacing;
-            MyItem.ItemShape.Rotate(1);
-            MyItem.ItemShape.Rotate(1);
-            MyItem.ItemShape.Rotate(1);
-            MyItem.ItemShape.Rotate(1);
-            Assert.AreEqual(expected: initial, actual: MyItem.ItemShape.CurrentFacing);
+            Facing initial = MyItem.Shape.CurrentFacing;
+            MyItem.Shape.Rotate(1);
+            MyItem.Shape.Rotate(1);
+            MyItem.Shape.Rotate(1);
+            MyItem.Shape.Rotate(1);
+            Assert.AreEqual(expected: initial, actual: MyItem.Shape.CurrentFacing);
         }
 
         [Test]
         public void ItemShapeRotateCCW360()
         {
-            Facing initial = MyItem.ItemShape.CurrentFacing;
-            MyItem.ItemShape.Rotate(-1);
-            MyItem.ItemShape.Rotate(-1);
-            MyItem.ItemShape.Rotate(-1);
-            MyItem.ItemShape.Rotate(-1);
-            Assert.AreEqual(expected: initial, actual: MyItem.ItemShape.CurrentFacing);
+            Facing initial = MyItem.Shape.CurrentFacing;
+            MyItem.Shape.Rotate(-1);
+            MyItem.Shape.Rotate(-1);
+            MyItem.Shape.Rotate(-1);
+            MyItem.Shape.Rotate(-1);
+            Assert.AreEqual(expected: initial, actual: MyItem.Shape.CurrentFacing);
         }
     }
 }

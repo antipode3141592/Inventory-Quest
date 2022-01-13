@@ -56,38 +56,43 @@ namespace InventoryQuest.Testing
         }
 
         [Test]
-        public void TestContainerSize()
+        public void ContainerSizeIsCorrect()
         {
             Assert.AreEqual(expected: backpackSize, actual: MyContainer.Size);  
         }
 
         [Test]
-        public void TestContainerEmptiness()
+        public void NewContainerIsEmpty()
+        {
+            Assert.IsTrue(IsContainerEmpty(MyContainer));
+        }
+
+        public bool IsContainerEmpty(Container container)
         {
             bool isEmpty = true;
-            foreach(var square in MyContainer.Grid)
+            foreach (var square in MyContainer.Grid)
             {
                 if (square.IsOccupied == true)
                 {
                     isEmpty = false; break;
                 }
             }
-            Assert.IsTrue(isEmpty);
+            return isEmpty;
         }
 
         [Test]
-        public void TryPlaceSuccess()
+        public void PlaceAtValidTarget()
         {
             float initialWeight = MyContainer.TotalWeight;
             MyContainer.TryPlace(MyItem, new Coor(0, 0));
-            Assert.AreEqual(expected: initialWeight + MyItem.ItemStats.Weight, actual: MyContainer.TotalWeight);
+            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: MyContainer.TotalWeight);
         }
 
         [Test]
-        public void TryPlaceSeveralItems()
+        public void PlaceSeveralItemsAtValidTargets()
         {
             float initialWeight = MyContainer.TotalWeight;
-            float targetWeight = initialWeight + (MyItem.ItemStats.Weight * 3);
+            float targetWeight = initialWeight + (MyItem.Stats.Weight * 3);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems[i], new Coor(0, 0 + i));
@@ -96,36 +101,37 @@ namespace InventoryQuest.Testing
         }
 
         [Test]
-        public void TryPlaceOutOfBounds()
+        public void FailPlaceAtOutOfBoundsTarget()
         {
             Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.Size.row+1, 0)));
         }
 
         [Test]
-        public void TryPlaceGridOccupied()
+        public void FailPlaceAtOccupiedTarget()
         {
             MyContainer.Grid[0, 0].IsOccupied = true;
             Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(0, 0)));
         }
 
         [Test]
-        public void TryTakeOutOfBounds()
+        public void FailTakeAtOutOfBoundsTarget()
         {
             Assert.IsFalse(MyContainer.TryTake(out var item, new Coor(r: MyContainer.Size.row + 1, c: 0)));
         }
 
         [Test]
-        public void TryTakeSuccess()
+        public void PlaceAndTakeItem()
         {
             MyContainer.TryPlace(MyItem, new Coor(r: 0, c: 0));
             Assert.IsTrue(MyContainer.TryTake(out var item, new Coor(r:0, c:0)));
+            Assert.IsTrue(IsContainerEmpty(MyContainer));
         }
 
         [Test]
-        public void TryPlaceSeveralT1()
+        public void PlaceSeveralItems()
         {
             float initialWeight = MyContainer.TotalWeight;
-            float targetWeight = initialWeight + (MyItems2[0].ItemStats.Weight * (float)MyTotalItems);
+            float targetWeight = initialWeight + (MyItems2[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i*2));
@@ -134,10 +140,10 @@ namespace InventoryQuest.Testing
         }
 
         [Test]
-        public void TryPlaceSeveralAndTake()
+        public void PlaceAndTakeSeveralItems()
         {
             float initialWeight = MyContainer.TotalWeight;
-            float targetWeight = initialWeight + (MyItems2[0].ItemStats.Weight * (float)MyTotalItems);
+            float targetWeight = initialWeight + (MyItems2[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i * 2));
@@ -147,7 +153,10 @@ namespace InventoryQuest.Testing
             {
                 MyContainer.TryTake(out var item, new Coor(r: 1, c: c * 2));
             }
+            Assert.IsTrue(IsContainerEmpty(MyContainer));
             Assert.AreEqual(expected: initialWeight, actual: MyContainer.TotalWeight);
         }
+
+
     }
 }

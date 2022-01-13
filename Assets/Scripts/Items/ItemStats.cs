@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 
 namespace InventoryQuest
@@ -23,10 +24,11 @@ namespace InventoryQuest
         }
     }
 
-
+    [Serializable]
     public class Modifier
     {
-        public CharacterStat CharacterStat;
-        public int Adjustment;
+        public string StatName;
+        public OperatorType OperatorType;
+        public float AdjustmentValue;
     }
 }

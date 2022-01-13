@@ -42,8 +42,6 @@ namespace InventoryQuest
         }
     }
 
-    public enum Rarity { common, uncommon, rare, epic, legendary }
-
     public class LootTable
     {
         public RarityRange[] RarityRanges = 
