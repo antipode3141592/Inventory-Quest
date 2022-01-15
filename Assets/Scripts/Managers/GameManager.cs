@@ -21,18 +21,18 @@ namespace InventoryQuest
         {
 
             //initialize player character with base stats and standard 10x5 unit backpack
-            CharacterStats playerStats = new CharacterStats(10,10,10);
+            CharacterStats playerStats = new CharacterStats(10f,10f,10f);
             ItemStats backpackStats = new ItemStats("adventure backpack", 
                 weight: 2f, 
                 goldValue: 5f, 
                 description: "a basic adventurer's backpack" );
-            Player = new Character(new Container(backpackStats, new Coor(r: 5, c: 10)), playerStats);
+            Player = new Character(ContainerFactory.GetContainer(ShapeType.Square1, backpackStats, new Coor(r: 5, c: 10)), playerStats);
 
             ItemStats lootPile = new ItemStats("loot pile",
                 weight: 0f,
                 goldValue: 0f,
                 description: "current loot pile");
-            LootPile = new Container(lootPile, new Coor(r: 3, c: 5));
+            LootPile = ContainerFactory.GetContainer(ShapeType.Square1, lootPile, new Coor(r: 3, c: 5));
 
         }
 

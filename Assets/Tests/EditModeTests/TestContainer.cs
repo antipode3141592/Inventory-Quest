@@ -33,17 +33,15 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void Setup()
         {
-            var _shape = new Square1();
-            var _shape2 = new T1(Facing.Right);
-            MyItem = new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape);
+            MyItem = ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats);
             MyItems = new List<Item>();
             MyItems2 = new List<Item>();
             for (int i = 0; i < MyTotalItems; i++)
             {
-                MyItems.Add(new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape));
-                MyItems2.Add(new Item(name: MyItemStats2.ItemId, itemStats: MyItemStats2, itemShape: _shape2));
+                MyItems.Add(ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats));
+                MyItems2.Add(ItemFactory.GetItem(shape: ShapeType.T1, stats: MyItemStats2));
             }
-            MyContainer = new Container(stats: backpackStats, size: backpackSize);
+            MyContainer = ContainerFactory.GetContainer(shape: ShapeType.Square1, stats: backpackStats, containerSize: backpackSize);
         }
 
         [TearDown]
@@ -58,7 +56,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void ContainerSizeIsCorrect()
         {
-            Assert.AreEqual(expected: backpackSize, actual: MyContainer.Size);  
+            Assert.AreEqual(expected: backpackSize, actual: MyContainer.ContainerSize);  
         }
 
         [Test]
@@ -103,7 +101,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void FailPlaceAtOutOfBoundsTarget()
         {
-            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.Size.row+1, 0)));
+            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.ContainerSize.row+1, 0)));
         }
 
         [Test]
@@ -116,7 +114,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void FailTakeAtOutOfBoundsTarget()
         {
-            Assert.IsFalse(MyContainer.TryTake(out var item, new Coor(r: MyContainer.Size.row + 1, c: 0)));
+            Assert.IsFalse(MyContainer.TryTake(out var item, new Coor(r: MyContainer.ContainerSize.row + 1, c: 0)));
         }
 
         [Test]

@@ -6,22 +6,24 @@ using UnityEngine;
 namespace Data
 
 {
-    public class Item
+    public class Item: IItem
     {
-        [SerializeField]
         public string Id { get; }
-        public string Name;
+        public string Name { get; }
         public ItemStats Stats;
         public Shape Shape;
-        public Container Container;
 
-        public Item(string name, ItemStats itemStats, Shape itemShape, Container container = null)
+        public Item(ItemStats itemStats, Shape itemShape)
         {
             Id = Guid.NewGuid().ToString();
-            Name = name;
+            Name = itemStats.ItemId;
             Stats = itemStats;
             Shape = itemShape;
-            Container = container;
         }
+
+        public float Weight => Stats.Weight;
+        public float Value => Stats.GoldValue;
     }
+
+
 }

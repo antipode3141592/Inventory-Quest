@@ -19,10 +19,10 @@ namespace InventoryQuest
         {
             Item loot = DataSource.GetRandomItem(rarity: rarity);
             Coor currentGuess = new Coor(0,0);
-            for (int r = 0; r < MyContainer.Size.row; r++)
+            for (int r = 0; r < MyContainer.ContainerSize.row; r++)
             {
                 currentGuess.row = r;
-                for (int c = 0; c < MyContainer.Size.column; c++)
+                for (int c = 0; c < MyContainer.ContainerSize.column; c++)
                 {
                     currentGuess.column = c;
                     if (MyContainer.TryPlace(loot, currentGuess))

@@ -13,9 +13,9 @@ namespace InventoryQuest.UI
 
         public void OnContainerUpdate(object sender, ContainerEventArgs e)
         {
-            for (int r = 0; r < e.Container.Size.row; r++)
+            for (int r = 0; r < e.Container.ContainerSize.row; r++)
             {
-                for (int c = 0; c < e.Container.Size.column; c++)
+                for (int c = 0; c < e.Container.ContainerSize.column; c++)
                 {
 
                 }

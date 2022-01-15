@@ -19,8 +19,7 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
-            var _shape = new Square1();
-            MyItem = new Item(name: MyItemStats.ItemId, itemStats: MyItemStats, itemShape: _shape);
+            MyItem = ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats);
         }
 
         [TearDown]

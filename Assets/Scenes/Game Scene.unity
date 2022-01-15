@@ -325,7 +325,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 329.0269, y: 313.17}
+  m_SizeDelta: {x: 329.0269, y: 302.97}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &325485429
 MonoBehaviour:
@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 10.883333, y: 10.883333}
+  m_CellSize: {x: 10.716667, y: 10.716667}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
@@ -3098,7 +3098,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7503829, y: 1}
+    m_SensorSize: {x: 1.7785382, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
