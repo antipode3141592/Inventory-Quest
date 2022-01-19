@@ -14,12 +14,13 @@ namespace InventoryQuest.Testing
         ItemStats MyItemStats = new ItemStats("apple_fuji",
                  weight: .1f,
                  goldValue: .5f,
-                 description: "Fuji Apple, the objectively best apple");
+                 description: "Fuji Apple, the objectively best apple",
+                 shape: ShapeType.Square1);
 
         [SetUp]
         public void SetUp()
         {
-            MyItem = ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats);
+            MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
         }
 
         [TearDown]

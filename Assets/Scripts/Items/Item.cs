@@ -1,7 +1,5 @@
 ﻿using InventoryQuest;
-using InventoryQuest.Shapes;
 using System;
-using UnityEngine;
 
 namespace Data
 
@@ -10,19 +8,21 @@ namespace Data
     {
         public string Id { get; }
         public string Name { get; }
-        public ItemStats Stats;
-        public Shape Shape;
+        //public ItemStats Stats;
+        public Shape Shape { get; }
 
-        public Item(ItemStats itemStats, Shape itemShape)
+        public Item(ItemStats itemStats)
         {
             Id = Guid.NewGuid().ToString();
             Name = itemStats.ItemId;
             Stats = itemStats;
-            Shape = itemShape;
+            Shape = ShapeFactory.GetShape(itemStats.ShapeType);
         }
 
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
+
+        public IItemStats Stats { get; }
     }
 
 

@@ -9,11 +9,13 @@ namespace InventoryQuest.Testing
     {
         //container
         Container MyContainer;
-        Coor backpackSize = new Coor(5, 10);
-        ItemStats backpackStats = new ItemStats("adventure backpack",
+        static Coor backpackSize = new Coor(5, 12);
+        ContainerStats backpackStats = new ContainerStats("adventure backpack",
                 weight: 2f,
                 goldValue: 5f,
-                description: "a basic adventurer's backpack");
+                description: "a basic adventurer's backpack",
+                shape: ShapeType.Square1,
+                containerSize: backpackSize);
         //test items
         Item MyItem;
         List<Item> MyItems;
@@ -21,27 +23,29 @@ namespace InventoryQuest.Testing
         ItemStats MyItemStats = new ItemStats("apple_fuji",
                  weight: .1f,
                  goldValue: .5f,
-                 description: "Fuji Apple, the objectively best apple");
+                 description: "Fuji Apple, the objectively best apple",
+                 shape: ShapeType.Square1);
 
         List<Item> MyItems2;
         ItemStats MyItemStats2 = new ItemStats("thingabob",
                  weight: 4f,
                  goldValue: 5f,
-                 description: "a strange shape");
+                 description: "a strange shape",
+                 shape: ShapeType.T1);
 
 
         [SetUp]
         public void Setup()
         {
-            MyItem = ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats);
+            MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
             MyItems = new List<Item>();
             MyItems2 = new List<Item>();
             for (int i = 0; i < MyTotalItems; i++)
             {
-                MyItems.Add(ItemFactory.GetItem(shape: ShapeType.Square1, stats: MyItemStats));
-                MyItems2.Add(ItemFactory.GetItem(shape: ShapeType.T1, stats: MyItemStats2));
+                MyItems.Add((Item)ItemFactory.GetItem(stats: MyItemStats));
+                MyItems2.Add((Item)ItemFactory.GetItem(stats: MyItemStats2));
             }
-            MyContainer = ContainerFactory.GetContainer(shape: ShapeType.Square1, stats: backpackStats, containerSize: backpackSize);
+            MyContainer = ContainerFactory.GetContainer(stats: backpackStats);
         }
 
         [TearDown]

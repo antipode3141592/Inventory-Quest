@@ -7,17 +7,20 @@ namespace InventoryQuest.Testing
     public class TestCharacterCreation
     {
         Character Player;
-        CharacterStats playerStats = new CharacterStats(10f, 10f, 10f);
-        Coor backpackSize = new Coor(r: 5, c: 10);
-        ItemStats backpackStats = new ItemStats("adventure backpack",
+        static EquipmentSlotType[] equipmentSlots = { EquipmentSlotType.Belt, EquipmentSlotType.Feet };
+        CharacterStats playerStats = new(10f, 10f, 10f, equipmentSlots:equipmentSlots);
+        
+        static Coor backpackSize = new(r: 5, c: 12);
+        ContainerStats backpackStats = new ContainerStats("adventure backpack",
                 weight: 2f,
                 goldValue: 5f,
-                description: "a basic adventurer's backpack");
+                description: "a basic adventurer's backpack",
+                containerSize: backpackSize);
 
         [SetUp]
         public void SetUp()
         {
-            Player = new Character(ContainerFactory.GetContainer(ShapeType.Square1, backpackStats, backpackSize), playerStats);
+            Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
 
         }
 
@@ -32,6 +35,12 @@ namespace InventoryQuest.Testing
         public void PlayerCreationBackpackSize()
         {
             Assert.AreEqual(expected: backpackSize, actual: Player.PrimaryContainer.ContainerSize);
+        }
+
+        [Test]
+        public void PlayerEquipmentSlotsCorrect()
+        {
+            Assert.AreEqual(expected: equipmentSlots.Length, actual: Player.EquipmentSlots.Count);
         }
     }
 }

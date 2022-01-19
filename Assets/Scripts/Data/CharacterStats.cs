@@ -1,9 +1,7 @@
-﻿using Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace InventoryQuest
+namespace Data
 {
 
     [Serializable]
@@ -17,7 +15,9 @@ namespace InventoryQuest
         public DamageResistance FireResistance;
         public DamageResistance IceResistance;
 
-        public CharacterStats(float strength, float dexterity, float durability, float lightingResistance = 0f, float acidResistance = 0f, float fireResistance = 0f, float iceResistance = 0f)
+        public List<EquipmentSlotType> EquipmentSlots;
+
+        public CharacterStats(float strength, float dexterity, float durability, float lightingResistance = 0f, float acidResistance = 0f, float fireResistance = 0f, float iceResistance = 0f, EquipmentSlotType[] equipmentSlots = null)
         {
             Strength = new CharacterStat(strength);
             Dexterity = new CharacterStat(dexterity);
@@ -26,35 +26,7 @@ namespace InventoryQuest
             AcidResistance = new DamageResistance(DamageType.Acid, acidResistance);
             FireResistance = new DamageResistance(DamageType.Fire, fireResistance);
             IceResistance = new DamageResistance(DamageType.Ice, iceResistance);
+            EquipmentSlots = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
         }
-    }
-
-    [Serializable]
-    public class CharacterStat
-    {
-        public float InitialValue;
-
-        public float CurrentValue { get; }
-
-        public CharacterStat(float initialValue)
-        {
-            InitialValue = initialValue;
-        }
-    }
-
-    [Serializable]
-    public class DamageResistance
-    {
-        public DamageType DamageType;
-        
-        public float InitialValue;
-
-        public DamageResistance(DamageType damageType, float initialValue)
-        {
-            DamageType = damageType;
-            InitialValue = initialValue;
-        }
-
-        public float CurrentValue { get; }
     }
 }

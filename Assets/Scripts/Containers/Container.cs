@@ -1,5 +1,4 @@
 ﻿using Data;
-using InventoryQuest.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +14,17 @@ namespace InventoryQuest
         public GridSquare[,] Grid;
         public Dictionary<string,Content> Contents;
         public Coor ContainerSize;
-        public ItemStats Stats;
-        public Shape Shape;
+        public IItemStats Stats { get; }
+        public Shape Shape { get; }
 
-        public Container(ItemStats itemStats, Shape shape, Coor containerSize)
+        public Container(ContainerStats stats)
         {
             Id = Guid.NewGuid().ToString();
-            Name = itemStats.ItemId;
-            ContainerSize = containerSize;
-            Stats = itemStats;
-            Shape = shape;
-            Grid = new GridSquare[containerSize.row, containerSize.column];
+            Name = stats.ItemId;
+            ContainerSize = stats.ContainerSize;
+            Stats = stats;
+            Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
+            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
             Contents = new Dictionary<string, Content>();
         }
 
@@ -40,7 +39,7 @@ namespace InventoryQuest
         public event EventHandler<GridEventArgs> OnGridHighlight;
         public event EventHandler<ContainerEventArgs> OnContainerChanged;
 
-        public bool TryPlace(Item item, Coor target)
+        public bool TryPlace(IItem item, Coor target)
         {
             if (IsPointInGrid(target) && !Grid[target.row, target.column].IsOccupied)
             {
@@ -86,7 +85,7 @@ namespace InventoryQuest
             return false;
         }
 
-        public bool TryTake(out Item item, Coor target)
+        public bool TryTake(out IItem item, Coor target)
         {
             if (IsPointInGrid(target) && Grid[target.row, target.column].IsOccupied)
             {

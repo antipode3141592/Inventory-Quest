@@ -1,16 +1,43 @@
-﻿namespace InventoryQuest.Characters
+﻿using Data;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace InventoryQuest.Characters
 {
     //characters 
     public class Character
     {
         public CharacterStats Stats;
-        
+        private List<StatModifier> _modifiers;
+
+        public List<StatModifier> CurrentModifiers 
+        {
+            get
+            {
+                _modifiers.Clear();
+                foreach(var slot in EquipmentSlots)
+                {
+                    _modifiers.AddRange(slot.Value.EquippedItem.Modifiers);
+                }
+                return _modifiers;
+            }
+        }
+
+        public Dictionary<EquipmentSlotType,EquipmentSlot> EquipmentSlots;
+
         public Container PrimaryContainer { get; set; }
 
-        public Character(Container container, CharacterStats stats)
+        public Character(CharacterStats characterStats, ContainerStats containerStats)
         {
-            PrimaryContainer = container;
-            Stats = stats;
+            PrimaryContainer = ContainerFactory.GetContainer(containerStats);
+            Stats = characterStats;
+            _modifiers = new List<StatModifier>();
+            EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();
+            foreach (EquipmentSlotType slotType in characterStats.EquipmentSlots) 
+            { 
+                EquipmentSlots.Add(key: slotType, value: new EquipmentSlot(slotType));
+            }
+
         }
 
         //derived stats

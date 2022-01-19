@@ -5,7 +5,7 @@ namespace InventoryQuest.Shapes
 {
     public class Bar4 : Shape
     {
-        public Bar4(Facing defaultFacing)
+        public Bar4(Facing defaultFacing = Facing.Right)
         {
             Id = "bar4";
             Masks = new Dictionary<Facing, BitMask>

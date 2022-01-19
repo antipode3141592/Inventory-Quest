@@ -11,26 +11,26 @@ namespace InventoryQuest
 {
     public class ItemFactory
     {
-        public static Item GetItem(ShapeType shape, ItemStats stats)
+        public static IItem GetItem(IItemStats stats)
         {
-            Shape _shape;
-            switch (shape)
+            EquipableItemStats equipableStats = stats as EquipableItemStats;
+            if (equipableStats != null)
             {
-                case ShapeType.Square1:
-                    _shape = new Square1();
-                    break;
-                case ShapeType.Square2:
-                    _shape = new Square2();
-                    break;
-                case ShapeType.T1:
-                    _shape = new T1();
-                    break;
-                default:
-                    Debug.Log($"item shape type not found, default single square");
-                    _shape = new Square1();
-                    break;
+                return new EquipableItem(equipableStats);
             }
-            return new Item(itemStats: stats, itemShape: _shape);
+            ContainerStats containerStats = stats as ContainerStats;
+            if(containerStats != null)
+            {
+                return new Container(containerStats);
+            }
+
+            ItemStats itemStats = stats as ItemStats;
+            if (itemStats != null)
+            {
+                return new Item(itemStats: itemStats);
+            }
+            return null;
+            
         }
     }
 }

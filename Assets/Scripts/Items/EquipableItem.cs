@@ -1,28 +1,34 @@
 ﻿using InventoryQuest;
-using InventoryQuest.Shapes;
 using System;
+using System.Collections.Generic;
 
 namespace Data
 
 {
-    public class EquipableItem : IItem, IEquippable
+    public class EquipableItem : IItem, IEquipable
     {
-        public EquipableItem(ShapeType shape, ItemStats itemStats)
-        {
-
-        }
+        public IItemStats Stats { get; }
+        public Shape Shape { get; }
 
         public string Id { get; }
 
         public string Name { get; }
 
-        public float Weight => throw new NotImplementedException();
+        public EquipmentSlotType SlotType { get; }
 
-        public float Value => throw new NotImplementedException();
+        public float Weight => Stats.Weight;
 
-        public void Equip()
+        public float Value => Stats.GoldValue;
+
+        public List<StatModifier> Modifiers { get ; set ; }
+
+        public EquipableItem(EquipableItemStats stats)
         {
-            throw new NotImplementedException();
+            Id = Guid.NewGuid().ToString();
+            Name = stats.ItemId;
+            Stats = stats;
+            Shape = ShapeFactory.GetShape(stats.ShapeType);
+            Modifiers = stats.Modifiers;
         }
     }
 }

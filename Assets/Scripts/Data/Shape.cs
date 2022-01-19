@@ -1,7 +1,6 @@
-﻿using Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace InventoryQuest.Shapes
+namespace Data
 {
     public abstract class Shape : IRotatable
     {
@@ -11,14 +10,16 @@ namespace InventoryQuest.Shapes
 
         public BitMask CurrentMask => Masks[CurrentFacing];
 
-        public Coor Size {
-            get {
+        public Coor Size
+        {
+            get
+            {
                 Coor retval;
                 retval.row = Masks[CurrentFacing].Map.GetLength(0);
                 retval.column = Masks[CurrentFacing].Map.GetLength(1);
                 return retval;
             }
-        } 
+        }
 
         public virtual void Rotate(int direction)
         {

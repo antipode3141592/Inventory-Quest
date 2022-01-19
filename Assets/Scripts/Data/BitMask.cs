@@ -1,4 +1,4 @@
-﻿namespace InventoryQuest
+﻿namespace Data
 {
     public class BitMask
     {
@@ -10,5 +10,5 @@
         }
     }
 
-    
+
 }
