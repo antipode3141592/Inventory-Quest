@@ -1,17 +1,16 @@
 ﻿using Data;
 using InventoryQuest.Characters;
 using NUnit.Framework;
+using Zenject;
 
 namespace InventoryQuest.Testing
 {
     public class TestEquipableItem
     {
-
+        IDataSource dataSource;
         Character Player;
         EquipableItem Sword;
-        
-        static EquipmentSlotType[] equipmentSlots = { EquipmentSlotType.Belt, EquipmentSlotType.Feet , EquipmentSlotType.RightHand};
-        CharacterStats playerStats = new(10f, 10f, 10f, equipmentSlots: equipmentSlots);
+        CharacterStats playerStats;
 
         static Coor backpackSize = new(r: 5, c: 12);
         ContainerStats backpackStats = new ContainerStats("adventure backpack",
@@ -21,8 +20,7 @@ namespace InventoryQuest.Testing
                 containerSize: backpackSize);
 
         static StatModifier[] statMods = { 
-            new( "Attack", OperatorType.Add, 5f),
-            new("Strength",OperatorType.Add,1f)
+            new(StatType.Strength,OperatorType.Add,1f)
         };
         EquipableItemStats EquipableStats = new EquipableItemStats("basic_sword_1",
                  weight: 2f,
@@ -35,6 +33,8 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
+            dataSource = (IDataSource)new DataSourceTest();
+            playerStats = dataSource.GetCharacterStats("Player");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
             Sword = (EquipableItem)ItemFactory.GetItem(EquipableStats); 
         }

@@ -2,9 +2,9 @@
 {
     public interface IDataSource
     {
-        public Item GetRandomItem(Rarity rarity);
+        public IItemStats GetRandomItemStats(Rarity rarity);
 
-        
+        public CharacterStats GetCharacterStats(string id);
 
     }
 }

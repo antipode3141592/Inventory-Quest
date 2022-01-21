@@ -21,7 +21,7 @@ namespace InventoryQuest
         {
 
             //initialize player character with base stats and standard 10x5 unit backpack
-            CharacterStats playerStats = new CharacterStats(10f,10f,10f);
+            CharacterStats playerStats = _dataSource.GetCharacterStats("Player");
             ContainerStats backpackStats = new ContainerStats(itemId:"adventure backpack", 
                 weight: 2f, 
                 goldValue: 5f, 
@@ -40,7 +40,7 @@ namespace InventoryQuest
 
         public void AddPieceToLootPile()
         {
-            Item item = _dataSource.GetRandomItem(Rarity.common);
+            Item item = (Item)ItemFactory.GetItem(_dataSource.GetRandomItemStats(Rarity.common));
             LootPile.TryPlace(item, new Coor(r: 0, c: 0));
         }
 

@@ -5,13 +5,13 @@ namespace Data
     [Serializable]
     public class StatModifier
     {
-        public string StatName;
+        public StatType Stat;
         public OperatorType OperatorType;
         public float AdjustmentValue;
 
-        public StatModifier(string statName, OperatorType operatorType, float adjustmentValue)
+        public StatModifier(StatType stat, OperatorType operatorType, float adjustmentValue)
         {
-            StatName = statName;
+            Stat = stat;
             OperatorType = operatorType;
             AdjustmentValue = adjustmentValue;
         }

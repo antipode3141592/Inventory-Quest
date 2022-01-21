@@ -17,7 +17,7 @@ namespace InventoryQuest
 
         public bool AddRandomLootToContainer(Rarity rarity)
         {
-            Item loot = DataSource.GetRandomItem(rarity: rarity);
+            Item loot = (Item)ItemFactory.GetItem(DataSource.GetRandomItemStats(rarity: rarity));
             Coor currentGuess = new Coor(0,0);
             for (int r = 0; r < MyContainer.ContainerSize.row; r++)
             {

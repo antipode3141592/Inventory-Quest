@@ -1,8 +1,12 @@
-﻿namespace Data
+﻿using System.Reflection;
+
+namespace Data
 {
     public class EquipmentSlot
     {
         public EquipmentSlotType SlotType { get; }
+
+        private CharacterStats _stats { get; }
 
         public EquipableItem EquippedItem { get; set; }
 
@@ -28,6 +32,17 @@
                 return true;
             }
             return false;
+        }
+
+        public void OnEquip()
+        {
+            if (EquippedItem != null)
+            {
+                foreach(StatModifier statMod in EquippedItem.Modifiers)
+                {
+                    
+                }
+            }
         }
 
         public EquipableItem Unequip()

@@ -10,17 +10,43 @@ namespace InventoryQuest
 {
     public class DataSourceTest : IDataSource
     {
-        public Dictionary<string, Item> Items;
+        
 
         public DataSourceTest()
         {
-            Items = new Dictionary<string, Item>();
 
         }
 
-        public Item GetRandomItem(Rarity rarity) 
+        public IItemStats GetRandomItemStats(Rarity rarity) 
         {
-            throw new NotImplementedException();
+
+            return null;
+        }
+
+        public CharacterStats GetCharacterStats(string id)
+        {
+
+            return id switch
+            {
+                "Player" => DefaultPlayerStats(),
+                _ => DefaultPlayerStats(),
+            };
+        }
+
+        public CharacterStats DefaultPlayerStats()
+        {
+            EquipmentSlotType[] equipmentSlots = { 
+                EquipmentSlotType.Belt, 
+                EquipmentSlotType.Feet 
+            };            
+
+            KeyValuePair<StatType, float>[] physicalStats = new KeyValuePair<StatType, float>[] {
+                new(StatType.Strength, 10f),
+                new(StatType.Dexterity, 10f),
+                new(StatType.Durability, 10f)
+            };
+
+            return new CharacterStats(stats: physicalStats, equipmentSlots: equipmentSlots);
         }
     }
 

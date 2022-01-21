@@ -1,14 +1,15 @@
 ﻿using Data;
 using InventoryQuest.Characters;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace InventoryQuest.Testing
 {
     public class TestCharacterCreation
     {
+        IDataSource dataSource;
         Character Player;
-        static EquipmentSlotType[] equipmentSlots = { EquipmentSlotType.Belt, EquipmentSlotType.Feet };
-        CharacterStats playerStats = new(10f, 10f, 10f, equipmentSlots:equipmentSlots);
+        CharacterStats playerStats;
         
         static Coor backpackSize = new(r: 5, c: 12);
         ContainerStats backpackStats = new ContainerStats("adventure backpack",
@@ -20,6 +21,8 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
+            dataSource = (IDataSource)new DataSourceTest();
+            playerStats = dataSource.GetCharacterStats("Player");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
 
         }
@@ -40,7 +43,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlayerEquipmentSlotsCorrect()
         {
-            Assert.AreEqual(expected: equipmentSlots.Length, actual: Player.EquipmentSlots.Count);
+            Assert.AreEqual(expected: playerStats.EquipmentSlots.Count, actual: Player.EquipmentSlots.Count);
         }
     }
 }

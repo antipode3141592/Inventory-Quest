@@ -41,8 +41,8 @@ namespace InventoryQuest.Characters
         }
 
         //derived stats
-        public float MaxEncumbrance => Stats.Strength.CurrentValue * 10f;
-        public float MaxHealth => Stats.Durability.CurrentValue * 10f;
+        public float MaxEncumbrance => Stats.PrimaryStats[StatType.Strength].CurrentValue * 10f;
+        public float MaxHealth => Stats.PrimaryStats[StatType.Durability].CurrentValue * 10f;
         public float CurrentEncumbrance => PrimaryContainer.TotalWeight;
         public float CurrentTotalGoldValue => PrimaryContainer.TotalWorth;
 

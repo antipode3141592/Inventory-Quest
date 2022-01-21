@@ -5,9 +5,9 @@ namespace Data
     [Serializable]
     public class CharacterStat
     {
-        public float InitialValue;
+        public float InitialValue { get; }
 
-        public float CurrentValue { get; }
+        public float CurrentValue { get; set; }
 
         public CharacterStat(float initialValue)
         {
