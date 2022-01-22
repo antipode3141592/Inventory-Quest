@@ -11,15 +11,14 @@ namespace InventoryQuest.Testing
     public class TestItem
     {
         Item MyItem;
-        ItemStats MyItemStats = new ItemStats("apple_fuji",
-                 weight: .1f,
-                 goldValue: .5f,
-                 description: "Fuji Apple, the objectively best apple",
-                 shape: ShapeType.Square1);
+        ItemStats MyItemStats;
+        IDataSource dataSource;
 
         [SetUp]
         public void SetUp()
         {
+            dataSource = new DataSourceTest();
+            MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
             MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
         }
 

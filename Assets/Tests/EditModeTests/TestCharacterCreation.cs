@@ -10,18 +10,13 @@ namespace InventoryQuest.Testing
         IDataSource dataSource;
         Character Player;
         CharacterStats playerStats;
-        
-        static Coor backpackSize = new(r: 5, c: 12);
-        ContainerStats backpackStats = new ContainerStats("adventure backpack",
-                weight: 2f,
-                goldValue: 5f,
-                description: "a basic adventurer's backpack",
-                containerSize: backpackSize);
+        ContainerStats backpackStats;
 
         [SetUp]
         public void SetUp()
         {
-            dataSource = (IDataSource)new DataSourceTest();
+            dataSource = new DataSourceTest();
+            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
             playerStats = dataSource.GetCharacterStats("Player");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
 
@@ -37,7 +32,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlayerCreationBackpackSize()
         {
-            Assert.AreEqual(expected: backpackSize, actual: Player.PrimaryContainer.ContainerSize);
+            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: Player.PrimaryContainer.ContainerSize);
         }
 
         [Test]

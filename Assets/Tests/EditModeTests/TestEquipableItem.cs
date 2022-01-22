@@ -11,30 +11,16 @@ namespace InventoryQuest.Testing
         Character Player;
         EquipableItem Sword;
         CharacterStats playerStats;
-
-        static Coor backpackSize = new(r: 5, c: 12);
-        ContainerStats backpackStats = new ContainerStats("adventure backpack",
-                weight: 2f,
-                goldValue: 5f,
-                description: "a basic adventurer's backpack",
-                containerSize: backpackSize);
-
-        static StatModifier[] statMods = { 
-            new(StatType.Strength,OperatorType.Add,1f)
-        };
-        EquipableItemStats EquipableStats = new EquipableItemStats("basic_sword_1",
-                 weight: 2f,
-                 goldValue: 10f,
-                 description: "a basic sword",
-                 shape: ShapeType.Bar3,
-                 defaultFacing: Facing.Down,
-                 modifiers: statMods);
+        ContainerStats backpackStats;
+        EquipableItemStats EquipableStats;
 
         [SetUp]
         public void SetUp()
         {
-            dataSource = (IDataSource)new DataSourceTest();
+            dataSource = new DataSourceTest();
             playerStats = dataSource.GetCharacterStats("Player");
+            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
+            EquipableStats = (EquipableItemStats)dataSource.GetItemStats("basic_sword_1");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
             Sword = (EquipableItem)ItemFactory.GetItem(EquipableStats); 
         }
