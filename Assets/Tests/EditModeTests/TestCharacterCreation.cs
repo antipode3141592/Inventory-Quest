@@ -38,7 +38,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlayerEquipmentSlotsCorrect()
         {
-            Assert.AreEqual(expected: playerStats.EquipmentSlots.Count, actual: Player.EquipmentSlots.Count);
+            Assert.AreEqual(expected: playerStats.EquipmentSlotsTypes.Count, actual: Player.EquipmentSlots.Count);
         }
     }
 }

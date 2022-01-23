@@ -5,15 +5,20 @@ namespace Data
     [Serializable]
     public class StatModifier
     {
-        public StatType Stat;
+        public Type StatType;
         public OperatorType OperatorType;
         public float AdjustmentValue;
 
-        public StatModifier(StatType stat, OperatorType operatorType, float adjustmentValue)
+        public StatModifier(Type statType, OperatorType operatorType, float adjustmentValue)
         {
-            Stat = stat;
+            StatType = statType;
             OperatorType = operatorType;
             AdjustmentValue = adjustmentValue;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.GetType()}: {StatType}, {OperatorType}, {AdjustmentValue}";
         }
     }
 }

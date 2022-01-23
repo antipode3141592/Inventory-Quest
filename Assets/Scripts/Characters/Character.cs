@@ -1,11 +1,14 @@
 ﻿using Data;
+using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace InventoryQuest.Characters
 {
     //characters 
-    public class Character
+    public class Character: IDisposable
     {
         public CharacterStats Stats;
         private List<StatModifier> _modifiers;
@@ -33,18 +36,60 @@ namespace InventoryQuest.Characters
             Stats = characterStats;
             _modifiers = new List<StatModifier>();
             EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();
-            foreach (EquipmentSlotType slotType in characterStats.EquipmentSlots) 
-            { 
-                EquipmentSlots.Add(key: slotType, value: new EquipmentSlot(slotType));
+            foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes) 
+            {
+                var slot = new EquipmentSlot(slotType);
+                EquipmentSlots.Add(key: slotType, value: slot);
+                slot.OnEquip += OnEquipHandler;
+                slot.OnUnequip += OnUnequipHandler;
             }
-
         }
 
+        
+
         //derived stats
-        public float MaxEncumbrance => Stats.PrimaryStats[StatType.Strength].CurrentValue * 10f;
-        public float MaxHealth => Stats.PrimaryStats[StatType.Durability].CurrentValue * 10f;
+        public float MaxEncumbrance => Stats.Strength.CurrentValue * 10f;
+        public float MaxHealth => Stats.Durability.CurrentValue * 10f;
         public float CurrentEncumbrance => PrimaryContainer.TotalWeight;
         public float CurrentTotalGoldValue => PrimaryContainer.TotalWorth;
 
+        public void Dispose()
+        {
+            foreach(var slot in EquipmentSlots)
+            {
+                slot.Value.OnEquip -= OnEquipHandler;
+                slot.Value.OnUnequip -= OnUnequipHandler;
+            }
+        }
+
+        public void OnEquipHandler(object sender, ModifierEventArgs e)
+        {
+            Debug.Log($"OnEquipHandler: {sender}");
+            foreach(var mod in e.Modifiers)
+            {
+                Type t = Stats.GetType();
+                FieldInfo field = t.GetField(mod.StatType.Name.ToString());
+                var obj = field.GetValue(Stats);
+                if (obj == null) continue;
+                PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
+                var currentValue = prop2.GetValue(obj,null);
+                prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
+            }
+        }
+
+        public void OnUnequipHandler(object sender, ModifierEventArgs e)
+        {
+            Debug.Log($"OnUnEquipHandler: {sender}");
+            foreach (var mod in e.Modifiers)
+            {
+                Type t = Stats.GetType();
+                FieldInfo field = t.GetField(mod.StatType.Name.ToString());
+                var obj = field.GetValue(Stats);
+                if (obj == null) continue;
+                PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
+                var currentValue = prop2.GetValue(obj, null);
+                prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
+            }
+        }
     }
 }

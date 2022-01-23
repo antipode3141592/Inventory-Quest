@@ -36,15 +36,19 @@ namespace InventoryQuest
 
         public CharacterStats DefaultPlayerStats()
         {
-            EquipmentSlotType[] equipmentSlots = { 
+            EquipmentSlotType[] equipmentSlots = {
+                EquipmentSlotType.RightHand, 
+                EquipmentSlotType.LeftHand,
                 EquipmentSlotType.Belt, 
                 EquipmentSlotType.Feet 
-            };            
+            };
 
-            KeyValuePair<StatType, float>[] physicalStats = new KeyValuePair<StatType, float>[] {
-                new(StatType.Strength, 10f),
-                new(StatType.Dexterity, 10f),
-                new(StatType.Durability, 10f)
+            Dictionary<Type, float> physicalStats = new()
+            {
+                { typeof(Strength), 10f },
+                { typeof(Dexterity), 10f },
+                { typeof(Durability), 10f },
+                { typeof(Charisma), 10f }
             };
 
             return new CharacterStats(stats: physicalStats, equipmentSlots: equipmentSlots);
@@ -77,7 +81,8 @@ namespace InventoryQuest
                      shape: ShapeType.Bar3,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
-                        new(StatType.Strength,OperatorType.Add,1f) }
+                        new(typeof(Strength),OperatorType.Add,1f),
+                        new(typeof(Charisma), OperatorType.Multiply, 2f)}
                      ),
                 _ => new ItemStats("blop",
                      weight: .1f,

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using System;
 
 namespace Data
 {
@@ -6,14 +6,15 @@ namespace Data
     {
         public EquipmentSlotType SlotType { get; }
 
-        private CharacterStats _stats { get; }
-
         public EquipableItem EquippedItem { get; set; }
 
         public EquipmentSlot(EquipmentSlotType slotType)
         {
             SlotType = slotType;
         }
+
+        public EventHandler<ModifierEventArgs> OnEquip;
+        public EventHandler<ModifierEventArgs> OnUnequip;
 
         public bool TryEquip(out EquipableItem previousItem, EquipableItem itemToEquip)
         {
@@ -26,29 +27,20 @@ namespace Data
                 }
                 else
                 {
-                    previousItem = EquippedItem;
+                    previousItem = Unequip();
                     EquippedItem = itemToEquip;
                 }
+                OnEquip?.Invoke(this, new ModifierEventArgs(itemToEquip.Modifiers));
                 return true;
             }
             return false;
-        }
-
-        public void OnEquip()
-        {
-            if (EquippedItem != null)
-            {
-                foreach(StatModifier statMod in EquippedItem.Modifiers)
-                {
-                    
-                }
-            }
         }
 
         public EquipableItem Unequip()
         {
             var item = EquippedItem;
             EquippedItem = null;
+            OnUnequip?.Invoke(this, new ModifierEventArgs(item.Modifiers));
             return item;
         }
     }
