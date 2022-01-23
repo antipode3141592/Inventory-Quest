@@ -81,9 +81,25 @@ namespace InventoryQuest
                      shape: ShapeType.Bar3,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,1f),
-                        new(typeof(Charisma), OperatorType.Multiply, 2f)}
+                        new(typeof(Strength),OperatorType.Add,1f)}
                      ),
+                "basic_sword_5" => new EquipableItemStats("basic_sword_5",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic sword",
+                    shape: ShapeType.Bar4,
+                    defaultFacing: Facing.Down,
+                    modifiers: new StatModifier[] {
+                        new(typeof(Strength),OperatorType.Add,5f)}
+                    ),
+                "ring_charisma_1" => new EquipableItemStats("ring_charisma_1",
+                    weight: 0.1f,
+                    goldValue: 50f,
+                    description: "simple silver band which grants minor charisma boost",
+                    shape: ShapeType.Square1, 
+                    modifiers: new StatModifier[] {
+                        new(typeof(Charisma), OperatorType.Add, 1f)}
+                    ),
                 _ => new ItemStats("blop",
                      weight: .1f,
                      goldValue: 0f,

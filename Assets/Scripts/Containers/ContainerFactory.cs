@@ -1,7 +1,4 @@
-﻿using Data;
-using InventoryQuest.Shapes;
-
-namespace InventoryQuest
+﻿namespace InventoryQuest
 {
     public class ContainerFactory
     {

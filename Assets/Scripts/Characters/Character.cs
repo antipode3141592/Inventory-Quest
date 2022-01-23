@@ -1,8 +1,7 @@
 ﻿using Data;
 using System;
-using System.Reflection;
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace InventoryQuest.Characters
@@ -73,7 +72,14 @@ namespace InventoryQuest.Characters
                 if (obj == null) continue;
                 PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
                 var currentValue = prop2.GetValue(obj,null);
-                prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
+
+                if (mod.OperatorType == OperatorType.Add)
+                {
+                    prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
+                } else if (mod.OperatorType == OperatorType.Multiply)
+                {
+                    prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
+                }
             }
         }
 
@@ -88,7 +94,13 @@ namespace InventoryQuest.Characters
                 if (obj == null) continue;
                 PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
                 var currentValue = prop2.GetValue(obj, null);
-                prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
+                if (mod.OperatorType == OperatorType.Add)
+                {
+                    prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
+                }else if (mod.OperatorType == OperatorType.Multiply)
+                {
+                    prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
+                }
             }
         }
     }

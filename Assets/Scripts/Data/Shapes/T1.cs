@@ -1,7 +1,6 @@
-﻿using Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace InventoryQuest.Shapes
+namespace Data.Shapes
 {
     public class T1 : Shape
     {

@@ -1,7 +1,6 @@
 ﻿using Data;
 using InventoryQuest.Characters;
 using NUnit.Framework;
-using Zenject;
 
 namespace InventoryQuest.Testing
 {
@@ -65,12 +64,12 @@ namespace InventoryQuest.Testing
             }
             Assert.AreEqual(swordId, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem.Id);
             Assert.AreEqual(11f, Player.Stats.Strength.CurrentValue);
-            Assert.AreEqual(12f, Player.Stats.Charisma.CurrentValue);
         }
 
         [Test]
         public void TakeItemFromBackpackEquipAndUnequip()
         {
+            float startingStrength = Player.Stats.Strength.CurrentValue;
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
             string swordId = Sword.Id;
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
@@ -86,8 +85,8 @@ namespace InventoryQuest.Testing
                 }
             }
             Assert.AreEqual(null, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem);
-            Assert.AreEqual(10f, Player.Stats.Strength.CurrentValue);
-            Assert.AreEqual(10f, Player.Stats.Charisma.CurrentValue);
+            Assert.AreEqual(startingStrength, Player.Stats.Strength.CurrentValue);
         }
+
     }
 }

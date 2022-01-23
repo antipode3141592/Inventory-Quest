@@ -4,7 +4,7 @@ using Data;
 using InventoryQuest;
 using InventoryQuest.Characters;
 using System;
-using InventoryQuest.Shapes;
+using Data.Shapes;
 
 namespace InventoryQuest.Testing
 {

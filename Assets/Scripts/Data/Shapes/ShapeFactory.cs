@@ -1,12 +1,7 @@
-﻿using Data;
-using InventoryQuest.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Data.Shapes;
 
-namespace InventoryQuest
+namespace Data
 {
     public class ShapeFactory
     {
