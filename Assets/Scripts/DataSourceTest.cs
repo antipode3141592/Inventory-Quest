@@ -48,7 +48,10 @@ namespace InventoryQuest
                 { typeof(Strength), 10f },
                 { typeof(Dexterity), 10f },
                 { typeof(Durability), 10f },
-                { typeof(Charisma), 10f }
+                { typeof(Charisma), 10f },
+                { typeof(Speed), 10f },
+                { typeof(Intelligence), 10f},
+                { typeof(Wisdom), 10f }
             };
 
             return new CharacterStats(stats: physicalStats, equipmentSlots: equipmentSlots);

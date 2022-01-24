@@ -1,8 +1,6 @@
-﻿using Data;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
-namespace InventoryQuest
+namespace Data
 {
     [Serializable]
     public class ItemStats: IItemStats

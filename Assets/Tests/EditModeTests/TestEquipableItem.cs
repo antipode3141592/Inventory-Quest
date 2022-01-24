@@ -50,6 +50,7 @@ namespace InventoryQuest.Testing
         {
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
             string swordId = Sword.Id;
+            
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
             {
                 EquipableItem _item = item as EquipableItem;
@@ -63,7 +64,7 @@ namespace InventoryQuest.Testing
                 }
             }
             Assert.AreEqual(swordId, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem.Id);
-            Assert.AreEqual(11f, Player.Stats.Strength.CurrentValue);
+            Assert.AreEqual(11f, Player.Stats.Attack.CurrentValue);
         }
 
         [Test]

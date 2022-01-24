@@ -1,10 +1,5 @@
-using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Data;
-using InventoryQuest;
-using InventoryQuest.Characters;
+using NUnit.Framework;
 
 namespace InventoryQuest.Testing
 {

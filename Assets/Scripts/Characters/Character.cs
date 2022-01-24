@@ -70,7 +70,7 @@ namespace InventoryQuest.Characters
                 FieldInfo field = t.GetField(mod.StatType.Name.ToString());
                 var obj = field.GetValue(Stats);
                 if (obj == null) continue;
-                PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
+                PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
                 var currentValue = prop2.GetValue(obj,null);
 
                 if (mod.OperatorType == OperatorType.Add)
@@ -92,7 +92,7 @@ namespace InventoryQuest.Characters
                 FieldInfo field = t.GetField(mod.StatType.Name.ToString());
                 var obj = field.GetValue(Stats);
                 if (obj == null) continue;
-                PropertyInfo prop2 = obj.GetType().GetProperty("CurrentValue");
+                PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
                 var currentValue = prop2.GetValue(obj, null);
                 if (mod.OperatorType == OperatorType.Add)
                 {
