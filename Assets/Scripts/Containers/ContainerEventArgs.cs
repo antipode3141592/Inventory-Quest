@@ -1,9 +1,8 @@
-﻿using InventoryQuest;
-using System;
+﻿using System;
 
-namespace Data
+namespace InventoryQuest
 {
-    public class ContainerEventArgs: EventArgs
+    public class ContainerEventArgs : EventArgs
     {
         public Container Container;
 

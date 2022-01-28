@@ -1,5 +1,4 @@
-﻿using InventoryQuest;
-using System;
+﻿using System;
 
 namespace Data
 
@@ -8,10 +7,10 @@ namespace Data
     {
         public string Id { get; }
         public string Name { get; }
-        //public ItemStats Stats;
+
         public Shape Shape { get; }
 
-        public Item(ItemStats itemStats)
+        public Item(IItemStats itemStats)
         {
             Id = Guid.NewGuid().ToString();
             Name = itemStats.Name;
