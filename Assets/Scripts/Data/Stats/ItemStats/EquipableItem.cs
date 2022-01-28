@@ -24,7 +24,7 @@ namespace Data
         public EquipableItem(EquipableItemStats stats)
         {
             Id = Guid.NewGuid().ToString();
-            Name = stats.ItemId;
+            Name = stats.Name;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType);
             Modifiers = stats.Modifiers;

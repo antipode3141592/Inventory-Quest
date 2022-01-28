@@ -14,7 +14,7 @@ namespace Data
         public Item(ItemStats itemStats)
         {
             Id = Guid.NewGuid().ToString();
-            Name = itemStats.ItemId;
+            Name = itemStats.Name;
             Stats = itemStats;
             Shape = ShapeFactory.GetShape(itemStats.ShapeType);
         }

@@ -30,32 +30,54 @@ namespace InventoryQuest
             return id switch
             {
                 "Player" => DefaultPlayerStats(),
+                "Minion" => DefaultMinionStats(),
                 _ => DefaultPlayerStats(),
             };
         }
 
         public CharacterStats DefaultPlayerStats()
         {
-            EquipmentSlotType[] equipmentSlots = {
+            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+
+            Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 10f, 10f, 10f, 10f, 10f, 10f, 10f });
+
+            return new CharacterStats(name: "[PLAYER NAME]", stats: physicalStats, equipmentSlots: equipmentSlots);
+        }
+
+        public CharacterStats DefaultMinionStats()
+        {
+            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+
+            Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 5f, 5f, 5f, 5f, 5f, 5f, 5f });
+
+            return new CharacterStats(name: "Minion", stats: physicalStats, equipmentSlots: equipmentSlots);
+        }
+
+        EquipmentSlotType[] GetDefaultEquipmentSlotTypes()
+        {
+            EquipmentSlotType[] slots = {
                 EquipmentSlotType.RightHand, 
                 EquipmentSlotType.LeftHand,
                 EquipmentSlotType.Belt, 
-                EquipmentSlotType.Feet 
+                EquipmentSlotType.Feet
             };
+            return slots;
+        }
 
+        Dictionary<Type, float> GetStatsBlock(float[] stats)
+        {
             Dictionary<Type, float> physicalStats = new()
             {
-                { typeof(Strength), 10f },
-                { typeof(Dexterity), 10f },
-                { typeof(Durability), 10f },
-                { typeof(Charisma), 10f },
-                { typeof(Speed), 10f },
-                { typeof(Intelligence), 10f},
-                { typeof(Wisdom), 10f }
+                { typeof(Strength), stats[0] },
+                { typeof(Dexterity), stats[1] },
+                { typeof(Durability), stats[2] },
+                { typeof(Charisma), stats[3] },
+                { typeof(Speed), stats[4] },
+                { typeof(Intelligence), stats[5] },
+                { typeof(Wisdom), stats[6] }
             };
-
-            return new CharacterStats(stats: physicalStats, equipmentSlots: equipmentSlots);
-        }
+            return physicalStats;
+        } 
 
         public IItemStats GetItemStats(string id)
         {

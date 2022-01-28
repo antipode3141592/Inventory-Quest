@@ -5,7 +5,7 @@ namespace Data
     [Serializable]
     public class ItemStats: IItemStats
     {
-        public string ItemId { get; }
+        public string Name { get; }
         public ShapeType ShapeType { get; }
         public Facing DefaultFacing { get; }
         public float Weight { get; }
@@ -15,7 +15,7 @@ namespace Data
 
         public ItemStats(string itemId, float weight, float goldValue, string description, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
         {
-            ItemId = itemId;
+            Name = itemId;
             ShapeType = shape;
             DefaultFacing = defaultFacing;
             Weight = weight;

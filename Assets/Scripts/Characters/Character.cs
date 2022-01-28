@@ -10,20 +10,6 @@ namespace InventoryQuest.Characters
     public class Character: IDisposable
     {
         public CharacterStats Stats;
-        private List<StatModifier> _modifiers;
-
-        public List<StatModifier> CurrentModifiers 
-        {
-            get
-            {
-                _modifiers.Clear();
-                foreach(var slot in EquipmentSlots)
-                {
-                    _modifiers.AddRange(slot.Value.EquippedItem.Modifiers);
-                }
-                return _modifiers;
-            }
-        }
 
         public Dictionary<EquipmentSlotType,EquipmentSlot> EquipmentSlots;
 
@@ -33,7 +19,6 @@ namespace InventoryQuest.Characters
         {
             PrimaryContainer = ContainerFactory.GetContainer(containerStats);
             Stats = characterStats;
-            _modifiers = new List<StatModifier>();
             EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes) 
             {
@@ -43,8 +28,6 @@ namespace InventoryQuest.Characters
                 slot.OnUnequip += OnUnequipHandler;
             }
         }
-
-        
 
         //derived stats
         public float MaxEncumbrance => Stats.Strength.CurrentValue * 10f;

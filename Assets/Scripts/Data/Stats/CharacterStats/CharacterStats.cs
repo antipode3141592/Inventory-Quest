@@ -7,6 +7,8 @@ namespace Data
     [Serializable]
     public class CharacterStats
     {
+        public string Name { get; set; }
+
         public Strength Strength;
         public Dexterity Dexterity;
         public Durability Durability;
@@ -21,8 +23,9 @@ namespace Data
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
         public List<EquipmentSlotType> EquipmentSlotsTypes;
 
-        public CharacterStats(Dictionary<Type,float> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
+        public CharacterStats(string name, Dictionary<Type,float> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
         {
+            Name = name;
             Strength = new Strength(stats[typeof(Strength)]);
             Dexterity = new Dexterity(stats[typeof(Dexterity)]);
             Durability = new Durability(stats[typeof(Durability)]);

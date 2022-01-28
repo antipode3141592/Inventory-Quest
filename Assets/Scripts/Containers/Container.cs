@@ -20,7 +20,7 @@ namespace InventoryQuest
         public Container(ContainerStats stats)
         {
             Id = Guid.NewGuid().ToString();
-            Name = stats.ItemId;
+            Name = stats.Name;
             ContainerSize = stats.ContainerSize;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
