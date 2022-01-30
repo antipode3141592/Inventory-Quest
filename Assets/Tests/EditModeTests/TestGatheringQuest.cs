@@ -13,7 +13,6 @@ namespace InventoryQuest.Testing
         Character player;
         Character minion_1;
         Character minion_2;
-        List<IItem> items = new List<IItem>();
 
         static int targetCount = 5;
         static string targetItemId = "apple_fuji";
@@ -46,7 +45,8 @@ namespace InventoryQuest.Testing
         void AddItems(string itemId, int itemsToMake)
         {
             for (int i = 0; i < itemsToMake; i++)
-                party.Characters[i % party.Characters.Count].PrimaryContainer.TryPlace(ItemFactory.GetItem(dataSource.GetItemStats(itemId)), new Coor(0, i));
+                party.Characters[i % party.Characters.Count].PrimaryContainer
+                     .TryPlace(ItemFactory.GetItem(dataSource.GetItemStats(itemId)), new Coor(0, i));
 
         }
 

@@ -9,9 +9,10 @@ namespace InventoryQuest
 {
     public class GatheringQuest : IQuest
     {
-        public GatheringQuest(string id, string description, string targetItemId, int targetQuantity, string rewardId)
+        public GatheringQuest(string name, string description, string targetItemId, int targetQuantity, string rewardId)
         {
-            Id = id;
+            Id = Guid.NewGuid().ToString();
+            Name = name;
             Description = description;
             TargetItemId = targetItemId;
             TargetQuantity = targetQuantity;
@@ -19,6 +20,8 @@ namespace InventoryQuest
         }
 
         public string Id { get; }
+
+        public string Name { get; }
 
         public string Description { get; }
 

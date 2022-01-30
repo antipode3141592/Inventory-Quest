@@ -7,7 +7,8 @@ namespace Data
     [Serializable]
     public class CharacterStats
     {
-        public string Name { get; set; }
+        public string Name { get; }
+        public string DisplayName { get; set; }
 
         public Strength Strength;
         public Dexterity Dexterity;

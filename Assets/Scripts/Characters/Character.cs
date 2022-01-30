@@ -47,22 +47,28 @@ namespace InventoryQuest.Characters
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
             Debug.Log($"OnEquipHandler: {sender}");
-            foreach(var mod in e.Modifiers)
+            foreach(StatModifier mod in e.Modifiers)
             {
-                Type t = Stats.GetType();
-                FieldInfo field = t.GetField(mod.StatType.Name.ToString());
-                var obj = field.GetValue(Stats);
-                if (obj == null) continue;
-                PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
-                var currentValue = prop2.GetValue(obj,null);
+                ApplyModifier(mod);
+            }
+        }
 
-                if (mod.OperatorType == OperatorType.Add)
-                {
-                    prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
-                } else if (mod.OperatorType == OperatorType.Multiply)
-                {
-                    prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
-                }
+        void ApplyModifier(StatModifier mod)
+        {
+            Type t = Stats.GetType();
+            FieldInfo field = t.GetField(mod.StatType.Name.ToString());
+            var obj = field.GetValue(Stats);
+            if (obj == null) return;
+            PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
+            var currentValue = prop2.GetValue(obj, null);
+
+            if (mod.OperatorType == OperatorType.Add)
+            {
+                prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
+            }
+            else if (mod.OperatorType == OperatorType.Multiply)
+            {
+                prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
             }
         }
 
@@ -71,19 +77,25 @@ namespace InventoryQuest.Characters
             Debug.Log($"OnUnEquipHandler: {sender}");
             foreach (var mod in e.Modifiers)
             {
-                Type t = Stats.GetType();
-                FieldInfo field = t.GetField(mod.StatType.Name.ToString());
-                var obj = field.GetValue(Stats);
-                if (obj == null) continue;
-                PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
-                var currentValue = prop2.GetValue(obj, null);
-                if (mod.OperatorType == OperatorType.Add)
-                {
-                    prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
-                }else if (mod.OperatorType == OperatorType.Multiply)
-                {
-                    prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
-                }
+                RemoveModifier(mod);
+            }
+        }
+
+        void RemoveModifier(StatModifier mod)
+        {
+            Type t = Stats.GetType();
+            FieldInfo field = t.GetField(mod.StatType.Name.ToString());
+            var obj = field.GetValue(Stats);
+            if (obj == null) return;
+            PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
+            var currentValue = prop2.GetValue(obj, null);
+            if (mod.OperatorType == OperatorType.Add)
+            {
+                prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
+            }
+            else if (mod.OperatorType == OperatorType.Multiply)
+            {
+                prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
             }
         }
     }

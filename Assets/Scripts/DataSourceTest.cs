@@ -87,7 +87,11 @@ namespace InventoryQuest
                      goldValue: .5f,
                      description: "Fuji Apple, the objectively best apple",
                      shape: ShapeType.Square1),
-
+                "loot_pile" => new ContainerStats("loot_pile",
+                    weight: 0f,
+                    goldValue: 0f,
+                    description: "current loot pile",
+                    containerSize: new Coor(r: 3, c: 5)),
                 "thingabob" => new ItemStats("thingabob",
                      weight: 4f,
                      goldValue: 5f,

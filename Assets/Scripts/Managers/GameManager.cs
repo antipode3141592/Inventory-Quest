@@ -1,5 +1,6 @@
 ﻿using Data;
 using InventoryQuest.Characters;
+using InventoryQuest.UI;
 using UnityEngine;
 using Zenject;
 
@@ -8,34 +9,41 @@ namespace InventoryQuest
     public class GameManager: MonoBehaviour
     {
         IDataSource _dataSource;
+        ContainerDisplay containerDisplay;
+        Party CurrentParty;
+        Party ReserveParty;
         Character Player;
+        Character Minion;
         Container LootPile;
 
-        [Inject]
-        public void Init(IDataSource dataSource)
-        {
-            _dataSource = dataSource;
-        }
+        //[Inject]
+        //public void Init(IDataSource dataSource)
+        //{
+        //    _dataSource = dataSource;
+        //}
 
         private void Awake()
         {
+            _dataSource = new DataSourceTest();
+            Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"), 
+                (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
+            Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
+                (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
+            CurrentParty = new Party(new Character[]{ Player });
+            ReserveParty = new Party(new Character[] {});
+            LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
+            
+            containerDisplay = FindObjectOfType<ContainerDisplay>();
+        }
 
-            //initialize player character with base stats and standard 10x5 unit backpack
-            CharacterStats playerStats = _dataSource.GetCharacterStats("Player");
-            ContainerStats backpackStats = new ContainerStats(itemId:"adventure backpack", 
-                weight: 2f, 
-                goldValue: 5f, 
-                description: "a basic adventurer's backpack",
-                containerSize: new Coor(r: 5,c: 12));
-            Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
+        private void Start()
+        {
+            containerDisplay.MyContainer = Player.PrimaryContainer;
+        }
 
-            ContainerStats lootPile = new ContainerStats("loot pile",
-                weight: 0f,
-                goldValue: 0f,
-                description: "current loot pile",
-                containerSize: new Coor(r: 3, c: 5));
-            LootPile = ContainerFactory.GetContainer(lootPile);
-
+        private void Update()
+        {
+            
         }
 
         public void AddPieceToLootPile()
