@@ -11,7 +11,7 @@ namespace InventoryQuest.UI
 
         public GameObject GridSquareSprite; //squarre prefab
 
-        GameObject[,] squares;
+        SpriteRenderer[,] squares;
 
         private Container myContainer;
         public Container MyContainer 
@@ -37,40 +37,46 @@ namespace InventoryQuest.UI
 
         public void CreateGrid()
         {
-            squares = new GameObject[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
+            squares = new SpriteRenderer[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
             //draw squares
             for (int r = 0; r < MyContainer.ContainerSize.row; r++)
             {
                 for (int c = 0; c < MyContainer.ContainerSize.column; c++)
                 {
-                    GameObject square = Instantiate(GridSquareSprite);
+                    var square = Instantiate(GridSquareSprite);
                     square.transform.position = new Vector2(Origin.x + c, Origin.y - r);
-                    squares[r, c] = square;
+                    squares[r, c] = square.GetComponent<SpriteRenderer>();
                 }
             }
         }
 
         public void DestroyGrid()
         {
-            foreach (GameObject square in squares)
+            foreach (var square in squares)
             {
                 Destroy(square, 0.1f);
             }
         }
 
-        public void OnContainerUpdate(object sender, ContainerUpdateArgs e)
+        public void OnContainerUpdate(object sender, GridEventArgs e)
         {
-
+            foreach(var grid in e.GridPositions)
+            {
+                SetSquareColor(grid, e.State);
+            }
         }
 
-        public void OnContainerClose(object sender, EventArgs e)
+        public void SetSquareColor(Coor target, GridSquareState state)
         {
-
-        }
-
-        public void SetSquareColor(GridSquareState state)
-        {
-            
+            Color targetColor =
+            state switch
+            {
+                GridSquareState.Occupied => Color.grey,
+                GridSquareState.Highlight => Color.green,
+                GridSquareState.Incorrect => Color.red,
+                _ => Color.white
+            };
+            squares[target.row, target.column].color = targetColor;
         }
     }
 
@@ -84,8 +90,4 @@ namespace InventoryQuest.UI
             State = state;
         }
     }
-
-    
-
-    public enum GridSquareState { Normal, Highlight, Incorrect, Occupied }
 }

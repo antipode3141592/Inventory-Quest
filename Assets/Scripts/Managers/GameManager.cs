@@ -16,6 +16,14 @@ namespace InventoryQuest
         Character Minion;
         Container LootPile;
 
+        float restPeriod = 1f;
+        float restTimer = 0f;
+
+        int _r = 0;
+        int _c = 0;
+
+        [SerializeField]
+        int targetTotal = 15;
         //[Inject]
         //public void Init(IDataSource dataSource)
         //{
@@ -34,6 +42,8 @@ namespace InventoryQuest
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
             
             containerDisplay = FindObjectOfType<ContainerDisplay>();
+
+            Player.PrimaryContainer.OnGridUpdated += containerDisplay.OnContainerUpdate;
         }
 
         private void Start()
@@ -43,7 +53,31 @@ namespace InventoryQuest
 
         private void Update()
         {
+            restTimer += Time.deltaTime;
+            if (restTimer >= restPeriod) { 
+                restTimer = 0f;
+                if (Player.PrimaryContainer.Contents.Count < targetTotal)
+                {
+                    var newItem = ItemFactory.GetItem(_dataSource.GetItemStats("apple_fuji"));
+                    Player.PrimaryContainer.TryPlace(newItem, new Coor(_r, _c));
+                    if (_c < Player.PrimaryContainer.ContainerSize.column-1)
+                    {
+                        _c++;
+                    }
+                    else
+                    {
+                        _c = 0;
+                        _r++;
+                    }
+                }
+            }
             
+            
+        }
+
+        private void OnDisable()
+        {
+            Player.PrimaryContainer.OnGridUpdated -= containerDisplay.OnContainerUpdate;
         }
 
         public void AddPieceToLootPile()

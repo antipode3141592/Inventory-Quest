@@ -35,7 +35,7 @@ namespace InventoryQuest
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
 
-        public event EventHandler<GridEventArgs> OnGridChanged;
+        public event EventHandler<GridEventArgs> OnGridUpdated;
         public event EventHandler<GridEventArgs> OnGridHighlight;
         public event EventHandler<ContainerEventArgs> OnContainerChanged;
 
@@ -63,6 +63,7 @@ namespace InventoryQuest
                 }
                 //place item
                 Contents.Add(item.Id, new Content(item, tempPointList));
+                OnGridUpdated?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), GridSquareState.Occupied));
                 for (int i = 0; i < tempPointList.Count; i++)
                 {
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
@@ -93,6 +94,7 @@ namespace InventoryQuest
                 {
                     item = content.Item;
                     Debug.Log($"the item {item.Name} at {target.row},{target.column} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    OnGridUpdated?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), GridSquareState.Normal));
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {

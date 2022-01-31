@@ -1,15 +1,16 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Data
 {
     public class GridEventArgs: EventArgs
     {
-        public Vector2Int gridPosition;
+        public Coor[] GridPositions;
+        public GridSquareState State;
 
-        public GridEventArgs(Vector2Int gridPosition)
+        public GridEventArgs(Coor[] gridPosition, GridSquareState targetState)
         {
-            this.gridPosition = gridPosition;
+            GridPositions = gridPosition;
+            State = targetState;
         }
     }
 
