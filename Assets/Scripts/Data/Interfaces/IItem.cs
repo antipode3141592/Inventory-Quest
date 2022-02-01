@@ -3,7 +3,7 @@
 {
     public interface IItem
     {
-        public string Id { get; }  //unique-ish object identifier
+        public string GuId { get; }  //unique-ish object identifier
         public string Name { get; }    //descriptive name for logging
         public float Weight { get; }   //item weight
         public float Value { get; }    //item value

@@ -5,14 +5,14 @@ namespace Data
 {
     public class Item: IItem
     {
-        public string Id { get; }
+        public string GuId { get; }
         public string Name { get; }
 
         public Shape Shape { get; }
 
         public Item(IItemStats itemStats)
         {
-            Id = Guid.NewGuid().ToString();
+            GuId = Guid.NewGuid().ToString();
             Name = itemStats.Name;
             Stats = itemStats;
             Shape = ShapeFactory.GetShape(itemStats.ShapeType);
@@ -23,6 +23,4 @@ namespace Data
 
         public IItemStats Stats { get; }
     }
-
-
 }

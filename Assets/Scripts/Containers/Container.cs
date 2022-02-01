@@ -9,7 +9,7 @@ namespace InventoryQuest
 {
     public class Container: IItem, IContainer
     {
-        public string Id { get; }
+        public string GuId { get; }
         public string Name { get; }
         public GridSquare[,] Grid;
         public Dictionary<string,Content> Contents;
@@ -19,7 +19,7 @@ namespace InventoryQuest
 
         public Container(ContainerStats stats)
         {
-            Id = Guid.NewGuid().ToString();
+            GuId = Guid.NewGuid().ToString();
             Name = stats.Name;
             ContainerSize = stats.ContainerSize;
             Stats = stats;
@@ -62,12 +62,12 @@ namespace InventoryQuest
                     }
                 }
                 //place item
-                Contents.Add(item.Id, new Content(item, tempPointList));
+                Contents.Add(item.GuId, new Content(item, tempPointList));
                 OnGridUpdated?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), GridSquareState.Occupied));
                 for (int i = 0; i < tempPointList.Count; i++)
                 {
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
-                    Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.Id;
+                    Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
                 LogGrid();
                 LogContents();

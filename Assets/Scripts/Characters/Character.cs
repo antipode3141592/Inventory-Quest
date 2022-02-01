@@ -9,6 +9,8 @@ namespace InventoryQuest.Characters
     //characters 
     public class Character: IDisposable
     {
+        public string GuId { get; }
+
         public CharacterStats Stats;
 
         public Dictionary<EquipmentSlotType,EquipmentSlot> EquipmentSlots;
@@ -17,6 +19,7 @@ namespace InventoryQuest.Characters
 
         public Character(CharacterStats characterStats, ContainerStats containerStats)
         {
+            GuId = Guid.NewGuid().ToString();
             PrimaryContainer = ContainerFactory.GetContainer(containerStats);
             Stats = characterStats;
             EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();

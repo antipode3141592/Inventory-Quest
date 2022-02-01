@@ -49,7 +49,7 @@ namespace InventoryQuest.Testing
         public void TakeItemFromBackpackAndEquip()
         {
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
-            string swordId = Sword.Id;
+            string swordId = Sword.GuId;
             
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
             {
@@ -63,7 +63,7 @@ namespace InventoryQuest.Testing
                     }
                 }
             }
-            Assert.AreEqual(swordId, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem.Id);
+            Assert.AreEqual(swordId, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem.GuId);
             Assert.AreEqual(11f, Player.Stats.Attack.CurrentValue);
         }
 
@@ -72,7 +72,7 @@ namespace InventoryQuest.Testing
         {
             float startingStrength = Player.Stats.Strength.CurrentValue;
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
-            string swordId = Sword.Id;
+            string swordId = Sword.GuId;
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
             {
                 EquipableItem _item = item as EquipableItem;

@@ -7,31 +7,38 @@ namespace InventoryQuest
 {
     public class Party
     {
-        public List<Character> Characters;
+        public Dictionary<string, Character> Characters;
 
-        public Party(List<Character> characters)
+        public string SelectedPartyMemberGuId { get; set; }
+
+        public Party(Dictionary<string, Character> characters)
         {
             Characters = characters;
         }
 
-        public Party(Character[] characters)
+        public Party(Character[] characters = null)
         {
-            Characters = new List<Character>(characters);
+            Characters = new Dictionary<string, Character>();
+            if (characters == null) return;
+            foreach(Character character in characters)
+            {
+                Characters.Add(character.GuId, character);
+            }
         }
 
-        public float PartyStrength => Characters.Sum(x => x.Stats.Strength.CurrentValue);
-        public float PartyAttack => Characters.Sum(x => x.Stats.Attack.CurrentValue);
+        public float PartyStrength => Characters.Sum(x => x.Value.Stats.Strength.CurrentValue);
+        public float PartyAttack => Characters.Sum(x => x.Value.Stats.Attack.CurrentValue);
 
         // add character to party
         public void Recruit(Character character)
         {
-            Characters.Add(character);
+            Characters.Add(character.GuId, character);
         }
 
         // remove character from party
         public void Dismiss(Character character)
         {
-            Characters.Remove(character);
+            Characters.Remove(character.GuId);
         }
 
         public void ReturnToTown(Character character)
@@ -44,14 +51,21 @@ namespace InventoryQuest
 
         }
 
+        public Character SelectCharacter(string characterId)
+        {
+            if (!Characters.ContainsKey(characterId)) return null;
+            SelectedPartyMemberGuId = characterId;
+            return Characters[characterId];
+        }
+
         public int CountItemInParty(string itemName)
         {
             int partyCount = 0;
-            foreach (Character character in Characters)
+            foreach (var character in Characters)
             {
-                partyCount += character.PrimaryContainer.Contents.Count(x => x.Value.Item.Name == itemName);
-                partyCount += character.EquipmentSlots.Count(x => x.Value.EquippedItem != null && x.Value.EquippedItem.Name == itemName);
-                Debug.Log($"{character.Stats.Name} is carrying {partyCount} units of {itemName}");
+                partyCount += character.Value.PrimaryContainer.Contents.Count(x => x.Value.Item.Name == itemName);
+                partyCount += character.Value.EquipmentSlots.Count(x => x.Value.EquippedItem != null && x.Value.EquippedItem.Name == itemName);
+                Debug.Log($"{character.Value.Stats.Name} is carrying {partyCount} units of {itemName}");
             }
             return partyCount;
         }

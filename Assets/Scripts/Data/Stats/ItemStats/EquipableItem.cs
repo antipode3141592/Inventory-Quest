@@ -9,7 +9,7 @@ namespace Data
         public IItemStats Stats { get; }
         public Shape Shape { get; }
 
-        public string Id { get; }
+        public string GuId { get; }
 
         public string Name { get; }
 
@@ -23,7 +23,7 @@ namespace Data
 
         public EquipableItem(EquipableItemStats stats)
         {
-            Id = Guid.NewGuid().ToString();
+            GuId = Guid.NewGuid().ToString();
             Name = stats.Name;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType);

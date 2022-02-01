@@ -44,8 +44,9 @@ namespace InventoryQuest.Testing
 
         void AddItems(string itemId, int itemsToMake)
         {
+            List<string> characterKeys = new List<string>(party.Characters.Keys);
             for (int i = 0; i < itemsToMake; i++)
-                party.Characters[i % party.Characters.Count].PrimaryContainer
+                party.Characters[characterKeys[i % characterKeys.Count]].PrimaryContainer
                      .TryPlace(ItemFactory.GetItem(dataSource.GetItemStats(itemId)), new Coor(0, i));
 
         }
