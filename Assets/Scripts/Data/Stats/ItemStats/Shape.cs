@@ -10,16 +10,7 @@ namespace Data
 
         public BitMask CurrentMask => Masks[CurrentFacing];
 
-        public Coor Size
-        {
-            get
-            {
-                Coor retval;
-                retval.row = Masks[CurrentFacing].Map.GetLength(0);
-                retval.column = Masks[CurrentFacing].Map.GetLength(1);
-                return retval;
-            }
-        }
+        public Coor Size => new Coor(Masks[CurrentFacing].Map.GetLength(0), Masks[CurrentFacing].Map.GetLength(1));
 
         public virtual void Rotate(int direction)
         {
