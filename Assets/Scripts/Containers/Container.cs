@@ -73,7 +73,7 @@ namespace InventoryQuest
                 LogContents();
                 return true;
             }
-            Debug.Log($"TryPlace() failed for {item.Name} at point [{target.row},{target.column}]");
+            Debug.Log($"TryPlace() failed for {item.Name} at point [{target}]");
             return false;
         }
 
@@ -93,7 +93,7 @@ namespace InventoryQuest
                 if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
                 {
                     item = content.Item;
-                    Debug.Log($"the item {item.Name} at {target.row},{target.column} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    Debug.Log($"the item {item.Name} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
                     OnGridUpdated?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), GridSquareState.Normal));
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
