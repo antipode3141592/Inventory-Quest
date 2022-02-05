@@ -47,26 +47,49 @@ namespace InventoryQuest.UI
         {
             Origin = transform.position;
 
-            //_camera = Camera.main;
-
             //should be injected
             _gameManager = FindObjectOfType<GameManager>();
 
-            //_physics2DRaycaster = FindObjectOfType<Physics2DRaycaster>();
             _physics2DRaycaster = _camera.GetComponent<Physics2DRaycaster>();
 
             //input system
             _myControls = new MyControls();
 
             _myControls.Game.Enable();
-            _myControls.Game.LeftClick.started += OnPointerDown;
             _myControls.Game.LeftClick.performed += OnPointerUp;
         }
 
         private void Update()
         {
-            
-            //"hover-over" functionality
+            //hover over red/green highlighting only while holding a piece
+            if (_gameManager.CurrentState == GameStates.HoldingItem)
+            {
+
+                
+                Coor currentHoverOver = CursorToCoor(out Coor coor) ? coor : new Coor(-1,-1);
+                //if (CursorToCoor(out Coor coor)) currentHoverOver = coor;
+                if (currentHoverOver == lastHoverOver) return;
+                int row = currentHoverOver.row;
+                int column = currentHoverOver.column;
+
+                SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
+                lastHoverOver = currentHoverOver;
+                if (MyContainer.Grid[row, column].IsOccupied)
+                {
+                    SetSquareColor(currentHoverOver, GridSquareState.Incorrect);
+                }
+                else
+                {
+                    SetSquareColor(currentHoverOver, GridSquareState.Highlight);
+                }
+                //return;
+                //SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
+                //lastHoverOver = new Coor(-1, -1);
+            }
+        }
+
+        bool CursorToCoor(out Coor coordinates)
+        {
             using (var pooledObject = ListPool<RaycastHit2D>.Get(out List<RaycastHit2D> hits))
             {
                 Vector2 target = _myControls.Game.CursorPosition.ReadValue<Vector2>();
@@ -77,28 +100,15 @@ namespace InventoryQuest.UI
                     {
                         if (hit.transform.gameObject.TryGetComponent<ContainerGridSquareDisplay>(out ContainerGridSquareDisplay square))
                         {
+                            coordinates = square.Coordinates;
+                            return true;
 
-                            Coor currentHoverOver = square.Coordinates;
-                            if (currentHoverOver == lastHoverOver) return;
-                            int row = currentHoverOver.row;
-                            int column = currentHoverOver.column;
-
-                            SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
-                            lastHoverOver = currentHoverOver;
-                            if (MyContainer.Grid[row, column].IsOccupied)
-                            {
-                                SetSquareColor(currentHoverOver, GridSquareState.Incorrect);
-                            }
-                            else
-                            {
-                                SetSquareColor(currentHoverOver, GridSquareState.Highlight);
-                            }
-                            return;
                         }
                     }
+
                 }
-                SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
-                lastHoverOver = new Coor(-1,-1);
+                coordinates = null;
+                return false;
             }
         }
 
@@ -111,7 +121,6 @@ namespace InventoryQuest.UI
 
         public void OnDestroy()
         {
-            _myControls.Game.LeftClick.started -= OnPointerDown;
             _myControls.Game.LeftClick.performed -= OnPointerUp;
         }
 
@@ -151,7 +160,7 @@ namespace InventoryQuest.UI
 
         public void SetSquareColor(Coor target, GridSquareState state)
         {
-            if (!IsValid(squares, target)) return;
+            if (!IsValidCoor(squares, target)) return;
             Color targetColor =
             state switch
             {
@@ -163,26 +172,28 @@ namespace InventoryQuest.UI
             squares[target.row, target.column].color = targetColor;
         }
 
-        bool IsValid(SpriteRenderer[,] grid, Coor target)
-        {
-            return target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
-        }
-
-        public void OnPointerDown(InputAction.CallbackContext context)
-        {
-            Debug.Log($"processing OnPointerDown() for {gameObject.name}");
-            
-            
-        }
+        bool IsValidCoor(SpriteRenderer[,] grid, Coor target) => target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
 
         public void OnPointerUp(InputAction.CallbackContext context)
         {
-            Debug.Log($"processing OnPointerUp() for {gameObject.name}");
+            Coor target = CursorToCoor(out Coor coor) ? coor : new Coor(-1, -1);
+            Debug.Log($"processing OnPointerUp() for {gameObject.name} at grid {target}");
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Default:
+                    
+                    if (MyContainer.TryTake(out var item, target))
+                    {
+                        _gameManager.HoldingItem = item;
+                        _gameManager.ChangeState(GameStates.HoldingItem);
+                    }
                     break;
-                case GameStates.HoldingPiece:
+                case GameStates.HoldingItem:
+                    if (MyContainer.TryPlace(_gameManager.HoldingItem, target))
+                    {
+                        _gameManager.HoldingItem = null;
+                        _gameManager.ChangeState(GameStates.Default);
+                    }
                     break;
                 default:
                     break;

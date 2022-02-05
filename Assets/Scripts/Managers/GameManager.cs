@@ -22,6 +22,8 @@ namespace InventoryQuest
         Character Minion;
         Container LootPile;
 
+        public IItem HoldingItem;
+
         float restPeriod = 1f;
 
         [SerializeField]
@@ -68,14 +70,18 @@ namespace InventoryQuest
                     break;
                 case GameStates.Default:
                     break;
-                case GameStates.HoldingPiece:
+                case GameStates.HoldingItem:
                     break;
                 default:
                     break;
             }
         }
 
-
+        public void ChangeState(GameStates targetState)
+        {
+            if (currentState == targetState) return;
+            currentState = targetState;
+        }
 
         public IEnumerator AddItemsToContainer(int itemTotal, float restPeriod, Container targetContainer)
         {
@@ -85,8 +91,8 @@ namespace InventoryQuest
                 {
                     if (itemCount >= itemTotal) yield break;
                     var newItem = ItemFactory.GetItem(_dataSource.GetItemStats("apple_fuji"));
-                    
-                    Player.PrimaryContainer.TryPlace(newItem, new Coor(_r, _c));
+
+                    targetContainer.TryPlace(newItem, new Coor(_r, _c));
                     itemCount++;
                     yield return new WaitForSeconds(restPeriod);
                 }
@@ -109,5 +115,5 @@ namespace InventoryQuest
 
     }
 
-    public enum GameStates { Loading, Default, HoldingPiece}
+    public enum GameStates { Loading, Default, HoldingItem}
 }
