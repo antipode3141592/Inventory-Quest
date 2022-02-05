@@ -64,7 +64,7 @@ namespace Inputs
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse"",
                     ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -75,7 +75,7 @@ namespace Inputs
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse"",
                     ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -86,7 +86,7 @@ namespace Inputs
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse"",
                     ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -94,7 +94,30 @@ namespace Inputs
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Mouse"",
+            ""bindingGroup"": ""Mouse"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
@@ -205,6 +228,24 @@ namespace Inputs
             }
         }
         public GameActions @Game => new GameActions(this);
+        private int m_MouseSchemeIndex = -1;
+        public InputControlScheme MouseScheme
+        {
+            get
+            {
+                if (m_MouseSchemeIndex == -1) m_MouseSchemeIndex = asset.FindControlSchemeIndex("Mouse");
+                return asset.controlSchemes[m_MouseSchemeIndex];
+            }
+        }
+        private int m_GamepadSchemeIndex = -1;
+        public InputControlScheme GamepadScheme
+        {
+            get
+            {
+                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+                return asset.controlSchemes[m_GamepadSchemeIndex];
+            }
+        }
         public interface IGameActions
         {
             void OnLeftClick(InputAction.CallbackContext context);

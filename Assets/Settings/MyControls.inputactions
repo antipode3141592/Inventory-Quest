@@ -40,7 +40,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse",
                     "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -51,7 +51,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse",
                     "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -62,7 +62,7 @@
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse",
                     "action": "CursorPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -70,5 +70,28 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Mouse",
+            "bindingGroup": "Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

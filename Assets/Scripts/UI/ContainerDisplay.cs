@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
+using Cinemachine;
 
 namespace InventoryQuest.UI
 {
@@ -27,7 +28,9 @@ namespace InventoryQuest.UI
         [SerializeField]
         ContactFilter2D _contactFilter;
         Physics2DRaycaster _physics2DRaycaster;
-        Camera mainCamera;
+        [SerializeField]
+        Camera _camera;
+        
 
         private Container myContainer;
         public Container MyContainer 
@@ -44,12 +47,13 @@ namespace InventoryQuest.UI
         {
             Origin = transform.position;
 
-            mainCamera = Camera.main;
+            //_camera = Camera.main;
 
             //should be injected
             _gameManager = FindObjectOfType<GameManager>();
 
-            _physics2DRaycaster = FindObjectOfType<Physics2DRaycaster>();
+            //_physics2DRaycaster = FindObjectOfType<Physics2DRaycaster>();
+            _physics2DRaycaster = _camera.GetComponent<Physics2DRaycaster>();
 
             //input system
             _myControls = new MyControls();
@@ -66,7 +70,7 @@ namespace InventoryQuest.UI
             using (var pooledObject = ListPool<RaycastHit2D>.Get(out List<RaycastHit2D> hits))
             {
                 Vector2 target = _myControls.Game.CursorPosition.ReadValue<Vector2>();
-                Vector2 worldTarget = mainCamera.ScreenToWorldPoint(target);
+                Vector2 worldTarget = _camera.ScreenToWorldPoint(target);
                 if (Physics2D.Raycast(worldTarget, -Vector2.up, _contactFilter, hits) >= 1)
                 {
                     foreach (var hit in hits)
@@ -93,12 +97,15 @@ namespace InventoryQuest.UI
                         }
                     }
                 }
+                SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
+                lastHoverOver = new Coor(-1,-1);
             }
         }
 
         GridSquareState GetGridSquareState(Coor coor)
         {
-            if (MyContainer.Grid[coor.row, coor.column].IsOccupied) return GridSquareState.Occupied;
+            if (MyContainer.IsPointInGrid(coor) 
+                && MyContainer.Grid[coor.row, coor.column].IsOccupied) return GridSquareState.Occupied;
             return GridSquareState.Normal;
         }
 
@@ -144,6 +151,7 @@ namespace InventoryQuest.UI
 
         public void SetSquareColor(Coor target, GridSquareState state)
         {
+            if (!IsValid(squares, target)) return;
             Color targetColor =
             state switch
             {
@@ -153,6 +161,11 @@ namespace InventoryQuest.UI
                 _ => Color.white
             };
             squares[target.row, target.column].color = targetColor;
+        }
+
+        bool IsValid(SpriteRenderer[,] grid, Coor target)
+        {
+            return target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
         }
 
         public void OnPointerDown(InputAction.CallbackContext context)

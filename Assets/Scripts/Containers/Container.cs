@@ -77,7 +77,7 @@ namespace InventoryQuest
             return false;
         }
 
-        bool IsPointInGrid(Coor target)
+        public bool IsPointInGrid(Coor target)
         {
             if (target.row <= ContainerSize.row && target.row >= 0 && target.column <= ContainerSize.column && target.column >= 0)
             {

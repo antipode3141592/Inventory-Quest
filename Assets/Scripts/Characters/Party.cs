@@ -8,6 +8,7 @@ namespace InventoryQuest
     public class Party
     {
         public Dictionary<string, Character> Characters;
+        public List<string> PartyDisplayOrder;
 
         public string SelectedPartyMemberGuId { get; set; }
 
@@ -19,6 +20,7 @@ namespace InventoryQuest
         public Party(Character[] characters = null)
         {
             Characters = new Dictionary<string, Character>();
+            PartyDisplayOrder = new List<string>();
             if (characters == null) return;
             foreach(Character character in characters)
             {

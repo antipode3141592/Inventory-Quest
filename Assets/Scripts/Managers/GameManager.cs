@@ -2,6 +2,7 @@
 using InventoryQuest.Characters;
 using InventoryQuest.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +12,10 @@ namespace InventoryQuest
     {
         IDataSource _dataSource;
         ContainerDisplay containerDisplay;
+        [SerializeField]
+        List<ContainerDisplay> characterContainerDisplays;
+        [SerializeField]
+        ContainerDisplay lootContainerDisplay;
         Party CurrentParty;
         Party ReserveParty;
         Character Player;
@@ -20,7 +25,7 @@ namespace InventoryQuest
         float restPeriod = 1f;
 
         [SerializeField]
-        int targetTotal = 15;
+        int targetTotal;
 
         GameStates currentState = GameStates.Loading;
         public GameStates CurrentState { get { return currentState; } }
@@ -31,20 +36,27 @@ namespace InventoryQuest
             Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"), 
                 (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
             Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
-                (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
-            CurrentParty = new Party(new Character[]{ Player });
+                (ContainerStats)_dataSource.GetItemStats("small backpack"));
+            CurrentParty = new Party(new Character[]{ Player, Minion });
             ReserveParty = new Party(new Character[] {});
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
-            
-            containerDisplay = FindObjectOfType<ContainerDisplay>();
-
-            Player.PrimaryContainer.OnGridUpdated += containerDisplay.OnContainerUpdate;
         }
 
         private void Start()
         {
-            containerDisplay.MyContainer = Player.PrimaryContainer;
-            StartCoroutine(AddItemsToContainer(targetTotal, restPeriod, Player.PrimaryContainer));
+            lootContainerDisplay.MyContainer = LootPile;
+
+            characterContainerDisplays[0].MyContainer = CurrentParty.Characters[Player.GuId].PrimaryContainer;
+            characterContainerDisplays[1].MyContainer = CurrentParty.Characters[Minion.GuId].PrimaryContainer;
+
+            CurrentParty.Characters[Player.GuId].PrimaryContainer.OnGridUpdated += characterContainerDisplays[0].OnContainerUpdate;
+            //CurrentParty.Characters[Minion.GuId].PrimaryContainer.OnGridUpdated += characterContainerDisplays[1].OnContainerUpdate;
+            LootPile.OnGridUpdated += lootContainerDisplay.OnContainerUpdate;
+
+            //containerDisplay.MyContainer = Player.PrimaryContainer;
+            StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, Minion.PrimaryContainer));
+            StartCoroutine(AddItemsToContainer(5, restPeriod, LootPile));
         }
 
         private void Update()
@@ -62,6 +74,8 @@ namespace InventoryQuest
                     break;
             }
         }
+
+
 
         public IEnumerator AddItemsToContainer(int itemTotal, float restPeriod, Container targetContainer)
         {
@@ -81,7 +95,9 @@ namespace InventoryQuest
 
         private void OnDisable()
         {
-            Player.PrimaryContainer.OnGridUpdated -= containerDisplay.OnContainerUpdate;
+            CurrentParty.Characters[Player.GuId].PrimaryContainer.OnGridUpdated -= characterContainerDisplays[0].OnContainerUpdate;
+            //CurrentParty.Characters[Minion.GuId].PrimaryContainer.OnGridUpdated -= characterContainerDisplays[1].OnContainerUpdate;
+            LootPile.OnGridUpdated -= lootContainerDisplay.OnContainerUpdate;
         }
 
         public void AddPieceToLootPile()
