@@ -11,13 +11,13 @@ namespace InventoryQuest
     public class GameManager: MonoBehaviour
     {
         IDataSource _dataSource;
-        ContainerDisplay containerDisplay;
+        PartyDisplay _partyDisplay;
+
         [SerializeField]
         List<ContainerDisplay> characterContainerDisplays;
         [SerializeField]
         ContainerDisplay lootContainerDisplay;
         Party CurrentParty;
-        Party ReserveParty;
         Character Player;
         Character Minion;
         Container LootPile;
@@ -35,17 +35,22 @@ namespace InventoryQuest
         private void Awake()
         {
             _dataSource = new DataSourceTest();
+            
             Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"), 
                 (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
             Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
                 (ContainerStats)_dataSource.GetItemStats("small backpack"));
             CurrentParty = new Party(new Character[]{ Player, Minion });
-            ReserveParty = new Party(new Character[] {});
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
+
+            _partyDisplay = FindObjectOfType<PartyDisplay>();
+            _partyDisplay.MyParty = CurrentParty;
         }
 
         private void Start()
         {
+
+
             lootContainerDisplay.MyContainer = LootPile;
 
             characterContainerDisplays[0].MyContainer = CurrentParty.Characters[Player.GuId].PrimaryContainer;

@@ -25,6 +25,7 @@ namespace InventoryQuest
             foreach(Character character in characters)
             {
                 Characters.Add(character.GuId, character);
+                PartyDisplayOrder.Add(character.GuId);
             }
         }
 

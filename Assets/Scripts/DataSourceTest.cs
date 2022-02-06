@@ -41,7 +41,7 @@ namespace InventoryQuest
 
             Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 10f, 10f, 10f, 10f, 10f, 10f, 10f });
 
-            return new CharacterStats(name: "[PLAYER NAME]", stats: physicalStats, equipmentSlots: equipmentSlots);
+            return new CharacterStats(name: "[PLAYER NAME]", portraitPath: "Portraits/Enemy 01-1",  stats: physicalStats, equipmentSlots: equipmentSlots);
         }
 
         public CharacterStats DefaultMinionStats()
@@ -50,7 +50,7 @@ namespace InventoryQuest
 
             Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 5f, 5f, 5f, 5f, 5f, 5f, 5f });
 
-            return new CharacterStats(name: "Minion", stats: physicalStats, equipmentSlots: equipmentSlots);
+            return new CharacterStats(name: "Minion", portraitPath: "Portraits/Enemy 03-1", stats: physicalStats, equipmentSlots: equipmentSlots);
         }
 
         EquipmentSlotType[] GetDefaultEquipmentSlotTypes()

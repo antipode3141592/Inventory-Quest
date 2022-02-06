@@ -10,6 +10,8 @@ namespace Data
         public string Name { get; }
         public string DisplayName { get; set; }
 
+        public string PortraitPath;
+
         public Strength Strength;
         public Dexterity Dexterity;
         public Durability Durability;
@@ -24,9 +26,12 @@ namespace Data
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
         public List<EquipmentSlotType> EquipmentSlotsTypes;
 
-        public CharacterStats(string name, Dictionary<Type,float> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
+        public CharacterStats(string name, string portraitPath, Dictionary<Type,float> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
         {
             Name = name;
+            DisplayName = name;
+            PortraitPath = portraitPath;
+
             Strength = new Strength(stats[typeof(Strength)]);
             Dexterity = new Dexterity(stats[typeof(Dexterity)]);
             Durability = new Durability(stats[typeof(Durability)]);

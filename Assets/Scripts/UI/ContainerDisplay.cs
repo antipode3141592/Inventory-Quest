@@ -1,6 +1,5 @@
 ﻿using Data;
 using Inputs;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,13 +20,12 @@ namespace InventoryQuest.UI
 
         SpriteRenderer[,] squares;
 
-        Coor lastHoverOver = new Coor(0,0);
+        Coor lastHoverOver = new Coor(-1,-1);
 
         MyControls _myControls;
 
         [SerializeField]
         ContactFilter2D _contactFilter;
-        Physics2DRaycaster _physics2DRaycaster;
         [SerializeField]
         Camera _camera;
         
@@ -50,8 +48,6 @@ namespace InventoryQuest.UI
             //should be injected
             _gameManager = FindObjectOfType<GameManager>();
 
-            _physics2DRaycaster = _camera.GetComponent<Physics2DRaycaster>();
-
             //input system
             _myControls = new MyControls();
 
@@ -64,10 +60,8 @@ namespace InventoryQuest.UI
             //hover over red/green highlighting only while holding a piece
             if (_gameManager.CurrentState == GameStates.HoldingItem)
             {
-
-                
                 Coor currentHoverOver = CursorToCoor(out Coor coor) ? coor : new Coor(-1,-1);
-                //if (CursorToCoor(out Coor coor)) currentHoverOver = coor;
+
                 if (currentHoverOver == lastHoverOver) return;
                 int row = currentHoverOver.row;
                 int column = currentHoverOver.column;
@@ -82,9 +76,6 @@ namespace InventoryQuest.UI
                 {
                     SetSquareColor(currentHoverOver, GridSquareState.Highlight);
                 }
-                //return;
-                //SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
-                //lastHoverOver = new Coor(-1, -1);
             }
         }
 
@@ -198,17 +189,6 @@ namespace InventoryQuest.UI
                 default:
                     break;
             }
-        }
-    }
-
-    public class ContainerUpdateArgs : EventArgs {
-        public Coor[] HighlightedSquares;
-        public GridSquareState State;
-
-        public ContainerUpdateArgs(Coor[] highlightedSquares, GridSquareState state)
-        {
-            HighlightedSquares = highlightedSquares;
-            State = state;
         }
     }
 }
