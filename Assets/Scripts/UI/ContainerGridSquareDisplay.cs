@@ -19,5 +19,18 @@ namespace InventoryQuest.UI
         {
             _container = container;
         }
+
+        public void SetColor(GridSquareState state)
+        {
+            Color targetColor =
+            state switch
+            {
+                GridSquareState.Occupied => Color.grey,
+                GridSquareState.Highlight => Color.green,
+                GridSquareState.Incorrect => Color.red,
+                _ => Color.white
+            };
+            _spriteRenderer.color = targetColor;
+        }
     }
 }

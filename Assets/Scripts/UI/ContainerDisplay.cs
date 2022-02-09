@@ -15,9 +15,9 @@ namespace InventoryQuest.UI
         public Vector2 Origin;
 
         [SerializeField]
-        public GameObject GridSquareSprite; //squarre prefab
+        public ContainerGridSquareDisplay GridSquareSprite; //squarre prefab
 
-        SpriteRenderer[,] squares;
+        ContainerGridSquareDisplay[,] squares;
 
         Coor lastHoverOver = new Coor(-1,-1);
 
@@ -53,6 +53,7 @@ namespace InventoryQuest.UI
             mouse = PlayerMouse.Factory.Create();
             mouse.playerId = playerId;
 
+            //default to center of screen
             mouse.screenPosition = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
         }
 
@@ -84,7 +85,6 @@ namespace InventoryQuest.UI
         {
             using (var pooledObject = ListPool<RaycastHit2D>.Get(out List<RaycastHit2D> hits))
             {
-                //Vector2 target = player.GetAxis2D("MouseX","MouseY");
                 Vector2 target = mouse.screenPosition;
                 Vector2 worldTarget = _camera.ScreenToWorldPoint(target);
                 Debug.Log($"target: {target} , worldTarget: {worldTarget}", gameObject);
@@ -115,18 +115,17 @@ namespace InventoryQuest.UI
 
         public void CreateGrid()
         {
-            squares = new SpriteRenderer[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
+            squares = new ContainerGridSquareDisplay[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
             //draw squares
             for (int r = 0; r < MyContainer.ContainerSize.row; r++)
             {
                 for (int c = 0; c < MyContainer.ContainerSize.column; c++)
                 {
-                    var square = Instantiate(original: GridSquareSprite, parent: transform);
+                    ContainerGridSquareDisplay square = Instantiate(original: GridSquareSprite, parent: transform);
                     square.transform.position = new Vector2(Origin.x + c, Origin.y - r);
-                    var display = square.GetComponent<ContainerGridSquareDisplay>();
-                    display.SetContainer(MyContainer);
-                    display.Coordinates = new Coor(r, c);
-                    squares[r, c] = square.GetComponent<SpriteRenderer>();
+                    square.SetContainer(MyContainer);
+                    square.Coordinates = new Coor(r, c);
+                    squares[r, c] = square;
                 }
             }
         }
@@ -150,18 +149,10 @@ namespace InventoryQuest.UI
         public void SetSquareColor(Coor target, GridSquareState state)
         {
             if (!IsValidCoor(squares, target)) return;
-            Color targetColor =
-            state switch
-            {
-                GridSquareState.Occupied => Color.grey,
-                GridSquareState.Highlight => Color.green,
-                GridSquareState.Incorrect => Color.red,
-                _ => Color.white
-            };
-            squares[target.row, target.column].color = targetColor;
+            squares[target.row, target.column].SetColor(state);
         }
 
-        bool IsValidCoor(SpriteRenderer[,] grid, Coor target) => target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
+        bool IsValidCoor(ContainerGridSquareDisplay[,] grid, Coor target) => target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
 
         public void OnEndDrag(PointerEventData eventData)
         {

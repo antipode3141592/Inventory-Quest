@@ -23,7 +23,7 @@ namespace InventoryQuest
 
         public IItem HoldingItem;
 
-        float restPeriod = 1f;
+        float restPeriod = 0.1f;
 
         [SerializeField]
         int targetTotal;
@@ -58,9 +58,9 @@ namespace InventoryQuest
             LootPile.OnGridUpdated += lootContainerDisplay.OnContainerUpdate;
 
             //containerDisplay.MyContainer = Player.PrimaryContainer;
-            StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer));
-            StartCoroutine(AddItemsToContainer(3, restPeriod, Minion.PrimaryContainer));
-            StartCoroutine(AddItemsToContainer(5, restPeriod, LootPile));
+            StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer, "fuji_apple"));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, Minion.PrimaryContainer, "fuji_apple"));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
         }
 
         private void Update()
@@ -85,14 +85,14 @@ namespace InventoryQuest
             currentState = targetState;
         }
 
-        public IEnumerator AddItemsToContainer(int itemTotal, float restPeriod, Container targetContainer)
+        public IEnumerator AddItemsToContainer(int itemTotal, float restPeriod, Container targetContainer, string itemId)
         {
             int itemCount = 0;
             for (int _r = 0; _r < targetContainer.ContainerSize.row; _r++) {
                 for (int _c = 0; _c < targetContainer.ContainerSize.column; _c++)
                 {
                     if (itemCount >= itemTotal) yield break;
-                    var newItem = ItemFactory.GetItem(_dataSource.GetItemStats("apple_fuji"));
+                    var newItem = ItemFactory.GetItem(_dataSource.GetItemStats(itemId));
 
                     targetContainer.TryPlace(newItem, new Coor(_r, _c));
                     itemCount++;
