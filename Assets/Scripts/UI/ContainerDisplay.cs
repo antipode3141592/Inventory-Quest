@@ -1,15 +1,14 @@
 ﻿using Data;
-using Inputs;
+using Rewired;
+using Rewired.Integration.UnityUI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.Pool;
-using Cinemachine;
 
 namespace InventoryQuest.UI
 {
-    public class ContainerDisplay : MonoBehaviour
+    public class ContainerDisplay : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IBeginDragHandler, IEndDragHandler
     {
         GameManager _gameManager;
         public Coor DisplaySize;
@@ -22,13 +21,15 @@ namespace InventoryQuest.UI
 
         Coor lastHoverOver = new Coor(-1,-1);
 
-        MyControls _myControls;
-
         [SerializeField]
         ContactFilter2D _contactFilter;
         [SerializeField]
         Camera _camera;
-        
+
+        Player player;
+        PlayerMouse mouse;
+        int playerId = 0;
+
 
         private Container myContainer;
         public Container MyContainer 
@@ -48,11 +49,11 @@ namespace InventoryQuest.UI
             //should be injected
             _gameManager = FindObjectOfType<GameManager>();
 
-            //input system
-            _myControls = new MyControls();
+            player = ReInput.players.GetPlayer(playerId);
+            mouse = PlayerMouse.Factory.Create();
+            mouse.playerId = playerId;
 
-            _myControls.Game.Enable();
-            _myControls.Game.LeftClick.performed += OnPointerUp;
+            mouse.screenPosition = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
         }
 
         private void Update()
@@ -68,7 +69,7 @@ namespace InventoryQuest.UI
 
                 SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
                 lastHoverOver = currentHoverOver;
-                if (MyContainer.Grid[row, column].IsOccupied)
+                if (MyContainer.IsPointInGrid(currentHoverOver) && MyContainer.Grid[row, column].IsOccupied)
                 {
                     SetSquareColor(currentHoverOver, GridSquareState.Incorrect);
                 }
@@ -83,8 +84,10 @@ namespace InventoryQuest.UI
         {
             using (var pooledObject = ListPool<RaycastHit2D>.Get(out List<RaycastHit2D> hits))
             {
-                Vector2 target = _myControls.Game.CursorPosition.ReadValue<Vector2>();
+                //Vector2 target = player.GetAxis2D("MouseX","MouseY");
+                Vector2 target = mouse.screenPosition;
                 Vector2 worldTarget = _camera.ScreenToWorldPoint(target);
+                Debug.Log($"target: {target} , worldTarget: {worldTarget}", gameObject);
                 if (Physics2D.Raycast(worldTarget, -Vector2.up, _contactFilter, hits) >= 1)
                 {
                     foreach (var hit in hits)
@@ -108,11 +111,6 @@ namespace InventoryQuest.UI
             if (MyContainer.IsPointInGrid(coor) 
                 && MyContainer.Grid[coor.row, coor.column].IsOccupied) return GridSquareState.Occupied;
             return GridSquareState.Normal;
-        }
-
-        public void OnDestroy()
-        {
-            _myControls.Game.LeftClick.performed -= OnPointerUp;
         }
 
         public void CreateGrid()
@@ -165,14 +163,30 @@ namespace InventoryQuest.UI
 
         bool IsValidCoor(SpriteRenderer[,] grid, Coor target) => target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
 
-        public void OnPointerUp(InputAction.CallbackContext context)
+        public void OnEndDrag(PointerEventData eventData)
         {
+            Debug.Log($"OnEndDrag()", gameObject);
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            Debug.Log($"OnBeginDrag()", gameObject);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerDown()", gameObject);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            PlayerPointerEventData playerEventData = (PlayerPointerEventData)eventData;
             Coor target = CursorToCoor(out Coor coor) ? coor : new Coor(-1, -1);
             Debug.Log($"processing OnPointerUp() for {gameObject.name} at grid {target}");
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Default:
-                    
+
                     if (MyContainer.TryTake(out var item, target))
                     {
                         _gameManager.HoldingItem = item;

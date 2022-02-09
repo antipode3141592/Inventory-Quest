@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Data;
 
 namespace InventoryQuest.UI
 {
@@ -12,6 +7,8 @@ namespace InventoryQuest.UI
     {
         [SerializeField]
         GameObject CharacterPortraitPrefab;
+
+        GameManager gameManager;
 
         List<CharacterPortrait> PartyDisplayList;
 
@@ -29,19 +26,38 @@ namespace InventoryQuest.UI
         void Awake()
         {
             PartyDisplayList = new List<CharacterPortrait>();
+            gameManager = FindObjectOfType<GameManager>();
+            
+        }
 
+        private void Start()
+        {
+            MyParty = gameManager.CurrentParty;
         }
 
         public void SetPortraits()
         {
             for(int i = 0; i < MyParty.PartyDisplayOrder.Count; i++)
             {
-                CharacterPortrait portrait = Instantiate(CharacterPortraitPrefab, transform).GetComponent<CharacterPortrait>();
-                portrait.SetName(MyParty.Characters[MyParty.PartyDisplayOrder[i]].Stats.DisplayName);
-                portrait.SetImage(MyParty.Characters[MyParty.PartyDisplayOrder[i]].Stats.PortraitPath);
+                if (MyParty.PartyDisplayOrder.Count > PartyDisplayList.Count)
+                {
+                    CharacterPortrait portrait = Instantiate(CharacterPortraitPrefab, transform).GetComponent<CharacterPortrait>();
+                    PartyDisplayList.Add(portrait);
+                }
+                var character = MyParty.Characters[MyParty.PartyDisplayOrder[i]];
+                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.Stats.DisplayName, imagePath: character.Stats.PortraitPath);
+                PartyDisplayList[i].PartyDisplay = this;
+                PartyDisplayList[i].IsSelected = MyParty.SelectedPartyMemberGuId == character.GuId; 
+
             }
         }
-
         
+        public void PartyMemberSelected(string characterGuid)
+        {
+            foreach (var portrait in PartyDisplayList)
+            {
+                portrait.IsSelected = portrait.CharacterGuid == characterGuid;
+            }
+        }
     }
 }

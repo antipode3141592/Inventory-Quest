@@ -1,7 +1,5 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Inputs;
 using Data;
+using UnityEngine;
 
 namespace InventoryQuest.UI
 {

@@ -1,7 +1,9 @@
 ﻿using InventoryQuest.Characters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Data;
 
 namespace InventoryQuest
 {
@@ -11,6 +13,8 @@ namespace InventoryQuest
         public List<string> PartyDisplayOrder;
 
         public string SelectedPartyMemberGuId { get; set; }
+
+        public EventHandler<MessageEventArgs> OnPartyMemberSelected;
 
         public Party(Dictionary<string, Character> characters)
         {
@@ -27,6 +31,7 @@ namespace InventoryQuest
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
             }
+            SelectedPartyMemberGuId = PartyDisplayOrder[0];
         }
 
         public float PartyStrength => Characters.Sum(x => x.Value.Stats.Strength.CurrentValue);
@@ -58,6 +63,7 @@ namespace InventoryQuest
         {
             if (!Characters.ContainsKey(characterId)) return null;
             SelectedPartyMemberGuId = characterId;
+            OnPartyMemberSelected?.Invoke(this, new MessageEventArgs(characterId));
             return Characters[characterId];
         }
 

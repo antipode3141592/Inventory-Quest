@@ -4,20 +4,19 @@ using InventoryQuest.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace InventoryQuest
 {
     public class GameManager: MonoBehaviour
     {
         IDataSource _dataSource;
-        PartyDisplay _partyDisplay;
+        //PartyDisplay _partyDisplay;
 
         [SerializeField]
         List<ContainerDisplay> characterContainerDisplays;
         [SerializeField]
         ContainerDisplay lootContainerDisplay;
-        Party CurrentParty;
+        public Party CurrentParty;
         Character Player;
         Character Minion;
         Container LootPile;
@@ -43,14 +42,12 @@ namespace InventoryQuest
             CurrentParty = new Party(new Character[]{ Player, Minion });
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
 
-            _partyDisplay = FindObjectOfType<PartyDisplay>();
-            _partyDisplay.MyParty = CurrentParty;
+            //_partyDisplay = FindObjectOfType<PartyDisplay>();
+            //_partyDisplay.MyParty = CurrentParty;
         }
 
         private void Start()
         {
-
-
             lootContainerDisplay.MyContainer = LootPile;
 
             characterContainerDisplays[0].MyContainer = CurrentParty.Characters[Player.GuId].PrimaryContainer;
