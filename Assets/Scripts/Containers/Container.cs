@@ -11,7 +11,7 @@ namespace InventoryQuest
     public class Container: IItem, IContainer
     {
         public string GuId { get; }
-        public string Name { get; }
+        public string Id { get; }
         public GridSquare[,] Grid;
         public Dictionary<string,Content> Contents;
         public Coor ContainerSize;
@@ -21,7 +21,7 @@ namespace InventoryQuest
         public Container(ContainerStats stats)
         {
             GuId = Guid.NewGuid().ToString();
-            Name = stats.Name;
+            Id = stats.Id;
             ContainerSize = stats.ContainerSize;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
@@ -42,24 +42,14 @@ namespace InventoryQuest
 
         public bool TryPlace(IItem item, Coor target)
         {
-            if (IsPointInGrid(target) && !Grid[target.row, target.column].IsOccupied)
+            if (IsValidPlacement(item, target))
             {
                 List<Coor> tempPointList = ListPool<Coor>.Get();
                 for (int r = 0; r < item.Shape.Size.row; r++)   
                 {
                     for (int c = 0; c < item.Shape.Size.column; c++)
                     {
-                        Debug.Log($"Current Shape Facing :{item.Shape.CurrentFacing}, Size.rows: {item.Shape.Size.row}, Size.columns: {item.Shape.Size.column}");
-                        Debug.Log($"Current Mask{item.Shape.CurrentMask}");
-                        if (Grid[target.row + r, target.column + c].IsOccupied && item.Shape.CurrentMask.Map[r, c])
-                        {
-                            Debug.Log($"TryPlace() failed for {item.Name} at point [{target.row + r}, {target.column + c}]");
-                            return false;
-                        }
-                        else if (item.Shape.CurrentMask.Map[r, c])
-                        {
-                            tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
-                        }
+                        tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
                     }
                 }
                 //place item
@@ -74,7 +64,7 @@ namespace InventoryQuest
                 //LogContents();
                 return true;
             }
-            Debug.Log($"TryPlace() failed for {item.Name} at point [{target}]");
+            Debug.Log($"TryPlace() failed for {item.Id} at point [{target}]");
             return false;
         }
 
@@ -94,7 +84,7 @@ namespace InventoryQuest
                 if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
                 {
                     item = content.Item;
-                    Debug.Log($"the item {item.Name} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
                     OnGridUpdated?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), GridSquareState.Normal));
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
@@ -118,7 +108,16 @@ namespace InventoryQuest
 
         public bool IsValidPlacement(IItem item, Coor target)
         {
-            return false;
+            if (!IsPointInGrid(target)) return false;
+            Shape shape = item.Shape;
+            for (int r = 0; r < shape.Size.row; r++)
+            {
+                for (int c = 0; c < shape.Size.column; c++)
+                {
+                    if (Grid[target.row + r, target.column + c].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
+                }
+            }
+            return true;
         }
 
         #region Logging
@@ -127,7 +126,7 @@ namespace InventoryQuest
             Debug.Log($"Container now contains {Contents.Count} items:");
             foreach (var content in Contents)
             {
-                Debug.Log($"....{content.Value.Item.Name}, {content.Value.Item.Value}g, {content.Value.Item.Weight}lbs");
+                Debug.Log($"....{content.Value.Item.Id}, {content.Value.Item.Value}g, {content.Value.Item.Weight}lbs");
             }
             Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
             Debug.Log($"Contained Weight: {ContainedWeight}");

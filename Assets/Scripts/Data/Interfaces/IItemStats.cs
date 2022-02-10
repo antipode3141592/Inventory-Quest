@@ -2,7 +2,7 @@
 {
     public interface IItemStats
     {
-        public string Name { get; }
+        public string Id { get; }
         public string Description { get; }
         public ShapeType ShapeType { get; }
         public Facing DefaultFacing { get; }

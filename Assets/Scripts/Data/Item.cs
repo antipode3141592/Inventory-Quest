@@ -7,14 +7,14 @@ namespace Data
     public class Item: IItem
     {
         public string GuId { get; }
-        public string Name { get; }
+        public string Id { get; }
 
         public Shape Shape { get; }
 
         public Item(IItemStats itemStats)
         {
             GuId = Guid.NewGuid().ToString();
-            Name = itemStats.Name;
+            Id = itemStats.Id;
             Stats = itemStats;
             Shape = ShapeFactory.GetShape(itemStats.ShapeType);
         }

@@ -12,7 +12,7 @@ namespace InventoryQuest
     {
         
 
-        public string Name { get; }
+        public string Id { get; }
 
         public ShapeType ShapeType { get; }
 
@@ -28,7 +28,7 @@ namespace InventoryQuest
 
         public ContainerStats(string itemId, float weight, float goldValue, string description, Coor containerSize, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
         {
-            Name = itemId;
+            Id = itemId;
             Weight = weight;
             GoldValue = goldValue;
             Description = description;

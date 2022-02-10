@@ -1,8 +1,10 @@
 ﻿using Data;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using System.Linq;
 
 namespace InventoryQuest.Characters
 {
@@ -37,6 +39,14 @@ namespace InventoryQuest.Characters
         public float MaxHealth => Stats.Durability.CurrentValue * 10f;
         public float CurrentEncumbrance => PrimaryContainer.TotalWeight;
         public float CurrentTotalGoldValue => PrimaryContainer.TotalWorth;
+
+        public int GetItemCountById(string id)
+        {
+            var count = 0;
+            count += PrimaryContainer.Contents.Count(x => x.Value.Item.Id == id);
+            count += EquipmentSlots.Count(x => x.Value.EquippedItem != null && x.Value.EquippedItem.Id == id);
+            return count;
+        }
 
         public void Dispose()
         {

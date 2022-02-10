@@ -1,9 +1,9 @@
-﻿using InventoryQuest.Characters;
+﻿using Data;
+using InventoryQuest.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Data;
 
 namespace InventoryQuest
 {
@@ -67,16 +67,19 @@ namespace InventoryQuest
             return Characters[characterId];
         }
 
-        public int CountItemInParty(string itemName)
+        public int CountItemInParty(string id)
         {
             int partyCount = 0;
             foreach (var character in Characters)
             {
-                partyCount += character.Value.PrimaryContainer.Contents.Count(x => x.Value.Item.Name == itemName);
-                partyCount += character.Value.EquipmentSlots.Count(x => x.Value.EquippedItem != null && x.Value.EquippedItem.Name == itemName);
-                Debug.Log($"{character.Value.Stats.Name} is carrying {partyCount} units of {itemName}");
+                partyCount += character.Value.GetItemCountById(id);
             }
             return partyCount;
+        }
+
+        public void SetDisplayOrder()
+        {
+
         }
     }
 }

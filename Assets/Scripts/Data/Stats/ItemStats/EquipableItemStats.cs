@@ -10,7 +10,7 @@ namespace Data
     [Serializable]
     public class EquipableItemStats : IItemStats
     {
-        public string Name { get; }
+        public string Id { get; }
         public string Description { get; }
         public ShapeType ShapeType { get; }
         public Facing DefaultFacing { get; }
@@ -21,7 +21,7 @@ namespace Data
 
         public EquipableItemStats(string itemId, float weight, float goldValue, string description, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null)
         {
-            Name = itemId;
+            Id = itemId;
             ShapeType = shape;
             DefaultFacing = defaultFacing;
             Weight = weight;

@@ -12,7 +12,7 @@ namespace Data
 
         public string GuId { get; }
 
-        public string Name { get; }
+        public string Id { get; }
 
         public EquipmentSlotType SlotType { get; }
 
@@ -25,7 +25,7 @@ namespace Data
         public EquipableItem(EquipableItemStats stats)
         {
             GuId = Guid.NewGuid().ToString();
-            Name = stats.Name;
+            Id = stats.Id;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType);
             Modifiers = stats.Modifiers;
