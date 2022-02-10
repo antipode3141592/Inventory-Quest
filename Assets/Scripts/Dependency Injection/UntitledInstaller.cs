@@ -1,6 +1,6 @@
 using UnityEngine;
 using Zenject;
-using Data;
+using Data.Interfaces;
 
 namespace InventoryQuest
 {

@@ -26,7 +26,7 @@ namespace InventoryQuest
             Characters = new Dictionary<string, Character>();
             PartyDisplayOrder = new List<string>();
             if (characters == null) return;
-            foreach(Character character in characters)
+            foreach (Character character in characters)
             {
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
@@ -51,7 +51,7 @@ namespace InventoryQuest
 
         public void ReturnToTown(Character character)
         {
-            
+
         }
 
         public void ReturnAllToTown()

@@ -1,4 +1,4 @@
-﻿namespace Data
+﻿namespace Data.Interfaces
 {
     public interface IContainer
     {
@@ -6,5 +6,5 @@
         public bool TryTake(out IItem item, Coor target);
     }
 
-    
+
 }

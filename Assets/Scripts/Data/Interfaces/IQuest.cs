@@ -1,4 +1,4 @@
-namespace InventoryQuest
+namespace Data.Interfaces
 {
     public interface IQuest
     {
@@ -8,7 +8,7 @@ namespace InventoryQuest
 
         public string RewardId { get; }
 
-        public bool Evaluate(Party party);
+        public bool Evaluate();
 
         public void Cancel();
     }

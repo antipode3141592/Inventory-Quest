@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 
 namespace InventoryQuest
 {

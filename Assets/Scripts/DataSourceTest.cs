@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Data;
 using Zenject;
 using UnityEngine;
+using Data.Interfaces;
 
 namespace InventoryQuest
 {

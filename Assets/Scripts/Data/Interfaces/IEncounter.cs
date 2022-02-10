@@ -1,4 +1,4 @@
-namespace InventoryQuest
+namespace Data.Interfaces
 {
     public interface IEncounter
     {

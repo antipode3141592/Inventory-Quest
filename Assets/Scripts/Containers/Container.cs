@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +70,8 @@ namespace InventoryQuest
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
-                LogGrid();
-                LogContents();
+                //LogGrid();
+                //LogContents();
                 return true;
             }
             Debug.Log($"TryPlace() failed for {item.Name} at point [{target}]");
@@ -106,12 +107,17 @@ namespace InventoryQuest
 
 
                     OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
-                    LogContents();
-                    LogGrid();
+                    //LogContents();
+                    //LogGrid();
                     return true;
                 }
             }
             item = null;
+            return false;
+        }
+
+        public bool IsValidPlacement(IItem item, Coor target)
+        {
             return false;
         }
 

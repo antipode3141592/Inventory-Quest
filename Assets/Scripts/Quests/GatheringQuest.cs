@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
+﻿using Data.Interfaces;
+using System;
 
 namespace InventoryQuest
 {
     public class GatheringQuest : IQuest
     {
-        public GatheringQuest(string name, string description, string targetItemId, int targetQuantity, string rewardId)
+        Party _party;
+
+        public GatheringQuest(string name, string description, string targetItemId, int targetQuantity, string rewardId, Party party)
         {
             Id = Guid.NewGuid().ToString();
             Name = name;
@@ -17,6 +15,7 @@ namespace InventoryQuest
             TargetItemId = targetItemId;
             TargetQuantity = targetQuantity;
             RewardId = rewardId;
+            _party = party;
         }
 
         public string Id { get; }
@@ -31,9 +30,9 @@ namespace InventoryQuest
 
         public string RewardId { get; }
 
-        public bool Evaluate(Party party)
+        public bool Evaluate()
         {
-            int targetCount = party.CountItemInParty(TargetItemId);
+            int targetCount = _party.CountItemInParty(TargetItemId);
             if (targetCount == TargetQuantity) return true;
             return false;
         }

@@ -8,7 +8,7 @@ using UnityEngine.Pool;
 
 namespace InventoryQuest.UI
 {
-    public class ContainerDisplay : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IBeginDragHandler, IEndDragHandler
+    public class ContainerDisplay : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         GameManager _gameManager;
         public Coor DisplaySize;
@@ -130,14 +130,6 @@ namespace InventoryQuest.UI
             }
         }
 
-        public void DestroyGrid()
-        {
-            foreach (var square in squares)
-            {
-                Destroy(square, 0.1f);
-            }
-        }
-
         public void OnContainerUpdate(object sender, GridEventArgs e)
         {
             foreach(var grid in e.GridPositions)
@@ -148,20 +140,8 @@ namespace InventoryQuest.UI
 
         public void SetSquareColor(Coor target, GridSquareState state)
         {
-            if (!IsValidCoor(squares, target)) return;
+            if (!myContainer.IsPointInGrid(target)) return;
             squares[target.row, target.column].SetColor(state);
-        }
-
-        bool IsValidCoor(ContainerGridSquareDisplay[,] grid, Coor target) => target.row < grid.GetLength(0) && target.row >= 0 && target.column < grid.GetLength(1) && target.column >= 0;
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            Debug.Log($"OnEndDrag()", gameObject);
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            Debug.Log($"OnBeginDrag()", gameObject);
         }
 
         public void OnPointerDown(PointerEventData eventData)

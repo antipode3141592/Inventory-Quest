@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 using InventoryQuest.Characters;
 using InventoryQuest.UI;
 using System.Collections;
