@@ -32,7 +32,7 @@ namespace InventoryQuest
 
         public bool Evaluate()
         {
-            int targetCount = _party.CountItemInParty(TargetItemId);
+            int targetCount = _party.GetPartyItemCountById(TargetItemId);
             if (targetCount == TargetQuantity) return true;
             return false;
         }

@@ -67,7 +67,7 @@ namespace InventoryQuest
             return Characters[characterId];
         }
 
-        public int CountItemInParty(string id)
+        public int GetPartyItemCountById(string id)
         {
             int partyCount = 0;
             foreach (var character in Characters)
