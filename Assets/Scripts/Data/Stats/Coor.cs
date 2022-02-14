@@ -13,20 +13,23 @@ namespace Data
             column = c;
         }
 
-        public bool Equals(Coor other)
+        public override bool Equals(object obj) => this.Equals(obj as Coor);
+
+        public bool Equals(Coor p)
         {
-            if (row == other.row && column == other.column) return true;
-            return false;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null) return false;
-
-            Coor p = obj as Coor;
-            if ((Object)p == null) return false;
-
-            return (row == p.row && column == p.column);
+            if (p is null)
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, p))
+            {
+                return true;
+            }
+            if (this.GetType() != p.GetType())
+            {
+                return false;
+            }
+            return (row == p.row) && (column == p.column);
         }
 
         public override int GetHashCode()
@@ -41,12 +44,20 @@ namespace Data
 
         public static bool operator ==(Coor c1, Coor c2)
         {
+            if (c1 is null)
+            {
+                if (c2 is null)
+                {
+                    return true;
+                }
+                return false;
+            }
             return c1.Equals(c2);
         }
 
         public static bool operator !=(Coor c1, Coor c2)
         {
-            return !c1.Equals(c2);
+            return !(c1 == c2);
         }
     }
 }
