@@ -1,22 +1,17 @@
 ﻿using Data;
 using Data.Interfaces;
 using InventoryQuest.Characters;
-using InventoryQuest.UI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest
 {
     public class GameManager: MonoBehaviour
     {
         IDataSource _dataSource;
-        //PartyDisplay _partyDisplay;
+        ContainerDisplayManager _containerDisplayManager;
 
-        [SerializeField]
-        List<ContainerDisplay> characterContainerDisplays;
-        [SerializeField]
-        ContainerDisplay lootContainerDisplay;
         public Party CurrentParty;
         Character Player;
         Character Minion;
@@ -32,6 +27,15 @@ namespace InventoryQuest
         GameStates currentState = GameStates.Loading;
         public GameStates CurrentState { get { return currentState; } }
 
+
+
+        [Inject]
+        public void Init(ContainerDisplayManager containerDisplayManager)
+        {
+            _containerDisplayManager = containerDisplayManager;
+        }
+
+
         private void Awake()
         {
             _dataSource = new DataSourceTest();
@@ -42,23 +46,13 @@ namespace InventoryQuest
                 (ContainerStats)_dataSource.GetItemStats("small backpack"));
             CurrentParty = new Party(new Character[]{ Player, Minion });
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
-
-            //_partyDisplay = FindObjectOfType<PartyDisplay>();
-            //_partyDisplay.MyParty = CurrentParty;
         }
 
         private void Start()
         {
-            lootContainerDisplay.MyContainer = LootPile;
+            _containerDisplayManager.ConnectCharacterContainer(CurrentParty.Characters[Player.GuId].PrimaryContainer);
+            _containerDisplayManager.ConnectLootContainer(LootPile);
 
-            characterContainerDisplays[0].MyContainer = CurrentParty.Characters[Player.GuId].PrimaryContainer;
-            characterContainerDisplays[1].MyContainer = CurrentParty.Characters[Minion.GuId].PrimaryContainer;
-
-            CurrentParty.Characters[Player.GuId].PrimaryContainer.OnGridUpdated += characterContainerDisplays[0].OnContainerUpdate;
-            //CurrentParty.Characters[Minion.GuId].PrimaryContainer.OnGridUpdated += characterContainerDisplays[1].OnContainerUpdate;
-            LootPile.OnGridUpdated += lootContainerDisplay.OnContainerUpdate;
-
-            //containerDisplay.MyContainer = Player.PrimaryContainer;
             StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer, "fuji_apple"));
             StartCoroutine(AddItemsToContainer(3, restPeriod, Minion.PrimaryContainer, "fuji_apple"));
             StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
@@ -102,20 +96,11 @@ namespace InventoryQuest
             }
         }
 
-        private void OnDisable()
-        {
-            CurrentParty.Characters[Player.GuId].PrimaryContainer.OnGridUpdated -= characterContainerDisplays[0].OnContainerUpdate;
-            //CurrentParty.Characters[Minion.GuId].PrimaryContainer.OnGridUpdated -= characterContainerDisplays[1].OnContainerUpdate;
-            LootPile.OnGridUpdated -= lootContainerDisplay.OnContainerUpdate;
-        }
-
         public void AddPieceToLootPile()
         {
             Item item = (Item)ItemFactory.GetItem(_dataSource.GetRandomItemStats(Rarity.common));
             LootPile.TryPlace(item, new Coor(r: 0, c: 0));
         }
-
-
     }
 
     public enum GameStates { Loading, Default, HoldingItem}
