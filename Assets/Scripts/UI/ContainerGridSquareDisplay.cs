@@ -5,32 +5,40 @@ namespace InventoryQuest.UI
 {
     public class ContainerGridSquareDisplay : MonoBehaviour
     {
-        SpriteRenderer _spriteRenderer;
-        Container _container;
+        [SerializeField]
+        SpriteRenderer backgroundSprite;
+        [SerializeField]
+        SpriteRenderer highlightSprite;
 
+        bool _isOccupied;
+        public bool IsOccupied { 
+            get { return _isOccupied; } 
+            set { 
+                backgroundSprite.color = value ? Color.grey : Color.white;
+                _isOccupied = value;
+            } 
+        }
+
+        HighlightState _highlightState;
+        public HighlightState CurrentState {
+            get { return _highlightState; }
+            set {
+                SetHighlightColor(value);
+                _highlightState = value;
+            } 
+        }
         public Coor Coordinates { get; set; }
 
-        private void Awake()
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();   
-        }
-
-        public void SetContainer(Container container)
-        {
-            _container = container;
-        }
-
-        public void SetColor(GridSquareState state)
+        public void SetHighlightColor(HighlightState state)
         {
             Color targetColor =
             state switch
             {
-                GridSquareState.Occupied => Color.grey,
-                GridSquareState.Highlight => Color.green,
-                GridSquareState.Incorrect => Color.red,
-                _ => Color.white
+                HighlightState.Highlight => Color.green,
+                HighlightState.Incorrect => Color.red,
+                _ => Color.clear
             };
-            _spriteRenderer.color = targetColor;
+            highlightSprite.color = targetColor;
         }
     }
 }

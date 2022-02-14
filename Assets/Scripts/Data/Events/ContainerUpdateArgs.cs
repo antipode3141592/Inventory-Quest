@@ -4,9 +4,9 @@ namespace Data
 {
     public class ContainerUpdateArgs : EventArgs {
         public Coor[] HighlightedSquares;
-        public GridSquareState State;
+        public HighlightState State;
 
-        public ContainerUpdateArgs(Coor[] highlightedSquares, GridSquareState state)
+        public ContainerUpdateArgs(Coor[] highlightedSquares, HighlightState state)
         {
             HighlightedSquares = highlightedSquares;
             State = state;

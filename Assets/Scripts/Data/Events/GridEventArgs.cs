@@ -5,9 +5,9 @@ namespace Data
     public class GridEventArgs: EventArgs
     {
         public Coor[] GridPositions;
-        public GridSquareState State;
+        public HighlightState State;
 
-        public GridEventArgs(Coor[] gridPosition, GridSquareState targetState)
+        public GridEventArgs(Coor[] gridPosition, HighlightState targetState)
         {
             GridPositions = gridPosition;
             State = targetState;

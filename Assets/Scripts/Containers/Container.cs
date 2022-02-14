@@ -36,8 +36,8 @@ namespace InventoryQuest
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
 
-        public event EventHandler<GridEventArgs> OnGridUpdated;
-        public event EventHandler<GridEventArgs> OnGridHighlight;
+        public event EventHandler<GridEventArgs> OnGridOccupied;
+        public event EventHandler<GridEventArgs> OnGridUnoccupied;
         public event EventHandler<ContainerEventArgs> OnContainerChanged;
 
         public bool TryPlace(IItem item, Coor target)
@@ -54,7 +54,7 @@ namespace InventoryQuest
                 }
                 //place item
                 Contents.Add(item.GuId, new Content(item, tempPointList));
-                OnGridUpdated?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), GridSquareState.Occupied));
+                OnGridOccupied?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal));
                 for (int i = 0; i < tempPointList.Count; i++)
                 {
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
@@ -85,7 +85,7 @@ namespace InventoryQuest
                 {
                     item = content.Item;
                     Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
-                    OnGridUpdated?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), GridSquareState.Normal));
+                    OnGridUnoccupied?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal));
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
@@ -114,9 +114,14 @@ namespace InventoryQuest
             {
                 for (int c = 0; c < shape.Size.column; c++)
                 {
-                    if (Grid[target.row + r, target.column + c].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
+                    int row = target.row + r;
+                    int column = target.column + c;
+
+                    if (!IsPointInGrid(new(row, column))) return false;
+                    if(Grid[row, column].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
                 }
             }
+            
             return true;
         }
 

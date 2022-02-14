@@ -19,7 +19,7 @@ namespace InventoryQuest.UI
 
         ContainerGridSquareDisplay[,] squares;
 
-        Coor lastHoverOver = new Coor(-1,-1);
+        Coor lastHoverOver = null;
 
         [SerializeField]
         ContactFilter2D _contactFilter;
@@ -36,7 +36,8 @@ namespace InventoryQuest.UI
         {
             get { return myContainer; } 
             set 
-            { 
+            {
+                if (value is null) DestroyGrid();
                 myContainer = value;
                 CreateGrid();
             }
@@ -62,23 +63,43 @@ namespace InventoryQuest.UI
             //hover over red/green highlighting only while holding a piece
             if (_gameManager.CurrentState == GameStates.HoldingItem)
             {
-                Coor currentHoverOver = CursorToCoor(out Coor coor) ? coor : new Coor(-1,-1);
+                Coor currentHoverOver = CursorToCoor(out Coor coor) ? coor : null;
 
-                if (currentHoverOver == lastHoverOver) return;
-                int row = currentHoverOver.row;
-                int column = currentHoverOver.column;
+                if (currentHoverOver == null || currentHoverOver == lastHoverOver) return;
+                ResetHighlightStates();
 
-                SetSquareColor(lastHoverOver, GetGridSquareState(lastHoverOver));
-                lastHoverOver = currentHoverOver;
-                if (MyContainer.IsPointInGrid(currentHoverOver) && MyContainer.Grid[row, column].IsOccupied)
+                HighlightHeldItemPlacement(currentHoverOver);
+                currentHoverOver = lastHoverOver;
+            }
+        }
+
+        private void ResetHighlightStates()
+        {
+            foreach (var square in squares)
+            {
+                if (square.CurrentState != HighlightState.Normal) square.CurrentState = HighlightState.Normal;
+            }
+        }
+
+        void HighlightHeldItemPlacement(Coor coordinates)
+        {
+            if (coordinates == null) return;
+            var squareState = MyContainer.IsValidPlacement(_gameManager.HoldingItem, coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
+            Shape holdingItemShape = _gameManager.HoldingItem.Shape;
+            for (int r = 0; r < holdingItemShape.Size.row; r++)
+            {
+                for (int c = 0; c < holdingItemShape.Size.column; c++)
                 {
-                    SetSquareColor(currentHoverOver, GridSquareState.Incorrect);
-                }
-                else
-                {
-                    SetSquareColor(currentHoverOver, GridSquareState.Highlight);
+                    if (holdingItemShape.CurrentMask.Map[r, c])
+                    {
+                        int row = coordinates.row + r;
+                        int column = coordinates.column + c;
+                        if (MyContainer.IsPointInGrid(new Coor(row, column)))
+                            squares[row, column].CurrentState = squareState;
+                    }
                 }
             }
+
         }
 
         bool CursorToCoor(out Coor coordinates)
@@ -106,15 +127,9 @@ namespace InventoryQuest.UI
             }
         }
 
-        GridSquareState GetGridSquareState(Coor coor)
-        {
-            if (MyContainer.IsPointInGrid(coor) 
-                && MyContainer.Grid[coor.row, coor.column].IsOccupied) return GridSquareState.Occupied;
-            return GridSquareState.Normal;
-        }
-
         public void CreateGrid()
         {
+            if (MyContainer is null) return;
             squares = new ContainerGridSquareDisplay[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
             //draw squares
             for (int r = 0; r < MyContainer.ContainerSize.row; r++)
@@ -123,25 +138,37 @@ namespace InventoryQuest.UI
                 {
                     ContainerGridSquareDisplay square = Instantiate(original: GridSquareSprite, parent: transform);
                     square.transform.position = new Vector2(Origin.x + c, Origin.y - r);
-                    square.SetContainer(MyContainer);
+                    //square.SetContainer(MyContainer);
                     square.Coordinates = new Coor(r, c);
                     squares[r, c] = square;
                 }
             }
+
+            MyContainer.OnGridOccupied += OnGridSpacesOccupied;
+            MyContainer.OnGridUnoccupied += OnGridSpacesUnoccupied;
         }
 
-        public void OnContainerUpdate(object sender, GridEventArgs e)
+        public void DestroyGrid()
         {
-            foreach(var grid in e.GridPositions)
+            MyContainer.OnGridOccupied -= OnGridSpacesOccupied;
+            MyContainer.OnGridUnoccupied -= OnGridSpacesUnoccupied;
+        }
+
+        public void OnGridSpacesOccupied(object sender, GridEventArgs e)
+        {
+            foreach(var coor in e.GridPositions)
             {
-                SetSquareColor(grid, e.State);
+                squares[coor.row, coor.column].IsOccupied = true;
             }
+            ResetHighlightStates();
         }
 
-        public void SetSquareColor(Coor target, GridSquareState state)
+        public void OnGridSpacesUnoccupied(object sender, GridEventArgs e)
         {
-            if (!myContainer.IsPointInGrid(target)) return;
-            squares[target.row, target.column].SetColor(state);
+            foreach(var coor in e.GridPositions)
+            {
+                squares[coor.row, coor.column].IsOccupied = false;
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
