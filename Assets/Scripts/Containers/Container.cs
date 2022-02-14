@@ -108,21 +108,43 @@ namespace InventoryQuest
 
         public bool IsValidPlacement(IItem item, Coor target)
         {
-            if (!IsPointInGrid(target)) return false;
-            Shape shape = item.Shape;
-            for (int r = 0; r < shape.Size.row; r++)
+            try
             {
-                for (int c = 0; c < shape.Size.column; c++)
+                Shape shape = item.Shape;
+                for (int r = 0; r < shape.Size.row; r++)
                 {
-                    int row = target.row + r;
-                    int column = target.column + c;
+                    for (int c = 0; c < shape.Size.column; c++)
+                    {
+                        int row = target.row + r;
+                        int column = target.column + c;
 
-                    if (!IsPointInGrid(new(row, column))) return false;
-                    if(Grid[row, column].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
+                        if (!IsPointInGrid(new(row, column))) return false;
+                        if (Grid[row, column].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
+                    }
                 }
+                return true;
             }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"{ex.Message}");
+                return false;
+            }
+
+            //if (!IsPointInGrid(target)) return false;
+            //Shape shape = item.Shape;
+            //for (int r = 0; r < shape.Size.row; r++)
+            //{
+            //    for (int c = 0; c < shape.Size.column; c++)
+            //    {
+            //        int row = target.row + r;
+            //        int column = target.column + c;
+
+            //        if (!IsPointInGrid(new(row, column))) return false;
+            //        if (Grid[row, column].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
+            //    }
+            //}
             
-            return true;
+            //return true;
         }
 
         #region Logging

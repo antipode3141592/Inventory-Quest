@@ -67,12 +67,33 @@ namespace InventoryQuest.UI
         public void OnPointerUp(PointerEventData eventData)
         {
             Debug.Log($"OnPointerup() on {gameObject.name} with coor: {Coordinates}");
+            switch (_gameManager.CurrentState)
+            {
+                case GameStates.Default:
+                    if (_container.TryTake(out var item, Coordinates))
+                    {
+                        _gameManager.HoldingItem = item;
+                        _gameManager.ChangeState(GameStates.HoldingItem);
+                    }
+                    break;
+                case GameStates.HoldingItem:
+                    if (_container.TryPlace(_gameManager.HoldingItem, Coordinates))
+                    {
+                        _gameManager.HoldingItem = null;
+                        _gameManager.ChangeState(GameStates.Default);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_gameManager.CurrentState != GameStates.HoldingItem) return;
-            SetHighlightColor(HighlightState.Highlight);
+            var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
+            SetHighlightColor(squareState);
         }
 
         public void OnPointerExit(PointerEventData eventData)

@@ -43,35 +43,6 @@ namespace InventoryQuest.UI
 
         }
 
-        private void ResetHighlightStates()
-        {
-            foreach (var square in squares)
-            {
-                if (square.CurrentState != HighlightState.Normal) square.CurrentState = HighlightState.Normal;
-            }
-        }
-
-        void HighlightHeldItemPlacement(Coor coordinates)
-        {
-            if (coordinates == null) return;
-            var squareState = MyContainer.IsValidPlacement(_gameManager.HoldingItem, coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
-            Shape holdingItemShape = _gameManager.HoldingItem.Shape;
-            for (int r = 0; r < holdingItemShape.Size.row; r++)
-            {
-                for (int c = 0; c < holdingItemShape.Size.column; c++)
-                {
-                    if (holdingItemShape.CurrentMask.Map[r, c])
-                    {
-                        int row = coordinates.row + r;
-                        int column = coordinates.column + c;
-                        if (MyContainer.IsPointInGrid(new Coor(row, column)))
-                            squares[row, column].CurrentState = squareState;
-                    }
-                }
-            }
-
-        }
-
         #region Grid Creation and Destruction
 
         public void CreateGrid()
@@ -113,7 +84,6 @@ namespace InventoryQuest.UI
             {
                 squares[coor.row, coor.column].IsOccupied = true;
             }
-            ResetHighlightStates();
         }
 
         public void OnGridSpacesUnoccupied(object sender, GridEventArgs e)
