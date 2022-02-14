@@ -1,14 +1,19 @@
 using Data;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class ContainerGridSquareDisplay : MonoBehaviour
+    public class ContainerGridSquareDisplay : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        GameManager _gameManager;
+        Container _container;
+
         [SerializeField]
-        SpriteRenderer backgroundSprite;
+        Image backgroundSprite;
         [SerializeField]
-        SpriteRenderer highlightSprite;
+        Image highlightSprite;
 
         bool _isOccupied;
         public bool IsOccupied { 
@@ -18,6 +23,8 @@ namespace InventoryQuest.UI
                 _isOccupied = value;
             } 
         }
+
+        public float Width => 32f;
 
         HighlightState _highlightState;
         public HighlightState CurrentState {
@@ -29,6 +36,12 @@ namespace InventoryQuest.UI
         }
         public Coor Coordinates { get; set; }
 
+        private void Awake()
+        {
+            _gameManager = FindObjectOfType<GameManager>();
+
+        }
+
         public void SetHighlightColor(HighlightState state)
         {
             Color targetColor =
@@ -39,6 +52,32 @@ namespace InventoryQuest.UI
                 _ => Color.clear
             };
             highlightSprite.color = targetColor;
+        }
+
+        public void SetContainer(Container container)
+        {
+            _container = container;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerDown() on {gameObject.name} with coor: {Coordinates}");
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerup() on {gameObject.name} with coor: {Coordinates}");
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (_gameManager.CurrentState != GameStates.HoldingItem) return;
+            SetHighlightColor(HighlightState.Highlight);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            SetHighlightColor(HighlightState.Normal);
         }
     }
 }

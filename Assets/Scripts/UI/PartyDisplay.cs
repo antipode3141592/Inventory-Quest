@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest.UI
 {
@@ -8,7 +9,7 @@ namespace InventoryQuest.UI
         [SerializeField]
         GameObject CharacterPortraitPrefab;
 
-        GameManager gameManager;
+        GameManager _gameManager;
 
         List<CharacterPortrait> PartyDisplayList;
 
@@ -22,17 +23,21 @@ namespace InventoryQuest.UI
                 SetPortraits();
             }
         }
+        [Inject]
+        public void Init(GameManager gameManager)
+        {
+            _gameManager = gameManager;
+        }
 
         void Awake()
         {
             PartyDisplayList = new List<CharacterPortrait>();
-            gameManager = FindObjectOfType<GameManager>();
             
         }
 
         private void Start()
         {
-            MyParty = gameManager.CurrentParty;
+            MyParty = _gameManager.CurrentParty;
         }
 
         public void SetPortraits()
