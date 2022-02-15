@@ -1,3 +1,4 @@
+using InventoryQuest.UI;
 using Zenject;
 
 namespace InventoryQuest
@@ -8,6 +9,7 @@ namespace InventoryQuest
         {
             Container.Bind<ContainerDisplayManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<CharacterStatsDisplay>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

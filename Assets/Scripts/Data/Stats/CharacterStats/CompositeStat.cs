@@ -23,4 +23,11 @@
         {
         }
     }
+
+    public class Defense : CompositeStat
+    {
+        public Defense(float initialValue, IStat stat) : base(initialValue, stat)
+        {
+        }
+    }
 }

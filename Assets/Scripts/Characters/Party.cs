@@ -34,31 +34,6 @@ namespace InventoryQuest
             SelectedPartyMemberGuId = PartyDisplayOrder[0];
         }
 
-        public float PartyStrength => Characters.Sum(x => x.Value.Stats.Strength.CurrentValue);
-        public float PartyAttack => Characters.Sum(x => x.Value.Stats.Attack.CurrentValue);
-
-        // add character to party
-        public void Recruit(Character character)
-        {
-            Characters.Add(character.GuId, character);
-        }
-
-        // remove character from party
-        public void Dismiss(Character character)
-        {
-            Characters.Remove(character.GuId);
-        }
-
-        public void ReturnToTown(Character character)
-        {
-
-        }
-
-        public void ReturnAllToTown()
-        {
-
-        }
-
         public Character SelectCharacter(string characterId)
         {
             if (!Characters.ContainsKey(characterId)) return null;

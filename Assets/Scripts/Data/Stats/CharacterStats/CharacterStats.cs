@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data
 {
@@ -12,17 +13,19 @@ namespace Data
 
         public string PortraitPath;
 
-        public Strength Strength;
-        public Dexterity Dexterity;
-        public Durability Durability;
-        public Charisma Charisma;
-        public Speed Speed;
-        public Intelligence Intelligence;
-        public Wisdom Wisdom;
+        public Strength Strength { get; set; }
+        public Dexterity Dexterity { get; set; }
+        public Durability Durability { get; set; }
+        public Charisma Charisma { get; set; }
+        public Speed Speed { get; set; }
+        public Intelligence Intelligence { get; set; }
+        public Wisdom Wisdom { get; set; }
 
-        public Attack Attack;
+        public Attack Attack { get; set; }
+        public Defense Defense { get; set; }
 
 
+        public Dictionary<Type, IStat> Stats;
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
         public List<EquipmentSlotType> EquipmentSlotsTypes;
 
@@ -41,9 +44,23 @@ namespace Data
             Wisdom = new Wisdom(stats[typeof(Wisdom)]);
 
             Attack = new Attack(0f, Strength);
+            Defense = new Defense(0f, Dexterity);
             Resistances = resistances;
 
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
+            Stats = new Dictionary<Type, IStat>();
+            var properties = typeof(CharacterStats).GetProperties();
+            //Debug.Log($"there are {properties.Length} public properties on {typeof(CharacterStats)}");
+            foreach(var property in properties)
+            {
+                if (typeof(IStat).IsAssignableFrom(property.PropertyType)) 
+                    Stats.Add(property.PropertyType, (IStat)property.GetValue(this));
+
+            }
+            //foreach(var item in Stats)
+            //{
+            //    Debug.Log($"{item.Key} - current {item.Value.CurrentValue}, initial {item.Value.InitialValue}");
+            //}
         }
 
 

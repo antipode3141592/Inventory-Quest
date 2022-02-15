@@ -129,22 +129,6 @@ namespace InventoryQuest
                 Debug.LogWarning($"{ex.Message}");
                 return false;
             }
-
-            //if (!IsPointInGrid(target)) return false;
-            //Shape shape = item.Shape;
-            //for (int r = 0; r < shape.Size.row; r++)
-            //{
-            //    for (int c = 0; c < shape.Size.column; c++)
-            //    {
-            //        int row = target.row + r;
-            //        int column = target.column + c;
-
-            //        if (!IsPointInGrid(new(row, column))) return false;
-            //        if (Grid[row, column].IsOccupied && shape.CurrentMask.Map[r, c]) return false;
-            //    }
-            //}
-            
-            //return true;
         }
 
         #region Logging

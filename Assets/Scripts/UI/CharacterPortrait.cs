@@ -18,8 +18,8 @@ namespace InventoryQuest.UI
 
         public PartyDisplay PartyDisplay;
 
-        Player player;
-        int playerId = 0;
+        //Player player;
+        //int playerId = 0;
 
         public string CharacterGuid { get; private set; }
 
@@ -34,10 +34,10 @@ namespace InventoryQuest.UI
             }
         }
 
-        private void Awake()
-        {
-            player = ReInput.players.GetPlayer(playerId);
-        }
+        //private void Awake()
+        //{
+        //    player = ReInput.players.GetPlayer(playerId);
+        //}
 
         //ex path: Portraits/Enemy 01-1  (exclude leading slash and filetype)
         void SetImage(string path)

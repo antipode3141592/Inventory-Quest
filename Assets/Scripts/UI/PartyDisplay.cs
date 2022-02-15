@@ -10,6 +10,8 @@ namespace InventoryQuest.UI
         GameObject CharacterPortraitPrefab;
 
         GameManager _gameManager;
+        ContainerDisplayManager _containerDisplayManager;
+        CharacterStatsDisplay _characterStatsDisplay;
 
         List<CharacterPortrait> PartyDisplayList;
 
@@ -24,9 +26,11 @@ namespace InventoryQuest.UI
             }
         }
         [Inject]
-        public void Init(GameManager gameManager)
+        public void Init(GameManager gameManager, ContainerDisplayManager containerDisplayManager, CharacterStatsDisplay characterStatsDisplay)
         {
             _gameManager = gameManager;
+            _containerDisplayManager = containerDisplayManager;
+            _characterStatsDisplay = characterStatsDisplay;
         }
 
         void Awake()
@@ -52,7 +56,14 @@ namespace InventoryQuest.UI
                 var character = MyParty.Characters[MyParty.PartyDisplayOrder[i]];
                 PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.Stats.DisplayName, imagePath: character.Stats.PortraitPath);
                 PartyDisplayList[i].PartyDisplay = this;
-                PartyDisplayList[i].IsSelected = MyParty.SelectedPartyMemberGuId == character.GuId; 
+                if (MyParty.SelectedPartyMemberGuId == character.GuId)
+                {
+                    PartyDisplayList[i].IsSelected = true;
+                    _characterStatsDisplay.CurrentCharacter = MyParty.SelectCharacter(character.GuId);
+                } else
+                {
+                    PartyDisplayList[i].IsSelected = false;
+                }
 
             }
         }
@@ -61,7 +72,13 @@ namespace InventoryQuest.UI
         {
             foreach (var portrait in PartyDisplayList)
             {
-                portrait.IsSelected = portrait.CharacterGuid == characterGuid;
+                if (portrait.CharacterGuid == characterGuid)
+                {
+                    portrait.IsSelected = true;
+                    _characterStatsDisplay.CurrentCharacter = MyParty.SelectCharacter(characterGuid);
+                }
+                else
+                    portrait.IsSelected = false;
             }
         }
     }
