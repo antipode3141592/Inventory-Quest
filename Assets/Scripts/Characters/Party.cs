@@ -34,6 +34,14 @@ namespace InventoryQuest
             SelectedPartyMemberGuId = PartyDisplayOrder[0];
         }
 
+
+        public void AddCharacter(Character character)
+        {
+            if (character is null) return;
+            Characters.Add(character.GuId, character);
+            PartyDisplayOrder.Add(character.GuId);
+            SelectedPartyMemberGuId = character.GuId;
+        }
         public Character SelectCharacter(string characterId)
         {
             if (!Characters.ContainsKey(characterId)) return null;

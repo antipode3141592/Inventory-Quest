@@ -12,7 +12,7 @@ namespace InventoryQuest
         IDataSource _dataSource;
         ContainerDisplayManager _containerDisplayManager;
 
-        public Party CurrentParty;
+        Party _party;
         Character Player;
         Character Minion;
         Container LootPile;
@@ -30,27 +30,28 @@ namespace InventoryQuest
 
 
         [Inject]
-        public void Init(ContainerDisplayManager containerDisplayManager)
+        public void Init(ContainerDisplayManager containerDisplayManager, IDataSource dataSource, Party party)
         {
             _containerDisplayManager = containerDisplayManager;
+            _dataSource = dataSource;
+            _party = party;
         }
 
 
         private void Awake()
-        {
-            _dataSource = new DataSourceTest();
-            
+        {   
             Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"), 
                 (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
             Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
                 (ContainerStats)_dataSource.GetItemStats("small backpack"));
-            CurrentParty = new Party(new Character[]{ Player, Minion });
+            _party.AddCharacter(Player);
+            _party.AddCharacter(Minion);
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
         }
 
         private void Start()
         {
-            _containerDisplayManager.ConnectCharacterContainer(CurrentParty.Characters[Player.GuId].PrimaryContainer);
+            _containerDisplayManager.ConnectCharacterContainer(_party.Characters[Player.GuId].PrimaryContainer);
             _containerDisplayManager.ConnectLootContainer(LootPile);
 
             StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer, "fuji_apple"));

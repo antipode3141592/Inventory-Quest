@@ -15,22 +15,16 @@ namespace InventoryQuest.UI
 
         List<CharacterPortrait> PartyDisplayList;
 
-        private Party myParty;
-        public Party MyParty
-        {
-            get => myParty;
-            set
-            {
-                myParty = value;
-                SetPortraits();
-            }
-        }
+        Party _party;
+        
+                
         [Inject]
-        public void Init(GameManager gameManager, ContainerDisplayManager containerDisplayManager, CharacterStatsDisplay characterStatsDisplay)
+        public void Init(GameManager gameManager, ContainerDisplayManager containerDisplayManager, CharacterStatsDisplay characterStatsDisplay, Party party)
         {
             _gameManager = gameManager;
             _containerDisplayManager = containerDisplayManager;
             _characterStatsDisplay = characterStatsDisplay;
+            _party = party;
         }
 
         void Awake()
@@ -41,25 +35,25 @@ namespace InventoryQuest.UI
 
         private void Start()
         {
-            MyParty = _gameManager.CurrentParty;
+            SetPortraits();
         }
 
         public void SetPortraits()
         {
-            for(int i = 0; i < MyParty.PartyDisplayOrder.Count; i++)
+            for(int i = 0; i < _party.PartyDisplayOrder.Count; i++)
             {
-                if (MyParty.PartyDisplayOrder.Count > PartyDisplayList.Count)
+                if (_party.PartyDisplayOrder.Count > PartyDisplayList.Count)
                 {
                     CharacterPortrait portrait = Instantiate(CharacterPortraitPrefab, transform).GetComponent<CharacterPortrait>();
                     PartyDisplayList.Add(portrait);
                 }
-                var character = MyParty.Characters[MyParty.PartyDisplayOrder[i]];
+                var character = _party.Characters[_party.PartyDisplayOrder[i]];
                 PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.Stats.DisplayName, imagePath: character.Stats.PortraitPath);
                 PartyDisplayList[i].PartyDisplay = this;
-                if (MyParty.SelectedPartyMemberGuId == character.GuId)
+                if (_party.SelectedPartyMemberGuId == character.GuId)
                 {
                     PartyDisplayList[i].IsSelected = true;
-                    _characterStatsDisplay.CurrentCharacter = MyParty.SelectCharacter(character.GuId);
+                    _characterStatsDisplay.CurrentCharacter = _party.SelectCharacter(character.GuId);
                 } else
                 {
                     PartyDisplayList[i].IsSelected = false;
@@ -75,7 +69,7 @@ namespace InventoryQuest.UI
                 if (portrait.CharacterGuid == characterGuid)
                 {
                     portrait.IsSelected = true;
-                    _characterStatsDisplay.CurrentCharacter = MyParty.SelectCharacter(characterGuid);
+                    _characterStatsDisplay.CurrentCharacter = _party.SelectCharacter(characterGuid);
                 }
                 else
                     portrait.IsSelected = false;
