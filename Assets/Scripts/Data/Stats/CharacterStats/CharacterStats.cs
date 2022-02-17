@@ -50,17 +50,12 @@ namespace Data
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
             Stats = new Dictionary<Type, IStat>();
             var properties = typeof(CharacterStats).GetProperties();
-            //Debug.Log($"there are {properties.Length} public properties on {typeof(CharacterStats)}");
             foreach(var property in properties)
             {
                 if (typeof(IStat).IsAssignableFrom(property.PropertyType)) 
                     Stats.Add(property.PropertyType, (IStat)property.GetValue(this));
 
             }
-            //foreach(var item in Stats)
-            //{
-            //    Debug.Log($"{item.Key} - current {item.Value.CurrentValue}, initial {item.Value.InitialValue}");
-            //}
         }
 
 

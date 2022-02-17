@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data;
-using Zenject;
-using UnityEngine;
+﻿using Data;
 using Data.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace InventoryQuest
 {
@@ -57,8 +52,11 @@ namespace InventoryQuest
         EquipmentSlotType[] GetDefaultEquipmentSlotTypes()
         {
             EquipmentSlotType[] slots = {
+                EquipmentSlotType.OneHandedWeapon,
+                EquipmentSlotType.Shield,
                 EquipmentSlotType.RightHand, 
                 EquipmentSlotType.LeftHand,
+                EquipmentSlotType.Ring,
                 EquipmentSlotType.Belt, 
                 EquipmentSlotType.Feet
             };
@@ -115,6 +113,7 @@ namespace InventoryQuest
                      goldValue: 10f,
                      description: "a basic sword",
                      shape: ShapeType.Bar3,
+                     slotType: EquipmentSlotType.OneHandedWeapon,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
                         new(typeof(Strength),OperatorType.Add,1f)}
@@ -124,6 +123,7 @@ namespace InventoryQuest
                     goldValue: 10f,
                     description: "a basic sword",
                     shape: ShapeType.Bar4,
+                    slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
                         new(typeof(Strength),OperatorType.Add,5f)}
@@ -132,7 +132,8 @@ namespace InventoryQuest
                     weight: 0.1f,
                     goldValue: 50f,
                     description: "simple silver band which grants minor charisma boost",
-                    shape: ShapeType.Square1, 
+                    shape: ShapeType.Square1,
+                    slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
                         new(typeof(Charisma), OperatorType.Add, 1f)}
                     ),

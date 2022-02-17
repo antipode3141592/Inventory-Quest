@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Interfaces;
+using System;
+using UnityEngine;
 
 namespace Data
 {
@@ -16,32 +18,40 @@ namespace Data
         public EventHandler<ModifierEventArgs> OnEquip;
         public EventHandler<ModifierEventArgs> OnUnequip;
 
-        public bool TryEquip(out EquipableItem previousItem, EquipableItem itemToEquip)
+        public bool TryEquip(out IItem previousItem, IItem item)
         {
             previousItem = null;
-            if (itemToEquip.SlotType == EquipmentSlotType.All || itemToEquip.SlotType == SlotType)
+            if (IsValidPlacement(item))
             {
-                if (EquippedItem == null)
+                EquipableItem itemToEquip = item as EquipableItem;
+                if (EquippedItem != null)
                 {
-                    EquippedItem = itemToEquip;
+                    Debug.Log($"{EquippedItem.Id} is equipped, unequipping...");
+                    if (TryUnequip(out previousItem))
+                        Debug.Log($"unequip successful");
                 }
-                else
-                {
-                    previousItem = Unequip();
-                    EquippedItem = itemToEquip;
-                }
-                OnEquip?.Invoke(this, new ModifierEventArgs(itemToEquip.Modifiers));
+                EquippedItem = itemToEquip;
+                OnEquip?.Invoke(this, new ModifierEventArgs(EquippedItem.Modifiers));
                 return true;
             }
             return false;
         }
 
-        public EquipableItem Unequip()
+        public bool TryUnequip(out IItem item)
         {
-            var item = EquippedItem;
+            item = null;
+            if (EquippedItem == null) return false;
+            item = EquippedItem;
+            OnUnequip?.Invoke(this, new ModifierEventArgs(EquippedItem.Modifiers));
             EquippedItem = null;
-            OnUnequip?.Invoke(this, new ModifierEventArgs(item.Modifiers));
-            return item;
+            return true;
+        }
+
+        public bool IsValidPlacement(IItem item)
+        {
+            EquipableItem equipableItem = item as EquipableItem;
+            if (equipableItem == null) return false;
+            return equipableItem.SlotType == SlotType;
         }
     }
 }

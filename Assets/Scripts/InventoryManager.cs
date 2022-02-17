@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace InventoryQuest.Manager
+namespace InventoryQuest.Managers
 {
     public class InventoryManager : MonoBehaviour
     {

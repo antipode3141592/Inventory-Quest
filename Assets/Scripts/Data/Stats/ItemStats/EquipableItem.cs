@@ -29,6 +29,7 @@ namespace Data
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType);
             Modifiers = stats.Modifiers;
+            SlotType = stats.SlotType;
         }
     }
 }

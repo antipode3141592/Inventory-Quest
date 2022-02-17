@@ -19,7 +19,9 @@ namespace Data
 
         public List<StatModifier> Modifiers { get; set; }
 
-        public EquipableItemStats(string itemId, float weight, float goldValue, string description, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null)
+        public EquipmentSlotType SlotType { get; set; }
+
+        public EquipableItemStats(string itemId, float weight, float goldValue, string description, EquipmentSlotType slotType, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null)
         {
             Id = itemId;
             ShapeType = shape;
@@ -28,6 +30,7 @@ namespace Data
             GoldValue = goldValue;
             Description = description;
             Modifiers = modifiers != null ? new(modifiers) : new();
+            SlotType = slotType;
         }
     }
 }

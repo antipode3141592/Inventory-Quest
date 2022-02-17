@@ -59,7 +59,7 @@ namespace InventoryQuest.Characters
 
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            Debug.Log($"OnEquipHandler: {sender}");
+            Debug.Log($"OnEquipHandler: {sender} with {e.Modifiers.Count} modifiers");
             foreach(StatModifier mod in e.Modifiers)
             {
                 ApplyModifier(mod);
@@ -69,8 +69,8 @@ namespace InventoryQuest.Characters
         void ApplyModifier(StatModifier mod)
         {
             Type t = Stats.GetType();
-            FieldInfo field = t.GetField(mod.StatType.Name.ToString());
-            var obj = field.GetValue(Stats);
+            PropertyInfo prop = t.GetProperty(mod.StatType.Name);
+            var obj = prop.GetValue(Stats);
             if (obj == null) return;
             PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
             var currentValue = prop2.GetValue(obj, null);
@@ -97,8 +97,8 @@ namespace InventoryQuest.Characters
         void RemoveModifier(StatModifier mod)
         {
             Type t = Stats.GetType();
-            FieldInfo field = t.GetField(mod.StatType.Name.ToString());
-            var obj = field.GetValue(Stats);
+            PropertyInfo prop = t.GetProperty(mod.StatType.Name);
+            var obj = prop.GetValue(Stats);
             if (obj == null) return;
             PropertyInfo prop2 = obj.GetType().GetProperty("Modifier");
             var currentValue = prop2.GetValue(obj, null);

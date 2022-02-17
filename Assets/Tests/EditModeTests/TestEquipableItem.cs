@@ -54,17 +54,16 @@ namespace InventoryQuest.Testing
             
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
             {
-                EquipableItem _item = item as EquipableItem;
-                if (_item != null)
+
+                EquipmentSlotType slotType = Sword.SlotType;
+                if (Player.EquipmentSlots.ContainsKey(slotType))
                 {
-                    if (Player.EquipmentSlots.ContainsKey(EquipmentSlotType.RightHand))
-                    {
-                        Player.EquipmentSlots[EquipmentSlotType.RightHand].TryEquip(out var oldItem, _item);
+                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item);
                         
-                    }
                 }
+
             }
-            Assert.AreEqual(swordId, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem.GuId);
+            Assert.AreEqual(swordId, Player.EquipmentSlots[Sword.SlotType].EquippedItem.GuId);
             Assert.AreEqual(11f, Player.Stats.Attack.CurrentValue);
         }
 
@@ -73,20 +72,19 @@ namespace InventoryQuest.Testing
         {
             float startingStrength = Player.Stats.Strength.CurrentValue;
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
+            EquipmentSlotType slotType = Sword.SlotType;
             string swordId = Sword.GuId;
             if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
             {
-                EquipableItem _item = item as EquipableItem;
-                if (_item != null)
+
+                
+                if (Player.EquipmentSlots.ContainsKey(slotType))
                 {
-                    if (Player.EquipmentSlots.ContainsKey(EquipmentSlotType.RightHand))
-                    {
-                        Player.EquipmentSlots[EquipmentSlotType.RightHand].TryEquip(out var oldItem, _item);
-                        var __item = Player.EquipmentSlots[EquipmentSlotType.RightHand].Unequip();
-                    }
+                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item);
+                    Player.EquipmentSlots[slotType].TryUnequip(out var _item);
                 }
             }
-            Assert.AreEqual(null, Player.EquipmentSlots[EquipmentSlotType.RightHand].EquippedItem);
+            Assert.AreEqual(null, Player.EquipmentSlots[slotType].EquippedItem);
             Assert.AreEqual(startingStrength, Player.Stats.Strength.CurrentValue);
         }
 
