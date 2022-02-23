@@ -1,4 +1,5 @@
 using InventoryQuest.Characters;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,9 +19,23 @@ namespace InventoryQuest.UI
             get { return _character; }
             set
             {
+                UnsubscribeToCharacterEvents();
                 _character = value;
+                SubcribeToCharacterEvents();
                 CreateStatBlock();
             }
+        }
+
+        void SubcribeToCharacterEvents()
+        {
+            if (_character == null) return;
+            _character.OnStatsUpdated += OnStatsUpdatedHandler;
+        }
+
+        void UnsubscribeToCharacterEvents()
+        {
+            if (_character == null) return;
+            _character.OnStatsUpdated -= OnStatsUpdatedHandler;
         }
 
         void CreateStatBlock()
@@ -38,6 +53,17 @@ namespace InventoryQuest.UI
                 StatTexts[i].text = $"{item.Key.Name}: {item.Value.CurrentValue} (initial: {item.Value.InitialValue})";
                 i++;
             }
+        }
+
+
+        void OnStatsUpdatedHandler (object sender, EventArgs e)
+        {
+            CreateStatBlock();
+        }
+
+        void UpdateText()
+        {
+
         }
     }
 }

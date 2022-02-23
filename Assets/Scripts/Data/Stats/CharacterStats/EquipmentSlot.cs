@@ -49,8 +49,7 @@ namespace Data
 
         public bool IsValidPlacement(IItem item)
         {
-            EquipableItem equipableItem = item as EquipableItem;
-            if (equipableItem == null) return false;
+            if (item is not EquipableItem equipableItem) return false;
             return equipableItem.SlotType == SlotType;
         }
     }

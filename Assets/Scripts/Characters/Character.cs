@@ -19,6 +19,9 @@ namespace InventoryQuest.Characters
 
         public Container PrimaryContainer { get; set; }
 
+        public EventHandler OnStatsUpdated;
+
+
         public Character(CharacterStats characterStats, ContainerStats containerStats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -83,6 +86,7 @@ namespace InventoryQuest.Characters
             {
                 prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
             }
+            OnStatsUpdated?.Invoke(this, new EventArgs());
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
@@ -110,6 +114,7 @@ namespace InventoryQuest.Characters
             {
                 prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
             }
+            OnStatsUpdated?.Invoke(this, new EventArgs());
         }
     }
 }
