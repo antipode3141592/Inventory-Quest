@@ -1,4 +1,5 @@
 using Data.Interfaces;
+using InventoryQuest.Managers;
 using InventoryQuest.UI;
 using Zenject;
 
@@ -12,7 +13,7 @@ namespace InventoryQuest
             Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterStatsDisplay>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IDataSource>().FromInstance(new DataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<Party>().FromInstance(new Party()).AsSingle().NonLazy();
+            Container.Bind<PartyManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
     }
 }

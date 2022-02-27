@@ -1,6 +1,6 @@
 ﻿using Data;
 using Data.Interfaces;
-using InventoryQuest.Characters;
+using InventoryQuest.Managers;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -11,10 +11,8 @@ namespace InventoryQuest
     {
         IDataSource _dataSource;
         ContainerDisplayManager _containerDisplayManager;
+        PartyManager _partyManager;
 
-        Party _party;
-        Character Player;
-        Character Minion;
         Container LootPile;
 
         public IItem HoldingItem;
@@ -30,32 +28,22 @@ namespace InventoryQuest
 
 
         [Inject]
-        public void Init(ContainerDisplayManager containerDisplayManager, IDataSource dataSource, Party party)
+        public void Init(ContainerDisplayManager containerDisplayManager, IDataSource dataSource, PartyManager partyManager)
         {
             _containerDisplayManager = containerDisplayManager;
             _dataSource = dataSource;
-            _party = party;
+            _partyManager = partyManager;
         }
 
 
         private void Awake()
         {   
-            Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"), 
-                (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
-            Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
-                (ContainerStats)_dataSource.GetItemStats("small backpack"));
-            _party.AddCharacter(Player);
-            _party.AddCharacter(Minion);
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
         }
 
         private void Start()
         {
-            _containerDisplayManager.ConnectCharacterContainer(_party.Characters[Player.GuId].PrimaryContainer);
             _containerDisplayManager.ConnectLootContainer(LootPile);
-
-            StartCoroutine(AddItemsToContainer(2, restPeriod, Player.PrimaryContainer, "fuji_apple"));
-            StartCoroutine(AddItemsToContainer(3, restPeriod, Minion.PrimaryContainer, "fuji_apple"));
             StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
         }
 

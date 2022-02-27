@@ -1,5 +1,3 @@
-using Rewired;
-using Rewired.Integration.UnityUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,7 +5,7 @@ using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class CharacterPortrait : MonoBehaviour
+    public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField]
         Image background;
@@ -17,9 +15,6 @@ namespace InventoryQuest.UI
         TextMeshProUGUI nameText;
 
         public PartyDisplay PartyDisplay;
-
-        //Player player;
-        //int playerId = 0;
 
         public string CharacterGuid { get; private set; }
 
@@ -33,11 +28,6 @@ namespace InventoryQuest.UI
                 isSelected = value;
             }
         }
-
-        //private void Awake()
-        //{
-        //    player = ReInput.players.GetPlayer(playerId);
-        //}
 
         //ex path: Portraits/Enemy 01-1  (exclude leading slash and filetype)
         void SetImage(string path)
@@ -67,6 +57,16 @@ namespace InventoryQuest.UI
         public void ChangePartyMemberName(string name)
         {
 
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            SelectPartyMember();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            
         }
     }
 }

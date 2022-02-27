@@ -1,5 +1,6 @@
 ﻿using Data.Interfaces;
 using System;
+using InventoryQuest.Managers;
 
 namespace InventoryQuest
 {

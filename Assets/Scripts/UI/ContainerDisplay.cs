@@ -1,6 +1,5 @@
 ﻿using Data;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI
@@ -18,6 +17,12 @@ namespace InventoryQuest.UI
         public ContainerGridSquareDisplay GridSquareSprite; //square prefab
 
         ContainerGridSquareDisplay[,] squares;
+        [SerializeField]
+        int rowMax;
+        [SerializeField]
+        int columnMax;
+
+        float squareWidth;
 
         [SerializeField]
         ContactFilter2D _contactFilter;
@@ -29,9 +34,9 @@ namespace InventoryQuest.UI
             get { return myContainer; } 
             set 
             {
-                if (value is null) DestroyGrid();
+                DestroyGrid();
                 myContainer = value;
-                CreateGrid();
+                SetupGrid();
             }
         }
 
@@ -43,23 +48,49 @@ namespace InventoryQuest.UI
 
         }
 
+        private void Awake()
+        {
+            squares = new ContainerGridSquareDisplay[rowMax, columnMax];
+            squareWidth = GridSquareSprite.Width;
+            InitializeGrid();
+        }
+
+        private void Start()
+        {
+            
+        }
+
+
         #region Grid Creation and Destruction
 
-        public void CreateGrid()
+        public void InitializeGrid()
+        {
+            for (int r = 0; r < rowMax; r++)
+            {
+                for(int c = 0; c < columnMax; c++)
+                {
+                    ContainerGridSquareDisplay square = Instantiate(original: GridSquareSprite, parent: _parent);
+                    square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
+                    square.SetContainer(MyContainer);
+                    square.Coordinates = new Coor(r, c);
+                    squares[r, c] = square;
+                    squares[r, c].gameObject.SetActive(false);
+                }
+            }
+
+        }
+
+        public void SetupGrid()
         {
             if (MyContainer is null) return;
-            float size = GridSquareSprite.Width;
-            squares = new ContainerGridSquareDisplay[MyContainer.ContainerSize.row, MyContainer.ContainerSize.column];
-            //draw squares
             for (int r = 0; r < MyContainer.ContainerSize.row; r++)
             {
                 for (int c = 0; c < MyContainer.ContainerSize.column; c++)
                 {
-                    ContainerGridSquareDisplay square = Instantiate(original: GridSquareSprite, parent: _parent);
-                    square.transform.localPosition = new Vector2((float)c * size, -(float)r * size);
-                    square.SetContainer(MyContainer);
-                    square.Coordinates = new Coor(r, c);
-                    squares[r, c] = square;
+                    squares[r, c].SetContainer(MyContainer);
+                    squares[r, c].gameObject.SetActive(true);
+                    squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
+
                 }
             }
 
@@ -69,13 +100,16 @@ namespace InventoryQuest.UI
 
         public void DestroyGrid()
         {
-            MyContainer.OnGridOccupied -= OnGridSpacesOccupied;
-            MyContainer.OnGridUnoccupied -= OnGridSpacesUnoccupied;
-
             foreach (var square in squares)
             {
-
+                square.IsOccupied = false;
+                square.SetContainer(null);
+                square.gameObject.SetActive(false);
             }
+
+            if (MyContainer is null) return;
+            MyContainer.OnGridOccupied -= OnGridSpacesOccupied;
+            MyContainer.OnGridUnoccupied -= OnGridSpacesUnoccupied;
         }
 
         public void OnGridSpacesOccupied(object sender, GridEventArgs e)

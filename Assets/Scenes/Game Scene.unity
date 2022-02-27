@@ -255,6 +255,8 @@ MonoBehaviour:
   _parent: {fileID: 1060314770}
   Origin: {x: -5, y: 2.5}
   GridSquareSprite: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
+  rowMax: 6
+  columnMax: 12
   _contactFilter:
     useTriggers: 1
     useLayerMask: 0
@@ -790,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1450,10 +1452,10 @@ RectTransform:
   m_Father: {fileID: 707535468}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 344.35498, y: 0}
-  m_SizeDelta: {x: 531.73, y: 578}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -531.73, y: 0}
+  m_SizeDelta: {x: 531.73, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &908402905
 MonoBehaviour:
@@ -1632,9 +1634,9 @@ RectTransform:
   m_Father: {fileID: 707535468}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -438.08997, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 289}
   m_SizeDelta: {x: 344.44, y: 289}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &996879799
@@ -1815,9 +1817,9 @@ RectTransform:
   m_Father: {fileID: 707535468}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -438.08997, y: 289}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 344.44, y: 289}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1060314771
@@ -3611,6 +3613,8 @@ MonoBehaviour:
   _parent: {fileID: 908402904}
   Origin: {x: 0, y: 0}
   GridSquareSprite: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
+  rowMax: 12
+  columnMax: 24
   _contactFilter:
     useTriggers: 1
     useLayerMask: 0
