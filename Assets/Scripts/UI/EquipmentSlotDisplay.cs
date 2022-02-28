@@ -46,6 +46,12 @@ namespace InventoryQuest.UI
             highlightSprite.color = targetColor;
         }
 
+        public void CheckIsOccupied()
+        {
+            if (_character is null) return;
+            backgroundSprite.color = _character.EquipmentSlots[SlotType].EquippedItem is null ? Color.white : Color.grey;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             Debug.Log($"OnPointerDown() for {gameObject.name}");

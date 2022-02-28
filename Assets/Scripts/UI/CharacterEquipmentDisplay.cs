@@ -47,6 +47,7 @@ namespace InventoryQuest.UI
                 {
                     slot.Value.gameObject.SetActive(true);
                     slot.Value.SetCharacter(_character);
+                    slot.Value.CheckIsOccupied();
                 }
                 else
                 {
