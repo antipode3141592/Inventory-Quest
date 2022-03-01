@@ -61,7 +61,7 @@ namespace InventoryQuest
         {
             _containerDisplayManager.ConnectLootContainer(LootPile);
             //StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "apple_fuji"));
-            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_crossbow_1"));
         }
 
         private void Update()
@@ -91,13 +91,18 @@ namespace InventoryQuest
             int itemCount = 0;
             for (int _r = 0; _r < targetContainer.ContainerSize.row; _r++)
             {
+                var newItem = ItemFactory.GetItem(_dataSource.GetItemStats(itemId));
+
                 for (int _c = 0; _c < targetContainer.ContainerSize.column; _c++)
                 {
                     if (itemCount >= itemTotal) yield break;
-                    var newItem = ItemFactory.GetItem(_dataSource.GetItemStats(itemId));
+                    
 
-                    targetContainer.TryPlace(newItem, new Coor(_r, _c));
-                    itemCount++;
+                    if (targetContainer.TryPlace(newItem, new Coor(_r, _c)))
+                    {
+                        newItem = ItemFactory.GetItem(_dataSource.GetItemStats(itemId));
+                        itemCount++;
+                    }
                     yield return new WaitForSeconds(restPeriod);
                 }
             }

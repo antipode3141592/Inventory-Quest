@@ -124,6 +124,17 @@ namespace InventoryQuest
                      modifiers: new StatModifier[] {
                         new(typeof(Strength),OperatorType.Add,1f)}
                      ),
+                "basic_crossbow_1" => new EquipableItemStats("basic_crossbow_1",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic crossbow",
+                    spritePath: "Items/basic_crossbow_1",
+                    shape: ShapeType.T1,
+                    slotType: EquipmentSlotType.TwoHandedWeapon,
+                    defaultFacing: Facing.Right,
+                    modifiers: new StatModifier[] {
+                            new(typeof(Dexterity),OperatorType.Add,1f)}
+                    ),
                 "basic_sword_5" => new EquipableItemStats("basic_sword_5",
                     weight: 2f,
                     goldValue: 10f,

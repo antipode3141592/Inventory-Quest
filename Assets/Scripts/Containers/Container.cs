@@ -61,7 +61,7 @@ namespace InventoryQuest
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
-                LogGrid();
+                //LogGrid();
                 //LogContents();
                 return true;
             }
@@ -99,7 +99,7 @@ namespace InventoryQuest
 
                     OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
                     //LogContents();
-                    LogGrid();
+                    //LogGrid();
                     return true;
                 }
             }
