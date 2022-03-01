@@ -8,5 +8,7 @@
         public Facing DefaultFacing { get; }
         public float Weight { get; }
         public float GoldValue { get; }
+
+        public string SpritePath { get; }
     }
 }

@@ -26,12 +26,15 @@ namespace InventoryQuest
 
         public string Description { get; }
 
-        public ContainerStats(string itemId, float weight, float goldValue, string description, Coor containerSize, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
+        public string SpritePath { get; }
+
+        public ContainerStats(string itemId, float weight, float goldValue, string description, string spritePath, Coor containerSize, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
         {
             Id = itemId;
             Weight = weight;
             GoldValue = goldValue;
             Description = description;
+            SpritePath = spritePath;
             ContainerSize = containerSize;
             ShapeType = shape;
             DefaultFacing = defaultFacing;

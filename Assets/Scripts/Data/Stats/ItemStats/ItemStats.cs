@@ -14,7 +14,9 @@ namespace Data
         
         public string Description { get; }
 
-        public ItemStats(string itemId, float weight, float goldValue, string description, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
+        public string SpritePath { get; }
+
+        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
         {
             Id = itemId;
             ShapeType = shape;
@@ -22,6 +24,7 @@ namespace Data
             Weight = weight;
             GoldValue = goldValue;
             Description = description;
+            SpritePath = spritePath;
         }
     }
 }

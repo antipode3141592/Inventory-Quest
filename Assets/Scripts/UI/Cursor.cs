@@ -9,6 +9,8 @@ namespace InventoryQuest.UI
 {
     public class Cursor : MonoBehaviour
     {
+        [SerializeField] public Image cursorIcon;
         
+        [SerializeField] public Image itemIcon;
     }
 }

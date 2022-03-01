@@ -1,13 +1,14 @@
 ﻿using Data;
 using Data.Interfaces;
 using InventoryQuest.Managers;
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest
 {
-    public class GameManager: MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         IDataSource _dataSource;
         ContainerDisplayManager _containerDisplayManager;
@@ -15,7 +16,18 @@ namespace InventoryQuest
 
         Container LootPile;
 
-        public IItem HoldingItem;
+        private IItem holdingItem;
+        public IItem HoldingItem 
+        { 
+            get => holdingItem; 
+            set {
+                holdingItem = value;
+                if (value is null) OnItemPlaced?.Invoke(this, EventArgs.Empty);
+                else OnItemHeld?.Invoke(this, EventArgs.Empty);
+                
+                
+            }
+        }
 
         float restPeriod = 0.1f;
 
@@ -23,8 +35,12 @@ namespace InventoryQuest
         int targetTotal;
 
         GameStates currentState = GameStates.Loading;
+        
+
         public GameStates CurrentState { get { return currentState; } }
 
+        public EventHandler OnItemHeld;
+        public EventHandler OnItemPlaced;
 
 
         [Inject]
@@ -37,14 +53,14 @@ namespace InventoryQuest
 
 
         private void Awake()
-        {   
+        {
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
         }
 
         private void Start()
         {
             _containerDisplayManager.ConnectLootContainer(LootPile);
-            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "apple_fuji"));
         }
 
         private void Update()
@@ -72,7 +88,8 @@ namespace InventoryQuest
         public IEnumerator AddItemsToContainer(int itemTotal, float restPeriod, Container targetContainer, string itemId)
         {
             int itemCount = 0;
-            for (int _r = 0; _r < targetContainer.ContainerSize.row; _r++) {
+            for (int _r = 0; _r < targetContainer.ContainerSize.row; _r++)
+            {
                 for (int _c = 0; _c < targetContainer.ContainerSize.column; _c++)
                 {
                     if (itemCount >= itemTotal) yield break;
