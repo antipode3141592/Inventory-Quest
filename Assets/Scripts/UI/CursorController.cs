@@ -62,6 +62,7 @@ namespace InventoryQuest.UI
         public void ShowItemSprite(string spritePath)
         {
             _cursor.itemIcon.sprite = Resources.Load<Sprite>(spritePath);
+            _cursor.itemIcon.SetNativeSize();
             _cursor.itemIcon.color = Color.white;
             _cursor.cursorIcon.color = Color.clear;
         }

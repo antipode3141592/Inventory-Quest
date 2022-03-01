@@ -14,6 +14,7 @@ namespace Data.Shapes
                 { Facing.Left, new BitMask(new bool[,] { {true, true, true} }) },
                 { Facing.Up, new BitMask(new bool[,] { { true }, { true }, { true }}) },
             };
+            CurrentFacing = defaultFacing;
         }
     }
 

@@ -21,7 +21,7 @@ namespace InventoryQuest
         { 
             get => holdingItem; 
             set {
-                holdingItem = value;
+                holdingItem = value; 
                 if (value is null) OnItemPlaced?.Invoke(this, EventArgs.Empty);
                 else OnItemHeld?.Invoke(this, EventArgs.Empty);
                 
@@ -60,7 +60,8 @@ namespace InventoryQuest
         private void Start()
         {
             _containerDisplayManager.ConnectLootContainer(LootPile);
-            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "apple_fuji"));
+            //StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "apple_fuji"));
+            StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_sword_1"));
         }
 
         private void Update()

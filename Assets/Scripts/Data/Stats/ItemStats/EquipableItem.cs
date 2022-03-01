@@ -27,7 +27,7 @@ namespace Data
             GuId = Guid.NewGuid().ToString();
             Id = stats.Id;
             Stats = stats;
-            Shape = ShapeFactory.GetShape(stats.ShapeType);
+            Shape = ShapeFactory.GetShape(shape: stats.ShapeType, facing: stats.DefaultFacing);
             Modifiers = stats.Modifiers;
             SlotType = stats.SlotType;
         }

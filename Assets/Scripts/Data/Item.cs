@@ -16,7 +16,7 @@ namespace Data
             GuId = Guid.NewGuid().ToString();
             Id = itemStats.Id;
             Stats = itemStats;
-            Shape = ShapeFactory.GetShape(itemStats.ShapeType);
+            Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
         }
 
         public float Weight => Stats.Weight;

@@ -4,7 +4,7 @@ namespace Data.Shapes
 {
     public class Square2 : Shape
     {
-        public Square2()
+        public Square2(Facing defaultFacing = Facing.Right)
         {
             Id = "square2";
             Masks = new Dictionary<Facing, BitMask>
@@ -13,7 +13,8 @@ namespace Data.Shapes
                 { Facing.Down, new BitMask( new bool[,] { { true, true }, { true, true } }) },
                 { Facing.Left, new BitMask( new bool[,] { { true, true }, { true, true } }) },
                 { Facing.Up, new BitMask( new bool[,] { { true, true }, { true, true } }) },
-            };   
+            };
+            CurrentFacing = defaultFacing;
         }
     }
 

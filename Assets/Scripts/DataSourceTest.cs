@@ -117,7 +117,7 @@ namespace InventoryQuest
                      weight: 2f,
                      goldValue: 10f,
                      description: "a basic sword",
-                     spritePath: "",
+                     spritePath: "Items/basic_sword_1",
                      shape: ShapeType.Bar3,
                      slotType: EquipmentSlotType.OneHandedWeapon,
                      defaultFacing: Facing.Down,
