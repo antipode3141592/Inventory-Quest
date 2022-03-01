@@ -49,7 +49,8 @@ namespace InventoryQuest
                 {
                     for (int c = 0; c < item.Shape.Size.column; c++)
                     {
-                        tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
+                        if (item.Shape.CurrentMask.Map[r,c])
+                            tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
                     }
                 }
                 //place item
@@ -60,7 +61,7 @@ namespace InventoryQuest
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
-                //LogGrid();
+                LogGrid();
                 //LogContents();
                 return true;
             }
@@ -98,7 +99,7 @@ namespace InventoryQuest
 
                     OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
                     //LogContents();
-                    //LogGrid();
+                    LogGrid();
                     return true;
                 }
             }
