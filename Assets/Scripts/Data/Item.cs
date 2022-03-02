@@ -1,5 +1,6 @@
 ﻿using Data.Interfaces;
 using System;
+using UnityEngine;
 
 namespace Data
 
@@ -11,12 +12,15 @@ namespace Data
 
         public Shape Shape { get; }
 
+        public Sprite Sprite { get; set; }
+
         public Item(IItemStats itemStats)
         {
             GuId = Guid.NewGuid().ToString();
             Id = itemStats.Id;
             Stats = itemStats;
             Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
+            Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
         }
 
         public float Weight => Stats.Weight;

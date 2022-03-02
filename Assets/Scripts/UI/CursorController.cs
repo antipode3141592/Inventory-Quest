@@ -51,7 +51,7 @@ namespace InventoryQuest.UI
 
         public void OnItemHeldHandler(object sender, EventArgs e)
         {
-            ShowItemSprite(_gameManager.HoldingItem.Stats.SpritePath);
+            ShowItemSprite();
         }
 
         public void OnItemPlacedHandler(object sender, EventArgs e)
@@ -59,9 +59,9 @@ namespace InventoryQuest.UI
             HideItemSprite();
         }
 
-        public void ShowItemSprite(string spritePath)
+        public void ShowItemSprite()
         {
-            _cursor.itemIcon.sprite = Resources.Load<Sprite>(spritePath);
+            _cursor.itemIcon.sprite = _gameManager.HoldingItem.Sprite;
             _cursor.itemIcon.SetNativeSize();
             _cursor.itemIcon.color = Color.white;
             _cursor.cursorIcon.color = Color.clear;

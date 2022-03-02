@@ -17,6 +17,8 @@ namespace InventoryQuest
         public Coor ContainerSize;
         public IItemStats Stats { get; }
         public Shape Shape { get; }
+        public Sprite Sprite { get; set; }
+
 
         public Container(ContainerStats stats)
         {
@@ -27,6 +29,7 @@ namespace InventoryQuest
             Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
             Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
             Contents = new Dictionary<string, Content>();
+            Sprite = Resources.Load<Sprite>(stats.SpritePath);
         }
 
         public float TotalWeight => Contents.Sum(x => x.Value.Item.Stats.Weight) + Weight;

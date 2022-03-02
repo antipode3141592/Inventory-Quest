@@ -1,6 +1,7 @@
 ﻿using Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data
 
@@ -21,6 +22,7 @@ namespace Data
         public float Value => Stats.GoldValue;
 
         public List<StatModifier> Modifiers { get ; set ; }
+        public Sprite Sprite { get; set; }
 
         public EquipableItem(EquipableItemStats stats)
         {
@@ -30,6 +32,7 @@ namespace Data
             Shape = ShapeFactory.GetShape(shape: stats.ShapeType, facing: stats.DefaultFacing);
             Modifiers = stats.Modifiers;
             SlotType = stats.SlotType;
+            Sprite = Resources.Load<Sprite>(stats.SpritePath);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Data.Interfaces
+﻿using UnityEngine;
+
+namespace Data.Interfaces
 
 {
     public interface IItem
@@ -8,6 +10,8 @@
         public float Weight { get; }   //item weight
         public float Value { get; }    //item value
         public IItemStats Stats { get; }
+
+        public Sprite Sprite { get; set; }
 
         public Shape Shape { get; }
     }
