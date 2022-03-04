@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using Rewired;
 
 namespace InventoryQuest
 {
@@ -13,6 +14,9 @@ namespace InventoryQuest
         IDataSource _dataSource;
         ContainerDisplayManager _containerDisplayManager;
         PartyManager _partyManager;
+
+        Player player;
+        int playerId = 0;
 
         Container LootPile;
 
@@ -24,8 +28,6 @@ namespace InventoryQuest
                 holdingItem = value; 
                 if (value is null) OnItemPlaced?.Invoke(this, EventArgs.Empty);
                 else OnItemHeld?.Invoke(this, EventArgs.Empty);
-                
-                
             }
         }
 
@@ -41,6 +43,8 @@ namespace InventoryQuest
 
         public EventHandler OnItemHeld;
         public EventHandler OnItemPlaced;
+        public EventHandler<RotationEventArgs> OnRotateCW;
+        public EventHandler<RotationEventArgs> OnRotateCCW;
 
 
         [Inject]
@@ -55,6 +59,7 @@ namespace InventoryQuest
         private void Awake()
         {
             LootPile = ContainerFactory.GetContainer((ContainerStats)_dataSource.GetItemStats("loot_pile"));
+            player = ReInput.players.GetPlayer(playerId);
         }
 
         private void Start()
@@ -74,6 +79,7 @@ namespace InventoryQuest
                 case GameStates.Default:
                     break;
                 case GameStates.HoldingItem:
+                    CheckRotateAction();
                     break;
                 default:
                     break;
@@ -105,6 +111,27 @@ namespace InventoryQuest
                     }
                     yield return new WaitForSeconds(restPeriod);
                 }
+            }
+        }
+
+        public void CheckRotateAction()
+        {
+
+            bool rotateCW = player.GetButtonUp("RotatePieceCW");
+            bool rotateCCW = player.GetButtonUp("RotatePieceCCW");
+
+            if (rotateCW) { 
+                var facing = HoldingItem.Shape.Rotate(1); 
+                Debug.Log($"CheckRotateAction() detected CW action");
+                OnRotateCW?.Invoke(this, new RotationEventArgs(facing));
+                return;
+            }
+
+            if (rotateCCW) {
+                var facing = HoldingItem.Shape.Rotate(-1);
+                Debug.Log($"CheckRotateAction() detected CCW action");
+                OnRotateCCW?.Invoke(this, new RotationEventArgs(facing));
+                return;
             }
         }
 

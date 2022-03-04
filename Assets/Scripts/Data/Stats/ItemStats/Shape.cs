@@ -13,10 +13,19 @@ namespace Data
 
         public Coor Size => new Coor(Masks[CurrentFacing].Map.GetLength(0), Masks[CurrentFacing].Map.GetLength(1));
 
-        public virtual void Rotate(int direction)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="direction">+1 CW, -1 CCW</param>
+        public Facing Rotate(int direction)
         {
             //update facing
-            CurrentFacing = (Facing)(((int)CurrentFacing + direction) % Masks.Count);
+
+            int v = (int)CurrentFacing + direction;
+            
+            var endFacing = v % Masks.Count < 0 ? (Facing)(Masks.Count - 1) : (Facing)(v % Masks.Count);
+            CurrentFacing = endFacing;
+            return endFacing;
         }
     }
 }

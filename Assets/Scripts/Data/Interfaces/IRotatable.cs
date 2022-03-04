@@ -3,6 +3,6 @@
 {
     public interface IRotatable
     {
-        public void Rotate(int direction);  //+1 CW, -1CCW
+        public Facing Rotate(int direction);  //+1 CW, -1CCW
     }
 }
