@@ -1,7 +1,9 @@
 using Data;
+using Data.Interfaces;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI
@@ -10,12 +12,11 @@ namespace InventoryQuest.UI
     {
         [SerializeField]
         Cursor cursorPrefab;
+        [SerializeField]
+        bool hardwareCursorEnable;
 
         GameManager _gameManager;
         Cursor _cursor;
-
-        float h => _cursor.itemIcon.preferredHeight;
-        float w => _cursor.itemIcon.preferredWidth;
 
         [Inject]
         public void Init(GameManager gameManager)
@@ -30,7 +31,7 @@ namespace InventoryQuest.UI
             _gameManager.OnItemPlaced += OnItemPlacedHandler;
             _gameManager.OnRotateCW += OnItemRotateCW;
             _gameManager.OnRotateCCW += OnItemRotateCCW;
-            //UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.visible = hardwareCursorEnable;
             HideItemSprite();
         }
 
@@ -66,59 +67,27 @@ namespace InventoryQuest.UI
 
         public void OnItemRotateCW(object sender, RotationEventArgs e)
         {
-            //_cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, -90) + _cursor.itemIcon.rectTransform.rotation.eulerAngles);
-            RotateSprite(e.TargetFacing);
+            ImageUtilities.RotateSprite(e.TargetFacing, _cursor.itemIcon);
         }
 
         public void OnItemRotateCCW(object sender, RotationEventArgs e)
         {
-            //_cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, 90) + _cursor.itemIcon.rectTransform.rotation.eulerAngles);
-            RotateSprite(e.TargetFacing);
-        }
-
-        void RotateSprite(Facing TargetFacing)
-        {
-            switch (TargetFacing)
-            {
-                case Facing.Right:
-                    _cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                    _cursor.itemIcon.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
-                    break;
-                case Facing.Down:
-                    _cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
-                    _cursor.itemIcon.rectTransform.anchoredPosition = new Vector3(h,0,0);
-                    break;
-                case Facing.Left:
-                    _cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, -180));
-                    _cursor.itemIcon.rectTransform.anchoredPosition = new Vector3(w, -h, 0);
-                    break;
-                case Facing.Up:
-                    _cursor.itemIcon.rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, -270));
-                    _cursor.itemIcon.rectTransform.anchoredPosition = new Vector3(0, -w, 0);
-                    break;
-                default:
-                    break;
-            }
+            ImageUtilities.RotateSprite(e.TargetFacing, _cursor.itemIcon);
         }
 
         public void ShowItemSprite()
         {
             var item = _gameManager.HoldingItem;
             _cursor.itemIcon.sprite = item.Sprite;
-            //set the size
             _cursor.itemIcon.SetNativeSize();
-            //determine starting facing
             _cursor.itemIcon.color = Color.white;
-            
-            RotateSprite(item.Shape.CurrentFacing);
-            //_cursor.cursorIcon.color = Color.clear;
+            ImageUtilities.RotateSprite(item.Shape.CurrentFacing, _cursor.itemIcon);
         }
 
         public void HideItemSprite()
         {
             _cursor.itemIcon.sprite = null;
             _cursor.itemIcon.color = Color.clear;
-            //_cursor.cursorIcon.color = Color.white;
         }
     }
 }
