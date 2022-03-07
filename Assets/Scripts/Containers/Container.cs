@@ -39,9 +39,8 @@ namespace InventoryQuest
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
 
-        public event EventHandler<GridEventArgs> OnGridOccupied;
-        public event EventHandler<GridEventArgs> OnGridUnoccupied;
-        public event EventHandler<ContainerEventArgs> OnContainerChanged;
+        public event EventHandler<GridEventArgs> OnItemPlaced;
+        public event EventHandler<GridEventArgs> OnItemTaken;
 
         public bool TryPlace(IItem item, Coor target)
         {
@@ -57,8 +56,8 @@ namespace InventoryQuest
                     }
                 }
                 //place item
-                Contents.Add(item.GuId, new Content(item, tempPointList));
-                OnGridOccupied?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal));
+                Contents.Add(item.GuId, new Content(item, tempPointList, target));
+                
                 for (int i = 0; i < tempPointList.Count; i++)
                 {
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
@@ -66,6 +65,7 @@ namespace InventoryQuest
                 }
                 //LogGrid();
                 //LogContents();
+                OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
                 return true;
             }
             Debug.Log($"TryPlace() failed for {item.Id} at point [{target}]");
@@ -89,7 +89,7 @@ namespace InventoryQuest
                 {
                     item = content.Item;
                     Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
-                    OnGridUnoccupied?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal));
+                    
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
@@ -98,11 +98,9 @@ namespace InventoryQuest
                         Grid[coor.row, coor.column].storedItemId = "";
                     }
                     ListPool<Coor>.Release(content.GridSpaces);
-
-
-                    OnContainerChanged?.Invoke(this, new ContainerEventArgs(this));
                     //LogContents();
                     //LogGrid();
+                    OnItemTaken?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal, target, item));
                     return true;
                 }
             }
