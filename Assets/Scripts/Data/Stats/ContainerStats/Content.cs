@@ -7,11 +7,13 @@ namespace Data
     {
         public IItem Item;
         public List<Coor> GridSpaces;
+        public Coor AnchorPosition;
 
-        public Content(IItem item, List<Coor> occupiedSpaces)
+        public Content(IItem item, List<Coor> occupiedSpaces, Coor anchorPosition)
         {
             GridSpaces = occupiedSpaces;
             Item = item;
+            AnchorPosition = anchorPosition;
         }
     }
 

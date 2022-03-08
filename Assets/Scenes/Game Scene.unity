@@ -252,9 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0bf8d789becb144bd5e40e0c4bcf5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 1060314770}
-  Origin: {x: -5, y: 2.5}
+  _panelTransform: {fileID: 1060314770}
   GridSquareSprite: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
+  ItemImage: {fileID: 5441537819867880285, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   rowMax: 6
   columnMax: 12
   _contactFilter:
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 1060314772}
   - component: {fileID: 1060314771}
   m_Layer: 5
-  m_Name: Loot Pool
+  m_Name: Loot Pool Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3459,6 +3459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorPrefab: {fileID: 3824087784194014376, guid: 78fa966d6e31acd40a5545cd4cce56d7, type: 3}
+  hardwareCursorEnable: 1
 --- !u!1001 &1653396508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3700,9 +3701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0bf8d789becb144bd5e40e0c4bcf5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 908402904}
-  Origin: {x: 0, y: 0}
+  _panelTransform: {fileID: 908402904}
   GridSquareSprite: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
+  ItemImage: {fileID: 5441537819867880285, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   rowMax: 12
   columnMax: 24
   _contactFilter:

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4314397590795802688}
   - component: {fileID: 4004504270696330323}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HighlightImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -113,7 +113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1815904352117667624
@@ -166,5 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90dd38154cc87f4cbd284bb5ad78a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImagePrefab: {fileID: 7533226305058349392, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   backgroundSprite: {fileID: 497306836238160756}
   highlightSprite: {fileID: 4004504270696330323}

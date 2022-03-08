@@ -1,4 +1,5 @@
 using Data;
+using Data.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -39,7 +40,6 @@ namespace InventoryQuest.UI
         private void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
-
         }
 
         public void SetHighlightColor(HighlightState state)
@@ -86,7 +86,6 @@ namespace InventoryQuest.UI
                 default:
                     break;
             }
-
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -99,6 +98,6 @@ namespace InventoryQuest.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             SetHighlightColor(HighlightState.Normal);
-        }
+        }   
     }
 }

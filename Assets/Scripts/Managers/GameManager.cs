@@ -65,8 +65,9 @@ namespace InventoryQuest
         private void Start()
         {
             _containerDisplayManager.ConnectLootContainer(LootPile);
-            //StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "apple_fuji"));
+            
             StartCoroutine(AddItemsToContainer(3, restPeriod, LootPile, "basic_crossbow_1"));
+            StartCoroutine(AddItemsToContainer(6, restPeriod, LootPile, "apple_fuji"));
         }
 
         private void Update()
