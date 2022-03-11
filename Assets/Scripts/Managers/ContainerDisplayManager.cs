@@ -1,9 +1,8 @@
-using InventoryQuest;
+using Data;
+using InventoryQuest.Managers;
 using InventoryQuest.UI;
 using UnityEngine;
 using Zenject;
-using Data;
-using InventoryQuest.Managers;
 
 public class ContainerDisplayManager : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class ContainerDisplayManager : MonoBehaviour
         _partyManager = partyManager;
     }
 
-    private void Awake()
+    private void Start()
     {
         _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
     }

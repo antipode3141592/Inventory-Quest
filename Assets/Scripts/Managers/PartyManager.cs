@@ -1,4 +1,5 @@
-﻿using Data.Interfaces;
+﻿using Data;
+using Data.Interfaces;
 using InventoryQuest.Characters;
 using UnityEngine;
 using Zenject;

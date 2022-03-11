@@ -87,7 +87,15 @@ namespace InventoryQuest.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_gameManager.CurrentState != GameStates.HoldingItem) return;
-            var squareState = _character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem) ? HighlightState.Highlight : HighlightState.Incorrect;
+            HighlightState squareState;
+            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem)) {
+                squareState = HighlightState.Highlight;
+                
+            } 
+            else
+            {
+                squareState = HighlightState.Incorrect;
+            }
             SetHighlightColor(squareState);
         }
 

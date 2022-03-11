@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Interfaces;
 using InventoryQuest.Characters;
+using InventoryQuest.Quests;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace InventoryQuest.Testing
     public class TestGatheringQuest
     {
         IQuest quest;
+        GatheringQuestStats questStats;
         IDataSource dataSource;
         Party party;
         Character player;
@@ -30,7 +32,8 @@ namespace InventoryQuest.Testing
                 (ContainerStats)dataSource.GetItemStats("adventure backpack"));
             party = new Party(new Character[] {player, minion_1, minion_2});
 
-            quest = new GatheringQuest("get_apples", "gather 5 fuji apples", targetItemId, targetCount, "ring_charisma_1", party);
+            questStats = new GatheringQuestStats("quest_000","get_apples", "gather 5 fuji apples", targetCount, targetItemId,  "ring_charisma_1");
+            quest = new GatheringQuest(questStats);
         }
 
         [TearDown]
@@ -64,14 +67,14 @@ namespace InventoryQuest.Testing
         public void QuestEvaluateTrue()
         {
             AddItems(targetItemId, 5);
-            Assert.IsTrue(quest.Evaluate());
+            Assert.IsTrue(quest.Evaluate(party));
         }
 
         [Test]
         public void QuestEvaluateFalse()
         {
             AddItems(targetItemId, 4);
-            Assert.IsFalse(quest.Evaluate());
+            Assert.IsFalse(quest.Evaluate(party));
         }
     }
 }

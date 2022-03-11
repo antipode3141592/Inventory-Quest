@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InventoryQuest
+namespace Data
 {
     public class ContainerEventArgs : EventArgs
     {

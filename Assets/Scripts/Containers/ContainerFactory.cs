@@ -1,4 +1,6 @@
-﻿namespace InventoryQuest
+﻿using Data;
+
+namespace InventoryQuest
 {
     public class ContainerFactory
     {

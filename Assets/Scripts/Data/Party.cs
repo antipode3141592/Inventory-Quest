@@ -1,9 +1,7 @@
-﻿using Data;
-using InventoryQuest.Characters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace InventoryQuest
+namespace Data
 {
     public class Party
     {

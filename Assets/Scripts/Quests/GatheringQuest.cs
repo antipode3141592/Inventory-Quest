@@ -1,23 +1,12 @@
-﻿using Data.Interfaces;
+﻿using Data;
+using Data.Interfaces;
 using System;
-using InventoryQuest.Managers;
 
-namespace InventoryQuest
+namespace InventoryQuest.Quests
 {
     public class GatheringQuest : IQuest
     {
-        Party _party;
-
-        public GatheringQuest(string name, string description, string targetItemId, int targetQuantity, string rewardId, Party party)
-        {
-            Id = Guid.NewGuid().ToString();
-            Name = name;
-            Description = description;
-            TargetItemId = targetItemId;
-            TargetQuantity = targetQuantity;
-            RewardId = rewardId;
-            _party = party;
-        }
+        
 
         public string Id { get; }
 
@@ -31,9 +20,19 @@ namespace InventoryQuest
 
         public string RewardId { get; }
 
-        public bool Evaluate()
+        public GatheringQuest(GatheringQuestStats stats)
         {
-            int targetCount = _party.GetPartyItemCountById(TargetItemId);
+            Id = Guid.NewGuid().ToString();
+            Name = stats.Name;
+            Description = stats.Description;
+            TargetItemId = stats.TargetItemId;
+            TargetQuantity = stats.TargetQuantity;
+            RewardId = stats.RewardId;
+        }
+
+        public bool Evaluate(Party party)
+        {
+            int targetCount = party.GetPartyItemCountById(TargetItemId);
             if (targetCount == TargetQuantity) return true;
             return false;
         }

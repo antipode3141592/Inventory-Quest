@@ -8,7 +8,7 @@ namespace Data.Interfaces
 
         public string RewardId { get; }
 
-        public bool Evaluate();
+        public bool Evaluate(Party party);
 
         public void Cancel();
     }

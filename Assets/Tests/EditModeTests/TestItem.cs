@@ -36,8 +36,10 @@ namespace InventoryQuest.Testing
         public void ItemShapeRotateCW()
         {
             Facing initial = MyItem.Shape.CurrentFacing;
-            Facing next = (Facing)(((int)initial + 1) % 4);
-            MyItem.Shape.Rotate(1);
+            int direction = 1;
+            int v = (int)initial + direction;
+            var next = v % 4 < 0 ? (Facing)3 : (Facing)(v % 4);
+            MyItem.Shape.Rotate(direction);
             Assert.AreEqual(expected: next, actual:MyItem.Shape.CurrentFacing);
         }
 
@@ -45,7 +47,9 @@ namespace InventoryQuest.Testing
         public void ItemShapeRotateCCW()
         {
             Facing initial = MyItem.Shape.CurrentFacing;
-            Facing next = (Facing)(((int)initial - 1) % 4);
+            int direction = -1;
+            int v = (int)initial + direction;
+            var next = v % 4 < 0 ? (Facing)3 : (Facing)(v % 4);
             MyItem.Shape.Rotate(-1);
             Assert.AreEqual(expected: next, actual: MyItem.Shape.CurrentFacing);
         }

@@ -1,12 +1,11 @@
-﻿using Data;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace InventoryQuest
+namespace Data
 {
     public class Container: IItem, IContainer
     {

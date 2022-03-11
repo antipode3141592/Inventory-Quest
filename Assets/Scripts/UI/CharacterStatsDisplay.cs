@@ -1,7 +1,6 @@
-using InventoryQuest.Characters;
+using Data;
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace InventoryQuest.UI
@@ -9,9 +8,7 @@ namespace InventoryQuest.UI
     public class CharacterStatsDisplay : MonoBehaviour
     {
         [SerializeField]
-        TextMeshProUGUI textPrefab;
-
-        List<TextMeshProUGUI> StatTexts = new List<TextMeshProUGUI>();
+        List<StatTextDisplay> statTexts = new List<StatTextDisplay>();
 
         Character _character;
         public Character CurrentCharacter
@@ -22,7 +19,7 @@ namespace InventoryQuest.UI
                 UnsubscribeToCharacterEvents();
                 _character = value;
                 SubcribeToCharacterEvents();
-                CreateStatBlock();
+                UpdateStatBlock();
             }
         }
 
@@ -38,32 +35,21 @@ namespace InventoryQuest.UI
             _character.OnStatsUpdated -= OnStatsUpdatedHandler;
         }
 
-        void CreateStatBlock()
+        void UpdateStatBlock()
         {
-            Debug.Log("Create Statblock...");
-            int i = 0;
-            foreach(var item in _character.Stats.Stats)
+
+            foreach (var item in _character.Stats.Stats)
             {
-                if (StatTexts.Count < _character.Stats.Stats.Count)
-                {
-                    var txt = Instantiate<TextMeshProUGUI>(textPrefab, gameObject.transform);
-                    txt.gameObject.name = $"{item.Key.Name}StatText";
-                    StatTexts.Add(txt);
-                }
-                StatTexts[i].text = $"{item.Key.Name}: {item.Value.CurrentValue} (initial: {item.Value.InitialValue})";
-                i++;
+                var stat = statTexts.Find(x => x.StatTypeName == item.Key.Name);
+                if (stat is null) return;
+                stat.UpdateText($"{item.Value.CurrentValue}");
             }
         }
 
 
         void OnStatsUpdatedHandler (object sender, EventArgs e)
         {
-            CreateStatBlock();
-        }
-
-        void UpdateText()
-        {
-
+            UpdateStatBlock();
         }
     }
 }

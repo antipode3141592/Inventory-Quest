@@ -1,12 +1,10 @@
-﻿using Data;
-using Data.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using System.Linq;
 
-namespace InventoryQuest.Characters
+namespace Data
 {
     //characters 
     public class Character: IDisposable
@@ -22,10 +20,10 @@ namespace InventoryQuest.Characters
         public EventHandler OnStatsUpdated;
 
 
-        public Character(CharacterStats characterStats, ContainerStats containerStats)
+        public Character(CharacterStats characterStats, Container primaryContainer)
         {
             GuId = Guid.NewGuid().ToString();
-            PrimaryContainer = ContainerFactory.GetContainer(containerStats);
+            PrimaryContainer = primaryContainer;
             Stats = characterStats;
             EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes) 
