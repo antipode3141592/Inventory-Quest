@@ -9,6 +9,12 @@ namespace InventoryQuest.UI
     {
         [SerializeField]
         List<StatTextDisplay> statTexts = new List<StatTextDisplay>();
+        [SerializeField]
+        CharacterCurrentMaxStatDisplay healthText;
+        [SerializeField]
+        CharacterCurrentMaxStatDisplay encumberanceText;
+        [SerializeField]
+        CharacterCurrentMaxStatDisplay experienceText;
 
         Character _character;
         public Character CurrentCharacter
@@ -44,6 +50,10 @@ namespace InventoryQuest.UI
                 if (stat is null) return;
                 stat.UpdateText($"{item.Value.CurrentValue}");
             }
+
+            healthText.UpdateText($"{_character.Stats.CurrentHealth}", $"{_character.Stats.MaximumHealth}");
+            encumberanceText.UpdateText($"{_character.CurrentEncumbrance}", $"{_character.Stats.MaximumEncumbrance}");
+            experienceText.UpdateText($"{ _character.Stats.CurrentExperience}", $"{_character.Stats.NextLevelExperience}");
         }
 
 

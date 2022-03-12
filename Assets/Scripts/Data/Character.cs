@@ -33,13 +33,11 @@ namespace Data
                 slot.OnEquip += OnEquipHandler;
                 slot.OnUnequip += OnUnequipHandler;
             }
+            PrimaryContainer.OnItemPlaced += OnContainerChangedHandler;
+            PrimaryContainer.OnItemTaken += OnContainerChangedHandler;
         }
 
-        //derived stats
-        public float MaxEncumbrance => Stats.Strength.CurrentValue * 10f;
-        public float MaxHealth => Stats.Durability.CurrentValue * 10f;
-        public float CurrentEncumbrance => PrimaryContainer.TotalWeight;
-        public float CurrentTotalGoldValue => PrimaryContainer.TotalWorth;
+        public float CurrentEncumbrance => PrimaryContainer.TotalWeight + EquipmentSlots.Where(x => x.Value.EquippedItem is not null).Sum(x => x.Value.EquippedItem.Weight);
 
         public int GetItemCountById(string id)
         {
@@ -65,6 +63,7 @@ namespace Data
             {
                 ApplyModifier(mod);
             }
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         void ApplyModifier(StatModifier mod)
@@ -84,7 +83,6 @@ namespace Data
             {
                 prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
             }
-            OnStatsUpdated?.Invoke(this, new EventArgs());
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
@@ -94,6 +92,7 @@ namespace Data
             {
                 RemoveModifier(mod);
             }
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         void RemoveModifier(StatModifier mod)
@@ -112,7 +111,11 @@ namespace Data
             {
                 prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
             }
-            OnStatsUpdated?.Invoke(this, new EventArgs());
+        }
+
+        public void OnContainerChangedHandler(object sender, EventArgs e)
+        {
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

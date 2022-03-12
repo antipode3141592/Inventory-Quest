@@ -6,27 +6,27 @@ namespace InventoryQuest.UI
     public class StatTextDisplay : MonoBehaviour
     {
         [SerializeField]
-        string statTypeName;
+        protected string statTypeName;
 
         public string StatTypeName => statTypeName;
 
         [SerializeField]
-        TextMeshProUGUI labelText;
+        protected TextMeshProUGUI labelText;
         [SerializeField]
-        TextMeshProUGUI currentStatValueText;
+        protected TextMeshProUGUI currentStatValueText;
         [SerializeField]
-        TextMeshProUGUI statModifierText;
-        private void Awake()
+        protected TextMeshProUGUI statModifierText;
+        protected void Awake()
         {
             HideModifier();
         }
 
-        public void UpdateText(string currentValue)
+        public virtual void UpdateText(string currentValue)
         {
             currentStatValueText.text = currentValue;
         }
 
-        public void ShowModifier(string modifier, bool isBuff = true)
+        public virtual void ShowModifier(string modifier, bool isBuff = true)
         {
             statModifierText.text = modifier;
             Color textColor = isBuff ? Color.green : Color.red;
@@ -35,7 +35,7 @@ namespace InventoryQuest.UI
             currentStatValueText.color = textColor;
         }
 
-        public void HideModifier()
+        public virtual void HideModifier()
         {
             statModifierText.color = Color.clear;
             labelText.color = Color.white;

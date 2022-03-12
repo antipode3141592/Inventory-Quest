@@ -23,6 +23,17 @@ namespace Data
         public Attack Attack { get; set; }
         public Defense Defense { get; set; }
 
+        public float CurrentHealth { get; set; }
+        public float MaximumHealth => Durability.CurrentValue * 5f;
+
+        public float MaximumEncumbrance => Strength.CurrentValue * 15f;
+
+        public float CurrentExperience { get; set; }
+
+        public float NextLevelExperience => (float)(CurrentLevel^2) * 250f + (float)CurrentLevel * 750f;
+
+        public int CurrentLevel { get; set; }
+
 
         public Dictionary<Type, IStat> Stats;
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
@@ -42,8 +53,8 @@ namespace Data
             Intelligence = new Intelligence(stats[typeof(Intelligence)]);
             Wisdom = new Wisdom(stats[typeof(Wisdom)]);
 
-            Attack = new Attack(0f, Strength);
-            Defense = new Defense(0f, Dexterity);
+            Attack = new Attack(0f, new CharacterStat[] { Strength, Speed });
+            Defense = new Defense(0f, new CharacterStat[] { Dexterity, Durability });
             Resistances = resistances;
 
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
@@ -55,6 +66,8 @@ namespace Data
                     Stats.Add(property.PropertyType, (IStat)property.GetValue(this));
 
             }
+
+            CurrentHealth = MaximumHealth;
         }
 
 

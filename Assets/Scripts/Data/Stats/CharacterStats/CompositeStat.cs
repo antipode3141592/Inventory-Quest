@@ -1,4 +1,7 @@
-﻿namespace Data
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Data
 {
     public abstract class CompositeStat : IStat
     {
@@ -6,27 +9,27 @@
 
         public float Modifier { get; set; }
 
-        public float CurrentValue => InitialValue + Modifier + ConnectedStat.CurrentValue;
+        public float CurrentValue => InitialValue + Modifier + ConnectedStats.Sum(x => x.CurrentValue);
 
-        public IStat ConnectedStat { get; }
+        public ICollection<IStat> ConnectedStats { get; }
 
-        public CompositeStat(float initialValue, IStat stat)
+        public CompositeStat(float initialValue, ICollection<IStat> stat)
         {
             InitialValue = initialValue;
-            ConnectedStat = stat;
+            ConnectedStats = stat;
         }
     }
 
     public class Attack : CompositeStat
     {
-        public Attack(float initialValue, IStat stat) : base(initialValue, stat)
+        public Attack(float initialValue, ICollection<IStat> stat) : base(initialValue, stat)
         {
         }
     }
 
     public class Defense : CompositeStat
     {
-        public Defense(float initialValue, IStat stat) : base(initialValue, stat)
+        public Defense(float initialValue, ICollection<IStat> stat) : base(initialValue, stat)
         {
         }
     }
