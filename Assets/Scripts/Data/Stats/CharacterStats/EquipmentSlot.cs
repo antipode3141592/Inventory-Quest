@@ -18,7 +18,7 @@ namespace Data
         public EventHandler<ModifierEventArgs> OnEquip;
         public EventHandler<ModifierEventArgs> OnUnequip;
 
-        public bool TryEquip(out IItem previousItem, IItem item)
+        public bool TryEquip(out IEquipable previousItem, IItem item)
         {
             previousItem = null;
             if (IsValidPlacement(item))
@@ -37,13 +37,13 @@ namespace Data
             return false;
         }
 
-        public bool TryUnequip(out IItem item)
+        public bool TryUnequip(out IEquipable item)
         {
             item = null;
             if (EquippedItem == null) return false;
             item = EquippedItem;
-            OnUnequip?.Invoke(this, new ModifierEventArgs(EquippedItem.Modifiers));
             EquippedItem = null;
+            OnUnequip?.Invoke(this, new ModifierEventArgs(item.Modifiers));
             return true;
         }
 
