@@ -77,11 +77,11 @@ namespace Data
 
             if (mod.OperatorType == OperatorType.Add)
             {
-                prop2.SetValue(obj, (float)currentValue + mod.AdjustmentValue);
+                prop2.SetValue(obj, (int)currentValue + mod.AdjustmentValue);
             }
             else if (mod.OperatorType == OperatorType.Multiply)
             {
-                prop2.SetValue(obj, (float)currentValue * mod.AdjustmentValue);
+                prop2.SetValue(obj, (int)currentValue * mod.AdjustmentValue);
             }
         }
 
@@ -105,11 +105,11 @@ namespace Data
             var currentValue = prop2.GetValue(obj, null);
             if (mod.OperatorType == OperatorType.Add)
             {
-                prop2.SetValue(obj, (float)currentValue - mod.AdjustmentValue);
+                prop2.SetValue(obj, (int)currentValue - mod.AdjustmentValue);
             }
             else if (mod.OperatorType == OperatorType.Multiply)
             {
-                prop2.SetValue(obj, (float)currentValue / mod.AdjustmentValue);
+                prop2.SetValue(obj, (int)currentValue * mod.AdjustmentValue);
             }
         }
 

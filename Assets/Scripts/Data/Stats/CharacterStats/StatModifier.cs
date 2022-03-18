@@ -7,9 +7,9 @@ namespace Data
     {
         public Type StatType;
         public OperatorType OperatorType;
-        public float AdjustmentValue;
+        public int AdjustmentValue;
 
-        public StatModifier(Type statType, OperatorType operatorType, float adjustmentValue)
+        public StatModifier(Type statType, OperatorType operatorType, int adjustmentValue)
         {
             StatType = statType;
             OperatorType = operatorType;

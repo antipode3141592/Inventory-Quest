@@ -5,15 +5,15 @@ namespace Data
 {
     public abstract class CompositeStat : IStat
     {
-        public float InitialValue { get; }
+        public int InitialValue { get; }
 
-        public float Modifier { get; set; }
+        public int Modifier { get; set; }
 
-        public float CurrentValue => InitialValue + Modifier + ConnectedStats.Sum(x => x.CurrentValue);
+        public int CurrentValue => InitialValue + Modifier + ConnectedStats.Sum(x => x.CurrentValue);
 
         public ICollection<IStat> ConnectedStats { get; }
 
-        public CompositeStat(float initialValue, ICollection<IStat> stat)
+        public CompositeStat(int initialValue, ICollection<IStat> stat)
         {
             InitialValue = initialValue;
             ConnectedStats = stat;
@@ -22,14 +22,14 @@ namespace Data
 
     public class Attack : CompositeStat
     {
-        public Attack(float initialValue, ICollection<IStat> stat) : base(initialValue, stat)
+        public Attack(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
         {
         }
     }
 
     public class Defense : CompositeStat
     {
-        public Defense(float initialValue, ICollection<IStat> stat) : base(initialValue, stat)
+        public Defense(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
         {
         }
     }

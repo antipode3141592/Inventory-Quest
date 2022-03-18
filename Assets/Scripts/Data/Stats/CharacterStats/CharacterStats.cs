@@ -13,24 +13,32 @@ namespace Data
         public string PortraitPath;
 
         public Strength Strength { get; set; }
-        public Dexterity Dexterity { get; set; }
-        public Durability Durability { get; set; }
-        public Charisma Charisma { get; set; }
+
+        public Vitality Vitality { get; set; }
+        
+        public Agility Agility { get; set; }
+
         public Speed Speed { get; set; }
+
+        public Charisma Charisma { get; set; }
+        
         public Intelligence Intelligence { get; set; }
-        public Wisdom Wisdom { get; set; }
+        public Spirit Spirit { get; set; }
+
+        public Arcane Arcane { get; set; }
+
 
         public Attack Attack { get; set; }
         public Defense Defense { get; set; }
 
-        public float CurrentHealth { get; set; }
-        public float MaximumHealth => Durability.CurrentValue * 5f;
+        public int CurrentHealth { get; set; }
+        public int MaximumHealth => Vitality.CurrentValue * 5;
 
-        public float MaximumEncumbrance => Strength.CurrentValue * 15f;
+        public int MaximumEncumbrance => Strength.CurrentValue * 15;
 
-        public float CurrentExperience { get; set; }
+        public int CurrentExperience { get; set; }
 
-        public float NextLevelExperience => (float)(CurrentLevel^2) * 250f + (float)CurrentLevel * 750f;
+        public int NextLevelExperience => (CurrentLevel^2) * 250 + CurrentLevel * 750;
 
         public int CurrentLevel { get; set; }
 
@@ -39,22 +47,23 @@ namespace Data
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
         public List<EquipmentSlotType> EquipmentSlotsTypes;
 
-        public CharacterStats(string name, string portraitPath, Dictionary<Type,float> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
+        public CharacterStats(string name, string portraitPath, Dictionary<Type,int> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
         {
             Name = name;
             DisplayName = name;
             PortraitPath = portraitPath;
 
             Strength = new Strength(stats[typeof(Strength)]);
-            Dexterity = new Dexterity(stats[typeof(Dexterity)]);
-            Durability = new Durability(stats[typeof(Durability)]);
-            Charisma = new Charisma(stats[typeof(Charisma)]);
+            Vitality = new Vitality(stats[typeof(Vitality)]);
+            Agility = new Agility(stats[typeof(Agility)]);
             Speed = new Speed(stats[typeof(Speed)]);
+            Charisma = new Charisma(stats[typeof(Charisma)]);
             Intelligence = new Intelligence(stats[typeof(Intelligence)]);
-            Wisdom = new Wisdom(stats[typeof(Wisdom)]);
+            Spirit = new Spirit(stats[typeof(Spirit)]);
+            Arcane = new Arcane(stats[typeof(Arcane)]);
 
-            Attack = new Attack(0f, new CharacterStat[] { Strength, Speed });
-            Defense = new Defense(0f, new CharacterStat[] { Dexterity, Durability });
+            Attack = new Attack(0, new CharacterStat[] { Strength, Speed });
+            Defense = new Defense(0, new CharacterStat[] { Agility, Vitality });
             Resistances = resistances;
 
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
