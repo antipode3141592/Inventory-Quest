@@ -60,7 +60,6 @@ namespace InventoryQuest.Testing
         {
             partyMember.EquipmentSlots[equipableItem.SlotType].TryEquip(out var previousItem, equipableItem);
             Assert.IsTrue(currentEncounter.Resolve(party));
-            Assert.AreEqual(partyMember.Stats.CurrentExperience, currentEncounter.Experience);
         }
         
         [Test]

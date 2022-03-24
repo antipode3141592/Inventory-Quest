@@ -49,6 +49,8 @@ namespace InventoryQuest.Testing
         [Test]
         public void TakeItemFromBackpackAndEquip()
         {
+            int initialAttackValue = Player.Stats.Attack.CurrentValue;
+            int calculatedAttackValue = initialAttackValue + 1;
             Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
             string swordId = Sword.GuId;
             
@@ -64,7 +66,7 @@ namespace InventoryQuest.Testing
 
             }
             Assert.AreEqual(swordId, Player.EquipmentSlots[Sword.SlotType].EquippedItem.GuId);
-            Assert.AreEqual(11f, Player.Stats.Attack.CurrentValue);
+            Assert.AreEqual(calculatedAttackValue, Player.Stats.Attack.CurrentValue);
         }
 
         [Test]
