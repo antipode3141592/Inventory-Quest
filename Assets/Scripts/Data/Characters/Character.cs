@@ -7,26 +7,25 @@ using UnityEngine;
 namespace Data
 {
     //characters 
-    public class Character: IDisposable
+    public class Character : IDisposable
     {
         public string GuId { get; }
 
         public CharacterStats Stats;
 
-        public Dictionary<EquipmentSlotType,EquipmentSlot> EquipmentSlots;
+        public Dictionary<EquipmentSlotType, EquipmentSlot> EquipmentSlots;
 
         public Container PrimaryContainer { get; set; }
 
         public EventHandler OnStatsUpdated;
-
 
         public Character(CharacterStats characterStats, Container primaryContainer)
         {
             GuId = Guid.NewGuid().ToString();
             PrimaryContainer = primaryContainer;
             Stats = characterStats;
-            EquipmentSlots = new Dictionary<EquipmentSlotType,EquipmentSlot>();
-            foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes) 
+            EquipmentSlots = new Dictionary<EquipmentSlotType, EquipmentSlot>();
+            foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
                 var slot = new EquipmentSlot(slotType);
                 EquipmentSlots.Add(key: slotType, value: slot);
@@ -38,6 +37,8 @@ namespace Data
         }
 
         public float CurrentEncumbrance => PrimaryContainer.TotalWeight + EquipmentSlots.Where(x => x.Value.EquippedItem is not null).Sum(x => x.Value.EquippedItem.Weight);
+
+        public bool IsIncapacitated => Stats.CurrentHealth <= 0 ? true : false;
 
         public int GetItemCountById(string id)
         {

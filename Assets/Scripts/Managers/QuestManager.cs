@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,15 @@ namespace InventoryQuest.Managers
         List<IQuest> availableQuests;
         List<IQuest> currentQuests;
         List<IQuest> completedQuests;
+
+        public List<IQuest> AvailableQuests => availableQuests;
+        public List<IQuest> CurrentQuests => currentQuests;
+        public List<IQuest> CompletedQuests => completedQuests;
+
+
+        public EventHandler<MessageEventArgs> OnQuestAccepted;
+        public EventHandler<MessageEventArgs> OnQuestCanceled;
+        public EventHandler<MessageEventArgs> OnQuestCompleted;
 
         [Inject]
         public void Init(GameManager gameManager, PartyManager partyManager)
@@ -40,6 +50,11 @@ namespace InventoryQuest.Managers
 
                 }
             }
+        }
+
+        public void AddQuestToCurrentQuests(IQuest quest)
+        {
+            availableQuests.Add(quest);
         }
     }
 }

@@ -67,10 +67,10 @@ namespace Data
         }
     }
 
-    public class Intelligence : CharacterStat
+    public class Intellect : CharacterStat
     {
-        public override Type Type => typeof(Intelligence);
-        public Intelligence(int initialValue) : base(initialValue)
+        public override Type Type => typeof(Intellect);
+        public Intellect(int initialValue) : base(initialValue)
         {
         }
     }

@@ -1519,7 +1519,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5474542538855383399, guid: d93481ad8216a6f42bc1a8105d2f5e42, type: 3}
       propertyPath: m_Name
-      value: IntelligenceStat
+      value: IntellectStat
       objectReference: {fileID: 0}
     - target: {fileID: 5535154579452986820, guid: d93481ad8216a6f42bc1a8105d2f5e42, type: 3}
       propertyPath: m_text
@@ -1611,7 +1611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9101971436603581144, guid: d93481ad8216a6f42bc1a8105d2f5e42, type: 3}
       propertyPath: statTypeName
-      value: Intelligence
+      value: Intellect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d93481ad8216a6f42bc1a8105d2f5e42, type: 3}

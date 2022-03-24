@@ -1,9 +1,8 @@
-﻿using Data;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace InventoryQuest
+namespace Data
 {
     public class DataSourceTest : IDataSource
     {
@@ -35,7 +34,7 @@ namespace InventoryQuest
         {
             EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
 
-            Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 10f, 10f, 10f, 10f, 10f, 10f, 10f });
+            Dictionary<Type, int> physicalStats = GetStatsBlock(new int[] { 10, 10, 10, 10, 10, 10, 10, 10 });
 
             return new CharacterStats(name: "[PLAYER NAME]", portraitPath: "Portraits/Enemy 01-1",  stats: physicalStats, equipmentSlots: equipmentSlots);
         }
@@ -44,7 +43,7 @@ namespace InventoryQuest
         {
             EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
 
-            Dictionary<Type, float> physicalStats = GetStatsBlock(new float[] { 5f, 5f, 5f, 5f, 5f, 5f, 5f });
+            Dictionary<Type, int> physicalStats = GetStatsBlock(new int[] { 5, 5, 5, 5, 5, 5, 0, 0 });
 
             return new CharacterStats(name: "Minion", portraitPath: "Portraits/Enemy 03-1", stats: physicalStats, equipmentSlots: equipmentSlots);
         }
@@ -63,17 +62,18 @@ namespace InventoryQuest
             return slots;
         }
 
-        Dictionary<Type, float> GetStatsBlock(float[] stats)
+        Dictionary<Type, int> GetStatsBlock(int[] stats)
         {
-            Dictionary<Type, float> physicalStats = new()
+            Dictionary<Type, int> physicalStats = new()
             {
                 { typeof(Strength), stats[0] },
-                { typeof(Dexterity), stats[1] },
-                { typeof(Durability), stats[2] },
-                { typeof(Charisma), stats[3] },
-                { typeof(Speed), stats[4] },
-                { typeof(Intelligence), stats[5] },
-                { typeof(Wisdom), stats[6] }
+                { typeof(Vitality), stats[1] },
+                { typeof(Agility), stats[2] },
+                { typeof(Speed), stats[3] },
+                { typeof(Charisma), stats[4] },
+                { typeof(Intellect), stats[5] },
+                { typeof(Spirit), stats[6] },
+                { typeof(Arcane), stats[7] }
             };
             return physicalStats;
         } 
@@ -122,8 +122,19 @@ namespace InventoryQuest
                      slotType: EquipmentSlotType.OneHandedWeapon,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,1f)}
+                        new(typeof(Strength),OperatorType.Add,1)}
                      ),
+                "basic_sword_15" => new EquipableItemStats("basic_sword_15",
+                    weight: 3.5f,
+                    goldValue: 10000f,
+                    description: "a basic sword",
+                    spritePath: "Items/basic_sword_1",
+                    shape: ShapeType.Bar3,
+                    slotType: EquipmentSlotType.OneHandedWeapon,
+                    defaultFacing: Facing.Down,
+                    modifiers: new StatModifier[] {
+                            new(typeof(Strength),OperatorType.Add,15)}
+                    ),
                 "basic_crossbow_1" => new EquipableItemStats("basic_crossbow_1",
                     weight: 2f,
                     goldValue: 10f,
@@ -133,7 +144,7 @@ namespace InventoryQuest
                     slotType: EquipmentSlotType.TwoHandedWeapon,
                     defaultFacing: Facing.Right,
                     modifiers: new StatModifier[] {
-                            new(typeof(Dexterity),OperatorType.Add,1f)}
+                            new(typeof(Agility),OperatorType.Add,1)}
                     ),
                 "basic_sword_5" => new EquipableItemStats("basic_sword_5",
                     weight: 2f,
@@ -144,7 +155,7 @@ namespace InventoryQuest
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,5f)}
+                        new(typeof(Strength),OperatorType.Add,5)}
                     ),
                 "ring_charisma_1" => new EquipableItemStats("ring_charisma_1",
                     weight: 0.1f,
@@ -154,7 +165,7 @@ namespace InventoryQuest
                     shape: ShapeType.Square1,
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
-                        new(typeof(Charisma), OperatorType.Add, 1f)}
+                        new(typeof(Charisma), OperatorType.Add, 1)}
                     ),
                 _ => new ItemStats("blop",
                      weight: .1f,

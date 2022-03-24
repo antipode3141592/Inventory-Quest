@@ -28,5 +28,15 @@ namespace InventoryQuest.UI
         {
 
         }
+
+        private void OnEnable()
+        {
+            currentEncounter = _encounterManager.CurrentEncounter;
+        }
+
+        private void Start()
+        {
+            
+        }
     }
 }

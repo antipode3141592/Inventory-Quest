@@ -22,7 +22,7 @@ namespace Data
 
         public Charisma Charisma { get; set; }
         
-        public Intelligence Intelligence { get; set; }
+        public Intellect Intellect { get; set; }
         public Spirit Spirit { get; set; }
 
         public Arcane Arcane { get; set; }
@@ -58,7 +58,7 @@ namespace Data
             Agility = new Agility(stats[typeof(Agility)]);
             Speed = new Speed(stats[typeof(Speed)]);
             Charisma = new Charisma(stats[typeof(Charisma)]);
-            Intelligence = new Intelligence(stats[typeof(Intelligence)]);
+            Intellect = new Intellect(stats[typeof(Intellect)]);
             Spirit = new Spirit(stats[typeof(Spirit)]);
             Arcane = new Arcane(stats[typeof(Arcane)]);
 

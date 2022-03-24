@@ -1,13 +1,12 @@
 ﻿using Data;
 using Data.Interfaces;
-using InventoryQuest.Managers;
+using Rewired;
 using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
-using Rewired;
 
-namespace InventoryQuest
+namespace InventoryQuest.Managers
 {
     public class GameManager : MonoBehaviour
     {

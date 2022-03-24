@@ -1,5 +1,5 @@
 using Data;
-using Data.Interfaces;
+using InventoryQuest.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
