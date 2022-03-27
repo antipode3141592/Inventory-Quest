@@ -7,7 +7,9 @@ namespace InventoryQuest.Testing
 {
     public class TestEquipableItem
     {
-        IDataSource dataSource;
+        ICharacterDataSource characterDataSource;
+        IItemDataSource itemDataSource;
+
         Character Player;
         EquipableItem Sword;
         CharacterStats playerStats;
@@ -17,10 +19,11 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
-            dataSource = new DataSourceTest();
-            playerStats = dataSource.GetCharacterStats("Player");
-            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
-            EquipableStats = (EquipableItemStats)dataSource.GetItemStats("basic_sword_1");
+            itemDataSource = new ItemDataSourceTest();
+            characterDataSource = new CharacterDataSourceTest();
+            playerStats = characterDataSource.GetCharacterStats("Player");
+            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_1");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
             Sword = (EquipableItem)ItemFactory.GetItem(EquipableStats); 
         }

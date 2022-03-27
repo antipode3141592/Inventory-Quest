@@ -1,14 +1,12 @@
 ﻿using Data.Interfaces;
-using System;
-using System.Collections.Generic;
 
 namespace Data
 {
-    public class DataSourceTest : IDataSource
+    public class ItemDataSourceTest : IItemDataSource
     {
         
 
-        public DataSourceTest()
+        public ItemDataSourceTest()
         {
 
         }
@@ -19,64 +17,7 @@ namespace Data
             return null;
         }
 
-        public CharacterStats GetCharacterStats(string id)
-        {
-
-            return id switch
-            {
-                "Player" => DefaultPlayerStats(),
-                "Minion" => DefaultMinionStats(),
-                _ => DefaultPlayerStats(),
-            };
-        }
-
-        public CharacterStats DefaultPlayerStats()
-        {
-            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
-
-            Dictionary<Type, int> physicalStats = GetStatsBlock(new int[] { 10, 10, 10, 10, 10, 10, 10, 10 });
-
-            return new CharacterStats(name: "[PLAYER NAME]", portraitPath: "Portraits/Enemy 01-1",  stats: physicalStats, equipmentSlots: equipmentSlots);
-        }
-
-        public CharacterStats DefaultMinionStats()
-        {
-            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
-
-            Dictionary<Type, int> physicalStats = GetStatsBlock(new int[] { 5, 5, 5, 5, 5, 5, 0, 0 });
-
-            return new CharacterStats(name: "Minion", portraitPath: "Portraits/Enemy 03-1", stats: physicalStats, equipmentSlots: equipmentSlots);
-        }
-
-        EquipmentSlotType[] GetDefaultEquipmentSlotTypes()
-        {
-            EquipmentSlotType[] slots = {
-                EquipmentSlotType.OneHandedWeapon,
-                EquipmentSlotType.Shield,
-                EquipmentSlotType.RightHand, 
-                EquipmentSlotType.LeftHand,
-                EquipmentSlotType.Ring,
-                EquipmentSlotType.Belt, 
-                EquipmentSlotType.Feet
-            };
-            return slots;
-        }
-
-        Dictionary<Type, int> GetStatsBlock(int[] stats)
-        {
-            Dictionary<Type, int> physicalStats = new()
-            {
-                { typeof(Strength), stats[0] },
-                { typeof(Vitality), stats[1] },
-                { typeof(Agility), stats[2] },
-                { typeof(Speed), stats[3] },
-                { typeof(Charisma), stats[4] },
-                { typeof(Intellect), stats[5] },
-                { typeof(Spirit), stats[6] },
-                { typeof(Arcane), stats[7] }
-            };
-            return physicalStats;
-        } 
+        
 
         public IItemStats GetItemStats(string id)
         {
@@ -157,15 +98,15 @@ namespace Data
                     modifiers: new StatModifier[] {
                         new(typeof(Strength),OperatorType.Add,5)}
                     ),
-                "ring_charisma_1" => new EquipableItemStats("ring_charisma_1",
+                "ring_charisma_5" => new EquipableItemStats("ring_charisma_1",
                     weight: 0.1f,
-                    goldValue: 50f,
-                    description: "simple silver band which grants minor charisma boost",
+                    goldValue: 500f,
+                    description: "A simple silver band that is quite charming.",
                     spritePath: "",
                     shape: ShapeType.Square1,
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
-                        new(typeof(Charisma), OperatorType.Add, 1)}
+                        new(typeof(Charisma), OperatorType.Add, 5)}
                     ),
                 _ => new ItemStats("blop",
                      weight: .1f,
@@ -176,11 +117,6 @@ namespace Data
             };
         }
 
-        public CharacterStats GetRandomCharacterStats(Rarity rarity)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
-
-
 }

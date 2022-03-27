@@ -8,7 +8,8 @@ namespace InventoryQuest.Testing
 {
     public class TestEncounters
     {
-        IDataSource dataSource;
+        IItemDataSource itemDataSource;
+        ICharacterDataSource characterDataSource;
         IEncounterDataSource encounterDataSource;
         IEncounter currentEncounter;
         Party party;
@@ -24,14 +25,15 @@ namespace InventoryQuest.Testing
         public void SetUp()
         {
             EquipableItemStats EquipableStats;
-            dataSource = new DataSourceTest();
+            itemDataSource = new ItemDataSourceTest();
+            characterDataSource = new CharacterDataSourceTest();
             encounterDataSource = new EncounterDataSourceTest();
 
             currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetEncounterById(encounterId));
 
-            playerStats = dataSource.GetCharacterStats("Player");
-            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
-            EquipableStats = (EquipableItemStats)dataSource.GetItemStats("basic_sword_15");
+            playerStats = characterDataSource.GetCharacterStats("Player");
+            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_15");
             partyMember = CharacterFactory.GetCharacter(playerStats, backpackStats);
             party = new Party(new Character[] { partyMember });
             equipableItem = (EquipableItem)ItemFactory.GetItem(EquipableStats);

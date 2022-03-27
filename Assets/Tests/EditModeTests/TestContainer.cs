@@ -7,7 +7,7 @@ namespace InventoryQuest.Testing
 {
     public class TestContainer
     {
-        IDataSource dataSource;
+        IItemDataSource dataSource;
         //container
         Container MyContainer;
 
@@ -25,7 +25,7 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void Setup()
         {
-            dataSource = new DataSourceTest();
+            dataSource = new ItemDataSourceTest();
             MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
             MyItemStats2 = (ItemStats)dataSource.GetItemStats("thingabob");
             backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");

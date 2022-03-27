@@ -9,12 +9,12 @@ namespace InventoryQuest.Testing
     {
         Item MyItem;
         ItemStats MyItemStats;
-        IDataSource dataSource;
+        IItemDataSource dataSource;
 
         [SetUp]
         public void SetUp()
         {
-            dataSource = new DataSourceTest();
+            dataSource = new ItemDataSourceTest();
             MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
             MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
         }

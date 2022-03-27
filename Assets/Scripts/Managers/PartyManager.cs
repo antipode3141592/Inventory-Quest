@@ -8,7 +8,8 @@ namespace InventoryQuest.Managers
 {
     public class PartyManager: MonoBehaviour
     {
-        IDataSource _dataSource;
+        ICharacterDataSource _characterDataSource;
+        IItemDataSource _itemDataSource;
 
         Party _party;
         Character Player;
@@ -17,17 +18,18 @@ namespace InventoryQuest.Managers
         public Party CurrentParty => _party;
 
         [Inject]
-        public void Init(IDataSource dataSource)
+        public void Init(ICharacterDataSource characterDataSource, IItemDataSource itemDataSource)
         {
-            _dataSource = dataSource;
+            _itemDataSource = itemDataSource;
+            _characterDataSource = characterDataSource;
         }
 
         private void Awake()
         {
-            Player = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Player"),
-                (ContainerStats)_dataSource.GetItemStats("adventure backpack"));
-            Minion = CharacterFactory.GetCharacter(_dataSource.GetCharacterStats("Minion"),
-                (ContainerStats)_dataSource.GetItemStats("small backpack"));
+            Player = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Player"),
+                (ContainerStats)_itemDataSource.GetItemStats("adventure backpack"));
+            Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
+                (ContainerStats)_itemDataSource.GetItemStats("small backpack"));
 
             _party = new Party(new Character[] { Player, Minion });
         }

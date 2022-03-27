@@ -11,7 +11,8 @@ namespace InventoryQuest.Testing
     {
         IQuest quest;
         GatheringQuestStats questStats;
-        IDataSource dataSource;
+        IItemDataSource itemDataSource;
+        ICharacterDataSource characterDataSource;
         Party party;
         Character player;
         Character minion_1;
@@ -23,13 +24,14 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
-            dataSource = new DataSourceTest();
-            player = CharacterFactory.GetCharacter(dataSource.GetCharacterStats("Player"),
-                (ContainerStats)dataSource.GetItemStats("adventure backpack"));
-            minion_1 = CharacterFactory.GetCharacter(dataSource.GetCharacterStats("Minion"),
-                (ContainerStats)dataSource.GetItemStats("adventure backpack"));
-            minion_2 = CharacterFactory.GetCharacter(dataSource.GetCharacterStats("Minion"),
-                (ContainerStats)dataSource.GetItemStats("adventure backpack"));
+            itemDataSource = new ItemDataSourceTest();
+            characterDataSource = new CharacterDataSourceTest();
+            player = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Player"),
+                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
+            minion_1 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
+                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
+            minion_2 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
+                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
             party = new Party(new Character[] {player, minion_1, minion_2});
 
             questStats = new GatheringQuestStats("quest_000","get_apples", "gather 5 fuji apples", targetCount, targetItemId,  "ring_charisma_1");
@@ -39,7 +41,7 @@ namespace InventoryQuest.Testing
         [TearDown]
         public void TearDown()
         {
-            dataSource = null;
+            itemDataSource = null;
             player = null;
             minion_1 = null;
             minion_2 = null;
@@ -52,7 +54,7 @@ namespace InventoryQuest.Testing
             List<string> characterKeys = new List<string>(party.Characters.Keys);
             for (int i = 0; i < itemsToMake; i++)
                 party.Characters[characterKeys[i % characterKeys.Count]].PrimaryContainer
-                     .TryPlace(ItemFactory.GetItem(dataSource.GetItemStats(itemId)), new Coor(0, i));
+                     .TryPlace(ItemFactory.GetItem(itemDataSource.GetItemStats(itemId)), new Coor(0, i));
 
         }
 

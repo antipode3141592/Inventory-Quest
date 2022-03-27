@@ -2,13 +2,13 @@
 using Data.Interfaces;
 using InventoryQuest.Characters;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace InventoryQuest.Testing
 {
     public class TestCharacterCreation
     {
-        IDataSource dataSource;
+        IItemDataSource itemDataSource;
+        ICharacterDataSource characterDataSource;
         Character Player;
         CharacterStats playerStats;
         ContainerStats backpackStats;
@@ -16,9 +16,10 @@ namespace InventoryQuest.Testing
         [SetUp]
         public void SetUp()
         {
-            dataSource = new DataSourceTest();
-            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
-            playerStats = dataSource.GetCharacterStats("Player");
+            itemDataSource = new ItemDataSourceTest();
+            characterDataSource = new CharacterDataSourceTest();
+            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            playerStats = characterDataSource.GetCharacterStats("Player");
             Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
 
         }

@@ -8,7 +8,7 @@ namespace InventoryQuest.Managers
 {
     public class InventoryManager : MonoBehaviour
     {
-        private IDataSource _dataSource;
+        private IItemDataSource _dataSource;
 
 
     }

@@ -38,7 +38,7 @@ namespace InventoryQuest.Managers
             if (CurrentEncounter.Resolve(_partyManager.CurrentParty)) {
                 foreach(var reward in CurrentEncounter.RewardIds)
                 {
-                    _rewardManager.ProcessReward(reward);
+                    _rewardManager.EnqueueReward(reward);
                 }
                 AwardExperience();
                 OnEncounterResolveSuccess?.Invoke(this, EventArgs.Empty);
