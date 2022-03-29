@@ -14,6 +14,8 @@ namespace Data
 
         public Sprite Sprite { get; set; }
 
+        public Rarity Rarity { get; }
+
         public Item(IItemStats itemStats)
         {
             GuId = Guid.NewGuid().ToString();

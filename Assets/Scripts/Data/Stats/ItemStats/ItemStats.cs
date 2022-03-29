@@ -9,6 +9,8 @@ namespace Data
         public string Id { get; }
         public ShapeType ShapeType { get; }
         public Facing DefaultFacing { get; }
+
+        public Rarity Rarity { get; }
         public float Weight { get; }
         public float GoldValue { get; }
         
@@ -16,7 +18,7 @@ namespace Data
 
         public string SpritePath { get; }
 
-        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right)
+        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common)
         {
             Id = itemId;
             ShapeType = shape;
@@ -25,6 +27,7 @@ namespace Data
             GoldValue = goldValue;
             Description = description;
             SpritePath = spritePath;
+            Rarity = rarity;
         }
     }
 }

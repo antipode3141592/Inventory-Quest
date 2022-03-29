@@ -1,9 +1,6 @@
 ﻿using Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
@@ -14,6 +11,8 @@ namespace Data
         public string Description { get; }
         public ShapeType ShapeType { get; }
         public Facing DefaultFacing { get; }
+
+        public Rarity Rarity { get; }
         public float Weight { get; }
         public float GoldValue { get; }
 
@@ -23,7 +22,7 @@ namespace Data
 
         public EquipmentSlotType SlotType { get; set; }
 
-        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null)
+        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common)
         {
             Id = itemId;
             ShapeType = shape;
@@ -34,6 +33,7 @@ namespace Data
             SpritePath = spritePath;
             Modifiers = modifiers != null ? new(modifiers) : new();
             SlotType = slotType;
+            Rarity = rarity;
         }
     }
 }

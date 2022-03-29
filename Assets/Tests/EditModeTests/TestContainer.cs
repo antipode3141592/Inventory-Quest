@@ -27,7 +27,7 @@ namespace InventoryQuest.Testing
         {
             dataSource = new ItemDataSourceTest();
             MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
-            MyItemStats2 = (ItemStats)dataSource.GetItemStats("thingabob");
+            MyItemStats2 = (ItemStats)dataSource.GetItemStats("brass_trinket");
             backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
             MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
             MyItems = new List<Item>();
@@ -110,14 +110,14 @@ namespace InventoryQuest.Testing
         [Test]
         public void FailTakeAtOutOfBoundsTarget()
         {
-            Assert.IsFalse(MyContainer.TryTake(out var item, new Coor(r: MyContainer.ContainerSize.row + 1, c: 0)));
+            Assert.IsFalse(MyContainer.TryTake(out _, new Coor(r: MyContainer.ContainerSize.row + 1, c: 0)));
         }
 
         [Test]
         public void PlaceAndTakeItem()
         {
             MyContainer.TryPlace(MyItem, new Coor(r: 0, c: 0));
-            Assert.IsTrue(MyContainer.TryTake(out var item, new Coor(r:0, c:0)));
+            Assert.IsTrue(MyContainer.TryTake(out _, new Coor(r:0, c:0)));
             Assert.IsTrue(IsContainerEmpty(MyContainer));
         }
 
@@ -140,15 +140,12 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (MyItems2[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
-                MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i * 2));
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: i*2, c: 0));
+                MyContainer.TryTake(out _, new Coor(r: i * 2, c: 0));
             }
-
-            for (int c = 0; c < MyTotalItems; c++)
-            {
-                MyContainer.TryTake(out var item, new Coor(r: 1, c: c * 2));
-            }
-            Assert.IsTrue(IsContainerEmpty(MyContainer));
             Assert.AreEqual(expected: initialWeight, actual: MyContainer.TotalWeight);
+            Assert.IsTrue(IsContainerEmpty(MyContainer));
+            
         }
 
 

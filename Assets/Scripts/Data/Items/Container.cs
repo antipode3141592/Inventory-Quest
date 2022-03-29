@@ -7,13 +7,15 @@ using UnityEngine.Pool;
 
 namespace Data
 {
-    public class Container: IItem, IContainer
+    public class Container : IItem, IContainer
     {
         public string GuId { get; }
         public string Id { get; }
         public GridSquare[,] Grid;
-        public Dictionary<string,Content> Contents;
+        public Dictionary<string, Content> Contents;
         public Coor ContainerSize;
+
+        public Rarity Rarity { get; }
         public IItemStats Stats { get; }
         public Shape Shape { get; }
         public Sprite Sprite { get; set; }
@@ -46,17 +48,17 @@ namespace Data
             if (IsValidPlacement(item, target))
             {
                 List<Coor> tempPointList = ListPool<Coor>.Get();
-                for (int r = 0; r < item.Shape.Size.row; r++)   
+                for (int r = 0; r < item.Shape.Size.row; r++)
                 {
                     for (int c = 0; c < item.Shape.Size.column; c++)
                     {
-                        if (item.Shape.CurrentMask.Map[r,c])
+                        if (item.Shape.CurrentMask.Map[r, c])
                             tempPointList.Add(new Coor(r: target.row + r, c: target.column + c));
                     }
                 }
                 //place item
                 Contents.Add(item.GuId, new Content(item, tempPointList, target));
-                
+
                 for (int i = 0; i < tempPointList.Count; i++)
                 {
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
@@ -88,7 +90,7 @@ namespace Data
                 {
                     item = content.Item;
                     Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
-                    
+
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
@@ -130,6 +132,28 @@ namespace Data
                 Debug.LogWarning($"{ex.Message}");
                 return false;
             }
+        }
+
+        public bool IsEmpty => isEmpty();
+
+        public bool IsFull => isFull();
+
+        bool isEmpty()
+        {
+            foreach (var square in Grid)
+            {
+                if (square.IsOccupied) return false;
+            }
+            return true;
+        }
+
+        bool isFull()
+        {
+            foreach (var square in Grid)
+            {
+                if (!square.IsOccupied) return false;
+            }
+            return true;
         }
 
         #region Logging
