@@ -6,7 +6,7 @@ namespace InventoryQuest.Characters
     {
         public static Character GetCharacter(CharacterStats characterStats, ContainerStats containerStats)
         {
-            Container container = ContainerFactory.GetContainer(containerStats);
+            Container container = (Container)ItemFactory.GetItem(containerStats);
             Character character = new Character(characterStats, container);
             return character;
         }

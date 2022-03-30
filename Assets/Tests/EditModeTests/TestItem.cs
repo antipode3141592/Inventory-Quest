@@ -28,7 +28,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void ItemShapeCorrect()
         {
-            Assert.AreEqual(expected: typeof(Square1), actual: MyItem.Shape.GetType());
+            Assert.AreEqual(expected: typeof(Monomino), actual: MyItem.Shape.GetType());
         }
         
 

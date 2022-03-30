@@ -37,7 +37,7 @@ namespace InventoryQuest.Testing
                 MyItems.Add((Item)ItemFactory.GetItem(stats: MyItemStats));
                 MyItems2.Add((Item)ItemFactory.GetItem(stats: MyItemStats2));
             }
-            MyContainer = ContainerFactory.GetContainer(stats: backpackStats);
+            MyContainer = (Container)ItemFactory.GetItem(stats: backpackStats);
         }
 
         [TearDown]
@@ -58,20 +58,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void NewContainerIsEmpty()
         {
-            Assert.IsTrue(IsContainerEmpty(MyContainer));
-        }
-
-        public bool IsContainerEmpty(Container container)
-        {
-            bool isEmpty = true;
-            foreach (var square in MyContainer.Grid)
-            {
-                if (square.IsOccupied == true)
-                {
-                    isEmpty = false; break;
-                }
-            }
-            return isEmpty;
+            Assert.IsTrue(MyContainer.IsEmpty);
         }
 
         [Test]
@@ -118,7 +105,7 @@ namespace InventoryQuest.Testing
         {
             MyContainer.TryPlace(MyItem, new Coor(r: 0, c: 0));
             Assert.IsTrue(MyContainer.TryTake(out _, new Coor(r:0, c:0)));
-            Assert.IsTrue(IsContainerEmpty(MyContainer));
+            Assert.IsTrue(MyContainer.IsEmpty);
         }
 
         [Test]
@@ -144,7 +131,7 @@ namespace InventoryQuest.Testing
                 MyContainer.TryTake(out _, new Coor(r: i * 2, c: 0));
             }
             Assert.AreEqual(expected: initialWeight, actual: MyContainer.TotalWeight);
-            Assert.IsTrue(IsContainerEmpty(MyContainer));
+            Assert.IsTrue(MyContainer.IsEmpty);
             
         }
 
