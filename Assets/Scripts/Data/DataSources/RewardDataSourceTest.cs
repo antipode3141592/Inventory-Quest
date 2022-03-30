@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Data.Rewards
 {
@@ -12,12 +11,41 @@ namespace Data.Rewards
                 name: "Ring of Charisma",
                 description: "A simple silver band that is quite charming.",
                 itemId: "ring_charisma_5"
-                )}
+                )
+            },
+            {
+                "common_loot_pile_small", new RandomItemRewardStats(
+                    id: "common_loot_pile_small",
+                    name: "Common loot pile",
+                    description: "Common loot pile",
+                    lootContainerId: "loot_pile_small",
+                    lootTableId: "common_loot"
+                    )
+            },
+            {
+                "common_loot_pile_medium", new RandomItemRewardStats(
+                    id: "common_loot_pile_medium",
+                    name: "Common loot pile",
+                    description: "Common loot pile",
+                    lootContainerId: "loot_pile_medium",
+                    lootTableId: "common_loot"
+                    )
+            },
+            {
+                "common_loot_pile_large", new RandomItemRewardStats(
+                    id: "common_loot_pile_large",
+                    name: "Common loot pile",
+                    description: "Common loot pile",
+                    lootContainerId: "loot_pile_large",
+                    lootTableId: "common_loot"
+                    )
+            }
         };
 
         public IRewardStats GetRewardById(string id)
         {
-            throw new NotImplementedException();
+            if (rewardDictionary.ContainsKey(id)) return rewardDictionary[id];
+            return null;
         }
     }
 }

@@ -19,15 +19,4 @@ namespace Data.Rewards
 
         public string ItemId { get; }
     }
-
-    public class ItemRewardStats: IRewardStats
-    {
-        public string Id { get; }
-
-        public string Name { get; }
-
-        public string Description { get; }
-
-        public string ItemId { get; }
-    }
 }

@@ -18,9 +18,17 @@ namespace Data.Encounters
 
         public override bool Resolve(Party party)
         {
+            Fight(party);
             return Characters.Count(x => x.IsIncapacitated) == Characters.Count;
         }
 
+        void Fight(Party party)
+        {
 
+            while (true)
+            {
+                break;
+            }
+        }
     }
 }

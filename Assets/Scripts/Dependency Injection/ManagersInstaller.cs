@@ -20,6 +20,8 @@ namespace InventoryQuest
                 .FromInstance(new EncounterDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<IRewardDataSource>()
                 .FromInstance(new RewardDataSourceTest()).AsSingle().NonLazy();
+            Container.Bind<ILootTableDataSource>()
+                .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<GameManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<RewardManager>()

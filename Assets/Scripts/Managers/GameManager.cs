@@ -2,6 +2,7 @@
 using Data.Interfaces;
 using Rewired;
 using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -25,7 +26,7 @@ namespace InventoryQuest.Managers
             }
         }
 
-        GameStates currentState = GameStates.Loading;
+        GameStates currentState;
         
 
         public GameStates CurrentState { get { return currentState; } }
@@ -44,6 +45,19 @@ namespace InventoryQuest.Managers
         private void Awake()
         {
             player = ReInput.players.GetPlayer(playerId);
+            currentState = GameStates.Loading;
+            _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
+        }
+
+        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
+        {
+            if (currentState == GameStates.Loading)
+                currentState = GameStates.Default;
+        }
+        private void Start()
+        {
+            Loading();
+            
         }
 
         private void Update()
@@ -51,7 +65,7 @@ namespace InventoryQuest.Managers
             switch (currentState)
             {
                 case GameStates.Loading:
-                    currentState = GameStates.Default;
+                    
                     break;
                 case GameStates.Default:
                     break;
@@ -61,6 +75,12 @@ namespace InventoryQuest.Managers
                 default:
                     break;
             }
+        }
+
+        void Loading()
+        {
+            _rewardManager.EnqueueReward("common_loot_pile_small");
+            _rewardManager.ProcessRewards();
         }
 
         public void ChangeState(GameStates targetState)

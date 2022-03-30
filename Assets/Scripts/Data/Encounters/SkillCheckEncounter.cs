@@ -34,16 +34,21 @@ namespace Data.Encounters
             {
                 foreach (var skillCheck in skillChecks)
                 {
-                    var partyCheck = skillCheck as PartySkillCheckValue;
-                    if (partyCheck is not null)
-                        resultsList.Add(PartyCheck(party, partyCheck) || CharacterCheck(party, partyCheck));
-                    else
-                        resultsList.Add(CharacterCheck(party, skillCheck));
+                    resultsList.Add(Check(party, skillCheck));
                 }
                 if (!resultsList.Any(x => x == false))
                     return true;
                 return false;
             }
+        }
+
+        public bool Check(Party party, SkillCheckValue skillCheck)
+        {
+            var partyCheck = skillCheck as PartySkillCheckValue;
+            if (partyCheck is not null)
+                return PartyCheck(party, partyCheck) || CharacterCheck(party, partyCheck);
+            else
+                return CharacterCheck(party, skillCheck);
         }
 
         bool CharacterCheck(Party party, SkillCheckValue skillCheckValue) 
@@ -70,6 +75,11 @@ namespace Data.Encounters
             SkillType = skillType;
             SingleTargetValue = singleTargetValue;
         }
+
+        public override string ToString() 
+        {
+            return $"{SkillType.Name} : {SingleTargetValue}";
+        }
     }
 
     public class PartySkillCheckValue : SkillCheckValue
@@ -79,6 +89,11 @@ namespace Data.Encounters
         public PartySkillCheckValue(Type skillType, int singleTargetValue, int partyTargetValue) : base(skillType, singleTargetValue)
         {
             PartyTargetValue = partyTargetValue;
+        }
+
+        public override string ToString()
+        {
+            return $"{SkillType.Name}: {SingleTargetValue} OR party total {PartyTargetValue}";
         }
     }
 }

@@ -1,42 +1,26 @@
-using Data.Interfaces;
-using InventoryQuest.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace InventoryQuest.UI
 {
     public class EncounterRequirementDisplay : MonoBehaviour
     {
-        GameManager _gameManager;
-        EncounterManager _encounterManager;
-
-        IEncounter currentEncounter;
+        
 
         [SerializeField] protected TextMeshProUGUI requirementText;
         [SerializeField] protected Image statusImage;
 
-        [Inject]
-        public void Init(GameManager gameManager, EncounterManager encounterManager)
-        {
-            _gameManager = gameManager;
-            _encounterManager = encounterManager;
+        public string RequirementText 
+        { 
+            get { return requirementText.text; }
+            set { requirementText.text = value; }
         }
 
-        private void Awake()
+        public void SetStatusColor(bool status)
         {
-
+            statusImage.color = status ? Color.green : Color.red;
         }
 
-        private void OnEnable()
-        {
-            currentEncounter = _encounterManager.CurrentEncounter;
-        }
-
-        private void Start()
-        {
-            
-        }
     }
 }

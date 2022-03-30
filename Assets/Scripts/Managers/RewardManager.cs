@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Interfaces;
 using Data.Rewards;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -13,28 +14,37 @@ namespace InventoryQuest.Managers
         ContainerDisplayManager _displayManager;
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
+        ILootTableDataSource _lootTableDataSource;
+        LootTable _lootTable;
 
         Container lootPile;
         
         Queue<IReward> rewardQueue = new Queue<IReward>();
 
-        public bool IsProcessing = true;
+        public EventHandler OnRewardsProcessStart;
+        public EventHandler OnRewardsProcessComplete;
 
         [Inject]
-        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, PartyManager partyManager, ContainerDisplayManager displayManager) 
+        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, PartyManager partyManager, ContainerDisplayManager displayManager, ILootTableDataSource lootTableDataSource) 
         {
             _dataSource = dataSource;
             _rewardDataSource = rewardDataSource;
             _partyManager = partyManager;
             _displayManager = displayManager;
+            _lootTableDataSource = lootTableDataSource;
         }
 
         private void Awake()
         {
-            lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile"));
-            _displayManager.ConnectLootContainer(lootPile);
+            _lootTable = new LootTable(_lootTableDataSource);
+            lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
             if (rewardQueue.Count == 0) return;
             ProcessRewards();
+        }
+
+        private void Start()
+        {
+            _displayManager.ConnectLootContainer(lootPile);
         }
 
 
@@ -50,13 +60,13 @@ namespace InventoryQuest.Managers
 
         public void ProcessRewards()
         {
-            IsProcessing = true;
+            OnRewardsProcessStart?.Invoke(this, EventArgs.Empty);
             while(rewardQueue.Count > 0)
             {
                 var reward = rewardQueue.Dequeue();
                 ProcessReward(reward);
             }
-            IsProcessing = false;
+            OnRewardsProcessComplete?.Invoke(this, EventArgs.Empty);
         }
 
         
@@ -68,21 +78,25 @@ namespace InventoryQuest.Managers
             {
 
             }
+            RandomItemReward randomItemReward = reward as RandomItemReward;
+            if (randomItemReward is not null)
+            {
+                PlaceRandomLootInContainer(randomItemReward);
+            }
+            CharacterReward characterReward = reward as CharacterReward;
+            if (characterReward is not null)
+            {
+
+            }
         }
 
-        public void PlaceRandomLootInContainer(ILootTable lootTable, int totalItems)
+        public void PlaceRandomLootInContainer(RandomItemReward reward)
         {
-            
-            for (int i = 0; i < totalItems; i++)
+            while (!lootPile.IsFull)
             {
-                Rarity rarity = lootTable.RandomRarity;
-
+                Rarity rarity = _lootTable.GetRandomRarity(reward.LootTableId);
                 IItem item = ItemFactory.GetItem(_dataSource.GetRandomItemStats(rarity));
-                while(!TryAutoPlaceToContainer(lootPile, item))
-                {
-                    if (lootPile.IsFull) break;
-                    item = ItemFactory.GetItem(_dataSource.GetRandomItemStats(rarity));
-                }
+                TryAutoPlaceToContainer(lootPile, item);
             }
         }
 
@@ -96,11 +110,14 @@ namespace InventoryQuest.Managers
                     if (container.TryPlace(item, new Coor(_r, _c)))
                         return true;
                     //try placing in each other facing
-                    for (int i = 0; i < 3; i++)
+                    if (!item.Shape.IsRotationallySymmetric)
                     {
-                        item.Shape.Rotate(1);
-                        if (container.TryPlace(item, new Coor(_r, _c)))
-                            return true;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            item.Shape.Rotate(1);
+                            if (container.TryPlace(item, new Coor(_r, _c)))
+                                return true;
+                        }
                     }
                 }
             }

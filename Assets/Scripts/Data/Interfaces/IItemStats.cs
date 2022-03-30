@@ -12,5 +12,8 @@
         public float GoldValue { get; }
 
         public string SpritePath { get; }
+
+        public bool IsQuest { get; }
+
     }
 }
