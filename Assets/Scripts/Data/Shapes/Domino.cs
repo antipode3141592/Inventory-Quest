@@ -2,11 +2,11 @@
 
 namespace Data.Shapes
 {
-    public class Bar2 : Shape
+    public class Domino : Shape
     {
-        public Bar2(Facing defaultFacing = Facing.Right)
+        public Domino(Facing defaultFacing = Facing.Right)
         {
-            Id = "bar2";
+            Id = "domino";
             Masks = new Dictionary<Facing, BitMask>
             {
                 { Facing.Right, new BitMask(new bool[,] { { true, true } }) },
@@ -15,7 +15,10 @@ namespace Data.Shapes
                 { Facing.Up, new BitMask(new bool[,] { { true }, { true } }) },
             };
             CurrentFacing = defaultFacing;
+            
         }
+
+        public override bool IsRotationallySymmetric => false;
     }
 
     

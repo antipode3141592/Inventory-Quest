@@ -1,4 +1,4 @@
 ﻿namespace Data
 {
-    public enum ShapeType { Bar2, Bar3, Bar4, Square1, Square2, T1 }
+    public enum ShapeType { Monomino, Domino, Tromino_I, Tromino_L, Tetromino_I, Tetromino_L, Tetromino_S, Tetromino_O, Tetromino_T }
 }

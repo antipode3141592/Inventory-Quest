@@ -10,26 +10,29 @@ namespace Data
             Shape _shape;
             switch (shape)
             {
-                case ShapeType.Square1:
-                    _shape = new Square1();
+                case ShapeType.Monomino:
+                    _shape = new Monomino();
                     break;
-                case ShapeType.Square2:
-                    _shape = new Square2();
+                case ShapeType.Domino:
+                    _shape = new Domino();
                     break;
-                case ShapeType.T1:
-                    _shape = new T1(facing);
+                case ShapeType.Tromino_I:
+                    _shape = new Tromino_I();
                     break;
-                case ShapeType.Bar2:
-                    _shape = new Bar2(facing);
+                //case ShapeType.Tromino_L:
+                //    _shape = new Tromino_L();
+                //    break;
+                case ShapeType.Tetromino_O:
+                    _shape = new Tetromino_O();
                     break;
-                case ShapeType.Bar3:
-                    _shape = new Bar3(facing);
+                case ShapeType.Tetromino_T:
+                    _shape = new Tetromino_T(facing);
                     break;
-                case ShapeType.Bar4:
-                    _shape = new Bar4(facing);
+                case ShapeType.Tetromino_I:
+                    _shape = new Tetromino_I(facing);
                     break;
                 default:
-                    _shape = new Square1();
+                    _shape = new Monomino();
                     break;
             }
             return _shape;

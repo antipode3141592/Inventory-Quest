@@ -2,11 +2,11 @@
 
 namespace Data.Shapes
 {
-    public class T1 : Shape
+    public class Tetromino_T : Shape
     {
-        public T1(Facing defaultFacing = Facing.Right)
+        public Tetromino_T(Facing defaultFacing = Facing.Right)
         {
-            Id = "t1";
+            Id = "tetromino_t";
             Masks = new Dictionary<Facing, BitMask>
             {
                 { Facing.Right, new BitMask(new bool[,] {
@@ -30,6 +30,7 @@ namespace Data.Shapes
             };
             CurrentFacing = defaultFacing;
         }
+        public override bool IsRotationallySymmetric => false;
     }
 
     

@@ -18,11 +18,13 @@ namespace Data
 
         public string SpritePath { get; }
 
+        public bool IsQuest { get; }
+
         public List<StatModifier> Modifiers { get; set; }
 
         public EquipmentSlotType SlotType { get; set; }
 
-        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common)
+        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common, bool isQuest = false)
         {
             Id = itemId;
             ShapeType = shape;
@@ -34,6 +36,7 @@ namespace Data
             Modifiers = modifiers != null ? new(modifiers) : new();
             SlotType = slotType;
             Rarity = rarity;
+            IsQuest = isQuest;
         }
     }
 }

@@ -17,8 +17,9 @@ namespace Data
         public string Description { get; }
 
         public string SpritePath { get; }
+        public bool IsQuest { get; }
 
-        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Square1, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common)
+        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuest = false)
         {
             Id = itemId;
             ShapeType = shape;
@@ -28,6 +29,7 @@ namespace Data
             Description = description;
             SpritePath = spritePath;
             Rarity = rarity;
+            IsQuest = isQuest;
         }
     }
 }
