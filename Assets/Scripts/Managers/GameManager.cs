@@ -80,6 +80,8 @@ namespace InventoryQuest.Managers
         void Loading()
         {
             _rewardManager.EnqueueReward("common_loot_pile_small");
+            _rewardManager.EnqueueReward("common_loot_pile_medium");
+            _rewardManager.EnqueueReward("common_loot_pile_medium");
             _rewardManager.ProcessRewards();
         }
 

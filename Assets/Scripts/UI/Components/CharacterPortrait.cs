@@ -35,7 +35,7 @@ namespace InventoryQuest.UI
             portrait.sprite = Resources.Load<Sprite>(path);
         }
 
-        public void SetName(string name)
+        void SetName(string name)
         {
             nameText.text = name;
         }

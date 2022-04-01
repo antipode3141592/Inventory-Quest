@@ -23,6 +23,13 @@ namespace Data
                      rarity: Rarity.common,
                      spritePath: "Items/Loot_75",
                      shape: ShapeType.Monomino) },
+            {   "book_common", new ItemStats("book_common",
+                     weight: .3f,
+                     goldValue: 1f,
+                     description: "A collection of short stories.",
+                     rarity: Rarity.common,
+                     spritePath: "Items/book_1",
+                     shape: ShapeType.Tetromino_O) },
             {   "ingot_common", new ItemStats("ingot_common",
                      weight: .1f,
                      goldValue: .5f,
@@ -41,7 +48,7 @@ namespace Data
                     weight: 0f,
                     goldValue: 0f,
                     description: "small pile",
-                    spritePath: "",
+                    spritePath: "Items/loot_pile_small",
                     isQuest: true,
                     containerSize: new Coor(r: 5, c: 3))
             },
@@ -49,7 +56,7 @@ namespace Data
                     weight: 0f,
                     goldValue: 0f,
                     description: "average pile",
-                    spritePath: "",
+                    spritePath: "Items/loot_pile_medium",
                     isQuest: true,
                     containerSize: new Coor(r: 5, c: 4))
             },
@@ -57,7 +64,7 @@ namespace Data
                     weight: 0f,
                     goldValue: 0f,
                     description: "large pile",
-                    spritePath: "",
+                    spritePath: "Items/loot_pile_large",
                     isQuest: true,
                     containerSize: new Coor(r: 6, c: 5))
             },
@@ -131,7 +138,7 @@ namespace Data
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,5)}
+                        new(typeof(Strength),OperatorType.Add,1)}
                     )
             },
             {   "basic_shortsword_3", new EquipableItemStats("basic_sword_3",
@@ -144,7 +151,7 @@ namespace Data
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,5)}
+                        new(typeof(Strength),OperatorType.Add,3)}
                     )
             },
             {   "basic_sword_3", new EquipableItemStats("basic_sword_3",
@@ -184,6 +191,33 @@ namespace Data
                     modifiers: new StatModifier[] {
                         new(typeof(Charisma), OperatorType.Add, 5)}
                     )
+            },
+            {   "boot_1", new EquipableItemStats("boot_1",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic shortsword with a sharp edge",
+                    rarity: Rarity.common,
+                    spritePath: "Items/boot_1",
+                    shape: ShapeType.Tromino_L,
+                    slotType: EquipmentSlotType.Feet)
+            },
+            {   "shoe_1", new EquipableItemStats("basic_sword_1",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic shortsword with a sharp edge",
+                    rarity: Rarity.common,
+                    spritePath: "Items/shoe_1",
+                    shape: ShapeType.Domino,
+                    slotType: EquipmentSlotType.Feet)
+            },
+            {   "sandal_1", new EquipableItemStats("sandal_1",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic shortsword with a sharp edge",
+                    rarity: Rarity.common,
+                    spritePath: "Items/sandal_1",
+                    shape: ShapeType.Domino,
+                    slotType: EquipmentSlotType.Feet)
             },
         };
 

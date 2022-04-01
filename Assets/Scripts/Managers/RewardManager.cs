@@ -3,6 +3,7 @@ using Data.Interfaces;
 using Data.Rewards;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -17,9 +18,11 @@ namespace InventoryQuest.Managers
         ILootTableDataSource _lootTableDataSource;
         LootTable _lootTable;
 
-        Container lootPile;
+        public Dictionary<string, Container> LootPiles = new();
+
+        public string SelectedPileId;
         
-        Queue<IReward> rewardQueue = new Queue<IReward>();
+        Queue<IReward> rewardQueue = new();
 
         public EventHandler OnRewardsProcessStart;
         public EventHandler OnRewardsProcessComplete;
@@ -37,16 +40,11 @@ namespace InventoryQuest.Managers
         private void Awake()
         {
             _lootTable = new LootTable(_lootTableDataSource);
-            lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
             if (rewardQueue.Count == 0) return;
             ProcessRewards();
         }
 
-        private void Start()
-        {
-            _displayManager.ConnectLootContainer(lootPile);
-        }
-
+        #region Processing Rewards Queue
 
         public void EnqueueReward(string rewardId)
         {
@@ -81,7 +79,9 @@ namespace InventoryQuest.Managers
             RandomItemReward randomItemReward = reward as RandomItemReward;
             if (randomItemReward is not null)
             {
-                PlaceRandomLootInContainer(randomItemReward);
+                var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
+                LootPiles.Add(lootPile.GuId,lootPile);
+                PlaceRandomLootInContainer(lootPile, randomItemReward);
             }
             CharacterReward characterReward = reward as CharacterReward;
             if (characterReward is not null)
@@ -90,13 +90,17 @@ namespace InventoryQuest.Managers
             }
         }
 
-        public void PlaceRandomLootInContainer(RandomItemReward reward)
+        #endregion
+
+
+        #region Item Placement Functions
+        void PlaceRandomLootInContainer(Container container, RandomItemReward reward)
         {
-            while (!lootPile.IsFull)
+            while (!container.IsFull)
             {
                 Rarity rarity = _lootTable.GetRandomRarity(reward.LootTableId);
                 IItem item = ItemFactory.GetItem(_dataSource.GetRandomItemStats(rarity));
-                TryAutoPlaceToContainer(lootPile, item);
+                TryAutoPlaceToContainer(container, item);
             }
         }
 
@@ -122,6 +126,17 @@ namespace InventoryQuest.Managers
                 }
             }
             return false;
+        }
+        #endregion
+
+        public void SelectLootPile(string containerGuid)
+        {
+            if (LootPiles.ContainsKey(containerGuid))
+            {
+                SelectedPileId = containerGuid;
+                _displayManager.ConnectLootContainer(LootPiles[containerGuid]);
+            }
+            
         }
     }
 }
