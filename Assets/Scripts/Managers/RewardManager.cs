@@ -106,9 +106,9 @@ namespace InventoryQuest.Managers
 
         static bool TryAutoPlaceToContainer(Container container, IItem item)
         {
-            for (int _r = 0; _r < container.ContainerSize.row; _r++)
+            for (int _r = 0; _r < container.Dimensions.row; _r++)
             {
-                for (int _c = 0; _c < container.ContainerSize.column; _c++)
+                for (int _c = 0; _c < container.Dimensions.column; _c++)
                 {
                     //try placing in default facing
                     if (container.TryPlace(item, new Coor(_r, _c)))

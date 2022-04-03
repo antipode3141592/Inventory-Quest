@@ -1,4 +1,5 @@
 using Data;
+using Data.Interfaces;
 using InventoryQuest.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +10,7 @@ namespace InventoryQuest.UI
     public class ContainerGridSquareDisplay : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
         GameManager _gameManager;
-        Container _container;
+        IContainer _container;
 
         [SerializeField]
         Image backgroundSprite;
@@ -54,7 +55,7 @@ namespace InventoryQuest.UI
             highlightSprite.color = targetColor;
         }
 
-        public void SetContainer(Container container)
+        public void SetContainer(IContainer container)
         {
             _container = container;
         }

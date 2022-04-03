@@ -40,11 +40,16 @@ namespace Data
             EquipmentSlotType[] slots = {
                 EquipmentSlotType.OneHandedWeapon,
                 EquipmentSlotType.Shield,
-                EquipmentSlotType.RightHand,
-                EquipmentSlotType.LeftHand,
-                EquipmentSlotType.Ring,
+                EquipmentSlotType.Head,
+                EquipmentSlotType.InnerTorso,
+                EquipmentSlotType.OuterTorso,
+                EquipmentSlotType.Legs,
                 EquipmentSlotType.Belt,
-                EquipmentSlotType.Feet
+                EquipmentSlotType.Feet,
+                EquipmentSlotType.Neck,
+                EquipmentSlotType.Ring,
+                EquipmentSlotType.Hands,
+                EquipmentSlotType.Backpack
             };
             return slots;
         }

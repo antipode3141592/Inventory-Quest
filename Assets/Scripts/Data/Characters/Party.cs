@@ -46,16 +46,6 @@ namespace Data
             return Characters[characterId];
         }
 
-        public int GetPartyItemCountById(string id)
-        {
-            int partyCount = 0;
-            foreach (var character in Characters)
-            {
-                partyCount += character.Value.GetItemCountById(id);
-            }
-            return partyCount;
-        }
-
         public void SetDisplayOrder()
         {
 

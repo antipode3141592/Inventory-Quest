@@ -1,4 +1,5 @@
 using Data;
+using Data.Interfaces;
 using InventoryQuest.Managers;
 using InventoryQuest.UI;
 using UnityEngine;
@@ -26,12 +27,12 @@ public class ContainerDisplayManager : MonoBehaviour
 
     #region Connect Containers
 
-    public void ConnectCharacterContainer(Container characterContainer)
+    public void ConnectCharacterContainer(IContainer characterContainer)
     {
         characterContainerDisplay.MyContainer = characterContainer;
     }
 
-    public void ConnectLootContainer(Container lootContainer)
+    public void ConnectLootContainer(IContainer lootContainer)
     {
         lootContainerDisplay.MyContainer = lootContainer;
     }
@@ -51,7 +52,7 @@ public class ContainerDisplayManager : MonoBehaviour
 
     void OnPartyMemberSelectedHandler(object sender, MessageEventArgs e)
     {
-        var container = _partyManager.CurrentParty.Characters[e.Message].PrimaryContainer;
+        var container = _partyManager.CurrentParty.Characters[e.Message].Backpack;
         if (container is null) return;
         ConnectCharacterContainer(container);
     }

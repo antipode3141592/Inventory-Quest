@@ -17,6 +17,11 @@ namespace InventoryQuest
             {
                 return new Container(containerStats);
             }
+            EquipableContainerStats equipableContainerStats = stats as EquipableContainerStats;
+            if (equipableContainerStats != null)
+            {
+                return new EquipableContainer(equipableContainerStats);
+            }
 
             ItemStats itemStats = stats as ItemStats;
             if (itemStats != null)

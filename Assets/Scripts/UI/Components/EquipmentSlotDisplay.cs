@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
+using TMPro;
 
 namespace InventoryQuest.UI
 {
@@ -20,6 +21,11 @@ namespace InventoryQuest.UI
         Image backgroundSprite;
         [SerializeField]
         Image highlightSprite;
+        [SerializeField]
+        Image equippedItemSprite;
+        [SerializeField]
+        TextMeshProUGUI slotTypeText;
+
 
         public EquipmentSlotType SlotType => _slotType;
 
@@ -29,18 +35,23 @@ namespace InventoryQuest.UI
             _gameManager = gameManager;
         }
 
+        private void Awake()
+        {
+            slotTypeText.text = SlotType.ToString();
+        }
+
         public void SetCharacter(Character character)
         {
             _character = character;
         }
 
-        public void SetHighlightColor(HighlightState state)
+        public void SetHighlightColor(Data.HighlightState state)
         {
             Color targetColor =
             state switch
             {
-                HighlightState.Highlight => Color.green,
-                HighlightState.Incorrect => Color.red,
+                Data.HighlightState.Highlight => Color.green,
+                Data.HighlightState.Incorrect => Color.red,
                 _ => Color.clear
             };
             highlightSprite.color = targetColor;
@@ -71,7 +82,7 @@ namespace InventoryQuest.UI
                     }
                     break;
                 case GameStates.HoldingItem:
-                    if (_character.EquipmentSlots[SlotType].TryEquip(out var previousItem, _gameManager.HoldingItem))
+                    if (_character.EquipmentSlots[SlotType].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
                     {
                         _gameManager.HoldingItem = previousItem as IItem;
                         if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Default);
@@ -87,21 +98,21 @@ namespace InventoryQuest.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_gameManager.CurrentState != GameStates.HoldingItem) return;
-            HighlightState squareState;
-            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem)) {
-                squareState = HighlightState.Highlight;
+            Data.HighlightState squareState;
+            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem as IEquipable)) { 
+                squareState = Data.HighlightState.Highlight;
                 
             } 
             else
             {
-                squareState = HighlightState.Incorrect;
+                squareState = Data.HighlightState.Incorrect;
             }
             SetHighlightColor(squareState);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            SetHighlightColor(HighlightState.Normal);
+            SetHighlightColor(Data.HighlightState.Normal);
         }
 
         

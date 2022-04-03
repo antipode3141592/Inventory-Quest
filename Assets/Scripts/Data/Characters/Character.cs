@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using Data.Interfaces;
 
 namespace Data
 {
@@ -15,14 +16,13 @@ namespace Data
 
         public Dictionary<EquipmentSlotType, EquipmentSlot> EquipmentSlots;
 
-        public Container PrimaryContainer { get; set; }
+        public IContainer Backpack => EquipmentSlots[EquipmentSlotType.Backpack].EquippedItem as IContainer;
 
         public EventHandler OnStatsUpdated;
 
-        public Character(CharacterStats characterStats, Container primaryContainer)
+        public Character(CharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
         {
             GuId = Guid.NewGuid().ToString();
-            PrimaryContainer = primaryContainer;
             Stats = characterStats;
             EquipmentSlots = new Dictionary<EquipmentSlotType, EquipmentSlot>();
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
@@ -32,21 +32,23 @@ namespace Data
                 slot.OnEquip += OnEquipHandler;
                 slot.OnUnequip += OnUnequipHandler;
             }
-            PrimaryContainer.OnItemPlaced += OnContainerChangedHandler;
-            PrimaryContainer.OnItemTaken += OnContainerChangedHandler;
+            if (initialEquipment is null) return;
+            foreach(IEquipable item in initialEquipment)
+            {
+                if (EquipmentSlots.ContainsKey(item.SlotType))
+                    Debug.Log($"Equipping {(item as IItem).Id} to {item.SlotType}");
+                    EquipmentSlots[item.SlotType].TryEquip(out _, item);
+            }
+
+            if (Backpack is null) return;
+            Backpack.OnItemPlaced += OnContainerChangedHandler;
+            Backpack.OnItemTaken += OnContainerChangedHandler;
+            // add initial Inventory to backpack
         }
 
-        public float CurrentEncumbrance => PrimaryContainer.TotalWeight + EquipmentSlots.Where(x => x.Value.EquippedItem is not null).Sum(x => x.Value.EquippedItem.Weight);
+        public float CurrentEncumbrance => EquipmentSlots.Where(x => x.Value.EquippedItem is not null).Sum(x => (x.Value.EquippedItem as IItem).Weight);
 
         public bool IsIncapacitated => Stats.CurrentHealth <= 0 ? true : false;
-
-        public int GetItemCountById(string id)
-        {
-            var count = 0;
-            count += PrimaryContainer.Contents.Count(x => x.Value.Item.Id == id);
-            count += EquipmentSlots.Count(x => x.Value.EquippedItem != null && x.Value.EquippedItem.Id == id);
-            return count;
-        }
 
         public void Dispose()
         {

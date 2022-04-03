@@ -9,9 +9,9 @@ namespace InventoryQuest.Testing
     {
         IItemDataSource dataSource;
         //container
-        Container MyContainer;
+        IContainer MyContainer;
 
-        ContainerStats backpackStats;
+        EquipableContainerStats backpackStats;
         //test items
         Item MyItem;
         List<Item> MyItems;
@@ -28,7 +28,7 @@ namespace InventoryQuest.Testing
             dataSource = new ItemDataSourceTest();
             MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
             MyItemStats2 = (ItemStats)dataSource.GetItemStats("brass_trinket");
-            backpackStats = (ContainerStats)dataSource.GetItemStats("adventure backpack");
+            backpackStats = (EquipableContainerStats)dataSource.GetItemStats("adventure backpack");
             MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
             MyItems = new List<Item>();
             MyItems2 = new List<Item>();
@@ -37,7 +37,7 @@ namespace InventoryQuest.Testing
                 MyItems.Add((Item)ItemFactory.GetItem(stats: MyItemStats));
                 MyItems2.Add((Item)ItemFactory.GetItem(stats: MyItemStats2));
             }
-            MyContainer = (Container)ItemFactory.GetItem(stats: backpackStats);
+            MyContainer = (IContainer)ItemFactory.GetItem(stats: backpackStats);
         }
 
         [TearDown]
@@ -52,7 +52,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void ContainerSizeIsCorrect()
         {
-            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: MyContainer.ContainerSize);  
+            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: MyContainer.Dimensions);  
         }
 
         [Test]
@@ -64,27 +64,27 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlaceAtValidTarget()
         {
-            float initialWeight = MyContainer.TotalWeight;
+            float initialWeight = MyContainer.InitialWeight;
             MyContainer.TryPlace(MyItem, new Coor(0, 0));
-            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: MyContainer.TotalWeight);
+            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: (MyContainer as IItem).Weight);
         }
 
         [Test]
         public void PlaceSeveralItemsAtValidTargets()
         {
-            float initialWeight = MyContainer.TotalWeight;
+            float initialWeight = MyContainer.InitialWeight;
             float targetWeight = initialWeight + (MyItem.Stats.Weight * 3);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems[i], new Coor(0, 0 + i));
             }
-            Assert.AreEqual(expected: targetWeight, actual: MyContainer.TotalWeight);
+            Assert.AreEqual(expected: targetWeight, actual: (MyContainer as IItem).Weight);
         }
 
         [Test]
         public void FailPlaceAtOutOfBoundsTarget()
         {
-            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.ContainerSize.row+1, 0)));
+            Assert.IsFalse(MyContainer.TryPlace(MyItem, new Coor(MyContainer.Dimensions.row+1, 0)));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void FailTakeAtOutOfBoundsTarget()
         {
-            Assert.IsFalse(MyContainer.TryTake(out _, new Coor(r: MyContainer.ContainerSize.row + 1, c: 0)));
+            Assert.IsFalse(MyContainer.TryTake(out _, new Coor(r: MyContainer.Dimensions.row + 1, c: 0)));
         }
 
         [Test]
@@ -111,26 +111,26 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlaceSeveralItems()
         {
-            float initialWeight = MyContainer.TotalWeight;
+            float initialWeight = MyContainer.InitialWeight;
             float targetWeight = initialWeight + (MyItems2[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i*2));
             }
-            Assert.AreEqual(expected: targetWeight, actual: MyContainer.TotalWeight);
+            Assert.AreEqual(expected: targetWeight, actual: (MyContainer as IItem).Weight);
         }
 
         [Test]
         public void PlaceAndTakeSeveralItems()
         {
-            float initialWeight = MyContainer.TotalWeight;
+            float initialWeight = MyContainer.InitialWeight;
             float targetWeight = initialWeight + (MyItems2[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
                 MyContainer.TryPlace(MyItems2[i], new Coor(r: i*2, c: 0));
                 MyContainer.TryTake(out _, new Coor(r: i * 2, c: 0));
             }
-            Assert.AreEqual(expected: initialWeight, actual: MyContainer.TotalWeight);
+            Assert.AreEqual(expected: initialWeight, actual: (MyContainer as IItem).Weight);
             Assert.IsTrue(MyContainer.IsEmpty);
             
         }

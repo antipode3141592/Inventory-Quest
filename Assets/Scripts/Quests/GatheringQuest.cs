@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Interfaces;
 using System;
+using System.Linq;
 
 namespace InventoryQuest.Quests
 {
@@ -32,9 +33,27 @@ namespace InventoryQuest.Quests
 
         public bool Evaluate(Party party)
         {
-            int targetCount = party.GetPartyItemCountById(TargetItemId);
+            int targetCount = GetPartyItemCountById(party, TargetItemId);
             if (targetCount == TargetQuantity) return true;
             return false;
+        }
+
+        public int GetItemCountById(Character character, string id)
+        {
+            var count = 0;
+            count += character.Backpack.Contents.Count(x => x.Value.Item.Id == id);
+            count += character.EquipmentSlots.Count(x => x.Value.EquippedItem != null && ((IItem)x.Value.EquippedItem).Id == id);
+            return count;
+        }
+
+        public int GetPartyItemCountById(Party party, string id)
+        {
+            int partyCount = 0;
+            foreach (var character in party.Characters.Values)
+            {
+                partyCount += GetItemCountById(character, id);
+            }
+            return partyCount;
         }
 
         public void Cancel()

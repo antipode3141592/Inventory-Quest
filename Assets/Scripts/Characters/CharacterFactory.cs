@@ -1,13 +1,14 @@
 ﻿using Data;
+using Data.Interfaces;
+using System.Collections.Generic;
 
 namespace InventoryQuest.Characters
 {
     public class CharacterFactory
     {
-        public static Character GetCharacter(CharacterStats characterStats, ContainerStats containerStats)
+        public static Character GetCharacter(CharacterStats characterStats, IList<IEquipable> startingEquipment = null, IList<IItem> startingInventory = null)
         {
-            Container container = (Container)ItemFactory.GetItem(containerStats);
-            Character character = new Character(characterStats, container);
+            Character character = new Character(characterStats, startingEquipment, startingInventory);
             return character;
         }
     }

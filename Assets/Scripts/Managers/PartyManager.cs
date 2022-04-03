@@ -27,9 +27,9 @@ namespace InventoryQuest.Managers
         private void Awake()
         {
             Player = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Player"),
-                (ContainerStats)_itemDataSource.GetItemStats("adventure backpack"));
+                new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("adventure backpack")) });
             Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
-                (ContainerStats)_itemDataSource.GetItemStats("small backpack"));
+                new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("small backpack")) });
 
             _party = new Party(new Character[] { Player, Minion });
         }

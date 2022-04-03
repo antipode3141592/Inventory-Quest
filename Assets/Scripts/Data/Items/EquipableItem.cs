@@ -21,7 +21,7 @@ namespace Data
 
         public float Value => Stats.GoldValue;
 
-        public List<StatModifier> Modifiers { get ; set ; }
+        public IList<StatModifier> Modifiers { get ; set ; }
         public Sprite Sprite { get; set; }
 
         public EquipableItem(EquipableItemStats stats)

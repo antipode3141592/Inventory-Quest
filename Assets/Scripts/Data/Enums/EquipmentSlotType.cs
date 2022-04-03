@@ -1,4 +1,4 @@
 ﻿namespace Data
 {
-    public enum EquipmentSlotType { All, Head, Neck, LeftShoulder, RightShoulder, LeftArm, RightArm, LeftLeg, RightLeg, Torso, Belt, LeftHand, RightHand, Legs, Feet, LeftRing, RightRing , OneHandedWeapon, TwoHandedWeapon, Shield, Ring};
+    public enum EquipmentSlotType { Head, Neck, InnerTorso, OuterTorso, Belt, Hands, Legs, Feet, OneHandedWeapon, TwoHandedWeapon, Shield, Ring, RangedWeapon, Ammo , Backpack};
 }

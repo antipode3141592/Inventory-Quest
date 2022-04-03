@@ -27,11 +27,11 @@ namespace InventoryQuest.Testing
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
             player = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Player"),
-                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
+                new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             minion_1 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
-                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
+                new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             minion_2 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
-                (ContainerStats)itemDataSource.GetItemStats("adventure backpack"));
+                new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             party = new Party(new Character[] {player, minion_1, minion_2});
 
             questStats = new GatheringQuestStats("quest_000","get_apples", "gather 5 fuji apples", targetCount, targetItemId,  "ring_charisma_1");
@@ -53,7 +53,7 @@ namespace InventoryQuest.Testing
         {
             List<string> characterKeys = new List<string>(party.Characters.Keys);
             for (int i = 0; i < itemsToMake; i++)
-                party.Characters[characterKeys[i % characterKeys.Count]].PrimaryContainer
+                party.Characters[characterKeys[i % characterKeys.Count]].Backpack
                      .TryPlace(ItemFactory.GetItem(itemDataSource.GetItemStats(itemId)), new Coor(0, i));
 
         }

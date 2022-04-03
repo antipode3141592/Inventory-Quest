@@ -13,8 +13,9 @@ namespace InventoryQuest.Testing
         Character Player;
         EquipableItem Sword;
         CharacterStats playerStats;
-        ContainerStats backpackStats;
+        EquipableContainerStats backpackStats;
         EquipableItemStats EquipableStats;
+        IEquipable backpack;
 
         [SetUp]
         public void SetUp()
@@ -22,9 +23,10 @@ namespace InventoryQuest.Testing
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
             playerStats = characterDataSource.GetCharacterStats("Player");
-            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
             EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_1");
-            Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
+            Player = CharacterFactory.GetCharacter(playerStats, new IEquipable[] { backpack });
             Sword = (EquipableItem)ItemFactory.GetItem(EquipableStats); 
         }
 
@@ -45,7 +47,7 @@ namespace InventoryQuest.Testing
         public void AddEquipableItemToBackpack()
         {
             float expectedWeight = backpackStats.Weight + EquipableStats.Weight;
-            Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
+            Player.Backpack.TryPlace(Sword, new Coor(0, 0));
             Assert.AreEqual(expectedWeight, Player.CurrentEncumbrance);
         }
 
@@ -54,21 +56,21 @@ namespace InventoryQuest.Testing
         {
             int initialAttackValue = Player.Stats.Attack.CurrentValue;
             int calculatedAttackValue = initialAttackValue + 1;
-            Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
+            Player.Backpack.TryPlace(Sword, new Coor(0, 0));
             string swordId = Sword.GuId;
             
-            if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
+            if (Player.Backpack.TryTake(out var item, new Coor(0, 0)))
             {
 
                 EquipmentSlotType slotType = Sword.SlotType;
                 if (Player.EquipmentSlots.ContainsKey(slotType))
                 {
-                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item);
+                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item as IEquipable);
                         
                 }
 
             }
-            Assert.AreEqual(swordId, Player.EquipmentSlots[Sword.SlotType].EquippedItem.GuId);
+            Assert.AreEqual(swordId, (Player.EquipmentSlots[Sword.SlotType].EquippedItem as IItem).GuId);
             Assert.AreEqual(calculatedAttackValue, Player.Stats.Attack.CurrentValue);
         }
 
@@ -76,16 +78,16 @@ namespace InventoryQuest.Testing
         public void TakeItemFromBackpackEquipAndUnequip()
         {
             float startingStrength = Player.Stats.Strength.CurrentValue;
-            Player.PrimaryContainer.TryPlace(Sword, new Coor(0, 0));
+            Player.Backpack.TryPlace(Sword, new Coor(0, 0));
             EquipmentSlotType slotType = Sword.SlotType;
             string swordId = Sword.GuId;
-            if (Player.PrimaryContainer.TryTake(out var item, new Coor(0, 0)))
+            if (Player.Backpack.TryTake(out var item, new Coor(0, 0)))
             {
 
                 
                 if (Player.EquipmentSlots.ContainsKey(slotType))
                 {
-                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item);
+                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item as IEquipable);
                     Player.EquipmentSlots[slotType].TryUnequip(out var _item);
                 }
             }

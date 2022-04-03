@@ -5,9 +5,9 @@ namespace Data
 {
     public class ModifierEventArgs : EventArgs
     {
-        public List<StatModifier> Modifiers;
+        public IList<StatModifier> Modifiers;
 
-        public ModifierEventArgs(List<StatModifier> modifiers)
+        public ModifierEventArgs(IList<StatModifier> modifiers)
         {
             Modifiers = modifiers;
         }

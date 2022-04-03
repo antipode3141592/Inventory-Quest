@@ -7,31 +7,23 @@ using UnityEngine.Pool;
 
 namespace Data
 {
-    public class Container : IItem, IContainer
+    public class EquipableContainer : IItem, IEquipable, IContainer
     {
-        public string GuId { get; }
-        public string Id { get; }
-        public GridSquare[,] Grid { get; }
-        public IDictionary<string, Content> Contents { get; }
-        public Coor Dimensions { get; }
-
-        public Rarity Rarity { get; }
         public IItemStats Stats { get; }
         public Shape Shape { get; }
+
+        public string GuId { get; }
+
+        public string Id { get; }
+
+        public EquipmentSlotType SlotType { get; }
+        public GridSquare[,] Grid { get; }
+        public IDictionary<string, Content> Contents { get; }
+
+        public float Value => Stats.GoldValue;
+
+        public IList<StatModifier> Modifiers { get; set; }
         public Sprite Sprite { get; set; }
-
-
-        public Container(ContainerStats stats)
-        {
-            GuId = Guid.NewGuid().ToString();
-            Id = stats.Id;
-            Dimensions = stats.ContainerSize;
-            Stats = stats;
-            Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
-            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
-            Contents = new Dictionary<string, Content>();
-            Sprite = Resources.Load<Sprite>(stats.SpritePath);
-        }
 
         public float InitialWeight => Stats.Weight;
         public float TotalWeight => Contents.Sum(x => x.Value.Item.Stats.Weight) + Weight;
@@ -39,10 +31,24 @@ namespace Data
         public float ContainedWeight => Contents.Sum(x => x.Value.Item.Stats.Weight);
         public float ContainedWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue);
         public float Weight => InitialWeight + Contents.Sum(x => x.Value.Item.Stats.Weight);
-        public float Value => Stats.GoldValue;
 
         public event EventHandler<GridEventArgs> OnItemPlaced;
         public event EventHandler<GridEventArgs> OnItemTaken;
+
+        public EquipableContainer(EquipableContainerStats stats)
+        {
+            GuId = Guid.NewGuid().ToString();
+            Stats = stats;
+            Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
+
+            Id = stats.Id;
+            SlotType = stats.SlotType;
+            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column]; ;
+            Contents = new Dictionary<string, Content>();
+            Modifiers = stats.Modifiers is not null ? stats.Modifiers : new List<StatModifier>();
+            Sprite = Resources.Load<Sprite>(stats.SpritePath);
+            Dimensions = stats.ContainerSize;
+        }
 
         public bool TryPlace(IItem item, Coor target)
         {
@@ -139,6 +145,8 @@ namespace Data
 
         public bool IsFull => isFull();
 
+        public Coor Dimensions { get; }
+
         bool isEmpty()
         {
             foreach (var square in Grid)
@@ -156,49 +164,5 @@ namespace Data
             }
             return true;
         }
-
-        #region Logging
-        private void LogContents()
-        {
-            Debug.Log($"Container now contains {Contents.Count} items:");
-            foreach (var content in Contents)
-            {
-                Debug.Log($"....{content.Value.Item.Id}, {content.Value.Item.Value}g, {content.Value.Item.Weight}lbs");
-            }
-            Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
-            Debug.Log($"Contained Weight: {ContainedWeight}");
-            Debug.Log($"Total Combined Weight: {TotalWeight}");
-        }
-
-        private void LogGrid()
-        {
-            Debug.Log($"Container Grid:");
-            for (int r = 0; r < Dimensions.row; r++)
-            {
-                string line = "";
-                for (int c = 0; c< Dimensions.column; c++)
-                {
-                    line += Grid[r, c].IsOccupied ? "X" : "0";
-                }
-                Debug.Log($"....{r}: {line}");
-            }
-        }
-
-        private void LogItemShape(Item item)
-        {
-            Debug.Log($"Item Shape:");
-            for (int r = 0; r < item.Shape.Size.row; r++)
-            {
-                string line = "";
-                for (int c = 0; c < item.Shape.Size.column; c++)
-                {
-                    line += item.Shape.CurrentMask.Map[r,c] ? "X" : "0";
-                }
-            }
-        }
-        #endregion
-
-        
     }
-    
 }

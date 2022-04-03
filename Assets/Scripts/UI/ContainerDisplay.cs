@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 using InventoryQuest.Managers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,8 +39,8 @@ namespace InventoryQuest.UI
         ContactFilter2D _contactFilter;
 
 
-        private Container myContainer;
-        public Container MyContainer 
+        private IContainer myContainer;
+        public IContainer MyContainer 
         {
             get { return myContainer; } 
             set 
@@ -90,9 +91,9 @@ namespace InventoryQuest.UI
         public void SetupGrid()
         {
             if (MyContainer is null) return;
-            for (int r = 0; r < MyContainer.ContainerSize.row; r++)
+            for (int r = 0; r < MyContainer.Dimensions.row; r++)
             {
-                for (int c = 0; c < MyContainer.ContainerSize.column; c++)
+                for (int c = 0; c < MyContainer.Dimensions.column; c++)
                 {
                     squares[r, c].SetContainer(MyContainer);
                     squares[r, c].gameObject.SetActive(true);
@@ -130,9 +131,9 @@ namespace InventoryQuest.UI
 
         public void UpdateGridState()
         {
-            for (int r = 0; r < MyContainer.ContainerSize.row; r++)
+            for (int r = 0; r < MyContainer.Dimensions.row; r++)
             {
-                for (int c = 0; c < MyContainer.ContainerSize.column; c++)
+                for (int c = 0; c < MyContainer.Dimensions.column; c++)
                 {
                     squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
                 }

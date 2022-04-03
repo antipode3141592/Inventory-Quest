@@ -37,6 +37,7 @@ namespace InventoryQuest.UI
             if (skillEncounter is not null)
             {
                 //enable skill check UI widget, SkillCheckEncounterDisplay
+
                 return;
             }
             CombatEncounter combatEncounter = _encounterManager.CurrentEncounter as CombatEncounter;

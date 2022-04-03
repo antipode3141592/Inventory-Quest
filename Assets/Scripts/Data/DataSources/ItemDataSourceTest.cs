@@ -49,7 +49,7 @@ namespace Data
                     goldValue: 0f,
                     description: "small pile",
                     spritePath: "Items/loot_pile_small",
-                    isQuest: true,
+                    isQuestItem: true,
                     containerSize: new Coor(r: 5, c: 3))
             },
             {    "loot_pile_medium", new ContainerStats("loot_pile_medium",
@@ -57,7 +57,7 @@ namespace Data
                     goldValue: 0f,
                     description: "average pile",
                     spritePath: "Items/loot_pile_medium",
-                    isQuest: true,
+                    isQuestItem: true,
                     containerSize: new Coor(r: 5, c: 4))
             },
             {    "loot_pile_large", new ContainerStats("loot_pile_large",
@@ -65,37 +65,41 @@ namespace Data
                     goldValue: 0f,
                     description: "large pile",
                     spritePath: "Items/loot_pile_large",
-                    isQuest: true,
+                    isQuestItem: true,
                     containerSize: new Coor(r: 6, c: 5))
             },
 
-            {   "adventure backpack", new ContainerStats("adventure backpack",
+            {   "adventure backpack", new EquipableContainerStats("adventure backpack",
                     weight: 2f,
                     goldValue: 5f,
                     description: "a basic adventurer's backpack",
                     spritePath: "",
-                    isQuest: true,
-                    shape: ShapeType.Monomino,
-                    containerSize: new Coor(12, 5))
+                    isQuestItem: true,
+                    shapeType: ShapeType.Monomino,
+                    containerSize: new Coor(12, 5),
+                    slotType: EquipmentSlotType.Backpack
+                )
             },
             {
 
-                "small backpack", new ContainerStats("small backpack",
+                "small backpack", new EquipableContainerStats("small backpack",
                     weight: 1f,
                     goldValue: 2f,
                     description: "a small backpack",
                     spritePath: "",
-                    isQuest: true,
-                    shape: ShapeType.Monomino,
-                    containerSize: new Coor(8, 4))
-                },
+                    isQuestItem: true,
+                    shapeType: ShapeType.Monomino,
+                    containerSize: new Coor(8, 4),
+                    slotType: EquipmentSlotType.Backpack
+                )
+            },
             { "basic_sword_1", new EquipableItemStats("basic_sword_1",
                      weight: 2f,
                      goldValue: 10f,
                      description: "a basic sword",
                      rarity: Rarity.common,
                      spritePath: "Items/basic_sword_1",
-                     shape: ShapeType.Tromino_I,
+                     shapeType: ShapeType.Tromino_I,
                      slotType: EquipmentSlotType.OneHandedWeapon,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
@@ -108,7 +112,7 @@ namespace Data
                     description: "a basic sword",
                     rarity: Rarity.epic,
                     spritePath: "Items/basic_sword_1",
-                    shape: ShapeType.Tromino_I,
+                    shapeType: ShapeType.Tromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -121,7 +125,7 @@ namespace Data
                     description: "a basic crossbow",
                     rarity: Rarity.common,
                     spritePath: "Items/basic_crossbow_1",
-                    shape: ShapeType.Tetromino_T,
+                    shapeType: ShapeType.Tetromino_T,
                     slotType: EquipmentSlotType.TwoHandedWeapon,
                     defaultFacing: Facing.Right,
                     modifiers: new StatModifier[] {
@@ -134,7 +138,7 @@ namespace Data
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/common_shortsword_1",
-                    shape: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tetromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -147,7 +151,7 @@ namespace Data
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/uncommon_shortsword_1",
-                    shape: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tetromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -160,7 +164,7 @@ namespace Data
                     description: "a basic sword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/uncommon_sword_1",
-                    shape: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tetromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -173,7 +177,7 @@ namespace Data
                     description: "a basic sword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/basic_sword_1",
-                    shape: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tetromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -186,7 +190,7 @@ namespace Data
                     description: "A simple silver band that is quite charming.",
                     rarity: Rarity.rare,
                     spritePath: "Items/Loot_64",
-                    shape: ShapeType.Monomino,
+                    shapeType: ShapeType.Monomino,
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
                         new(typeof(Charisma), OperatorType.Add, 5)}
@@ -198,7 +202,7 @@ namespace Data
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.common,
                     spritePath: "Items/boot_1",
-                    shape: ShapeType.Tromino_L,
+                    shapeType: ShapeType.Tromino_L,
                     slotType: EquipmentSlotType.Feet)
             },
             {   "shoe_1", new EquipableItemStats("basic_sword_1",
@@ -207,7 +211,7 @@ namespace Data
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.common,
                     spritePath: "Items/shoe_1",
-                    shape: ShapeType.Domino,
+                    shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.Feet)
             },
             {   "sandal_1", new EquipableItemStats("sandal_1",
@@ -216,7 +220,7 @@ namespace Data
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.common,
                     spritePath: "Items/sandal_1",
-                    shape: ShapeType.Domino,
+                    shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.Feet)
             },
         };
@@ -228,7 +232,7 @@ namespace Data
 
         public IItemStats GetRandomItemStats(Rarity rarity) 
         {
-            var itemsOfRarity = itemDictionary.Select(y => y).Where(x => x.Value.Rarity == rarity && x.Value.IsQuest == false);
+            var itemsOfRarity = itemDictionary.Select(y => y).Where(x => x.Value.Rarity == rarity && x.Value.IsQuestItem == false);
             int randomIndex = Random.Range(0,itemsOfRarity.Count());
             Debug.Log($"rarity: {rarity}, index: {randomIndex}, itemcount: {itemsOfRarity.Count()}");
             return itemsOfRarity.ElementAt(randomIndex).Value;

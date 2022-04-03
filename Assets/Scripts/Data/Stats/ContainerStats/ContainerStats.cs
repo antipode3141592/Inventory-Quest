@@ -8,6 +8,8 @@ namespace Data
 
         public string Id { get; }
 
+        public string Description { get; }
+
         public ShapeType ShapeType { get; }
 
         public Facing DefaultFacing { get; }
@@ -20,13 +22,13 @@ namespace Data
 
         public Coor ContainerSize { get; }
 
-        public string Description { get; }
+        
 
         public string SpritePath { get; }
         
-        public bool IsQuest { get; }
+        public bool IsQuestItem { get; }
 
-        public ContainerStats(string itemId, float weight, float goldValue, string description, string spritePath, Coor containerSize, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuest = false)
+        public ContainerStats(string itemId, float weight, float goldValue, string description, string spritePath, Coor containerSize, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuestItem = false)
         {
             Id = itemId;
             Weight = weight;
@@ -37,7 +39,7 @@ namespace Data
             ShapeType = shape;
             DefaultFacing = defaultFacing;
             Rarity = rarity;
-            IsQuest = isQuest;
+            IsQuestItem = isQuestItem;
         }
     }
 }

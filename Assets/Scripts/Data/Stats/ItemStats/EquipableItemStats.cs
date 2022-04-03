@@ -5,8 +5,9 @@ using System.Collections.Generic;
 namespace Data
 {
     [Serializable]
-    public class EquipableItemStats : IItemStats
+    public class EquipableItemStats : IItemStats, IEquipableStats
     {
+        //IItemStats
         public string Id { get; }
         public string Description { get; }
         public ShapeType ShapeType { get; }
@@ -18,16 +19,20 @@ namespace Data
 
         public string SpritePath { get; }
 
-        public bool IsQuest { get; }
+        public bool IsQuestItem { get; }
+
+        //
+
+
 
         public List<StatModifier> Modifiers { get; set; }
 
         public EquipmentSlotType SlotType { get; set; }
 
-        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common, bool isQuest = false)
+        public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shapeType = ShapeType.Monomino, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common, bool isQuest = false)
         {
             Id = itemId;
-            ShapeType = shape;
+            ShapeType = shapeType;
             DefaultFacing = defaultFacing;
             Weight = weight;
             GoldValue = goldValue;
@@ -36,7 +41,7 @@ namespace Data
             Modifiers = modifiers != null ? new(modifiers) : new();
             SlotType = slotType;
             Rarity = rarity;
-            IsQuest = isQuest;
+            IsQuestItem = isQuest;
         }
     }
 }

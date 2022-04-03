@@ -11,16 +11,18 @@ namespace InventoryQuest.Testing
         ICharacterDataSource characterDataSource;
         Character Player;
         CharacterStats playerStats;
-        ContainerStats backpackStats;
+        EquipableContainerStats backpackStats;
+        IEquipable backpack;
 
         [SetUp]
         public void SetUp()
         {
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
             playerStats = characterDataSource.GetCharacterStats("Player");
-            Player = CharacterFactory.GetCharacter(playerStats, backpackStats);
+            Player = CharacterFactory.GetCharacter(characterStats:playerStats, startingEquipment: new IEquipable[] { backpack });
 
         }
 
@@ -34,7 +36,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlayerCreationBackpackSize()
         {
-            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: Player.PrimaryContainer.ContainerSize);
+            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: Player.Backpack.Dimensions);
         }
 
         [Test]

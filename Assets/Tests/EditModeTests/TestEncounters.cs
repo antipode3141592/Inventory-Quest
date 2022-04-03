@@ -15,8 +15,9 @@ namespace InventoryQuest.Testing
         Party party;
         Character partyMember;
         CharacterStats playerStats;
-        ContainerStats backpackStats;
-        EquipableItem equipableItem;
+        EquipableContainerStats backpackStats;
+        IEquipable equipableItem;
+        IEquipable backpack;
         
 
         const string encounterId = "test_of_might";
@@ -32,11 +33,14 @@ namespace InventoryQuest.Testing
             currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetEncounterById(encounterId));
 
             playerStats = characterDataSource.GetCharacterStats("Player");
-            backpackStats = (ContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
+            backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
             EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_15");
-            partyMember = CharacterFactory.GetCharacter(playerStats, backpackStats);
+            partyMember = CharacterFactory.GetCharacter(
+                characterStats: playerStats, 
+                startingEquipment: new IEquipable[]{ backpack });
             party = new Party(new Character[] { partyMember });
-            equipableItem = (EquipableItem)ItemFactory.GetItem(EquipableStats);
+            equipableItem = (IEquipable)ItemFactory.GetItem(EquipableStats);
 
         }
 
@@ -67,11 +71,11 @@ namespace InventoryQuest.Testing
         [Test]
         public void TestOfMightSuccessParty()
         {
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, backpackStats));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, backpackStats));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, backpackStats));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, backpackStats));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, backpackStats));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats)}));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
             Assert.IsTrue(currentEncounter.Resolve(party));
         }
 
