@@ -85,7 +85,12 @@ namespace InventoryQuest.Testing
             Assert.IsFalse(currentEncounter.Resolve(party));
         }
 
-
+        [Test]
+        public void RandomEncounterCreateSuccess()
+        {
+            IEncounter encounter = (IEncounter)EncounterFactory.GetEncounter(encounterDataSource.GetRandomEncounter());
+            Assert.IsTrue(encounter is IEncounter);
+        }
 
     }
 }

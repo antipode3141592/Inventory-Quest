@@ -65,18 +65,16 @@ namespace Data
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
-                //LogGrid();
-                //LogContents();
                 OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
                 return true;
             }
-            Debug.Log($"TryPlace() failed for {item.Id} at point [{target}]");
             return false;
         }
 
         public bool IsPointInGrid(Coor target)
         {
-            if (target.row <= Dimensions.row && target.row >= 0 && target.column <= Dimensions.column && target.column >= 0)
+            if (( 0 <= target.row && target.row <= Dimensions.row )
+                && (0 <= target.column && target.column <= Dimensions.column))
             {
                 return true;
             }
@@ -90,18 +88,13 @@ namespace Data
                 if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
                 {
                     item = content.Item;
-                    Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
-
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
-                        Debug.Log($"....{coor.row},{coor.column}");
                         Grid[coor.row, coor.column].IsOccupied = false;
                         Grid[coor.row, coor.column].storedItemId = "";
                     }
                     ListPool<Coor>.Release(content.GridSpaces);
-                    //LogContents();
-                    //LogGrid();
                     OnItemTaken?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal, target, item));
                     return true;
                 }
@@ -155,50 +148,7 @@ namespace Data
                 if (!square.IsOccupied) return false;
             }
             return true;
-        }
-
-        #region Logging
-        private void LogContents()
-        {
-            Debug.Log($"Container now contains {Contents.Count} items:");
-            foreach (var content in Contents)
-            {
-                Debug.Log($"....{content.Value.Item.Id}, {content.Value.Item.Value}g, {content.Value.Item.Weight}lbs");
-            }
-            Debug.Log($"Total Combined Gold Value: {ContainedWorth}");
-            Debug.Log($"Contained Weight: {ContainedWeight}");
-            Debug.Log($"Total Combined Weight: {TotalWeight}");
-        }
-
-        private void LogGrid()
-        {
-            Debug.Log($"Container Grid:");
-            for (int r = 0; r < Dimensions.row; r++)
-            {
-                string line = "";
-                for (int c = 0; c< Dimensions.column; c++)
-                {
-                    line += Grid[r, c].IsOccupied ? "X" : "0";
-                }
-                Debug.Log($"....{r}: {line}");
-            }
-        }
-
-        private void LogItemShape(Item item)
-        {
-            Debug.Log($"Item Shape:");
-            for (int r = 0; r < item.Shape.Size.row; r++)
-            {
-                string line = "";
-                for (int c = 0; c < item.Shape.Size.column; c++)
-                {
-                    line += item.Shape.CurrentMask.Map[r,c] ? "X" : "0";
-                }
-            }
-        }
-        #endregion
-
-        
+        }        
     }
     
 }

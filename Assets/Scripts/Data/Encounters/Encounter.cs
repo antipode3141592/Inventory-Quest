@@ -10,23 +10,22 @@ namespace Data.Encounters
         protected Encounter(IEncounterStats encounterStats)
         {
             GuId = Guid.NewGuid().ToString();
-            Id = encounterStats.Id;
-            Name = encounterStats.Name;
-            Description = encounterStats.Description;
             RewardIds = encounterStats.RewardIds;
             PenaltyIds = encounterStats.PenaltyIds;
-            Experience = encounterStats.Experience;
+            Stats = encounterStats;
         }
 
         public string GuId { get; }
 
-        public string Id { get; }
+        public string Id => Stats.Id;
 
-        public string Name { get; }
+        public string Name => Stats.Name;
 
-        public string Description { get; }
+        public string Description => Stats.Description;
 
-        public int Experience { get; }
+        public int Experience => Stats.Experience;
+
+        public IEncounterStats Stats { get; }
 
         public IList<string> RewardIds { get; }
 

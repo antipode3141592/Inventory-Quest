@@ -73,7 +73,7 @@ namespace Data
                     weight: 2f,
                     goldValue: 5f,
                     description: "a basic adventurer's backpack",
-                    spritePath: "",
+                    spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
                     containerSize: new Coor(12, 5),
@@ -86,7 +86,7 @@ namespace Data
                     weight: 1f,
                     goldValue: 2f,
                     description: "a small backpack",
-                    spritePath: "",
+                    spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
                     containerSize: new Coor(8, 4),
@@ -184,7 +184,7 @@ namespace Data
                         new(typeof(Strength),OperatorType.Add,5)}
                     )
             },
-            {   "ring_charisma_5", new EquipableItemStats("ring_charisma_1",
+            {   "ring_charisma_5", new EquipableItemStats("ring_charisma_5",
                     weight: 0.1f,
                     goldValue: 500f,
                     description: "A simple silver band that is quite charming.",
@@ -194,6 +194,18 @@ namespace Data
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
                         new(typeof(Charisma), OperatorType.Add, 5)}
+                    )
+            },
+            {   "ring_spirit_25", new EquipableItemStats("ring_spirit_25",
+                    weight: 0.1f,
+                    goldValue: 500f,
+                    description: "A golden ring that radiates spirit energy",
+                    rarity: Rarity.rare,
+                    spritePath: "Items/Loot_64",
+                    shapeType: ShapeType.Monomino,
+                    slotType: EquipmentSlotType.Ring,
+                    modifiers: new StatModifier[] {
+                        new(typeof(Spirit), OperatorType.Add, 15)}
                     )
             },
             {   "boot_1", new EquipableItemStats("boot_1",

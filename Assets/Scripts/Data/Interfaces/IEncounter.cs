@@ -12,10 +12,14 @@ namespace Data.Interfaces
 
         public int Experience { get; }
 
+        public IEncounterStats Stats { get; }
+
         public IList<string> RewardIds { get; }
 
         public IList<string> PenaltyIds { get; }
 
         public bool Resolve(Party party);
+
+
     }
 }

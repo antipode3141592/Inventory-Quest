@@ -1,8 +1,11 @@
-﻿using Data.Encounters;
+﻿using Data;
+using Data.Encounters;
 using Data.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 
@@ -10,78 +13,135 @@ namespace InventoryQuest.Managers
 {
     public class EncounterManager: MonoBehaviour
     {
-        GameManager _gameManager;
         PartyManager _partyManager;
         RewardManager _rewardManager;
         IEncounterDataSource _dataSource;
 
-        IEncounter currentEncounter;
+        [SerializeField] 
 
-        public EventHandler OnEncounterListCreated;
+        public EventHandler OnEncounterCreated;
         public EventHandler OnEncounterStart;
+        public EventHandler OnEncounterResolveStart;
         public EventHandler OnEncounterResolveSuccess;
         public EventHandler OnEncounterResolveFailure;
 
-        public IEncounter CurrentEncounter => currentEncounter;
+        bool isResolving = false;
 
-        public IList<IEncounter> Encounters;
+        public IEncounter CurrentEncounter { get; set; }
 
         [Inject]
-        public void Init(GameManager gameManager, IEncounterDataSource dataSource, PartyManager partyManager, RewardManager rewardManager)
+        public void Init(IEncounterDataSource dataSource, PartyManager partyManager, RewardManager rewardManager)
         {
-            _gameManager = gameManager;
             _dataSource = dataSource;
             _partyManager = partyManager;
             _rewardManager = rewardManager;
         }
 
-        private void Awake()
-        {
-            Encounters = new List<IEncounter>();
-        }
-
         public void ResolveCurrentEncounter()
         {
-            if (CurrentEncounter.Resolve(_partyManager.CurrentParty)) {
-                foreach(var reward in CurrentEncounter.RewardIds)
+            if (isResolving) return;
+            isResolving = true;
+            OnEncounterResolveStart?.Invoke(this, EventArgs.Empty);
+            StartCoroutine(EncounterResolveBegin());
+        }
+
+        void LoadNextEncounter()
+        {
+            //cleanup
+            StartCoroutine(EncounterCleanup());
+        }
+
+        IEnumerator EncounterResolveBegin()
+        {
+            yield return new WaitForSeconds(1f);
+            if (CurrentEncounter.Resolve(_partyManager.CurrentParty))
+            {
+                foreach (var reward in CurrentEncounter.RewardIds)
                 {
                     _rewardManager.EnqueueReward(reward);
                 }
-                AwardExperience();
+                Debug.Log($"The Encounter {CurrentEncounter.Name} is a success!");
+                AwardExperience(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveSuccess?.Invoke(this, EventArgs.Empty);
-            } 
+            }
             else
             {
+                Debug.Log($"The Encounter {CurrentEncounter.Name} was a failure!");
+                DistributePenalties(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveFailure?.Invoke(this, EventArgs.Empty);
+            }
+            isResolving = false;
+            LoadNextEncounter();
+        }
+
+        IEnumerator EncounterCleanup()
+        {
+            Debug.Log("EncounterCleanup()");
+            yield return new WaitForSeconds(1f);
+            BeginAdventure();
+        }
+
+        void AwardExperience(IDictionary<string, Character> Characters)
+        {
+            foreach(var character in Characters)
+            {
+                character.Value.Stats.CurrentExperience += CurrentEncounter.Stats.Experience;
             }
         }
 
-        void AwardExperience()
+        void DistributePenalties(IDictionary<string, Character> Characters)
         {
-            foreach(var character in _partyManager.CurrentParty.Characters)
+            foreach (var character in Characters)
             {
-                character.Value.Stats.CurrentExperience += currentEncounter.Experience;
+                
             }
         }
 
         public void RetreatToSafety()
         {
-
+            EndAdventure();
         }
 
         public void BeginAdventure()
         {
+            GenerateEncounter();
+            OnEncounterStart?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void EndAdventure()
+        {
 
         }
 
-        void GenerateEncounterList(int totalEncounters)
+        public void GenerateEncounter()
         {
-            Encounters.Clear();
-            for (int i = 0; i < totalEncounters; i++)
-            {
-                Encounters.Add(EncounterFactory.GetEncounter(_dataSource.GetRandomEncounter()));
-            }
-            OnEncounterListCreated?.Invoke(this, EventArgs.Empty);
+            CurrentEncounter = EncounterFactory.GetEncounter(_dataSource.GetRandomEncounter());
+            OnEncounterCreated?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    //public interface IPath
+    //{
+    //    public string Id { get; }
+    //    public string Name { get; }
+
+    //    public string StartLocationId { get; }
+    //    public string EndLocationId { get; }
+
+    //    public int Length => EncounterIds.Count;
+
+    //    public IList<string> EncounterIds { get; }
+    //}
+
+
+
+    //public interface ILocation
+    //{
+    //    public IList<IPath> Paths { get; }
+    //}
+
+    //public interface IMap
+    //{
+    //    public IList<ILocation> Locations { get; }
+    //}
 }

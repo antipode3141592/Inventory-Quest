@@ -39,7 +39,24 @@ namespace Data.Rewards
                     lootContainerId: "loot_pile_large",
                     lootTableId: "common_loot"
                     )
+            },
+            {
+                "spirit_ring", new ItemRewardStats(
+                    id: "spirit_ring",
+                    name: "Greater Spirit Ring",
+                    description: "A ring imbued with powerful spirit magic",
+                    itemId: "ring_spirit_25"
+                    )
+            },
+            {
+                "power_sword", new ItemRewardStats(
+                    id: "power_sword",
+                    name: "Powerful Sword",
+                    description: "A magical sword that increases the strength of the bearer.",
+                    itemId: "basic_sword_15"
+                    )
             }
+
         };
 
         public IRewardStats GetRewardById(string id)

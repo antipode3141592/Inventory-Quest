@@ -1,5 +1,6 @@
 ﻿using Data.Encounters;
 using InventoryQuest.Managers;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -8,10 +9,9 @@ namespace InventoryQuest.UI
 {
     public class SkillCheckEncounterDisplay : MonoBehaviour
     {
-        public PartyManager _partyManager;
+        PartyManager _partyManager;
 
-        public IList<EncounterRequirementDisplay> EncounterRequirements;
-        public IList<EncounterRequirementDisplay> EncounterAlternateRequirements;
+        IList<EncounterRequirementDisplay> EncounterRequirements;
 
         public EncounterRequirementDisplay RequirementDisplayPrefab;
 
@@ -23,27 +23,45 @@ namespace InventoryQuest.UI
             _partyManager = partyManager;
         }
 
-        void DisplayRequirements()
+        private void Awake()
+        {
+            EncounterRequirements = new List<EncounterRequirementDisplay>();
+        }
+
+        public void DisplayRequirements()
         {
             if (SkillEncounter is not null)
             {
-                foreach (var req in SkillEncounter.SkillCheckRequirements)
+                for (int i = 0; i < SkillEncounter.SkillCheckRequirements.Count; i++)
                 {
-                    EncounterRequirements.Add(CreateRequirementElement(req));
+                    var req = SkillEncounter.SkillCheckRequirements[i];
+                    if (i >= EncounterRequirements.Count) 
+                        EncounterRequirements.Add(CreateRequirementElement(req));
+                    UpdateRequirement(EncounterRequirements[i], req);
+                    
                 }
-                foreach (var req in SkillEncounter.SkillCheckAlternates)
-                {
-                    EncounterAlternateRequirements.Add(CreateRequirementElement(req));
-                }
-
             }
         }
 
-        EncounterRequirementDisplay CreateRequirementElement(SkillCheckValue skillCheck)
+        public void UpdateRequirements(object sender, EventArgs e)
         {
-            EncounterRequirementDisplay display = Instantiate<EncounterRequirementDisplay>(RequirementDisplayPrefab, transform);
+            if (SkillEncounter is null) return;
+            for(int i = 0; i < SkillEncounter.SkillCheckRequirements.Count; i++)
+            {
+                UpdateRequirement(EncounterRequirements[i],SkillEncounter.SkillCheckRequirements[i]);
+            }
+        }
+
+        void UpdateRequirement(EncounterRequirementDisplay display, SkillCheckRequirement skillCheck)
+        {
             display.RequirementText = skillCheck.ToString();
             display.SetStatusColor(SkillEncounter.Check(_partyManager.CurrentParty, skillCheck));
+        }
+
+        EncounterRequirementDisplay CreateRequirementElement(SkillCheckRequirement skillCheck)
+        {
+            EncounterRequirementDisplay display = Instantiate<EncounterRequirementDisplay>(RequirementDisplayPrefab, transform);
+            
             return display;
         }
     }

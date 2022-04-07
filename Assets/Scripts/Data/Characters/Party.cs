@@ -11,10 +11,19 @@ namespace Data
         public string SelectedPartyMemberGuId { get; set; }
 
         public EventHandler<MessageEventArgs> OnPartyMemberSelected;
+        public EventHandler OnPartyMemberStatsUpdated;
+        
 
         public Party(Dictionary<string, Character> characters)
         {
             Characters = characters;
+            foreach (var character in characters.Values)
+                character.OnStatsUpdated += OnStatsUpdatedHandler;
+        }
+
+        void OnStatsUpdatedHandler(object sender, EventArgs e)
+        {
+            OnPartyMemberStatsUpdated?.Invoke(this, e);
         }
 
         public Party(Character[] characters = null)

@@ -60,7 +60,18 @@ namespace InventoryQuest.UI
         public void CheckIsOccupied()
         {
             if (_character is null) return;
-            backgroundSprite.color = _character.EquipmentSlots[SlotType].EquippedItem is null ? Color.white : Color.grey;
+            if (_character.EquipmentSlots[SlotType].EquippedItem is null)
+            {
+                backgroundSprite.color = Color.white;
+                equippedItemSprite.sprite = null;
+            }
+            else
+            {
+                backgroundSprite.color = Color.grey;
+                equippedItemSprite.sprite = (_character.EquipmentSlots[SlotType].EquippedItem as IItem).Sprite;
+            }
+
+
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -79,6 +90,8 @@ namespace InventoryQuest.UI
                         _gameManager.HoldingItem = currentEquipment as IItem;
                         _gameManager.ChangeState(GameStates.HoldingItem);
                         backgroundSprite.color = Color.white;
+                        equippedItemSprite.color = Color.white;
+                        equippedItemSprite.sprite = null;
                     }
                     break;
                 case GameStates.HoldingItem:
@@ -88,6 +101,8 @@ namespace InventoryQuest.UI
                         if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Default);
                         else _gameManager.ChangeState(GameStates.HoldingItem);
                         backgroundSprite.color = Color.grey;
+                        equippedItemSprite.color = Color.white;
+                        equippedItemSprite.sprite = (_character.EquipmentSlots[SlotType].EquippedItem as IItem).Sprite;
                     }
                     break;
                 default:

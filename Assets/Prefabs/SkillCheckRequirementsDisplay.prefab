@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 123032429765193106}
   - component: {fileID: 5547843571158483468}
   m_Layer: 5
-  m_Name: RequirementsDisplay
+  m_Name: SkillCheckRequirementsDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f887b294e200890448e64738b662cccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _partyManager: {fileID: 0}
   RequirementDisplayPrefab: {fileID: 5129112116688400891, guid: 22bf0138edbb48b468c6b02d67aeec90, type: 3}
 --- !u!114 &5547843571158483468
 MonoBehaviour:
@@ -214,8 +213,8 @@ MonoBehaviour:
     ChildScaleHeight: 0
     ChildControlWidth: 0
     ChildControlHeight: 0
-    Orientation: 0
+    Orientation: 1
     screenConfigName: Fallback
   customSettings:
     items: []
-  orientation: 0
+  orientation: 1

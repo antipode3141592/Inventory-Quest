@@ -11,12 +11,13 @@ namespace InventoryQuest.Managers
 {
     public class RewardManager: MonoBehaviour
     {
-        PartyManager _partyManager;
         ContainerDisplayManager _displayManager;
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
         LootTable _lootTable;
+
+        bool isProcessing = false;
 
         public Dictionary<string, Container> LootPiles = new();
 
@@ -28,11 +29,10 @@ namespace InventoryQuest.Managers
         public EventHandler OnRewardsProcessComplete;
 
         [Inject]
-        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, PartyManager partyManager, ContainerDisplayManager displayManager, ILootTableDataSource lootTableDataSource) 
+        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ContainerDisplayManager displayManager, ILootTableDataSource lootTableDataSource) 
         {
             _dataSource = dataSource;
             _rewardDataSource = rewardDataSource;
-            _partyManager = partyManager;
             _displayManager = displayManager;
             _lootTableDataSource = lootTableDataSource;
         }
@@ -40,8 +40,6 @@ namespace InventoryQuest.Managers
         private void Awake()
         {
             _lootTable = new LootTable(_lootTableDataSource);
-            if (rewardQueue.Count == 0) return;
-            ProcessRewards();
         }
 
         #region Processing Rewards Queue
@@ -58,12 +56,15 @@ namespace InventoryQuest.Managers
 
         public void ProcessRewards()
         {
+            if (isProcessing) return;
+            isProcessing = true;
             OnRewardsProcessStart?.Invoke(this, EventArgs.Empty);
             while(rewardQueue.Count > 0)
             {
                 var reward = rewardQueue.Dequeue();
                 ProcessReward(reward);
             }
+            isProcessing = false;
             OnRewardsProcessComplete?.Invoke(this, EventArgs.Empty);
         }
 
@@ -74,14 +75,17 @@ namespace InventoryQuest.Managers
             ItemReward itemReward = reward as ItemReward;
             if (itemReward is not null)
             {
-
+                var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
+                LootPiles.Add(lootPile.GuId, lootPile);
+                TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemReward.ItemId)));
+                PlaceRandomLootInContainer(lootPile, "common_loot");
             }
             RandomItemReward randomItemReward = reward as RandomItemReward;
             if (randomItemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
                 LootPiles.Add(lootPile.GuId,lootPile);
-                PlaceRandomLootInContainer(lootPile, randomItemReward);
+                PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
             }
             CharacterReward characterReward = reward as CharacterReward;
             if (characterReward is not null)
@@ -94,11 +98,11 @@ namespace InventoryQuest.Managers
 
 
         #region Item Placement Functions
-        void PlaceRandomLootInContainer(Container container, RandomItemReward reward)
+        void PlaceRandomLootInContainer(Container container, string lootTableId)
         {
             while (!container.IsFull)
             {
-                Rarity rarity = _lootTable.GetRandomRarity(reward.LootTableId);
+                Rarity rarity = _lootTable.GetRandomRarity(lootTableId);
                 IItem item = ItemFactory.GetItem(_dataSource.GetRandomItemStats(rarity));
                 TryAutoPlaceToContainer(container, item);
             }

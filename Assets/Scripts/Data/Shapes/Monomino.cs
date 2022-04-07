@@ -20,6 +20,8 @@ namespace Data.Shapes
         }
 
         public override bool IsRotationallySymmetric => true;
+
+
     }
 
     

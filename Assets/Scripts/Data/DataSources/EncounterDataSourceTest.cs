@@ -1,5 +1,7 @@
 ﻿using Data.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Encounters
 {
@@ -10,13 +12,13 @@ namespace Data.Encounters
             { "test_of_might", new SkillCheckEncounterStats(
                 id: "test_of_might",
                 name: "Test of Might",
-                description: "At least one Party Member must have the required Strength or face the consequences!",
-                experience: 100,
+                description: "A boulder blocks your path!  Move it, or go around (add a random encounter).",
+                experience: 175,
                 rewardIds: new List<string>() { "lootbox_common"},
                 penaltyIds: new List<string>(){},
-                skillCheckRequirements: new List<SkillCheckValue>() 
+                skillCheckRequirements: new List<SkillCheckRequirement>() 
                 {
-                    { new PartySkillCheckValue(typeof(Strength),20,60) }
+                    new SkillCheckRequirement(new List<Type>(){typeof(Strength) },20,60)
                 }) 
             },
             {
@@ -24,13 +26,28 @@ namespace Data.Encounters
                 new SkillCheckEncounterStats(
                 id: "test_of_vigor",
                 name: "Test of Vigor",
-                description: "At least one Party Member must have the required Vitality or face the consequences!",
-                experience: 100,
+                description: "A sheer cliff bars your way!  Climb it, or go around (add a random encounter). ",
+                experience: 150,
                 rewardIds: new List<string>() { "lootbox_common" },
                 penaltyIds: new List<string>() { },
-                skillCheckRequirements: new List<SkillCheckValue>()
+                skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckValue(typeof(Vitality),20) }
+                    { new SkillCheckRequirement(new List<Type>(){typeof(Vitality)},20) },
+                    { new SkillCheckRequirement(new List<Type>(){typeof(Strength)},20) }
+                })
+            },
+            {
+                "test_of_faith",
+                new SkillCheckEncounterStats(
+                id: "test_of_faith",
+                name: "Test of Faith",
+                description: "An ominous fog fills the area.  The angered spirits can be appeased with a cleansing ritual.",
+                experience: 300,
+                rewardIds: new List<string>() { "lootbox_common" , "lootbox_common"},
+                penaltyIds: new List<string>() { },
+                skillCheckRequirements: new List<SkillCheckRequirement>()
+                {
+                    { new SkillCheckRequirement(new List<Type>(){typeof(Spirit) },30) }
                 })
             }
 
@@ -49,7 +66,23 @@ namespace Data.Encounters
 
         public IEncounterStats GetRandomEncounter()
         {
-            return null;
+            int i = UnityEngine.Random.Range(0, encounterDictionary.Count);
+            return encounterDictionary.ElementAt(i).Value;
         }
     }
+
+    //public class EncounterDataSourceJSON : IEncounterDataSource
+    //{
+
+
+    //    public IEncounterStats GetEncounterById(string id)
+    //    {
+    //        throw new System.NotImplementedException();
+    //    }
+
+    //    public IEncounterStats GetRandomEncounter()
+    //    {
+    //        throw new System.NotImplementedException();
+    //    }
+    //}
 }

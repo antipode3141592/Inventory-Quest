@@ -11,6 +11,8 @@ namespace Data.Interfaces
 
         public string Description { get; }
 
+        public string Category { get; } // display name for encounter Type
+
         public int Experience { get; }
 
         public IList<string> RewardIds { get; }

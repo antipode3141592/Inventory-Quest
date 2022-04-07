@@ -9,6 +9,7 @@ namespace Data
         public Dictionary<Facing, BitMask> Masks;
         public Facing CurrentFacing;
         public abstract bool IsRotationallySymmetric { get; }
+        public bool IsChiral { get; }
 
         public BitMask CurrentMask => Masks[CurrentFacing];
 

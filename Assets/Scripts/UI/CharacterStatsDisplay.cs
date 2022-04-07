@@ -1,12 +1,16 @@
 using Data;
+using InventoryQuest.Managers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest.UI
 {
     public class CharacterStatsDisplay : MonoBehaviour
     {
+        EncounterManager _encounterManager;
+
         [SerializeField]
         List<StatTextDisplay> statTexts = new List<StatTextDisplay>();
         [SerializeField]
@@ -17,6 +21,19 @@ namespace InventoryQuest.UI
         CharacterCurrentMaxStatDisplay experienceText;
 
         Character _character;
+
+        [Inject]
+        public void Init(EncounterManager encounterManager)
+        {
+            _encounterManager = encounterManager;
+        }
+
+        public void Awake()
+        {
+            _encounterManager.OnEncounterResolveSuccess += OnStatsUpdatedHandler;
+            _encounterManager.OnEncounterResolveFailure += OnStatsUpdatedHandler;
+        }
+
         public Character CurrentCharacter
         {
             get { return _character; }

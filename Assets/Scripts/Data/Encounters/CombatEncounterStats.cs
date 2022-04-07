@@ -15,6 +15,8 @@ namespace Data.Encounters
 
         public int Experience { get; }
 
+        public string Category => "Combat";
+
         public IList<string> RewardIds => throw new NotImplementedException();
 
         public IList<Func<bool>> Requirements => throw new NotImplementedException();

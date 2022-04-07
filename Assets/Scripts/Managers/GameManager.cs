@@ -10,7 +10,10 @@ namespace InventoryQuest.Managers
 {
     public class GameManager : MonoBehaviour
     {
+        const string encounterId = "test_of_might";
+
         RewardManager _rewardManager;
+        EncounterManager _encounterManager;
 
         Player player;
         int playerId = 0;
@@ -37,9 +40,10 @@ namespace InventoryQuest.Managers
         public EventHandler<RotationEventArgs> OnRotateCCW;
 
         [Inject]
-        public void Init(RewardManager rewardManager)
+        public void Init(RewardManager rewardManager, EncounterManager encounterManager)
         {
             _rewardManager = rewardManager;
+            _encounterManager = encounterManager;
         }
 
         private void Awake()
@@ -49,11 +53,7 @@ namespace InventoryQuest.Managers
             _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
         }
 
-        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
-        {
-            if (currentState == GameStates.Loading)
-                currentState = GameStates.Default;
-        }
+        
         private void Start()
         {
             Loading();
@@ -77,12 +77,19 @@ namespace InventoryQuest.Managers
             }
         }
 
+        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
+        {
+            ChangeState(GameStates.Default);
+        }
+
         void Loading()
         {
-            _rewardManager.EnqueueReward("common_loot_pile_small");
-            _rewardManager.EnqueueReward("common_loot_pile_medium");
+            _encounterManager.BeginAdventure();
+            _rewardManager.EnqueueReward("spirit_ring");
+            _rewardManager.EnqueueReward("power_sword");
             _rewardManager.EnqueueReward("common_loot_pile_medium");
             _rewardManager.ProcessRewards();
+            
         }
 
         public void ChangeState(GameStates targetState)
