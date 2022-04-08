@@ -3,7 +3,6 @@ using Data.Interfaces;
 using Data.Rewards;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +11,7 @@ namespace InventoryQuest.Managers
     public class RewardManager: MonoBehaviour
     {
         ContainerDisplayManager _displayManager;
+
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
@@ -21,12 +21,15 @@ namespace InventoryQuest.Managers
 
         public Dictionary<string, Container> LootPiles = new();
 
+        List<IItem> deleteItems = new List<IItem>();
+
         public string SelectedPileId;
         
         Queue<IReward> rewardQueue = new();
 
         public EventHandler OnRewardsProcessStart;
         public EventHandler OnRewardsProcessComplete;
+        public EventHandler OnRewardsCleared;
 
         [Inject]
         public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ContainerDisplayManager displayManager, ILootTableDataSource lootTableDataSource) 
@@ -46,6 +49,7 @@ namespace InventoryQuest.Managers
 
         public void EnqueueReward(string rewardId)
         {
+            Debug.Log($"EnqueueReward({rewardId})...");
             //get IRewardStats from IRewardDataSource
             var stats = _rewardDataSource.GetRewardById(rewardId);
             //get IReward from RewardFactory
@@ -72,6 +76,7 @@ namespace InventoryQuest.Managers
 
         void ProcessReward(IReward reward)
         {
+            Debug.Log($"Processing Reward {reward.Name}", this);
             ItemReward itemReward = reward as ItemReward;
             if (itemReward is not null)
             {
@@ -92,6 +97,27 @@ namespace InventoryQuest.Managers
             {
 
             }
+        }
+
+        public void DestroyRewards()
+        {
+            Debug.Log($"Destroying reward piles and items", this);
+            deleteItems.Clear();
+            foreach (var container in LootPiles.Values)
+            {
+                foreach (var content in container.Contents.Values)
+                {
+                    deleteItems.Add(content.Item);
+                }
+                deleteItems.Add(container);
+            }
+
+            for (int i = 0; i < deleteItems.Count; i++)
+            {
+                deleteItems[i] = null;
+            }
+            LootPiles.Clear();
+            OnRewardsCleared?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

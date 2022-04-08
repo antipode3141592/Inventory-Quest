@@ -41,6 +41,16 @@ namespace Data.Rewards
                     )
             },
             {
+                "uncommon_loot_pile_gigantic",
+                new RandomItemRewardStats(
+                    id: "uncommon_loot_pile_gigantic",
+                    name: "Common loot pile",
+                    description: "Common loot pile",
+                    lootContainerId: "loot_pile_gigantic",
+                    lootTableId: "uncommon_loot"
+                    )
+            },
+            {
                 "spirit_ring", new ItemRewardStats(
                     id: "spirit_ring",
                     name: "Greater Spirit Ring",

@@ -24,6 +24,7 @@ namespace InventoryQuest.Managers
         public EventHandler OnEncounterResolveStart;
         public EventHandler OnEncounterResolveSuccess;
         public EventHandler OnEncounterResolveFailure;
+        public EventHandler OnEncounterComplete;
 
         bool isResolving = false;
 
@@ -56,11 +57,13 @@ namespace InventoryQuest.Managers
             yield return new WaitForSeconds(1f);
             if (CurrentEncounter.Resolve(_partyManager.CurrentParty))
             {
+                Debug.Log($"The Encounter {CurrentEncounter.Name} is a success!");
                 foreach (var reward in CurrentEncounter.RewardIds)
                 {
+                    Debug.Log($"Enqueuing {reward}");
                     _rewardManager.EnqueueReward(reward);
                 }
-                Debug.Log($"The Encounter {CurrentEncounter.Name} is a success!");
+                
                 AwardExperience(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveSuccess?.Invoke(this, EventArgs.Empty);
             }
@@ -78,7 +81,7 @@ namespace InventoryQuest.Managers
         {
             Debug.Log("EncounterCleanup()");
             yield return new WaitForSeconds(1f);
-            BeginAdventure();
+            OnEncounterComplete?.Invoke(this, EventArgs.Empty);
         }
 
         void AwardExperience(IDictionary<string, Character> Characters)
@@ -104,6 +107,7 @@ namespace InventoryQuest.Managers
 
         public void BeginAdventure()
         {
+            Debug.Log("Begin new adventure!");
             GenerateEncounter();
             OnEncounterStart?.Invoke(this, EventArgs.Empty);
         }

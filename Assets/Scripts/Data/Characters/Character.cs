@@ -8,7 +8,7 @@ using Data.Interfaces;
 namespace Data
 {
     //characters 
-    public class Character : IDisposable
+    public class Character : IDisposable, ICharacter
     {
         public string GuId { get; }
 
@@ -33,11 +33,11 @@ namespace Data
                 slot.OnUnequip += OnUnequipHandler;
             }
             if (initialEquipment is null) return;
-            foreach(IEquipable item in initialEquipment)
+            foreach (IEquipable item in initialEquipment)
             {
                 if (EquipmentSlots.ContainsKey(item.SlotType))
                     Debug.Log($"Equipping {(item as IItem).Id} to {item.SlotType}");
-                    EquipmentSlots[item.SlotType].TryEquip(out _, item);
+                EquipmentSlots[item.SlotType].TryEquip(out _, item);
             }
 
             if (Backpack is null) return;
@@ -52,7 +52,7 @@ namespace Data
 
         public void Dispose()
         {
-            foreach(var slot in EquipmentSlots)
+            foreach (var slot in EquipmentSlots)
             {
                 slot.Value.OnEquip -= OnEquipHandler;
                 slot.Value.OnUnequip -= OnUnequipHandler;
@@ -62,7 +62,7 @@ namespace Data
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
             Debug.Log($"OnEquipHandler: {sender} with {e.Modifiers.Count} modifiers");
-            foreach(StatModifier mod in e.Modifiers)
+            foreach (StatModifier mod in e.Modifiers)
             {
                 ApplyModifier(mod);
             }

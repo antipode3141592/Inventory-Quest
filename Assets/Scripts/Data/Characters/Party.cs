@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data
 {
@@ -12,17 +13,10 @@ namespace Data
 
         public EventHandler<MessageEventArgs> OnPartyMemberSelected;
         public EventHandler OnPartyMemberStatsUpdated;
-        
-
-        public Party(Dictionary<string, Character> characters)
-        {
-            Characters = characters;
-            foreach (var character in characters.Values)
-                character.OnStatsUpdated += OnStatsUpdatedHandler;
-        }
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)
         {
+            Debug.Log($"OnStatsUpdated received from {sender.GetType().Name}"); ;
             OnPartyMemberStatsUpdated?.Invoke(this, e);
         }
 
@@ -35,6 +29,7 @@ namespace Data
             {
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
+                character.OnStatsUpdated += OnStatsUpdatedHandler;
             }
             SelectedPartyMemberGuId = PartyDisplayOrder[0];
         }
@@ -46,6 +41,7 @@ namespace Data
             Characters.Add(character.GuId, character);
             PartyDisplayOrder.Add(character.GuId);
             SelectedPartyMemberGuId = character.GuId;
+            character.OnStatsUpdated += OnStatsUpdatedHandler;
         }
         public Character SelectCharacter(string characterId)
         {

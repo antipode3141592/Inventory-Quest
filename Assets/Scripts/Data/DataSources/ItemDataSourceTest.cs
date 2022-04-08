@@ -68,6 +68,14 @@ namespace Data
                     isQuestItem: true,
                     containerSize: new Coor(r: 6, c: 5))
             },
+            {    "loot_pile_gigantic", new ContainerStats("loot_pile_gigantic",
+                    weight: 0f,
+                    goldValue: 0f,
+                    description: "a truly massive pile",
+                    spritePath: "Items/loot_pile_gigantic",
+                    isQuestItem: true,
+                    containerSize: new Coor(r: 20, c: 10))
+            },
 
             {   "adventure backpack", new EquipableContainerStats("adventure backpack",
                     weight: 2f,
@@ -76,7 +84,7 @@ namespace Data
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(12, 5),
+                    containerSize: new Coor(20, 20),
                     slotType: EquipmentSlotType.Backpack
                 )
             },

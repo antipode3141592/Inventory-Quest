@@ -11,7 +11,6 @@ namespace InventoryQuest.UI
     public class EncounterDisplayController : MonoBehaviour
     {
         EncounterManager _encounterManager;
-        PartyManager _partyManager;
 
 
         public TextMeshProUGUI NameText;
@@ -24,10 +23,9 @@ namespace InventoryQuest.UI
         //[SerializeField] CraftingEncounterDisplay craftingEncounterDisplay;
 
         [Inject]
-        public void Init(EncounterManager encounterManager, PartyManager partyManager)
+        public void Init(EncounterManager encounterManager)
         {
             _encounterManager = encounterManager;
-            _partyManager = partyManager;
         }
 
         void Awake()
@@ -37,8 +35,6 @@ namespace InventoryQuest.UI
             _encounterManager.OnEncounterResolveSuccess += DisplaySuccess;
 
         }
-
-
 
         void DisplaySuccess(object sender, EventArgs e)
         {
@@ -58,10 +54,7 @@ namespace InventoryQuest.UI
             DescriptionText.text = "";
             EnounterTypeText.text = "";
             if (skillCheckEncounterDisplay.gameObject.activeInHierarchy)
-            {
-                _partyManager.CurrentParty.OnPartyMemberStatsUpdated -= skillCheckEncounterDisplay.UpdateRequirements;
                 skillCheckEncounterDisplay.gameObject.SetActive(false);
-            }
         }
 
         public void DisplayEncounter(object sender, EventArgs e)
@@ -84,7 +77,6 @@ namespace InventoryQuest.UI
                 
 
                 skillCheckEncounterDisplay.DisplayRequirements();
-                _partyManager.CurrentParty.OnPartyMemberStatsUpdated += skillCheckEncounterDisplay.UpdateRequirements;
                 return;
             }
             CombatEncounter combatEncounter = encounter as CombatEncounter;

@@ -14,7 +14,7 @@ namespace Data.Encounters
                 name: "Test of Might",
                 description: "A boulder blocks your path!  Move it, or go around (add a random encounter).",
                 experience: 175,
-                rewardIds: new List<string>() { "lootbox_common"},
+                rewardIds: new List<string>() { "common_loot_pile_medium" },
                 penaltyIds: new List<string>(){},
                 skillCheckRequirements: new List<SkillCheckRequirement>() 
                 {
@@ -28,7 +28,7 @@ namespace Data.Encounters
                 name: "Test of Vigor",
                 description: "A sheer cliff bars your way!  Climb it, or go around (add a random encounter). ",
                 experience: 150,
-                rewardIds: new List<string>() { "lootbox_common" },
+                rewardIds: new List<string>() { "common_loot_pile_medium" },
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
@@ -43,7 +43,7 @@ namespace Data.Encounters
                 name: "Test of Faith",
                 description: "An ominous fog fills the area.  The angered spirits can be appeased with a cleansing ritual.",
                 experience: 300,
-                rewardIds: new List<string>() { "lootbox_common" , "lootbox_common"},
+                rewardIds: new List<string>() { "common_loot_pile_medium", "common_loot_pile_medium" },
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {

@@ -2,7 +2,6 @@
 using Data.Interfaces;
 using Rewired;
 using System;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -51,13 +50,21 @@ namespace InventoryQuest.Managers
             player = ReInput.players.GetPlayer(playerId);
             currentState = GameStates.Loading;
             _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
+            _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
         }
 
-        
+        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        {
+            _rewardManager.DestroyRewards();
+            Loading();
+        }
+
         private void Start()
         {
+            _rewardManager.EnqueueReward("spirit_ring");
+            _rewardManager.EnqueueReward("power_sword");
+            _rewardManager.EnqueueReward("uncommon_loot_pile_gigantic");
             Loading();
-            
         }
 
         private void Update()
@@ -85,9 +92,7 @@ namespace InventoryQuest.Managers
         void Loading()
         {
             _encounterManager.BeginAdventure();
-            _rewardManager.EnqueueReward("spirit_ring");
-            _rewardManager.EnqueueReward("power_sword");
-            _rewardManager.EnqueueReward("common_loot_pile_medium");
+            
             _rewardManager.ProcessRewards();
             
         }

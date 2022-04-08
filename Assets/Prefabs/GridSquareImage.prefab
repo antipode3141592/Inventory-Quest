@@ -166,6 +166,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90dd38154cc87f4cbd284bb5ad78a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImagePrefab: {fileID: 7533226305058349392, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   backgroundSprite: {fileID: 497306836238160756}
   highlightSprite: {fileID: 4004504270696330323}

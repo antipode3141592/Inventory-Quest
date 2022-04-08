@@ -26,17 +26,23 @@ namespace InventoryQuest.UI
         private void Awake()
         {
             EncounterRequirements = new List<EncounterRequirementDisplay>();
+            _partyManager.CurrentParty.OnPartyMemberStatsUpdated += UpdateRequirements;
         }
 
         public void DisplayRequirements()
         {
             if (SkillEncounter is not null)
             {
+                for (int n = 0; n < EncounterRequirements.Count; n++)
+                {
+                    EncounterRequirements[n].gameObject.SetActive(false);
+                }
                 for (int i = 0; i < SkillEncounter.SkillCheckRequirements.Count; i++)
                 {
                     var req = SkillEncounter.SkillCheckRequirements[i];
                     if (i >= EncounterRequirements.Count) 
                         EncounterRequirements.Add(CreateRequirementElement(req));
+                    EncounterRequirements[i].gameObject.SetActive(true);
                     UpdateRequirement(EncounterRequirements[i], req);
                     
                 }
@@ -45,6 +51,7 @@ namespace InventoryQuest.UI
 
         public void UpdateRequirements(object sender, EventArgs e)
         {
+            Debug.Log($"UpdateRequirements() responding to {sender.GetType().Name}");
             if (SkillEncounter is null) return;
             for(int i = 0; i < SkillEncounter.SkillCheckRequirements.Count; i++)
             {
