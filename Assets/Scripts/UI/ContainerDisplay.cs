@@ -142,6 +142,7 @@ namespace InventoryQuest.UI
 
         public void SetItemSprites()
         {
+            if (MyContainer is null) return;
             foreach(var content in MyContainer.Contents)
             {
                 Facing facing = content.Value.Item.Shape.CurrentFacing;
@@ -159,6 +160,7 @@ namespace InventoryQuest.UI
 
         public void RemoveAllItemSprites()
         {
+            if (itemImages is null || itemImages.Count == 0) return;
             for (int i = 0; i < itemImages.Count; i++)
             {
                 Destroy(itemImages[i].gameObject);

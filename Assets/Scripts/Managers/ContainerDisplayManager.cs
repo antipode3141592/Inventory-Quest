@@ -2,12 +2,14 @@ using Data;
 using Data.Interfaces;
 using InventoryQuest.Managers;
 using InventoryQuest.UI;
+using System;
 using UnityEngine;
 using Zenject;
 
 public class ContainerDisplayManager : MonoBehaviour
 {
     PartyManager _partyManager;
+    RewardManager _rewardManager;
 
     [SerializeField]
     ContainerDisplay characterContainerDisplay;
@@ -15,14 +17,21 @@ public class ContainerDisplayManager : MonoBehaviour
     ContainerDisplay lootContainerDisplay;
 
     [Inject]
-    public void Init(PartyManager partyManager)
+    public void Init(PartyManager partyManager, RewardManager rewardManager)
     {
         _partyManager = partyManager;
+        _rewardManager = rewardManager;
     }
 
     private void Start()
     {
         _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
+        _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
+    }
+
+    private void OnRewardsClearedHandler(object sender, EventArgs e)
+    {
+        DisconnectLootContainer();
     }
 
     #region Connect Containers
@@ -37,14 +46,14 @@ public class ContainerDisplayManager : MonoBehaviour
         lootContainerDisplay.MyContainer = lootContainer;
     }
 
-    public void DisconnectCharacterContainer()
+    void DisconnectCharacterContainer()
     {
-        characterContainerDisplay = null;
+        characterContainerDisplay.MyContainer = null;
     }
 
-    public void DisconnectLootContainer()
+    void DisconnectLootContainer()
     {
-        lootContainerDisplay = null;
+        lootContainerDisplay.MyContainer = null;
 
     }
     #endregion

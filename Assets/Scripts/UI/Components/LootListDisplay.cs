@@ -23,6 +23,12 @@ namespace InventoryQuest.UI
         private void Awake()
         {
             _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
+            _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
+        }
+
+        private void OnRewardsClearedHandler(object sender, EventArgs e)
+        {
+            DestroyLootPiles();
         }
 
         private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
@@ -59,14 +65,13 @@ namespace InventoryQuest.UI
 
         }
 
-        public void DestroyPile(string guid)
-        {
-
-        }
-
         public void DestroyLootPiles()
         {
-
+            for (int i = 0; i < lootIcons.Count; i++)
+            {
+                Destroy(lootIcons[i].gameObject);
+            }
+            lootIcons.Clear();
         }
     }
 }
