@@ -1,8 +1,7 @@
-﻿using Data.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Data
+namespace Data.Stats
 {
     public class CharacterDataSourceTest : ICharacterDataSource
     {

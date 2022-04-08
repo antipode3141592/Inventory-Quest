@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Data.Interfaces
+namespace Data.Stats
+
 {
     public interface IEquipableStats
     {

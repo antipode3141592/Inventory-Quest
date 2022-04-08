@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Stats;
+using System;
 using System.Collections.Generic;
 
 namespace Data

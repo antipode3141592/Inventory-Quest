@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Data.Stats;
+using System.Collections.Generic;
 
 namespace Data.Interfaces
 

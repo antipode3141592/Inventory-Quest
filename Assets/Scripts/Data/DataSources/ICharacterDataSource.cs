@@ -1,4 +1,4 @@
-﻿namespace Data.Interfaces
+﻿namespace Data.Stats
 {
     public interface ICharacterDataSource
     {

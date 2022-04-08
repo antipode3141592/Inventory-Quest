@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data
+namespace Data.Stats
 {
 
     public abstract class CharacterStat : IStat
@@ -9,21 +9,16 @@ namespace Data
 
         public int InitialValue { get; }
 
-        public int CurrentValue => InitialValue + Modifier;
+        public int CurrentValue => InitialValue + Modifier + PurchasedLevels;
 
         public int Modifier { get; set; }
+
+        public int PurchasedLevels { get; set; }
 
         public CharacterStat(int initialValue)
         {
             InitialValue = initialValue;
         }
-    }
-
-    public interface IStat
-    {
-        int InitialValue { get; }
-        int CurrentValue { get; }
-        public int Modifier { get; set; }
     }
 
     public class Strength : CharacterStat

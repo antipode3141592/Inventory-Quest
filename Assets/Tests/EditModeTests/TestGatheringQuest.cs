@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Interfaces;
+using Data.Stats;
 using InventoryQuest.Characters;
 using InventoryQuest.Quests;
 using NUnit.Framework;

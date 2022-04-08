@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Data
+namespace Data.Stats
 {
     public abstract class CompositeStat : IStat
     {
@@ -9,9 +9,10 @@ namespace Data
 
         public int Modifier { get; set; }
 
-        public int CurrentValue => InitialValue + Modifier + ConnectedStats.Sum(x => x.CurrentValue);
+        public int CurrentValue => InitialValue + Modifier + PurchasedLevels + ConnectedStats.Sum(x => x.CurrentValue);
 
         public ICollection<IStat> ConnectedStats { get; }
+        public int PurchasedLevels { get; set; }
 
         public CompositeStat(int initialValue, ICollection<IStat> stat)
         {
@@ -30,6 +31,13 @@ namespace Data
     public class Defense : CompositeStat
     {
         public Defense(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
+        {
+        }
+    }
+
+    public class Initiative : CompositeStat
+    {
+        public Initiative(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
         {
         }
     }

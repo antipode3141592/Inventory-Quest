@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using Data.Interfaces;
+using Data.Stats;
 
 namespace Data
 {

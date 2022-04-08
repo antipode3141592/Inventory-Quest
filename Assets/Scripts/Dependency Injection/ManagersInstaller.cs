@@ -2,6 +2,7 @@ using Data;
 using Data.Encounters;
 using Data.Interfaces;
 using Data.Rewards;
+using Data.Stats;
 using InventoryQuest.Managers;
 using InventoryQuest.UI;
 using Zenject;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data
+namespace Data.Stats
 {
     [Serializable]
     public class StatModifier

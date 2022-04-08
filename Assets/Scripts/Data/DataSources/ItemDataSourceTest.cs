@@ -1,4 +1,5 @@
 ﻿using Data.Interfaces;
+using Data.Stats;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -74,7 +75,7 @@ namespace Data
                     description: "a truly massive pile",
                     spritePath: "Items/loot_pile_gigantic",
                     isQuestItem: true,
-                    containerSize: new Coor(r: 20, c: 10))
+                    containerSize: new Coor(r: 12, c: 6))
             },
 
             {   "adventure backpack", new EquipableContainerStats("adventure backpack",
@@ -84,7 +85,7 @@ namespace Data
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(20, 20),
+                    containerSize: new Coor(20, 12),
                     slotType: EquipmentSlotType.Backpack
                 )
             },

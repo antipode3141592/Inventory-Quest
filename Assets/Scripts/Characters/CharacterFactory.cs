@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Interfaces;
+using Data.Stats;
 using System.Collections.Generic;
 
 namespace InventoryQuest.Characters
