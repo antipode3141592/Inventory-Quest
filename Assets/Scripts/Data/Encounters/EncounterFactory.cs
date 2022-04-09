@@ -12,6 +12,8 @@ namespace Data.Encounters
             if (craftingStats is not null) return new CraftingEncounter(craftingStats);
             var skillCheckStats = encounterStats as SkillCheckEncounterStats;
             if (skillCheckStats is not null) return new SkillCheckEncounter(skillCheckStats);
+            var restStats = encounterStats as RestEncounterStats;
+            if (restStats is not null) return new RestEncounter(restStats);
             return null;
         }
 

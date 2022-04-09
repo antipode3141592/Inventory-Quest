@@ -8,7 +8,7 @@ namespace Data.Encounters
 {
     public class EncounterDataSourceTest : IEncounterDataSource
     {
-        Dictionary<string, IEncounterStats> encounterDictionary = new() 
+        Dictionary<string, IEncounterStats> encounterDictionary = new()
         {
             { "test_of_might", new SkillCheckEncounterStats(
                 id: "test_of_might",
@@ -16,11 +16,11 @@ namespace Data.Encounters
                 description: "A boulder blocks your path!  Move it, or go around (add a random encounter).",
                 experience: 175,
                 rewardIds: new List<string>() { "common_loot_pile_medium" },
-                penaltyIds: new List<string>(){},
-                skillCheckRequirements: new List<SkillCheckRequirement>() 
+                penaltyIds: new List<string>() { },
+                skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    new SkillCheckRequirement(new List<Type>(){typeof(Strength) },20,60)
-                }) 
+                    new SkillCheckRequirement(new List<Type>() { typeof(Strength) }, 20, 60)
+                })
             },
             {
                 "test_of_vigor",
@@ -33,8 +33,8 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new List<Type>(){typeof(Vitality)},20) },
-                    { new SkillCheckRequirement(new List<Type>(){typeof(Strength)},20) }
+                    { new SkillCheckRequirement(new List<Type>() { typeof(Vitality) }, 20) },
+                    { new SkillCheckRequirement(new List<Type>() { typeof(Strength) }, 20) }
                 })
             },
             {
@@ -48,8 +48,18 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new List<Type>(){typeof(Spirit) },30) }
+                    { new SkillCheckRequirement(new List<Type>() { typeof(Spirit) }, 30) }
                 })
+            },
+            {
+                "campsite",
+                new RestEncounterStats(
+                    id: "campsite",
+                    name: "An Ideal Campsite",
+                    description: "A lovely place to rest for the evening.  (Restore all HP and MP)",
+                    experience: 0,
+                    rewardIds: null
+                )
             }
 
         };

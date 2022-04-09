@@ -6,7 +6,7 @@ namespace Data.Encounters
 {
     public class SkillCheckEncounterStats : IEncounterStats
     {
-        public SkillCheckEncounterStats(string id, string name, string description, int experience, IList<string> rewardIds, IList<string> penaltyIds, IList<SkillCheckRequirement> skillCheckRequirements, IList<SkillCheckRequirement> skillCheckAlternates = null)
+        public SkillCheckEncounterStats(string id, string name, string description, int experience, IList<string> rewardIds, IList<string> penaltyIds, IList<SkillCheckRequirement> skillCheckRequirements)
         {
             Id = id;
             Name = name;
@@ -15,7 +15,6 @@ namespace Data.Encounters
             RewardIds = rewardIds;
             PenaltyIds = penaltyIds;
             SkillCheckRequirements = skillCheckRequirements;
-            SkillCheckAlternates = skillCheckAlternates;
         }
 
         public string Id { get; }
@@ -33,7 +32,6 @@ namespace Data.Encounters
         public IList<string> PenaltyIds { get; }
 
         public IList<SkillCheckRequirement> SkillCheckRequirements;
-        public IList<SkillCheckRequirement> SkillCheckAlternates;
     }
 
     
