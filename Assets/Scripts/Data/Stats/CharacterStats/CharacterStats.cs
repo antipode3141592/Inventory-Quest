@@ -10,7 +10,9 @@ namespace Data.Stats
         public string Name { get; }
         public string DisplayName { get; set; }
 
-        public string PortraitPath;
+        public string PortraitPath { get; }
+
+        public string SpeciesId { get; }
 
         public Strength Strength { get; set; }
 
@@ -28,11 +30,21 @@ namespace Data.Stats
         public Arcane Arcane { get; set; }
 
 
+        //derived stats
+
         public Attack Attack { get; set; }
         public Defense Defense { get; set; }
 
+        public Initiative Initiative { get; set; }
+
+
+        public int HealthPerLevel { get; } = 5;
+        public int MagicPerLevel { get; } = 5;
         public int CurrentHealth { get; set; }
-        public int MaximumHealth => Vitality.CurrentValue * 5;
+
+        public int CurrentMagicPool { get; }
+        public int MaximumHealth => Vitality.CurrentValue + (HealthPerLevel * CurrentLevel);
+        public int MaximumMagicPool => Arcane.CurrentValue + Spirit.CurrentValue + ( MagicPerLevel * CurrentLevel);
 
         public int MaximumEncumbrance => Strength.CurrentValue * 15;
 
@@ -47,10 +59,17 @@ namespace Data.Stats
         public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
         public List<EquipmentSlotType> EquipmentSlotsTypes;
 
-        public CharacterStats(string name, string portraitPath, Dictionary<Type,int> stats, Dictionary<DamageType, DamageResistance> resistances = null, EquipmentSlotType[] equipmentSlots = null)
+        public CharacterStats(
+            string name, 
+            string portraitPath, 
+            string speciesId,
+            Dictionary<Type,int> stats, 
+            Dictionary<DamageType, DamageResistance> resistances = null, 
+            EquipmentSlotType[] equipmentSlots = null)
         {
             Name = name;
             DisplayName = name;
+            SpeciesId = speciesId;
             PortraitPath = portraitPath;
 
             Strength = new Strength(stats[typeof(Strength)]);
@@ -64,6 +83,7 @@ namespace Data.Stats
 
             Attack = new Attack(0, new CharacterStat[] { Strength, Speed });
             Defense = new Defense(0, new CharacterStat[] { Agility, Vitality });
+            Initiative = new Initiative(0, new CharacterStat[] { Agility, Speed });
             Resistances = resistances;
 
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
@@ -77,6 +97,7 @@ namespace Data.Stats
             }
 
             CurrentHealth = MaximumHealth;
+            CurrentMagicPool = MaximumMagicPool;
         }
 
 

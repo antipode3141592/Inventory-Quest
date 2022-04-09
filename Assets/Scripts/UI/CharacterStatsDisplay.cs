@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using TMPro;
 
 namespace InventoryQuest.UI
 {
@@ -16,9 +17,16 @@ namespace InventoryQuest.UI
         [SerializeField]
         CharacterCurrentMaxStatDisplay healthText;
         [SerializeField]
-        CharacterCurrentMaxStatDisplay encumberanceText;
+        CharacterCurrentMaxStatDisplay magicText;
+        [SerializeField]
+        CharacterCurrentMaxStatDisplay encumberanceText; 
         [SerializeField]
         CharacterCurrentMaxStatDisplay experienceText;
+        [SerializeField]
+        TextMeshProUGUI nameText;
+
+        [SerializeField]
+        TextMeshProUGUI speciesText; 
 
         Character _character;
 
@@ -50,12 +58,17 @@ namespace InventoryQuest.UI
         {
             if (_character == null) return;
             _character.OnStatsUpdated += OnStatsUpdatedHandler;
+            nameText.text = _character.Stats.DisplayName;
+            speciesText.text = _character.Stats.SpeciesId;
         }
 
         void UnsubscribeToCharacterEvents()
         {
             if (_character == null) return;
+
             _character.OnStatsUpdated -= OnStatsUpdatedHandler;
+            nameText.text = "";
+            speciesText.text = "";
         }
 
         void UpdateStatBlock()
@@ -69,6 +82,7 @@ namespace InventoryQuest.UI
             }
 
             healthText.UpdateText($"{_character.Stats.CurrentHealth}", $"{_character.Stats.MaximumHealth}");
+            magicText.UpdateText($"{_character.Stats.CurrentMagicPool}", $"{_character.Stats.MaximumMagicPool}");
             encumberanceText.UpdateText($"{_character.CurrentEncumbrance}", $"{_character.Stats.MaximumEncumbrance}");
             experienceText.UpdateText($"{ _character.Stats.CurrentExperience}", $"{_character.Stats.NextLevelExperience}");
         }
