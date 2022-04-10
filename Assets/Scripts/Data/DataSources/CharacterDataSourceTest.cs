@@ -107,9 +107,9 @@ namespace Data.Stats
     }
 
 
-    public static class CharacterLeveler
+    public static class PlayableCharacterLeveler
     {
-        static void AddRanksToCharacter(Character character, IDictionary<Type, int> purchasedRanks)
+        static void AddRanksToCharacter(PlayableCharacter character, IDictionary<Type, int> purchasedRanks)
         {
             var statsDictionary = character.Stats.Stats;
             foreach (var skill in purchasedRanks)

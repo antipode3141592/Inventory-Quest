@@ -13,8 +13,8 @@ namespace InventoryQuest.Managers
         IItemDataSource _itemDataSource;
 
         Party _party;
-        Character Player;
-        Character Minion;
+        PlayableCharacter Player;
+        PlayableCharacter Minion;
 
         public Party CurrentParty => _party;
 
@@ -32,7 +32,7 @@ namespace InventoryQuest.Managers
             Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("small backpack")) });
 
-            _party = new Party(new Character[] { Player, Minion });
+            _party = new Party(new PlayableCharacter[] { Player, Minion });
         }
     }
 }

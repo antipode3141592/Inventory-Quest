@@ -9,7 +9,7 @@ using Data.Stats;
 namespace Data
 {
     //characters 
-    public class Character : IDisposable, ICharacter
+    public class PlayableCharacter : IDisposable, ICharacter
     {
         public string GuId { get; }
 
@@ -21,7 +21,7 @@ namespace Data
 
         public EventHandler OnStatsUpdated;
 
-        public Character(CharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
+        public PlayableCharacter(CharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
         {
             GuId = Guid.NewGuid().ToString();
             Stats = characterStats;
@@ -42,8 +42,8 @@ namespace Data
             }
 
             if (Backpack is null) return;
-            Backpack.OnItemPlaced += OnContainerChangedHandler;
-            Backpack.OnItemTaken += OnContainerChangedHandler;
+            Backpack.OnItemPlaced += OnBackpackChangedHandler;
+            Backpack.OnItemTaken += OnBackpackChangedHandler;
             // add initial Inventory to backpack
         }
 
@@ -117,7 +117,7 @@ namespace Data
             }
         }
 
-        public void OnContainerChangedHandler(object sender, EventArgs e)
+        public void OnBackpackChangedHandler(object sender, EventArgs e)
         {
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }

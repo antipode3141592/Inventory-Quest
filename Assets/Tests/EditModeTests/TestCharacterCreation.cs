@@ -10,7 +10,7 @@ namespace InventoryQuest.Testing
     {
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
-        Character Player;
+        PlayableCharacter Player;
         CharacterStats playerStats;
         EquipableContainerStats backpackStats;
         IEquipable backpack;

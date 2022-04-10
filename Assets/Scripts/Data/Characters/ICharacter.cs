@@ -10,7 +10,7 @@ namespace Data
         string GuId { get; }
         bool IsIncapacitated { get; }
 
-        void OnContainerChangedHandler(object sender, EventArgs e);
+        void OnBackpackChangedHandler(object sender, EventArgs e);
         void OnEquipHandler(object sender, ModifierEventArgs e);
         void OnUnequipHandler(object sender, ModifierEventArgs e);
     }

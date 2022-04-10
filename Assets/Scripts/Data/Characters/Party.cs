@@ -6,7 +6,7 @@ namespace Data
 {
     public class Party
     {
-        public Dictionary<string, Character> Characters;
+        public Dictionary<string, PlayableCharacter> Characters;
         public List<string> PartyDisplayOrder;
 
         public string SelectedPartyMemberGuId { get; set; }
@@ -20,12 +20,12 @@ namespace Data
             OnPartyMemberStatsUpdated?.Invoke(this, e);
         }
 
-        public Party(Character[] characters = null)
+        public Party(PlayableCharacter[] characters = null)
         {
-            Characters = new Dictionary<string, Character>();
+            Characters = new Dictionary<string, PlayableCharacter>();
             PartyDisplayOrder = new List<string>();
             if (characters == null) return;
-            foreach (Character character in characters)
+            foreach (PlayableCharacter character in characters)
             {
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
@@ -35,7 +35,7 @@ namespace Data
         }
 
 
-        public void AddCharacter(Character character)
+        public void AddCharacter(PlayableCharacter character)
         {
             if (character is null) return;
             Characters.Add(character.GuId, character);
@@ -43,7 +43,7 @@ namespace Data
             SelectedPartyMemberGuId = character.GuId;
             character.OnStatsUpdated += OnStatsUpdatedHandler;
         }
-        public Character SelectCharacter(string characterId)
+        public PlayableCharacter SelectCharacter(string characterId)
         {
             if (!Characters.ContainsKey(characterId)) return null;
             SelectedPartyMemberGuId = characterId;
