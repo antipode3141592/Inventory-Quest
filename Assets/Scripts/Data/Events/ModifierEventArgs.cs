@@ -1,8 +1,7 @@
-﻿using Data.Stats;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Data
+namespace Data.Characters
 {
     public class ModifierEventArgs : EventArgs
     {

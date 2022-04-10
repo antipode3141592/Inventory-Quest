@@ -1,4 +1,5 @@
 using Data;
+using Data.Shapes;
 using InventoryQuest.Managers;
 using System;
 using UnityEngine;
@@ -45,9 +46,9 @@ namespace InventoryQuest.UI
             {
                 case GameStates.Loading:
                     break;
-                case GameStates.Default:
+                case GameStates.EncounterPreparing:
                     break;
-                case GameStates.HoldingItem:
+                case GameStates.ItemHolding:
                     break;
                 default:
                     break;

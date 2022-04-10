@@ -1,8 +1,5 @@
-using Data.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
+using Data.Items;
 using UnityEngine;
-using Zenject;
 
 namespace InventoryQuest.Managers
 {

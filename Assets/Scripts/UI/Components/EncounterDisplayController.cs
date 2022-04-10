@@ -1,5 +1,6 @@
 using Data.Encounters;
 using InventoryQuest.Managers;
+using InventoryQuest.UI.Components;
 using System;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,9 @@ namespace InventoryQuest.UI
         public TextMeshProUGUI EnounterTypeText;
         public Image ResultsImage;
 
+        [SerializeField] EncounterSuccessDisplay encounterSuccessDisplay;
+        [SerializeField] EncounterFailureDisplay encounterFailureDisplay;
+
         [SerializeField] SkillCheckEncounterDisplay skillCheckEncounterDisplay;
         //[SerializeField] CombatEncounterDisplay combatEncounterDisplay;
         //[SerializeField] CraftingEncounterDisplay craftingEncounterDisplay;
@@ -30,7 +34,7 @@ namespace InventoryQuest.UI
 
         void Awake()
         {
-            _encounterManager.OnEncounterStart += DisplayEncounter;
+            _encounterManager.OnEncounterLoaded += DisplayEncounter;
             _encounterManager.OnEncounterResolveFailure += DisplayFailure;
             _encounterManager.OnEncounterResolveSuccess += DisplaySuccess;
 
@@ -38,13 +42,20 @@ namespace InventoryQuest.UI
 
         void DisplaySuccess(object sender, EventArgs e)
         {
-            ResultsImage.color = Color.green;
-            ClearDisplay();
+            ResultsImage.color = UIPreferences.TextBuffColor;
+            encounterSuccessDisplay.gameObject.SetActive(true);
+            encounterSuccessDisplay.SuccessDescriptionText.text = _encounterManager.CurrentEncounter.Stats.SuccessMessage;
         }
 
         void DisplayFailure(object sender, EventArgs e)
         {
-            ResultsImage.color = Color.red;
+            ResultsImage.color = UIPreferences.TextDeBuffColor;
+            encounterFailureDisplay.gameObject.SetActive(true);
+            encounterFailureDisplay.FailureDescriptionText.text = _encounterManager.CurrentEncounter.Stats.FailureMessage;
+        }
+
+        public void Continue()
+        {
             ClearDisplay();
         }
 
@@ -53,8 +64,12 @@ namespace InventoryQuest.UI
             NameText.text = "";
             DescriptionText.text = "";
             EnounterTypeText.text = "";
-            if (skillCheckEncounterDisplay.gameObject.activeInHierarchy)
-                skillCheckEncounterDisplay.gameObject.SetActive(false);
+            
+            skillCheckEncounterDisplay.gameObject.SetActive(false);
+            //combatEncounterDisplay.gameObject.SetActive(false);
+            //craftingEncounterDisplay.gameObject.SetActive(false);
+            encounterSuccessDisplay.gameObject.SetActive(false);
+            encounterFailureDisplay.gameObject.SetActive(false);
         }
 
         public void DisplayEncounter(object sender, EventArgs e)

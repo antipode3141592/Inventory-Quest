@@ -1,7 +1,7 @@
-﻿using Data.Interfaces;
+﻿using Data.Items;
 using System;
 
-namespace Data
+namespace Data.Characters
 {
     public interface ICharacter
     {

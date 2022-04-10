@@ -1,11 +1,9 @@
-﻿using Data;
+﻿using Data.Characters;
 using Data.Encounters;
-using Data.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 
@@ -15,11 +13,11 @@ namespace InventoryQuest.Managers
     {
         PartyManager _partyManager;
         RewardManager _rewardManager;
-        IEncounterDataSource _dataSource;
+        
 
         [SerializeField] 
 
-        public EventHandler OnEncounterCreated;
+        public EventHandler OnEncounterLoaded;
         public EventHandler OnEncounterStart;
         public EventHandler OnEncounterResolveStart;
         public EventHandler OnEncounterResolveSuccess;
@@ -28,32 +26,36 @@ namespace InventoryQuest.Managers
 
         bool isResolving = false;
 
-        public IEncounter CurrentEncounter { get; set; }
+        IEncounter currentEncounter;
+
+        public IEncounter CurrentEncounter {
+            get { return currentEncounter; }
+            set {
+                currentEncounter = value;
+                OnEncounterLoaded?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         [Inject]
-        public void Init(IEncounterDataSource dataSource, PartyManager partyManager, RewardManager rewardManager)
+        public void Init(PartyManager partyManager, RewardManager rewardManager)
         {
-            _dataSource = dataSource;
             _partyManager = partyManager;
             _rewardManager = rewardManager;
         }
 
+
+        //connected to UI Button
         public void ResolveCurrentEncounter()
         {
             if (isResolving) return;
             isResolving = true;
-            OnEncounterResolveStart?.Invoke(this, EventArgs.Empty);
+            
             StartCoroutine(EncounterResolveBegin());
-        }
-
-        void LoadNextEncounter()
-        {
-            //cleanup
-            StartCoroutine(EncounterCleanup());
         }
 
         IEnumerator EncounterResolveBegin()
         {
+            OnEncounterResolveStart?.Invoke(this, EventArgs.Empty);
             yield return new WaitForSeconds(1f);
             if (CurrentEncounter.Resolve(_partyManager.CurrentParty))
             {
@@ -74,7 +76,7 @@ namespace InventoryQuest.Managers
                 OnEncounterResolveFailure?.Invoke(this, EventArgs.Empty);
             }
             isResolving = false;
-            LoadNextEncounter();
+            StartCoroutine(EncounterCleanup());
         }
 
         IEnumerator EncounterCleanup()
@@ -84,7 +86,7 @@ namespace InventoryQuest.Managers
             OnEncounterComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        void AwardExperience(IDictionary<string, Character> Characters)
+        void AwardExperience(IDictionary<string, PlayableCharacter> Characters)
         {
             foreach(var character in Characters)
             {
@@ -92,7 +94,7 @@ namespace InventoryQuest.Managers
             }
         }
 
-        void DistributePenalties(IDictionary<string, Character> Characters)
+        void DistributePenalties(IDictionary<string, PlayableCharacter> Characters)
         {
             foreach (var character in Characters)
             {
@@ -100,52 +102,6 @@ namespace InventoryQuest.Managers
             }
         }
 
-        public void RetreatToSafety()
-        {
-            EndAdventure();
-        }
-
-        public void BeginAdventure()
-        {
-            Debug.Log("Begin new adventure!");
-            GenerateEncounter();
-            OnEncounterStart?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void EndAdventure()
-        {
-
-        }
-
-        public void GenerateEncounter()
-        {
-            CurrentEncounter = EncounterFactory.GetEncounter(_dataSource.GetRandomEncounter());
-            OnEncounterCreated?.Invoke(this, EventArgs.Empty);
-        }
+        
     }
-
-    //public interface IPath
-    //{
-    //    public string Id { get; }
-    //    public string Name { get; }
-
-    //    public string StartLocationId { get; }
-    //    public string EndLocationId { get; }
-
-    //    public int Length => EncounterIds.Count;
-
-    //    public IList<string> EncounterIds { get; }
-    //}
-
-
-
-    //public interface ILocation
-    //{
-    //    public IList<IPath> Paths { get; }
-    //}
-
-    //public interface IMap
-    //{
-    //    public IList<ILocation> Locations { get; }
-    //}
 }

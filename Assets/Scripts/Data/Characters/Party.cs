@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace Data.Characters
+
 {
     public class Party
     {

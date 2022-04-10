@@ -1,5 +1,6 @@
 using Data;
-using InventoryQuest.Characters;
+using Data.Characters;
+using Data.Items;
 using InventoryQuest.Managers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace InventoryQuest.UI
     {
         PartyManager _partyManager;
         GameManager _gameManager;
-        Character _character;
+        PlayableCharacter _character;
 
         Dictionary<EquipmentSlotType, EquipmentSlotDisplay> _equipmentSlots = new Dictionary<EquipmentSlotType, EquipmentSlotDisplay>();
 

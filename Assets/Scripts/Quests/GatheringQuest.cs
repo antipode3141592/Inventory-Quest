@@ -1,5 +1,6 @@
-﻿using Data;
-using Data.Interfaces;
+﻿using Data.Characters;
+using Data.Quests;
+using Data.Items;
 using System;
 using System.Linq;
 
@@ -38,7 +39,7 @@ namespace InventoryQuest.Quests
             return false;
         }
 
-        public int GetItemCountById(Character character, string id)
+        public int GetItemCountById(PlayableCharacter character, string id)
         {
             var count = 0;
             count += character.Backpack.Contents.Count(x => x.Value.Item.Id == id);

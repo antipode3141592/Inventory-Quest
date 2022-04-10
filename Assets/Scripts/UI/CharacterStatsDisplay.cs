@@ -1,10 +1,10 @@
-using Data;
+using Data.Characters;
 using InventoryQuest.Managers;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Zenject;
-using TMPro;
 
 namespace InventoryQuest.UI
 {
@@ -28,7 +28,7 @@ namespace InventoryQuest.UI
         [SerializeField]
         TextMeshProUGUI speciesText; 
 
-        Character _character;
+        PlayableCharacter _character;
 
         [Inject]
         public void Init(EncounterManager encounterManager)
@@ -42,7 +42,7 @@ namespace InventoryQuest.UI
             _encounterManager.OnEncounterResolveFailure += OnStatsUpdatedHandler;
         }
 
-        public Character CurrentCharacter
+        public PlayableCharacter CurrentCharacter
         {
             get { return _character; }
             set

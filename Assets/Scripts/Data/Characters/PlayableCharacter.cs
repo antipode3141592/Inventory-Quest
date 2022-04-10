@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Data.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using Data.Interfaces;
-using Data.Stats;
 
-namespace Data
+namespace Data.Characters
 {
     //characters 
     public class PlayableCharacter : IDisposable, ICharacter

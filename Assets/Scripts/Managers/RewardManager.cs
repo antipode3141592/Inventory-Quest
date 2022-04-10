@@ -1,5 +1,5 @@
 ﻿using Data;
-using Data.Interfaces;
+using Data.Items;
 using Data.Rewards;
 using System;
 using System.Collections.Generic;

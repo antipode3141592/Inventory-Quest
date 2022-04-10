@@ -1,4 +1,6 @@
-﻿namespace Data.Rewards
+﻿using Data.Items;
+
+namespace Data.Rewards
 {
     public class RarityRange
     {

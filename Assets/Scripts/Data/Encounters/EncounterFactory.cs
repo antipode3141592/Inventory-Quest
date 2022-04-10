@@ -1,6 +1,4 @@
-﻿using Data.Interfaces;
-
-namespace Data.Encounters
+﻿namespace Data.Encounters
 {
     public class EncounterFactory
     {

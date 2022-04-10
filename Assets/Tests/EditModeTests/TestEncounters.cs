@@ -1,8 +1,6 @@
-﻿using Data;
+﻿using Data.Characters;
 using Data.Encounters;
-using Data.Interfaces;
-using Data.Stats;
-using InventoryQuest.Characters;
+using Data.Items;
 using NUnit.Framework;
 
 namespace InventoryQuest.Testing
@@ -14,7 +12,7 @@ namespace InventoryQuest.Testing
         IEncounterDataSource encounterDataSource;
         IEncounter currentEncounter;
         Party party;
-        Character partyMember;
+        PlayableCharacter partyMember;
         CharacterStats playerStats;
         EquipableContainerStats backpackStats;
         IEquipable equipableItem;
@@ -40,7 +38,7 @@ namespace InventoryQuest.Testing
             partyMember = CharacterFactory.GetCharacter(
                 characterStats: playerStats, 
                 startingEquipment: new IEquipable[]{ backpack });
-            party = new Party(new Character[] { partyMember });
+            party = new Party(new PlayableCharacter[] { partyMember });
             equipableItem = (IEquipable)ItemFactory.GetItem(EquipableStats);
 
         }

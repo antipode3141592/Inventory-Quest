@@ -1,4 +1,4 @@
-﻿using Data.Interfaces;
+﻿using Data.Quests;
 using InventoryQuest.Managers;
 using UnityEngine;
 using Zenject;

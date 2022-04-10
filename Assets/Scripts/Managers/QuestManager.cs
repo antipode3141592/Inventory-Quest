@@ -1,5 +1,6 @@
 ﻿using Data;
-using Data.Interfaces;
+using Data.Characters;
+using Data.Quests;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

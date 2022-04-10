@@ -1,7 +1,4 @@
-﻿
-using Data.Shapes;
-
-namespace Data
+﻿namespace Data.Shapes
 {
     public class ShapeFactory
     {

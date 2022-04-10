@@ -1,7 +1,7 @@
 ﻿using Data;
-using Data.Interfaces;
-using Data.Stats;
-using InventoryQuest.Characters;
+using Data.Characters;
+using Data.Items;
+using Data.Quests;
 using InventoryQuest.Quests;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -15,9 +15,9 @@ namespace InventoryQuest.Testing
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
         Party party;
-        Character player;
-        Character minion_1;
-        Character minion_2;
+        PlayableCharacter player;
+        PlayableCharacter minion_1;
+        PlayableCharacter minion_2;
 
         static int targetCount = 5;
         static string targetItemId = "apple_fuji";
@@ -33,7 +33,7 @@ namespace InventoryQuest.Testing
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             minion_2 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
-            party = new Party(new Character[] {player, minion_1, minion_2});
+            party = new Party(new PlayableCharacter[] {player, minion_1, minion_2});
 
             questStats = new GatheringQuestStats("quest_000","get_apples", "gather 5 fuji apples", targetCount, targetItemId,  "ring_charisma_1");
             quest = new GatheringQuest(questStats);

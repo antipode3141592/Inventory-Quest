@@ -1,8 +1,7 @@
-using Data;
+using Data.Characters;
 using Data.Encounters;
-using Data.Interfaces;
+using Data.Items;
 using Data.Rewards;
-using Data.Stats;
 using InventoryQuest.Managers;
 using InventoryQuest.UI;
 using Zenject;

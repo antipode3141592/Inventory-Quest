@@ -1,7 +1,6 @@
-﻿using Data;
-using Data.Interfaces;
-using Data.Stats;
-using InventoryQuest.Characters;
+﻿using Data.Characters;
+using Data.Items;
+
 using UnityEngine;
 using Zenject;
 

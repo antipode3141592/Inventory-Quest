@@ -1,5 +1,5 @@
-﻿using Data;
-using Data.Interfaces;
+﻿using Data.Characters;
+using Data.Quests;
 using System;
 
 namespace InventoryQuest.Quests

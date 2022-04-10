@@ -1,4 +1,5 @@
 using Data;
+using Data.Shapes;
 using NUnit.Framework;
 
 namespace InventoryQuest.Testing

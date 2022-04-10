@@ -1,18 +1,18 @@
-using Data;
-using Data.Interfaces;
+using Data.Characters;
+using Data.Items;
 using InventoryQuest.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
-using TMPro;
 
 namespace InventoryQuest.UI
 {
     public class EquipmentSlotDisplay : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
         GameManager _gameManager;
-        Character _character;
+        PlayableCharacter _character;
 
         [SerializeField]
         EquipmentSlotType _slotType;
@@ -40,7 +40,7 @@ namespace InventoryQuest.UI
             slotTypeText.text = SlotType.ToString();
         }
 
-        public void SetCharacter(Character character)
+        public void SetCharacter(PlayableCharacter character)
         {
             _character = character;
         }
@@ -50,8 +50,8 @@ namespace InventoryQuest.UI
             Color targetColor =
             state switch
             {
-                Data.HighlightState.Highlight => Color.green,
-                Data.HighlightState.Incorrect => Color.red,
+                Data.HighlightState.Highlight => UIPreferences.TextBuffColor,
+                Data.HighlightState.Incorrect => UIPreferences.TextDeBuffColor,
                 _ => Color.clear
             };
             highlightSprite.color = targetColor;
@@ -84,22 +84,22 @@ namespace InventoryQuest.UI
             Debug.Log($"OnPointerUp() for {gameObject.name}");
             switch (_gameManager.CurrentState)
             {
-                case GameStates.Default:
+                case GameStates.EncounterPreparing:
                     if(_character.EquipmentSlots[SlotType].TryUnequip(out var currentEquipment)) {
                         if (currentEquipment is null) return;
                         _gameManager.HoldingItem = currentEquipment as IItem;
-                        _gameManager.ChangeState(GameStates.HoldingItem);
+                        _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.white;
                         equippedItemSprite.color = Color.white;
                         equippedItemSprite.sprite = null;
                     }
                     break;
-                case GameStates.HoldingItem:
+                case GameStates.ItemHolding:
                     if (_character.EquipmentSlots[SlotType].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
                     {
                         _gameManager.HoldingItem = previousItem as IItem;
-                        if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Default);
-                        else _gameManager.ChangeState(GameStates.HoldingItem);
+                        if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.EncounterPreparing);
+                        else _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.grey;
                         equippedItemSprite.color = Color.white;
                         equippedItemSprite.sprite = (_character.EquipmentSlots[SlotType].EquippedItem as IItem).Sprite;
@@ -112,7 +112,7 @@ namespace InventoryQuest.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_gameManager.CurrentState != GameStates.HoldingItem) return;
+            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             Data.HighlightState squareState;
             if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem as IEquipable)) { 
                 squareState = Data.HighlightState.Highlight;

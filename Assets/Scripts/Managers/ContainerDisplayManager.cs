@@ -1,68 +1,70 @@
 using Data;
-using Data.Interfaces;
-using InventoryQuest.Managers;
+using Data.Items;
 using InventoryQuest.UI;
 using System;
 using UnityEngine;
 using Zenject;
 
-public class ContainerDisplayManager : MonoBehaviour
+namespace InventoryQuest.Managers
 {
-    PartyManager _partyManager;
-    RewardManager _rewardManager;
-
-    [SerializeField]
-    ContainerDisplay characterContainerDisplay;
-    [SerializeField]
-    ContainerDisplay lootContainerDisplay;
-
-    [Inject]
-    public void Init(PartyManager partyManager, RewardManager rewardManager)
+    public class ContainerDisplayManager : MonoBehaviour
     {
-        _partyManager = partyManager;
-        _rewardManager = rewardManager;
-    }
+        PartyManager _partyManager;
+        RewardManager _rewardManager;
 
-    private void Start()
-    {
-        _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
-        _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
-    }
+        [SerializeField]
+        ContainerDisplay characterContainerDisplay;
+        [SerializeField]
+        ContainerDisplay lootContainerDisplay;
 
-    private void OnRewardsClearedHandler(object sender, EventArgs e)
-    {
-        DisconnectLootContainer();
-    }
+        [Inject]
+        public void Init(PartyManager partyManager, RewardManager rewardManager)
+        {
+            _partyManager = partyManager;
+            _rewardManager = rewardManager;
+        }
 
-    #region Connect Containers
+        private void Start()
+        {
+            _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
+            _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
+        }
 
-    public void ConnectCharacterContainer(IContainer characterContainer)
-    {
-        characterContainerDisplay.MyContainer = characterContainer;
-    }
+        private void OnRewardsClearedHandler(object sender, EventArgs e)
+        {
+            DisconnectLootContainer();
+        }
 
-    public void ConnectLootContainer(IContainer lootContainer)
-    {
-        lootContainerDisplay.MyContainer = lootContainer;
-    }
+        #region Connect Containers
 
-    void DisconnectCharacterContainer()
-    {
-        characterContainerDisplay.MyContainer = null;
-    }
+        public void ConnectCharacterContainer(IContainer characterContainer)
+        {
+            characterContainerDisplay.MyContainer = characterContainer;
+        }
 
-    void DisconnectLootContainer()
-    {
-        lootContainerDisplay.MyContainer = null;
+        public void ConnectLootContainer(IContainer lootContainer)
+        {
+            lootContainerDisplay.MyContainer = lootContainer;
+        }
 
-    }
-    #endregion
+        void DisconnectCharacterContainer()
+        {
+            characterContainerDisplay.MyContainer = null;
+        }
+
+        void DisconnectLootContainer()
+        {
+            lootContainerDisplay.MyContainer = null;
+
+        }
+        #endregion
 
 
-    void OnPartyMemberSelectedHandler(object sender, MessageEventArgs e)
-    {
-        var container = _partyManager.CurrentParty.Characters[e.Message].Backpack;
-        if (container is null) return;
-        ConnectCharacterContainer(container);
+        void OnPartyMemberSelectedHandler(object sender, MessageEventArgs e)
+        {
+            var container = _partyManager.CurrentParty.Characters[e.Message].Backpack;
+            if (container is null) return;
+            ConnectCharacterContainer(container);
+        }
     }
 }

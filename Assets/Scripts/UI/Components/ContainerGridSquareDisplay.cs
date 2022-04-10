@@ -1,5 +1,5 @@
 using Data;
-using Data.Interfaces;
+using Data.Items;
 using InventoryQuest.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -70,18 +70,18 @@ namespace InventoryQuest.UI
             Debug.Log($"OnPointerup() on {gameObject.name} with coor: {Coordinates}");
             switch (_gameManager.CurrentState)
             {
-                case GameStates.Default:
+                case GameStates.EncounterPreparing:
                     if (_container.TryTake(out var item, Coordinates))
                     {
                         _gameManager.HoldingItem = item;
-                        _gameManager.ChangeState(GameStates.HoldingItem);
+                        _gameManager.ChangeState(GameStates.ItemHolding);
                     }
                     break;
-                case GameStates.HoldingItem:
+                case GameStates.ItemHolding:
                     if (_container.TryPlace(_gameManager.HoldingItem, Coordinates))
                     {
                         _gameManager.HoldingItem = null;
-                        _gameManager.ChangeState(GameStates.Default);
+                        _gameManager.ChangeState(GameStates.EncounterPreparing);
                     }
                     break;
                 default:
@@ -91,7 +91,7 @@ namespace InventoryQuest.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_gameManager.CurrentState != GameStates.HoldingItem) return;
+            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
             SetHighlightColor(squareState);
         }

@@ -1,7 +1,6 @@
 ﻿using Data;
-using Data.Interfaces;
-using Data.Stats;
-using InventoryQuest.Characters;
+using Data.Characters;
+using Data.Items;
 using NUnit.Framework;
 
 namespace InventoryQuest.Testing
@@ -11,7 +10,7 @@ namespace InventoryQuest.Testing
         ICharacterDataSource characterDataSource;
         IItemDataSource itemDataSource;
 
-        Character Player;
+        PlayableCharacter Player;
         EquipableItem Sword;
         CharacterStats playerStats;
         EquipableContainerStats backpackStats;

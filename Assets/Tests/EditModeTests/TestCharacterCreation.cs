@@ -1,7 +1,5 @@
-﻿using Data;
-using Data.Interfaces;
-using Data.Stats;
-using InventoryQuest.Characters;
+﻿using Data.Items;
+using Data.Characters;
 using NUnit.Framework;
 
 namespace InventoryQuest.Testing

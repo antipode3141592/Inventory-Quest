@@ -1,7 +1,7 @@
-﻿using Data.Interfaces;
+﻿using Data.Characters;
 using System;
 
-namespace Data
+namespace Data.Quests
 {
     public abstract class Quest : IQuest
     {

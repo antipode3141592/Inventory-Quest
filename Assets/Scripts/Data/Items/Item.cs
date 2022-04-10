@@ -1,8 +1,8 @@
-﻿using Data.Interfaces;
+﻿using Data.Shapes;
 using System;
 using UnityEngine;
 
-namespace Data
+namespace Data.Items
 
 {
     public class Item: IItem

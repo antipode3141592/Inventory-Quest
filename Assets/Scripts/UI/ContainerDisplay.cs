@@ -1,5 +1,6 @@
 ﻿using Data;
-using Data.Interfaces;
+using Data.Items;
+using Data.Shapes;
 using InventoryQuest.Managers;
 using System.Collections.Generic;
 using UnityEngine;

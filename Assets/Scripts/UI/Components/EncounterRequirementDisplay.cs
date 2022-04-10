@@ -19,7 +19,7 @@ namespace InventoryQuest.UI
 
         public void SetStatusColor(bool status)
         {
-            statusImage.color = status ? Color.green : Color.red;
+            statusImage.color = status ? UIPreferences.TextBuffColor : UIPreferences.TextDeBuffColor;
         }
 
     }
