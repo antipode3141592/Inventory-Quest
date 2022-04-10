@@ -5,8 +5,9 @@ namespace Data.Stats
 {
 
     [Serializable]
-    public class CharacterStats
+    public class CharacterStats : ICharacterStats
     {
+        public string Id { get; }
         public string Name { get; }
         public string DisplayName { get; set; }
 
@@ -17,13 +18,13 @@ namespace Data.Stats
         public Strength Strength { get; set; }
 
         public Vitality Vitality { get; set; }
-        
+
         public Agility Agility { get; set; }
 
         public Speed Speed { get; set; }
 
         public Charisma Charisma { get; set; }
-        
+
         public Intellect Intellect { get; set; }
         public Spirit Spirit { get; set; }
 
@@ -42,30 +43,30 @@ namespace Data.Stats
         public int MagicPerLevel { get; } = 5;
         public int CurrentHealth { get; set; }
 
-        public int CurrentMagicPool { get; }
+        public int CurrentMagicPool { get; set; }
         public int MaximumHealth => Vitality.CurrentValue + (HealthPerLevel * CurrentLevel);
-        public int MaximumMagicPool => Arcane.CurrentValue + Spirit.CurrentValue + ( MagicPerLevel * CurrentLevel);
+        public int MaximumMagicPool => Arcane.CurrentValue + Spirit.CurrentValue + (MagicPerLevel * CurrentLevel);
 
         public int MaximumEncumbrance => Strength.CurrentValue * 15;
 
         public int CurrentExperience { get; set; }
 
-        public int NextLevelExperience => (CurrentLevel^2) * 250 + CurrentLevel * 750;
+        public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
 
         public int CurrentLevel { get; set; }
 
 
-        public Dictionary<Type, IStat> Stats;
-        public Dictionary<DamageType,DamageResistance> Resistances = new Dictionary<DamageType, DamageResistance>();
-        public List<EquipmentSlotType> EquipmentSlotsTypes;
+        public IDictionary<Type, IStat> Stats { get; }
+        public IDictionary<DamageType, DamageResistance> Resistances { get; } = new Dictionary<DamageType, DamageResistance>();
+        public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
 
         public CharacterStats(
-            string name, 
-            string portraitPath, 
+            string name,
+            string portraitPath,
             string speciesId,
-            Dictionary<Type,int> stats, 
-            Dictionary<DamageType, DamageResistance> resistances = null, 
-            EquipmentSlotType[] equipmentSlots = null)
+            Dictionary<Type, int> stats,
+            Dictionary<DamageType, DamageResistance> resistances = null,
+            IList<EquipmentSlotType> equipmentSlots = null)
         {
             Name = name;
             DisplayName = name;
@@ -89,9 +90,9 @@ namespace Data.Stats
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
             Stats = new Dictionary<Type, IStat>();
             var properties = typeof(CharacterStats).GetProperties();
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
-                if (typeof(IStat).IsAssignableFrom(property.PropertyType)) 
+                if (typeof(IStat).IsAssignableFrom(property.PropertyType))
                     Stats.Add(property.PropertyType, (IStat)property.GetValue(this));
 
             }
