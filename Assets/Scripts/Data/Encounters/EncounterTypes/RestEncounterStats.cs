@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace Data.Encounters
 {
-    public class SkillCheckEncounterStats : IEncounterStats
+    public class RestEncounterStats : IEncounterStats
     {
-        public SkillCheckEncounterStats(string id, string name, string description, int experience, string successMessage, string failureMessage, IList<string> rewardIds, IList<string> penaltyIds, IList<SkillCheckRequirement> skillCheckRequirements)
+        public RestEncounterStats(string id, string name, string description, int experience, string successMessage, string failureMessage, IList<string> rewardIds, IList<string> penaltyIds = null)
         {
             Id = id;
             Name = name;
@@ -16,10 +14,9 @@ namespace Data.Encounters
             FailureMessage = failureMessage;
             RewardIds = rewardIds;
             PenaltyIds = penaltyIds;
-            SkillCheckRequirements = skillCheckRequirements;
         }
 
-        public SkillCheckEncounterStats(SkillCheckEncounterData encounterData)
+        public RestEncounterStats(RestEncounterData encounterData)
         {
             Id = encounterData.Id;
             Name = encounterData.Name;
@@ -29,12 +26,6 @@ namespace Data.Encounters
             FailureMessage = encounterData.FailureMessage;
             RewardIds = encounterData.RewardIds;
             PenaltyIds = encounterData.PenaltyIds;
-
-            SkillCheckRequirements = new List<SkillCheckRequirement>();
-            foreach(var requirements in encounterData.SkillCheckRequirements)
-            {
-                SkillCheckRequirements.Add(new SkillCheckRequirement(requirements));
-            }
         }
 
         public string Id { get; }
@@ -43,9 +34,9 @@ namespace Data.Encounters
 
         public string Description { get; }
 
-        public int Experience { get; }
+        public string Category => "Rest";
 
-        public string Category => "Skill Check";
+        public int Experience { get; }
 
         public IList<string> RewardIds { get; }
 
@@ -54,9 +45,5 @@ namespace Data.Encounters
         public string SuccessMessage { get; }
 
         public string FailureMessage { get; }
-
-        public IList<SkillCheckRequirement> SkillCheckRequirements;
     }
-
-    
 }

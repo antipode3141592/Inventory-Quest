@@ -3,6 +3,7 @@
 
 namespace Data.Encounters
 {
+
     public interface IEncounterStats
     {
         public string Id { get; }

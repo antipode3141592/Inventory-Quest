@@ -1,5 +1,4 @@
 ﻿using Data.Characters;
-using System;
 using System.Collections.Generic;
 
 namespace Data.Encounters
@@ -47,32 +46,6 @@ namespace Data.Encounters
             if (maxValue >= skillCheck.TargetValue) 
                 return true;
             return (skillCheck.PartyTargetValue >= 0) && (currentTotal >= skillCheck.PartyTargetValue);
-        }
-    }
-
-    public class SkillCheckRequirement
-    {
-        public IList<Type> SkillTypes;
-        public int TargetValue;
-        public int PartyTargetValue;
-
-        public SkillCheckRequirement(IList<Type> skillTypes, int targetValue, int partyTargetValue = -1)
-        {
-            SkillTypes = skillTypes;
-            TargetValue = targetValue;
-            PartyTargetValue = partyTargetValue;
-        }
-
-        public override string ToString() 
-        {
-            string skillTypes = SkillTypes[0].Name;
-            for (int i = 1; i < SkillTypes.Count; i++)
-            {
-                skillTypes += $" + {SkillTypes[i].Name}";
-            }
-            if (PartyTargetValue < 0)
-                return $"{skillTypes} : {TargetValue}";
-            return $"{skillTypes} : {TargetValue} or combined {PartyTargetValue}";
         }
     }
 }

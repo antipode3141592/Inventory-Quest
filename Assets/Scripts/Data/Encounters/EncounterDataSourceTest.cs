@@ -1,7 +1,9 @@
 ﻿using Data.Characters;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEngine;
 
 namespace Data.Encounters
 {
@@ -71,10 +73,33 @@ namespace Data.Encounters
 
         };
 
+        readonly string _filename = "encounterData.json"; //default file name
+
         public EncounterDataSourceTest()
         {
 
         }
+
+        public void SaveEncounterData()
+        {
+            string saveFilename = PrependPersistencePath(_filename);
+
+            EncounterDataList encounterData = new(encounterDictionary.Values.ToList());
+
+            string json = JsonUtility.ToJson(obj: encounterData, prettyPrint: true);
+
+            Debug.Log(json);
+
+            FileStream filestream = new FileStream(saveFilename, FileMode.Create);
+            //using syntax automatically opens and closes the filestream cleanly
+            using (StreamWriter writer = new StreamWriter(filestream))
+            {
+                writer.Write(json);
+            }
+
+
+        }
+
 
         public IEncounterStats GetEncounterById(string id)
         {
@@ -87,20 +112,10 @@ namespace Data.Encounters
             int i = UnityEngine.Random.Range(0, encounterDictionary.Count);
             return encounterDictionary.ElementAt(i).Value;
         }
+
+        string PrependPersistencePath(string filename)
+        {
+            return Application.persistentDataPath + "/" + filename; //slash, because it's from inside unity
+        }
     }
-
-    //public class EncounterDataSourceJSON : IEncounterDataSource
-    //{
-
-
-    //    public IEncounterStats GetEncounterById(string id)
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-
-    //    public IEncounterStats GetRandomEncounter()
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-    //}
 }

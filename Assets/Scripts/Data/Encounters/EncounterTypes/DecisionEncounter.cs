@@ -3,9 +3,9 @@ using System;
 
 namespace Data.Encounters
 {
-    public class DialogueEncounter : Encounter
+    public class DecisionEncounter : Encounter
     {
-        public DialogueEncounter(IEncounterStats encounterStats) : base(encounterStats)
+        public DecisionEncounter(IEncounterStats encounterStats) : base(encounterStats)
         {
         }
 

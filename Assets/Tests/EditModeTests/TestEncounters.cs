@@ -27,7 +27,7 @@ namespace InventoryQuest.Testing
             EquipableItemStats EquipableStats;
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            encounterDataSource = new EncounterDataSourceTest();
+            encounterDataSource = new EncounterDataSourceJSON();
 
             currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetEncounterById(encounterId));
 
@@ -53,6 +53,19 @@ namespace InventoryQuest.Testing
             equipableItem = null;
         }
 
+        [Test]
+        public void EncounterDataSourceJSON()
+        {
+            
+            Assert.That(encounterDataSource is EncounterDataSourceJSON);
+        }
+
+        [Test]
+        public void EncounterDataSourceJSONLoadSuccess()
+        {
+
+            Assert.IsTrue(encounterDataSource.GetEncounterById(encounterId) is IEncounterStats);
+        }
 
         [Test]
         public void EncounterCreateSuccess()
