@@ -1,6 +1,5 @@
 ﻿using Data.Encounters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +15,7 @@ namespace InventoryQuest.Managers
         RewardManager _rewardManager;
 
         IEncounterDataSource _dataSource;
+        IPathDataSource _pathDataSource;
 
         int currentIndex;
 
@@ -25,81 +25,84 @@ namespace InventoryQuest.Managers
 
         public EventHandler OnEncounterListGenerated;
         public EventHandler OnAdventureStarted;
-        public EventHandler OnAdventureComplete;
+        public EventHandler OnAdventureCompleted;
+        public EventHandler<AdventureStates> OnAdventureStateChanged;
+
+        AdventureStates currentState;
+
+        public AdventureStates CurrentState
+        {
+            get { return currentState; }
+            set
+            {
+                OnAdventureStateChanged?.Invoke(this,value);
+                Debug.Log($"current state: {value}");
+                currentState = value;
+            }
+        }
 
         [Inject]
-        public void Init(IEncounterDataSource dataSource, EncounterManager encounterManager, RewardManager rewardManager)
+        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, EncounterManager encounterManager, RewardManager rewardManager)
         {
             _dataSource = dataSource;
+            _pathDataSource = pathDataSource;
             _encounterManager = encounterManager;
             _rewardManager = rewardManager;
         }
 
         private void Awake()
         {
+            currentState = AdventureStates.Idle;
             _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
-
-            _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
         }
 
-        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        public void ChoosePath(string pathId)
         {
-            _rewardManager.DestroyRewards();
-            Loading();
-        }
 
-        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
-        {
-            
-        }
-
-        public void Loading()
-        {
-            _rewardManager.ProcessRewards();
-        }
-
-        public void ChoosePath()
-        {
+            currentState = AdventureStates.Pathfinding;
             //set current path 
+
+            CurrentPath = PathFactory.GetPath(_pathDataSource.GetPathById(pathId));
 
 
             OnEncounterListGenerated?.Invoke(this, EventArgs.Empty);
             currentIndex = 0;
             LoadEncounter(CurrentPath.EncounterIds[currentIndex]);
-            
+
         }
 
-        public void LoadEncounter(string id)
+        void LoadEncounter(string id)
         {
-            if(id == string.Empty)
+            if (id == string.Empty)
                 _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_dataSource.GetRandomEncounter());
             _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_dataSource.GetEncounterById(id));
+            currentState = AdventureStates.Adventuring;
+            OnAdventureStarted?.Invoke(this, EventArgs.Empty);
         }
+
+        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        {
+            Debug.Log($"{gameObject.name}: {currentState}, OnEncounterCompleteHandler()", this);
+            //get next encounter in list
+            if (currentIndex < CurrentPath.Length-1)
+            {
+                currentIndex++;
+
+                var nextEncounterId = CurrentPath.EncounterIds[currentIndex];
+                //if it exists, start encounter
+                Debug.Log($"load encounter: {nextEncounterId}");
+                LoadEncounter(nextEncounterId);
+                //else end adventure
+            } else
+            {
+                currentState = AdventureStates.Idle;
+                OnAdventureCompleted?.Invoke(this, EventArgs.Empty);
+            }
+
+        }
+
+        
     }
 
-    public enum AdventureStates { Idle, Pathfinding, Encountering }
-    /* Idle - in town, menu, or whatever
- * Pathfinding - pick endpoint location on map, load path (list of encounters) data
- * Encountering - iterate through list of encounters
- * 
- */
-
-    public interface IPathStats
-    {
-
-    }
-
-    public interface ILocationStats
-    {
-
-    }
-
-    public interface IPathDataSource
-    {
-        public IPathStats GetPathById(string id);
-    }
-
+    public enum AdventureStates { Idle, Pathfinding, Adventuring }
 }
-
-
-

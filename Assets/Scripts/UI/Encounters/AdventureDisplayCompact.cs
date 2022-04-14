@@ -1,9 +1,6 @@
 ﻿using InventoryQuest.Managers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +10,8 @@ namespace InventoryQuest.UI.Components
     {
         AdventureManager _adventureManager;
         EncounterManager _encounterManager;
+
+        [SerializeField] Transform markerDisplayParentTransform;
 
 
         [SerializeField] AdventureEncounterMarker encounterMarkerPrefab;
@@ -27,10 +26,30 @@ namespace InventoryQuest.UI.Components
 
         private void Awake()
         {
+            _adventureManager.OnEncounterListGenerated += OnEncounterListGeneratedHandler;
             _encounterManager.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.OnEncounterResolveStart += OnEncounterResolveStartHandler;
             _encounterManager.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
+            _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
+        }
+
+        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        {
+            foreach(var marker in adventureEncounterMarkers)
+            {
+
+            }
+        }
+
+        private void OnEncounterListGeneratedHandler(object sender, EventArgs e)
+        {
+            foreach (var encounterId in _adventureManager.CurrentPath.EncounterIds)
+            {
+                var go = Instantiate<AdventureEncounterMarker>(encounterMarkerPrefab, markerDisplayParentTransform);
+                go.EncounterId = encounterId;
+                adventureEncounterMarkers.Add(go);
+            }
         }
 
         private void OnEncounterResolveFailureHandler(object sender, EventArgs e)
@@ -50,7 +69,7 @@ namespace InventoryQuest.UI.Components
 
         private void OnEncounterLoadedHandler(object sender, EventArgs e)
         {
-            
+            //highlight current encounter
         }
     }
 }

@@ -65,6 +65,14 @@ namespace Data.Rewards
                     description: "A magical sword that increases the strength of the bearer.",
                     itemId: "basic_sword_15"
                     )
+            },
+            {
+                "shortsword_0", new ItemRewardStats(
+                    id: "shortsword_0",
+                    name: "Steel Shortsword",
+                    description: "A solidly built short sword.  Simple, but effective.",
+                    itemId: "basic_shortsword_0"
+                    )
             }
 
         };

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 
@@ -11,11 +12,12 @@ namespace InventoryQuest.Managers
 {
     public class EncounterManager: MonoBehaviour
     {
+        AdventureManager _adventureManager;
         PartyManager _partyManager;
         RewardManager _rewardManager;
-        
 
-        [SerializeField] 
+
+        [SerializeField] Button continueButton;
 
         public EventHandler OnEncounterLoaded;
         public EventHandler OnEncounterStart;
@@ -24,36 +26,95 @@ namespace InventoryQuest.Managers
         public EventHandler OnEncounterResolveFailure;
         public EventHandler OnEncounterComplete;
 
+        public EventHandler<EncounterStates> OnEncounterStateChanged;
+
         bool isResolving = false;
+        bool isEnding = false;
 
         IEncounter currentEncounter;
+        EncounterStates currentState;
+        EncounterStates CurrentState
+        {
+            get { return currentState; }
+            set
+            {
+                Debug.Log($"EncounterManager current state: {value}", this);
+                OnEncounterStateChanged?.Invoke(this, value);
+                currentState = value;
+            }
+        }
 
         public IEncounter CurrentEncounter {
             get { return currentEncounter; }
             set {
+                CurrentState = EncounterStates.Loading;
                 currentEncounter = value;
                 OnEncounterLoaded?.Invoke(this, EventArgs.Empty);
+                CurrentState = EncounterStates.Preparing;
             }
         }
 
         [Inject]
-        public void Init(PartyManager partyManager, RewardManager rewardManager)
+        public void Init(AdventureManager adventureManager, PartyManager partyManager, RewardManager rewardManager)
         {
+            _adventureManager = adventureManager;
             _partyManager = partyManager;
             _rewardManager = rewardManager;
         }
 
-
-        //connected to UI Button
-        public void ResolveCurrentEncounter()
+        private void Awake()
         {
-            if (isResolving) return;
-            isResolving = true;
-            
-            StartCoroutine(EncounterResolveBegin());
+            CurrentState = EncounterStates.Idle;
+            continueButton.onClick.AddListener(Continue);
         }
 
-        IEnumerator EncounterResolveBegin()
+        public void ChangeState(EncounterStates targetState)
+        {
+            if (CurrentState == targetState) return;
+            CurrentState = targetState;
+        }
+
+
+        //connected to UI Button
+        public void Continue()
+        {
+            if (currentState == EncounterStates.Preparing)
+            {
+                BeginResolution();
+            } else if (currentState == EncounterStates.Cleanup)
+            {
+                EndEncounter();
+            }
+        }
+
+        
+        void BeginResolution()
+        {
+            
+            if (isResolving) return;
+            isResolving = true;
+            CurrentState = EncounterStates.Resolving;
+            StartCoroutine(ResolveEncounterRoutine());
+        }
+
+        void BeginCleanup()
+        {
+            CurrentState = EncounterStates.Cleanup;
+            _rewardManager.ProcessRewards();
+        }
+
+        void EndEncounter()
+        {
+            if (isEnding) return;
+            isEnding = true;
+            CurrentState = EncounterStates.End;
+            _rewardManager.DestroyRewards();
+            StartCoroutine(EndEncounterRoutine());
+        }
+
+        
+
+        IEnumerator ResolveEncounterRoutine()
         {
             OnEncounterResolveStart?.Invoke(this, EventArgs.Empty);
             yield return new WaitForSeconds(1f);
@@ -76,13 +137,20 @@ namespace InventoryQuest.Managers
                 OnEncounterResolveFailure?.Invoke(this, EventArgs.Empty);
             }
             isResolving = false;
-            StartCoroutine(EncounterCleanup());
+            BeginCleanup();
         }
 
-        IEnumerator EncounterCleanup()
+        
+
+        
+
+        IEnumerator EndEncounterRoutine()
         {
-            Debug.Log("EncounterCleanup()");
+            Debug.Log($"Ending encounter...", this);
             yield return new WaitForSeconds(1f);
+            
+            isEnding = false;
+            CurrentState = EncounterStates.Idle;
             OnEncounterComplete?.Invoke(this, EventArgs.Empty);
         }
 
@@ -104,4 +172,6 @@ namespace InventoryQuest.Managers
 
         
     }
+
+    public enum EncounterStates { Idle, Loading, Preparing, Resolving, Cleanup, End}
 }

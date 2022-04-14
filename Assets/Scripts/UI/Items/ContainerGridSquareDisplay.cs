@@ -70,7 +70,7 @@ namespace InventoryQuest.UI
             Debug.Log($"OnPointerup() on {gameObject.name} with coor: {Coordinates}");
             switch (_gameManager.CurrentState)
             {
-                case GameStates.EncounterPreparing:
+                case GameStates.Encounter:
                     if (_container.TryTake(out var item, Coordinates))
                     {
                         _gameManager.HoldingItem = item;
@@ -81,7 +81,7 @@ namespace InventoryQuest.UI
                     if (_container.TryPlace(_gameManager.HoldingItem, Coordinates))
                     {
                         _gameManager.HoldingItem = null;
-                        _gameManager.ChangeState(GameStates.EncounterPreparing);
+                        _gameManager.ChangeState(GameStates.Encounter);
                     }
                     break;
                 default:

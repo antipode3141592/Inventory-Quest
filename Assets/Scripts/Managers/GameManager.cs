@@ -3,6 +3,7 @@ using Data.Items;
 using Data.Shapes;
 using Rewired;
 using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +17,8 @@ namespace InventoryQuest.Managers
 
         Player player;
         int playerId = 0;
+
+        [SerializeField] float startDelay = 1f;
 
         private IItem holdingItem;
         public IItem HoldingItem 
@@ -49,13 +52,29 @@ namespace InventoryQuest.Managers
         {
             player = ReInput.players.GetPlayer(playerId);
             currentState = GameStates.Loading;
-            //test stuff
-            _rewardManager.EnqueueReward("spirit_ring");
-            _rewardManager.EnqueueReward("power_sword");
-            _rewardManager.EnqueueReward("uncommon_loot_pile_gigantic");
 
-            _adventureManager.Loading();
-            
+            //testing stuff
+
+            _adventureManager.OnAdventureStarted += OnAdventureStartedHandler;
+            _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
+        }
+
+        private void OnAdventureCompletedHandler(object sender, EventArgs e)
+        {
+            Debug.Log($"OnAdventureCompleted handled by {gameObject.name}", this);
+        }
+
+        private void Start()
+        {
+            StartCoroutine(Pathfind("intro_path"));
+        }
+
+        IEnumerator Pathfind(string id)
+        {
+            Debug.Log($"Staring delay...", this);
+            yield return new WaitForSeconds(startDelay);
+            _adventureManager.ChoosePath(id);
+            Debug.Log($"Pathfinding!", this);
         }
 
         private void Update()
@@ -63,9 +82,9 @@ namespace InventoryQuest.Managers
             CheckRotateAction();
         }
 
-        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
+        private void OnAdventureStartedHandler(object sender, EventArgs e)
         {
-            ChangeState(GameStates.EncounterPreparing);
+            ChangeState(GameStates.Encounter);
         }
 
         public void ChangeState(GameStates targetState)
@@ -95,5 +114,5 @@ namespace InventoryQuest.Managers
         }
     }
 
-    public enum GameStates { Loading, EncounterPreparing, ItemHolding, EncounterResolving }
+    public enum GameStates { Loading, Encounter, ItemHolding }
 }

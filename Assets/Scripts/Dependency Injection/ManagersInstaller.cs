@@ -17,17 +17,21 @@ namespace InventoryQuest
             Container.Bind<ICharacterDataSource>()
                 .FromInstance(new CharacterDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<IEncounterDataSource>()
-                .FromInstance(new EncounterDataSourceTest()).AsSingle().NonLazy();
+                .FromInstance(new EncounterDataSourceJSON()).AsSingle().NonLazy();
             Container.Bind<IRewardDataSource>()
                 .FromInstance(new RewardDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<ILootTableDataSource>()
                 .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
+            Container.Bind<IPathDataSource>()
+                .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<GameManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<AdventureManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<RewardManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<PartyManager>()
-                .FromComponentInHierarchy().AsSingle().NonLazy();
+                .FromComponentInHierarchy().AsSingle();
             Container.Bind<EncounterManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<ContainerDisplayManager>()

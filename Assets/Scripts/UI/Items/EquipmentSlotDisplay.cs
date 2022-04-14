@@ -84,7 +84,7 @@ namespace InventoryQuest.UI
             Debug.Log($"OnPointerUp() for {gameObject.name}");
             switch (_gameManager.CurrentState)
             {
-                case GameStates.EncounterPreparing:
+                case GameStates.Encounter:
                     if(_character.EquipmentSlots[SlotType].TryUnequip(out var currentEquipment)) {
                         if (currentEquipment is null) return;
                         _gameManager.HoldingItem = currentEquipment as IItem;
@@ -98,7 +98,7 @@ namespace InventoryQuest.UI
                     if (_character.EquipmentSlots[SlotType].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
                     {
                         _gameManager.HoldingItem = previousItem as IItem;
-                        if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.EncounterPreparing);
+                        if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Encounter);
                         else _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.grey;
                         equippedItemSprite.color = Color.white;

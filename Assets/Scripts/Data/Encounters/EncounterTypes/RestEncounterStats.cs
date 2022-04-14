@@ -34,9 +34,9 @@ namespace Data.Encounters
 
         public string Description { get; }
 
-        public string Category => "Rest";
-
         public int Experience { get; }
+
+        public string Category => "Rest";
 
         public IList<string> RewardIds { get; }
 
@@ -45,5 +45,7 @@ namespace Data.Encounters
         public string SuccessMessage { get; }
 
         public string FailureMessage { get; }
+
+        
     }
 }

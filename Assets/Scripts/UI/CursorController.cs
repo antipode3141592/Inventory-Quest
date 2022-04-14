@@ -8,7 +8,7 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class CursorController : MonoBehaviour, IPointerMoveHandler, IPointerUpHandler
+    public class CursorController : MonoBehaviour, IPointerMoveHandler
     {
         [SerializeField]
         Cursor cursorPrefab;
@@ -38,21 +38,6 @@ namespace InventoryQuest.UI
         public void OnPointerMove(PointerEventData eventData)
         {
             _cursor.transform.position = eventData.position;
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            switch (_gameManager.CurrentState)
-            {
-                case GameStates.Loading:
-                    break;
-                case GameStates.EncounterPreparing:
-                    break;
-                case GameStates.ItemHolding:
-                    break;
-                default:
-                    break;
-            }
         }
 
         public void OnItemHeldHandler(object sender, EventArgs e)

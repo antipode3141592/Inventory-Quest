@@ -89,9 +89,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.Backpack
                 )
             },
-            {
-
-                "small backpack", new EquipableContainerStats("small backpack",
+            {   "small backpack", new EquipableContainerStats("small backpack",
                     weight: 1f,
                     goldValue: 2f,
                     description: "a small backpack",
@@ -102,7 +100,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.Backpack
                 )
             },
-            { "basic_sword_1", new EquipableItemStats("basic_sword_1",
+            {   "basic_sword_1", new EquipableItemStats("basic_sword_1",
                      weight: 2f,
                      goldValue: 10f,
                      description: "a basic sword",
@@ -141,10 +139,22 @@ namespace Data.Items
                             new(typeof(Agility),OperatorType.Add,1)}
                     )
             },
-            {   "basic_shortsword_1", new EquipableItemStats("basic_sword_1",
+            {   "basic_shortsword_0", new EquipableItemStats("basic_shortsword_0",
                     weight: 2f,
                     goldValue: 10f,
                     description: "a basic shortsword with a sharp edge",
+                    rarity: Rarity.rare,
+                    spritePath: "Items/common_shortsword_1",
+                    shapeType: ShapeType.Tetromino_I,
+                    slotType: EquipmentSlotType.OneHandedWeapon,
+                    defaultFacing: Facing.Down,
+                    modifiers: new StatModifier[] { }
+                    )
+            },
+            {   "basic_shortsword_1", new EquipableItemStats("basic_shortsword_1",
+                    weight: 2f,
+                    goldValue: 10f,
+                    description: "a basic shortsword with a refined edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/common_shortsword_1",
                     shapeType: ShapeType.Tetromino_I,
@@ -154,7 +164,7 @@ namespace Data.Items
                         new(typeof(Strength),OperatorType.Add,1)}
                     )
             },
-            {   "basic_shortsword_3", new EquipableItemStats("basic_sword_3",
+            {   "basic_shortsword_3", new EquipableItemStats("basic_shortsword_3",
                     weight: 2f,
                     goldValue: 10f,
                     description: "a basic shortsword with a sharp edge",
