@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class LootIcon : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class LootIcon : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         Image background;
@@ -26,17 +26,6 @@ namespace InventoryQuest.UI
             }
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            Debug.Log($"LootPile {ContainerGuid} Selected", gameObject);
-            LootListDisplay.LootPileSelected(ContainerGuid);
-        }
-
         public void SetupLootIcon(string guid, string imagePath)
         {
             SetImage(imagePath);
@@ -49,5 +38,10 @@ namespace InventoryQuest.UI
             icon.sprite = Resources.Load<Sprite>(path);
         }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.Log($"LootPile {ContainerGuid} Selected", gameObject);
+            LootListDisplay.LootPileSelected(ContainerGuid);
+        }
     }
 }

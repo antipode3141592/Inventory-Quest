@@ -37,15 +37,15 @@ namespace InventoryQuest.UI
             
         }
 
-        private void OnEnable()
+        private void Start()
         {
             _partyManager.CurrentParty.OnPartyMemberStatsUpdated += UpdateRequirements;
         }
 
-        private void OnDisable()
-        {
-            _partyManager.CurrentParty.OnPartyMemberStatsUpdated -= UpdateRequirements;
-        }
+        //private void OnDisable()
+        //{
+        //    _partyManager.CurrentParty.OnPartyMemberStatsUpdated -= UpdateRequirements;
+        //}
 
         public void DisplayRequirements()
         {

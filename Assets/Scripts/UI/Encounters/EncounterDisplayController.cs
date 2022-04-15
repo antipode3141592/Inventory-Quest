@@ -19,6 +19,8 @@ namespace InventoryQuest.UI
         public TextMeshProUGUI EnounterTypeText;
         public Image ResultsImage;
 
+        [SerializeField] PressAndHoldButton continueButton;
+
         [SerializeField] EncounterSuccessDisplay encounterSuccessDisplay;
         [SerializeField] EncounterFailureDisplay encounterFailureDisplay;
 
@@ -36,8 +38,13 @@ namespace InventoryQuest.UI
         void Awake()
         {
             ClearDisplay();
-            
+            continueButton.OnPointerHoldSuccess += Continue;
 
+        }
+
+        private void Continue(object sender, EventArgs e)
+        {
+            _encounterManager.Continue();
         }
 
         private void OnEnable()

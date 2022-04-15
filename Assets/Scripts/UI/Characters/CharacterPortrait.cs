@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class CharacterPortrait : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         Image background;
@@ -59,14 +59,9 @@ namespace InventoryQuest.UI
 
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
             SelectPartyMember();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            
         }
     }
 }

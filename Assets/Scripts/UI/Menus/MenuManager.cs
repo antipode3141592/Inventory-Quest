@@ -1,5 +1,6 @@
 ﻿using InventoryQuest.Managers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,13 @@ namespace InventoryQuest.UI
 
         private void Start()
         {
+            StartCoroutine(Initialize());
+            
+        }
+
+        IEnumerator Initialize()
+        {
+            yield return new WaitForSeconds(3f);
             InitializeMenus();
         }
 

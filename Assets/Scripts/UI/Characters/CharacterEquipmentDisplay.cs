@@ -29,14 +29,12 @@ namespace InventoryQuest.UI
             foreach (var slot in slots)
             {
                 _equipmentSlots.Add(slot.SlotType, slot);
-            }
-            _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelect;
+            }   
         }
 
-        private void OnDestroy()
+        private void Start()
         {
-            if (_partyManager.CurrentParty != null)
-                _partyManager.CurrentParty.OnPartyMemberSelected -= OnPartyMemberSelect;
+            _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelect;
         }
 
         private void OnPartyMemberSelect(object sender, MessageEventArgs e)

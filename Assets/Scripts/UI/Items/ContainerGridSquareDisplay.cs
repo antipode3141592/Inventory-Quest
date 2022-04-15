@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class ContainerGridSquareDisplay : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+    public class ContainerGridSquareDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         GameManager _gameManager;
         IContainer _container;
@@ -60,14 +60,20 @@ namespace InventoryQuest.UI
             _container = container;
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerDown() on {gameObject.name} with coor: {Coordinates}");
+            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
+            var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
+            SetHighlightColor(squareState);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerup() on {gameObject.name} with coor: {Coordinates}");
+            SetHighlightColor(HighlightState.Normal);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Encounter:
@@ -88,17 +94,5 @@ namespace InventoryQuest.UI
                     break;
             }
         }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
-            var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
-            SetHighlightColor(squareState);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            SetHighlightColor(HighlightState.Normal);
-        }   
     }
 }

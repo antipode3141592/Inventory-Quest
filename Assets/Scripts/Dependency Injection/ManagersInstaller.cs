@@ -33,7 +33,7 @@ namespace InventoryQuest
             Container.Bind<RewardManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<PartyManager>()
-                .FromComponentInHierarchy().AsSingle();
+                .FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<EncounterManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<ContainerDisplayManager>()

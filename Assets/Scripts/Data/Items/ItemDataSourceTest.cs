@@ -265,7 +265,7 @@ namespace Data.Items
         {
             var itemsOfRarity = itemDictionary.Select(y => y).Where(x => x.Value.Rarity == rarity && x.Value.IsQuestItem == false);
             int randomIndex = Random.Range(0,itemsOfRarity.Count());
-            Debug.Log($"rarity: {rarity}, index: {randomIndex}, itemcount: {itemsOfRarity.Count()}");
+            //Debug.Log($"rarity: {rarity}, index: {randomIndex}, itemcount: {itemsOfRarity.Count()}");
             return itemsOfRarity.ElementAt(randomIndex).Value;
         }
 

@@ -9,7 +9,7 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class EquipmentSlotDisplay : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+    public class EquipmentSlotDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         GameManager _gameManager;
         PlayableCharacter _character;
@@ -74,18 +74,34 @@ namespace InventoryQuest.UI
 
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerDown() for {gameObject.name}");
+            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
+            Data.HighlightState squareState;
+            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem as IEquipable)) { 
+                squareState = Data.HighlightState.Highlight;
+                
+            } 
+            else
+            {
+                squareState = Data.HighlightState.Incorrect;
+            }
+            SetHighlightColor(squareState);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerUp() for {gameObject.name}");
+            SetHighlightColor(Data.HighlightState.Normal);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.Log($"OnPointerClick() for {gameObject.name}");
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Encounter:
-                    if(_character.EquipmentSlots[SlotType].TryUnequip(out var currentEquipment)) {
+                    if (_character.EquipmentSlots[SlotType].TryUnequip(out var currentEquipment))
+                    {
                         if (currentEquipment is null) return;
                         _gameManager.HoldingItem = currentEquipment as IItem;
                         _gameManager.ChangeState(GameStates.ItemHolding);
@@ -109,27 +125,5 @@ namespace InventoryQuest.UI
                     break;
             }
         }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
-            Data.HighlightState squareState;
-            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem as IEquipable)) { 
-                squareState = Data.HighlightState.Highlight;
-                
-            } 
-            else
-            {
-                squareState = Data.HighlightState.Incorrect;
-            }
-            SetHighlightColor(squareState);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            SetHighlightColor(Data.HighlightState.Normal);
-        }
-
-        
     }
 }

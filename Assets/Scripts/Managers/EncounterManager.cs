@@ -16,9 +16,6 @@ namespace InventoryQuest.Managers
         PartyManager _partyManager;
         RewardManager _rewardManager;
 
-
-        [SerializeField] Button continueButton;
-
         public EventHandler OnEncounterLoaded;
         public EventHandler OnEncounterStart;
         public EventHandler OnEncounterResolveStart;
@@ -65,7 +62,6 @@ namespace InventoryQuest.Managers
         private void Awake()
         {
             CurrentState = EncounterStates.Idle;
-            continueButton.onClick.AddListener(Continue);
         }
 
         public void ChangeState(EncounterStates targetState)
