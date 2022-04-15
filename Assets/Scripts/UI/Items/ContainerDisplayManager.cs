@@ -1,11 +1,11 @@
 using Data;
 using Data.Items;
-using InventoryQuest.UI;
+using InventoryQuest.Managers;
 using System;
 using UnityEngine;
 using Zenject;
 
-namespace InventoryQuest.Managers
+namespace InventoryQuest.UI
 {
     public class ContainerDisplayManager : MonoBehaviour
     {
@@ -28,6 +28,12 @@ namespace InventoryQuest.Managers
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
+            _rewardManager.OnLootPileSelected += OnLootPileSelectedHandler;
+        }
+
+        private void OnLootPileSelectedHandler(object sender, Container e)
+        {
+            ConnectLootContainer(e);
         }
 
         private void OnRewardsClearedHandler(object sender, EventArgs e)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Cinemachine;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.Managers
 {
     public class CameraManager : MonoBehaviour
     {

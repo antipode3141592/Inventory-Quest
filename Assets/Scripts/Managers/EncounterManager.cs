@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 
@@ -12,7 +11,6 @@ namespace InventoryQuest.Managers
 {
     public class EncounterManager: MonoBehaviour
     {
-        AdventureManager _adventureManager;
         PartyManager _partyManager;
         RewardManager _rewardManager;
 
@@ -52,9 +50,8 @@ namespace InventoryQuest.Managers
         }
 
         [Inject]
-        public void Init(AdventureManager adventureManager, PartyManager partyManager, RewardManager rewardManager)
+        public void Init(PartyManager partyManager, RewardManager rewardManager)
         {
-            _adventureManager = adventureManager;
             _partyManager = partyManager;
             _rewardManager = rewardManager;
         }

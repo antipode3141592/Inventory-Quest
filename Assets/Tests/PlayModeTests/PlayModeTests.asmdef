@@ -5,9 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Data",
-        "Scripts",
         "Zenject",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "InventoryQuest"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

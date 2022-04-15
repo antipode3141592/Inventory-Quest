@@ -10,8 +10,6 @@ namespace InventoryQuest.Managers
 {
     public class RewardManager: MonoBehaviour
     {
-        ContainerDisplayManager _displayManager;
-
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
@@ -30,13 +28,13 @@ namespace InventoryQuest.Managers
         public EventHandler OnRewardsProcessStart;
         public EventHandler OnRewardsProcessComplete;
         public EventHandler OnRewardsCleared;
+        public EventHandler<Container> OnLootPileSelected;
 
         [Inject]
-        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ContainerDisplayManager displayManager, ILootTableDataSource lootTableDataSource) 
+        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource) 
         {
             _dataSource = dataSource;
             _rewardDataSource = rewardDataSource;
-            _displayManager = displayManager;
             _lootTableDataSource = lootTableDataSource;
         }
 
@@ -164,7 +162,8 @@ namespace InventoryQuest.Managers
             if (LootPiles.ContainsKey(containerGuid))
             {
                 SelectedPileId = containerGuid;
-                _displayManager.ConnectLootContainer(LootPiles[containerGuid]);
+                OnLootPileSelected?.Invoke(this, LootPiles[containerGuid]);
+                //_displayManager.ConnectLootContainer(LootPiles[containerGuid]);
             }
             
         }

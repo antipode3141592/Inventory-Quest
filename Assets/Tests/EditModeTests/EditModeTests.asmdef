@@ -4,9 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Scripts",
         "Data",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "InventoryQuest"
     ],
     "includePlatforms": [
         "Editor"

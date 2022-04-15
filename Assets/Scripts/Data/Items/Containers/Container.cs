@@ -121,7 +121,7 @@ namespace Data.Items
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Debug.LogWarning($"{ex.Message}");
                 return false;
