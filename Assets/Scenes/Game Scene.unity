@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 1611251475}
   - component: {fileID: 1611251474}
   - component: {fileID: 1611251473}
+  - component: {fileID: 1611251476}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1242,6 +1243,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1611251473}
+  - {fileID: 1611251476}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1274,6 +1276,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1611251476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611251472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722b25ac6e0b6ac48bace9d9c31d4e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1697846496 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1452528957205071194, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
@@ -1504,19 +1518,19 @@ PrefabInstance:
       objectReference: {fileID: 50021984}
     - target: {fileID: 1452528958697323416, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1452528958697323416, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_Padding.m_Left
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1452528958697323416, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_Padding.m_Right
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1452528958697323416, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1452528958698568108, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_RootOrder

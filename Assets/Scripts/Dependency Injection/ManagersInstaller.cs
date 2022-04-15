@@ -3,7 +3,7 @@ using Data.Encounters;
 using Data.Items;
 using Data.Rewards;
 using InventoryQuest.Managers;
-using InventoryQuest.UI;
+
 using Zenject;
 
 namespace InventoryQuest
@@ -24,8 +24,7 @@ namespace InventoryQuest
                 .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<IPathDataSource>()
                 .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<MenuManager>()
-                .FromComponentInHierarchy().AsSingle();
+            
             Container.Bind<GameManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<AdventureManager>()
@@ -36,10 +35,7 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<EncounterManager>()
                 .FromComponentInHierarchy().AsSingle();
-            Container.Bind<ContainerDisplayManager>()
-                .FromComponentInHierarchy().AsSingle();
-            Container.Bind<CharacterStatsDisplay>()
-                .FromComponentInHierarchy().AsSingle();
+            
         }
     }
 }
