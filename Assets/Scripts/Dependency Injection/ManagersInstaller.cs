@@ -24,6 +24,8 @@ namespace InventoryQuest
                 .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<IPathDataSource>()
                 .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
+            Container.Bind<MenuManager>()
+                .FromComponentInHierarchy().AsSingle();
             Container.Bind<GameManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<AdventureManager>()

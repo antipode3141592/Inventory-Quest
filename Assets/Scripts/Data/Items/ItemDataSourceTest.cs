@@ -145,7 +145,7 @@ namespace Data.Items
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/common_shortsword_1",
-                    shapeType: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] { }
@@ -157,7 +157,7 @@ namespace Data.Items
                     description: "a basic shortsword with a refined edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/common_shortsword_1",
-                    shapeType: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -170,7 +170,7 @@ namespace Data.Items
                     description: "a basic shortsword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/uncommon_shortsword_1",
-                    shapeType: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -183,7 +183,7 @@ namespace Data.Items
                     description: "a basic sword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/uncommon_sword_1",
-                    shapeType: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
@@ -196,7 +196,7 @@ namespace Data.Items
                     description: "a basic sword with a sharp edge",
                     rarity: Rarity.rare,
                     spritePath: "Items/basic_sword_1",
-                    shapeType: ShapeType.Tetromino_I,
+                    shapeType: ShapeType.Tromino_I,
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {

@@ -83,7 +83,7 @@ namespace InventoryQuest.UI
 
             healthText.UpdateText($"{_character.Stats.CurrentHealth}", $"{_character.Stats.MaximumHealth}");
             magicText.UpdateText($"{_character.Stats.CurrentMagicPool}", $"{_character.Stats.MaximumMagicPool}");
-            encumberanceText.UpdateText($"{_character.CurrentEncumbrance}", $"{_character.Stats.MaximumEncumbrance}");
+            encumberanceText.UpdateText($"{_character.CurrentEncumbrance:0.#}", $"{_character.Stats.MaximumEncumbrance}");
             experienceText.UpdateText($"{ _character.Stats.CurrentExperience}", $"{_character.Stats.NextLevelExperience}");
         }
 
