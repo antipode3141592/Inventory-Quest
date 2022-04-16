@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 /[Aa]ssets/[Pp]lugins/*
 /[Aa]ssets/[Dd]ownloaded Assets/*
+
+/[Aa]ssets/[Tt]hera[Bb]ytes/*
