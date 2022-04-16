@@ -10,16 +10,14 @@ namespace InventoryQuest.UI
 {
     public class CharacterEquipmentDisplay : MonoBehaviour
     {
-        PartyManager _partyManager;
-        GameManager _gameManager;
+        IPartyManager _partyManager;
         PlayableCharacter _character;
 
         Dictionary<EquipmentSlotType, EquipmentSlotDisplay> _equipmentSlots = new Dictionary<EquipmentSlotType, EquipmentSlotDisplay>();
 
         [Inject]
-        public void Init(GameManager gameManager, PartyManager partyManager)
+        public void Init(IPartyManager partyManager)
         {
-            _gameManager = gameManager;
             _partyManager = partyManager;
         }
 

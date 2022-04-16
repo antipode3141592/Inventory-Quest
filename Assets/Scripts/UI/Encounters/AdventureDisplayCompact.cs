@@ -8,8 +8,8 @@ namespace InventoryQuest.UI.Components
 {
     public class AdventureDisplayCompact: MonoBehaviour
     {
-        AdventureManager _adventureManager;
-        EncounterManager _encounterManager;
+        IAdventureManager _adventureManager;
+        IEncounterManager _encounterManager;
 
         [SerializeField] Transform markerDisplayParentTransform;
 
@@ -18,7 +18,7 @@ namespace InventoryQuest.UI.Components
         List<AdventureEncounterMarker> adventureEncounterMarkers = new();
 
         [Inject]
-        public void Init(AdventureManager adventureManager, EncounterManager encounterManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;

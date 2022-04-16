@@ -9,7 +9,7 @@ namespace InventoryQuest.UI
 {
     public class ContainerGridSquareDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        GameManager _gameManager;
+        IGameManager _gameManager;
         IContainer _container;
 
         [SerializeField]

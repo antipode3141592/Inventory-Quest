@@ -18,7 +18,13 @@ namespace Data
 
         public override string ToString()
         {
-            return $"{this.GetType()}: {StatType}, {OperatorType}, {AdjustmentValue}";
+            if (OperatorType == OperatorType.Add) {
+                return $"{StatType.Name} + {AdjustmentValue}";
+            } else if (OperatorType == OperatorType.Multiply)
+            {
+                return $"{StatType.Name} x {AdjustmentValue}";
+            }
+            return "";
         }
     }
 }

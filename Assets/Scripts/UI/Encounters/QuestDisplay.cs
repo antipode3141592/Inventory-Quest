@@ -7,12 +7,12 @@ namespace InventoryQuest.UI
 {
     public class QuestDisplay : MonoBehaviour
     {
-        QuestManager _questManager;
+        IQuestManager _questManager;
 
         IQuest selectedQuest;
 
         [Inject]
-        public void Init(QuestManager questManager)
+        public void Init(IQuestManager questManager)
         {
             _questManager = questManager;
         }

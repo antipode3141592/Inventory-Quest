@@ -9,7 +9,7 @@ namespace InventoryQuest.UI
 {
     public class SkillCheckEncounterDisplay : MonoBehaviour
     {
-        PartyManager _partyManager;
+        IPartyManager _partyManager;
 
         IList<EncounterRequirementDisplay> EncounterRequirements;
 
@@ -26,7 +26,7 @@ namespace InventoryQuest.UI
         }
 
         [Inject]
-        public void Init(PartyManager partyManager)
+        public void Init(IPartyManager partyManager)
         {
             _partyManager = partyManager;
         }

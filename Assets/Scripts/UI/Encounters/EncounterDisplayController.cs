@@ -11,7 +11,7 @@ namespace InventoryQuest.UI
 {
     public class EncounterDisplayController : MonoBehaviour
     {
-        EncounterManager _encounterManager;
+        IEncounterManager _encounterManager;
 
 
         public TextMeshProUGUI NameText;
@@ -30,7 +30,7 @@ namespace InventoryQuest.UI
         //[SerializeField] CraftingEncounterDisplay craftingEncounterDisplay;
 
         [Inject]
-        public void Init(EncounterManager encounterManager)
+        public void Init(IEncounterManager encounterManager)
         {
             _encounterManager = encounterManager;
         }

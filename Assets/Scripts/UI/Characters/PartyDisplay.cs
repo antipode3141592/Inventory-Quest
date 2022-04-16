@@ -10,20 +10,16 @@ namespace InventoryQuest.UI
         [SerializeField]
         GameObject CharacterPortraitPrefab;
 
-        GameManager _gameManager;
-        ContainerDisplayManager _containerDisplayManager;
         CharacterStatsDisplay _characterStatsDisplay;
 
         List<CharacterPortrait> PartyDisplayList;
 
-        PartyManager _partyManager;
+        IPartyManager _partyManager;
         
                 
         [Inject]
-        public void Init(GameManager gameManager, ContainerDisplayManager containerDisplayManager, CharacterStatsDisplay characterStatsDisplay, PartyManager partyManager)
+        public void Init(CharacterStatsDisplay characterStatsDisplay, IPartyManager partyManager)
         {
-            _gameManager = gameManager;
-            _containerDisplayManager = containerDisplayManager;
             _characterStatsDisplay = characterStatsDisplay;
             _partyManager = partyManager;
         }
@@ -32,6 +28,11 @@ namespace InventoryQuest.UI
         {
             PartyDisplayList = new List<CharacterPortrait>();
             
+        }
+
+        private void OnEnable()
+        {
+            PartyMemberSelected(_partyManager.CurrentParty.SelectedPartyMemberGuId);
         }
 
         private void Start()

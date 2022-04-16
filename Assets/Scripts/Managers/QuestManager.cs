@@ -8,10 +8,10 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class QuestManager: MonoBehaviour
+    public class QuestManager : MonoBehaviour, IQuestManager
     {
-        GameManager _gameManager;
-        PartyManager _partyManager;
+        IGameManager _gameManager;
+        IPartyManager _partyManager;
         Party _party => _partyManager.CurrentParty;
 
         List<IQuest> availableQuests;
@@ -23,16 +23,16 @@ namespace InventoryQuest.Managers
         public List<IQuest> CompletedQuests => completedQuests;
 
 
-        public EventHandler<MessageEventArgs> OnQuestAccepted;
-        public EventHandler<MessageEventArgs> OnQuestCanceled;
-        public EventHandler<MessageEventArgs> OnQuestCompleted;
+        public event EventHandler<MessageEventArgs> OnQuestAccepted;
+        public event EventHandler<MessageEventArgs> OnQuestCanceled;
+        public event EventHandler<MessageEventArgs> OnQuestCompleted;
 
         [Inject]
-        public void Init(GameManager gameManager, PartyManager partyManager)
+        public void Init(IGameManager gameManager, IPartyManager partyManager)
         {
             _gameManager = gameManager;
             _partyManager = partyManager;
-            
+
         }
 
         private void Awake()
@@ -44,10 +44,10 @@ namespace InventoryQuest.Managers
 
         public void EvaluateCurrentQuests()
         {
-            foreach(var quest in currentQuests)
+            foreach (var quest in currentQuests)
             {
                 if (quest.Evaluate(_party))
-                { 
+                {
 
                 }
             }

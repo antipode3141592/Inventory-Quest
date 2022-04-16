@@ -6,12 +6,12 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class PartyManager: MonoBehaviour
+    public class PartyManager : MonoBehaviour, IPartyManager
     {
         ICharacterDataSource _characterDataSource;
         IItemDataSource _itemDataSource;
 
-        Party _party;
+        Party _party = new();
         PlayableCharacter Player;
         PlayableCharacter Minion;
 
@@ -30,8 +30,9 @@ namespace InventoryQuest.Managers
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("adventure backpack")) });
             Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("small backpack")) });
-
-            _party = new Party(new PlayableCharacter[] { Player, Minion });
+            _party.AddCharacter(Player);
+            _party.AddCharacter(Minion);
+            //_party = new Party(new PlayableCharacter[] { Player, Minion });
         }
     }
 }

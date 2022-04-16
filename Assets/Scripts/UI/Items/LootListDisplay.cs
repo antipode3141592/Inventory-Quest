@@ -8,14 +8,14 @@ namespace InventoryQuest.UI
 {
     public class LootListDisplay : MonoBehaviour
     {
-        RewardManager _rewardManager;
+        IRewardManager _rewardManager;
         readonly List<LootIcon> lootIcons = new();
 
         [SerializeField]
         LootIcon _lootIconPrefab;
 
         [Inject]
-        public void Init(RewardManager rewardManager)
+        public void Init(IRewardManager rewardManager)
         {
             _rewardManager = rewardManager;
         }

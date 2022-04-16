@@ -6,10 +6,10 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class AdventureManager: MonoBehaviour
+    public class AdventureManager : MonoBehaviour, IAdventureManager
     {
-        EncounterManager _encounterManager;
-        RewardManager _rewardManager;
+        IEncounterManager _encounterManager;
+        IRewardManager _rewardManager;
 
         IEncounterDataSource _dataSource;
         IPathDataSource _pathDataSource;
@@ -20,10 +20,10 @@ namespace InventoryQuest.Managers
         public ILocation StartLocation { get; set; }
         public ILocation EndLocation { get; set; }
 
-        public EventHandler OnEncounterListGenerated;
-        public EventHandler OnAdventureStarted;
-        public EventHandler OnAdventureCompleted;
-        public EventHandler<AdventureStates> OnAdventureStateChanged;
+        public event EventHandler OnEncounterListGenerated;
+        public event EventHandler OnAdventureStarted;
+        public event EventHandler OnAdventureCompleted;
+        public event EventHandler<AdventureStates> OnAdventureStateChanged;
 
         AdventureStates currentState;
 
@@ -32,14 +32,14 @@ namespace InventoryQuest.Managers
             get { return currentState; }
             set
             {
-                OnAdventureStateChanged?.Invoke(this,value);
+                OnAdventureStateChanged?.Invoke(this, value);
                 Debug.Log($"current state: {value}");
                 currentState = value;
             }
         }
 
         [Inject]
-        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, EncounterManager encounterManager, RewardManager rewardManager)
+        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, IEncounterManager encounterManager, IRewardManager rewardManager)
         {
             _dataSource = dataSource;
             _pathDataSource = pathDataSource;
@@ -81,7 +81,7 @@ namespace InventoryQuest.Managers
         {
             Debug.Log($"{gameObject.name}: {currentState}, OnEncounterCompleteHandler()", this);
             //get next encounter in list
-            if (currentIndex < CurrentPath.Length-1)
+            if (currentIndex < CurrentPath.Length - 1)
             {
                 currentIndex++;
 
@@ -90,7 +90,8 @@ namespace InventoryQuest.Managers
                 Debug.Log($"load encounter: {nextEncounterId}");
                 LoadEncounter(nextEncounterId);
                 //else end adventure
-            } else
+            }
+            else
             {
                 currentState = AdventureStates.Idle;
                 OnAdventureCompleted?.Invoke(this, EventArgs.Empty);
@@ -98,7 +99,7 @@ namespace InventoryQuest.Managers
 
         }
 
-        
+
     }
 
     public enum AdventureStates { Idle, Pathfinding, Adventuring }

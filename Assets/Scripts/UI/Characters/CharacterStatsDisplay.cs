@@ -10,7 +10,7 @@ namespace InventoryQuest.UI
 {
     public class CharacterStatsDisplay : MonoBehaviour
     {
-        EncounterManager _encounterManager;
+        IEncounterManager _encounterManager;
 
         [SerializeField]
         List<StatTextDisplay> statTexts = new List<StatTextDisplay>();
@@ -31,7 +31,7 @@ namespace InventoryQuest.UI
         PlayableCharacter _character;
 
         [Inject]
-        public void Init(EncounterManager encounterManager)
+        public void Init(IEncounterManager encounterManager)
         {
             _encounterManager = encounterManager;
         }
@@ -56,7 +56,7 @@ namespace InventoryQuest.UI
 
         void SubcribeToCharacterEvents()
         {
-            if (_character == null) return;
+            if (_character is null) return;
             _character.OnStatsUpdated += OnStatsUpdatedHandler;
             nameText.text = _character.Stats.DisplayName;
             speciesText.text = _character.Stats.SpeciesId;
@@ -64,7 +64,7 @@ namespace InventoryQuest.UI
 
         void UnsubscribeToCharacterEvents()
         {
-            if (_character == null) return;
+            if (_character is null) return;
 
             _character.OnStatsUpdated -= OnStatsUpdatedHandler;
             nameText.text = "";

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zenject;
+﻿using Zenject;
 
 namespace InventoryQuest.UI
 {
@@ -11,9 +6,9 @@ namespace InventoryQuest.UI
     {
         public override void InstallBindings()
         {
-            Container.Bind<MenuManager>()
+            Container.Bind<MenuController>()
                     .FromComponentInHierarchy().AsSingle();
-            Container.Bind<ContainerDisplayManager>()
+            Container.Bind<ContainerDisplayController>()
                     .FromComponentInHierarchy().AsSingle();
             Container.Bind<CharacterStatsDisplay>()
                     .FromComponentInHierarchy().AsSingle();

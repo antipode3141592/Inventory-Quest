@@ -7,10 +7,10 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class ContainerDisplayManager : MonoBehaviour
+    public class ContainerDisplayController : MonoBehaviour
     {
-        PartyManager _partyManager;
-        RewardManager _rewardManager;
+        IPartyManager _partyManager;
+        IRewardManager _rewardManager;
 
         [SerializeField]
         ContainerDisplay characterContainerDisplay;
@@ -18,7 +18,7 @@ namespace InventoryQuest.UI
         ContainerDisplay lootContainerDisplay;
 
         [Inject]
-        public void Init(PartyManager partyManager, RewardManager rewardManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;

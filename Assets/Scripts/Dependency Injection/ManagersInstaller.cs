@@ -12,28 +12,15 @@ namespace InventoryQuest
     {
         public override void InstallBindings()
         {
-            Container.Bind<IItemDataSource>()
-                .FromInstance(new ItemDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<ICharacterDataSource>()
-                .FromInstance(new CharacterDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<IEncounterDataSource>()
-                .FromInstance(new EncounterDataSourceJSON()).AsSingle().NonLazy();
-            Container.Bind<IRewardDataSource>()
-                .FromInstance(new RewardDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<ILootTableDataSource>()
-                .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<IPathDataSource>()
-                .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
-            
-            Container.Bind<GameManager>()
+            Container.Bind<IPartyManager>().To<PartyManager>()
                 .FromComponentInHierarchy().AsSingle();
-            Container.Bind<AdventureManager>()
+            Container.Bind<IGameManager>().To<GameManager>()
                 .FromComponentInHierarchy().AsSingle();
-            Container.Bind<RewardManager>()
+            Container.Bind<IAdventureManager>().To<AdventureManager>()
                 .FromComponentInHierarchy().AsSingle();
-            Container.Bind<PartyManager>()
-                .FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.Bind<EncounterManager>()
+            Container.Bind<IRewardManager>().To<RewardManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IEncounterManager>().To<EncounterManager>()
                 .FromComponentInHierarchy().AsSingle();
             
         }

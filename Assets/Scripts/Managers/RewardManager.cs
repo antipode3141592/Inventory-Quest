@@ -8,7 +8,7 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class RewardManager: MonoBehaviour
+    public class RewardManager : MonoBehaviour, IRewardManager
     {
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
@@ -17,21 +17,21 @@ namespace InventoryQuest.Managers
 
         bool isProcessing = false;
 
-        public Dictionary<string, Container> LootPiles = new();
+        public IDictionary<string, Container> LootPiles { get; } = new Dictionary<string, Container>();
 
         List<IItem> deleteItems = new List<IItem>();
 
         public string SelectedPileId;
-        
+
         Queue<IReward> rewardQueue = new();
 
-        public EventHandler OnRewardsProcessStart;
-        public EventHandler OnRewardsProcessComplete;
-        public EventHandler OnRewardsCleared;
-        public EventHandler<Container> OnLootPileSelected;
+        public event EventHandler OnRewardsProcessStart;
+        public event EventHandler OnRewardsProcessComplete;
+        public event EventHandler OnRewardsCleared;
+        public event EventHandler<Container> OnLootPileSelected;
 
         [Inject]
-        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource) 
+        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource)
         {
             _dataSource = dataSource;
             _rewardDataSource = rewardDataSource;
@@ -61,7 +61,7 @@ namespace InventoryQuest.Managers
             if (isProcessing) return;
             isProcessing = true;
             OnRewardsProcessStart?.Invoke(this, EventArgs.Empty);
-            while(rewardQueue.Count > 0)
+            while (rewardQueue.Count > 0)
             {
                 var reward = rewardQueue.Dequeue();
                 ProcessReward(reward);
@@ -70,7 +70,7 @@ namespace InventoryQuest.Managers
             OnRewardsProcessComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        
+
 
         void ProcessReward(IReward reward)
         {
@@ -87,7 +87,7 @@ namespace InventoryQuest.Managers
             if (randomItemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
-                LootPiles.Add(lootPile.GuId,lootPile);
+                LootPiles.Add(lootPile.GuId, lootPile);
                 PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
             }
             CharacterReward characterReward = reward as CharacterReward;
@@ -165,7 +165,7 @@ namespace InventoryQuest.Managers
                 OnLootPileSelected?.Invoke(this, LootPiles[containerGuid]);
                 //_displayManager.ConnectLootContainer(LootPiles[containerGuid]);
             }
-            
+
         }
     }
 }

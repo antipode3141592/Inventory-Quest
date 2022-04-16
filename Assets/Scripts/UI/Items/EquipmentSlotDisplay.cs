@@ -11,7 +11,7 @@ namespace InventoryQuest.UI
 {
     public class EquipmentSlotDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        GameManager _gameManager;
+        IGameManager _gameManager;
         PlayableCharacter _character;
 
         [SerializeField]
@@ -30,7 +30,7 @@ namespace InventoryQuest.UI
         public EquipmentSlotType SlotType => _slotType;
 
         [Inject]
-        public void Init(GameManager gameManager)
+        public void Init(IGameManager gameManager)
         {
             _gameManager = gameManager;
         }

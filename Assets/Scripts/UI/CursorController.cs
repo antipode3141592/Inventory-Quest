@@ -15,11 +15,11 @@ namespace InventoryQuest.UI
         [SerializeField]
         bool hardwareCursorEnable;
 
-        GameManager _gameManager;
+        IGameManager _gameManager;
         Cursor _cursor;
 
         [Inject]
-        public void Init(GameManager gameManager)
+        public void Init(IGameManager gameManager)
         {
             _gameManager = gameManager;
         }

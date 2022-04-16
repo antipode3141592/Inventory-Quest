@@ -1,19 +1,14 @@
 ﻿using Data;
 using Data.Items;
 using Data.Shapes;
-using InventoryQuest.Managers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace InventoryQuest.UI
 {
     public class ContainerDisplay : MonoBehaviour
     {
-        GameManager _gameManager;
-        ContainerDisplayManager _containerDisplayManager;
-
         [SerializeField]
         Transform _panelTransform;
         
@@ -52,14 +47,6 @@ namespace InventoryQuest.UI
                 SetupGrid();
                 SetItemSprites();
             }
-        }
-
-        [Inject]
-        public void Init(GameManager gameManager, ContainerDisplayManager containerDisplayManager)
-        {
-            _gameManager = gameManager;
-            _containerDisplayManager = containerDisplayManager;
-
         }
 
         private void Awake()

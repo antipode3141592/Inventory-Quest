@@ -2,19 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 
 namespace InventoryQuest.UI
 {
-    public class MenuManager : MonoBehaviour
+    public class MenuController : MonoBehaviour
     {
-        GameManager _gameManager;
-        AdventureManager _adventureManager;
+        IAdventureManager _adventureManager;
 
         [SerializeField] MainMenu _mainMenu;
         [SerializeField] LocationMenu _locationMenu;
@@ -28,9 +24,8 @@ namespace InventoryQuest.UI
         Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(GameManager gameManager, AdventureManager adventureManager)
+        public void Init(IAdventureManager adventureManager)
         {
-            _gameManager = gameManager;
             _adventureManager = adventureManager;
         }
 
@@ -58,7 +53,7 @@ namespace InventoryQuest.UI
 
         IEnumerator Initialize()
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
             InitializeMenus();
         }
 

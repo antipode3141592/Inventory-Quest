@@ -8,8 +8,8 @@ namespace InventoryQuest.UI
 {
     public class LocationMenu : Menu
     {
-        AdventureManager _adventureManager;
-        MenuManager _menuManager;
+        IAdventureManager _adventureManager;
+        MenuController _menuController;
 
         [SerializeField] string selectedPath = "intro_path";
 
@@ -17,10 +17,10 @@ namespace InventoryQuest.UI
         [SerializeField] Button StartAdventureButton;
 
         [Inject]
-        public void Init(AdventureManager adventureManager, MenuManager menuManager)
+        public void Init(IAdventureManager adventureManager, MenuController menuController)
         {
             _adventureManager = adventureManager;
-            _menuManager = menuManager;
+            _menuController = menuController;
         }
 
         private void Awake()
@@ -31,7 +31,7 @@ namespace InventoryQuest.UI
 
         void ChooseSelectedPath()
         {
-            _menuManager.OpenMenu(typeof(AdventureMenu));
+            _menuController.OpenMenu(typeof(AdventureMenu));
             _adventureManager.ChoosePath(selectedPath);
         }
     }

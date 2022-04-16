@@ -7,21 +7,20 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IGameManager
     {
-        RewardManager _rewardManager;
-        EncounterManager _encounterManager;
-        AdventureManager _adventureManager;
+        IAdventureManager _adventureManager;
 
         Player player;
         int playerId = 0;
 
         private IItem holdingItem;
-        public IItem HoldingItem 
-        { 
-            get => holdingItem; 
-            set {
-                holdingItem = value; 
+        public IItem HoldingItem
+        {
+            get => holdingItem;
+            set
+            {
+                holdingItem = value;
                 if (value is null) OnItemPlaced?.Invoke(this, EventArgs.Empty);
                 else OnItemHeld?.Invoke(this, EventArgs.Empty);
             }
@@ -31,16 +30,14 @@ namespace InventoryQuest.Managers
 
         public GameStates CurrentState { get { return currentState; } }
 
-        public EventHandler OnItemHeld;
-        public EventHandler OnItemPlaced;
-        public EventHandler<RotationEventArgs> OnRotateCW;
-        public EventHandler<RotationEventArgs> OnRotateCCW;
+        public event EventHandler OnItemHeld;
+        public event EventHandler OnItemPlaced;
+        public event EventHandler<RotationEventArgs> OnRotateCW;
+        public event EventHandler<RotationEventArgs> OnRotateCCW;
 
         [Inject]
-        public void Init(RewardManager rewardManager, EncounterManager encounterManager, AdventureManager adventureManager)
+        public void Init(IAdventureManager adventureManager)
         {
-            _rewardManager = rewardManager;
-            _encounterManager = encounterManager;
             _adventureManager = adventureManager;
         }
 
@@ -82,14 +79,16 @@ namespace InventoryQuest.Managers
             bool rotateCW = player.GetButtonUp("RotatePieceCW");
             bool rotateCCW = player.GetButtonUp("RotatePieceCCW");
 
-            if (rotateCW) { 
-                var facing = HoldingItem.Shape.Rotate(1); 
+            if (rotateCW)
+            {
+                var facing = HoldingItem.Shape.Rotate(1);
                 Debug.Log($"CheckRotateAction() detected CW action");
                 OnRotateCW?.Invoke(this, new RotationEventArgs(facing));
                 return;
             }
 
-            if (rotateCCW) {
+            if (rotateCCW)
+            {
                 var facing = HoldingItem.Shape.Rotate(-1);
                 Debug.Log($"CheckRotateAction() detected CCW action");
                 OnRotateCCW?.Invoke(this, new RotationEventArgs(facing));

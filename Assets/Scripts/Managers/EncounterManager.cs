@@ -9,19 +9,19 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class EncounterManager: MonoBehaviour
+    public class EncounterManager : MonoBehaviour, IEncounterManager
     {
-        PartyManager _partyManager;
-        RewardManager _rewardManager;
+        IPartyManager _partyManager;
+        IRewardManager _rewardManager;
 
-        public EventHandler OnEncounterLoaded;
-        public EventHandler OnEncounterStart;
-        public EventHandler OnEncounterResolveStart;
-        public EventHandler OnEncounterResolveSuccess;
-        public EventHandler OnEncounterResolveFailure;
-        public EventHandler OnEncounterComplete;
+        public event EventHandler OnEncounterLoaded;
+        public event EventHandler OnEncounterStart;
+        public event EventHandler OnEncounterResolveStart;
+        public event EventHandler OnEncounterResolveSuccess;
+        public event EventHandler OnEncounterResolveFailure;
+        public event EventHandler OnEncounterComplete;
 
-        public EventHandler<EncounterStates> OnEncounterStateChanged;
+        public event EventHandler<EncounterStates> OnEncounterStateChanged;
 
         bool isResolving = false;
         bool isEnding = false;
@@ -39,9 +39,11 @@ namespace InventoryQuest.Managers
             }
         }
 
-        public IEncounter CurrentEncounter {
+        public IEncounter CurrentEncounter
+        {
             get { return currentEncounter; }
-            set {
+            set
+            {
                 CurrentState = EncounterStates.Loading;
                 currentEncounter = value;
                 OnEncounterLoaded?.Invoke(this, EventArgs.Empty);
@@ -50,7 +52,7 @@ namespace InventoryQuest.Managers
         }
 
         [Inject]
-        public void Init(PartyManager partyManager, RewardManager rewardManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
@@ -74,16 +76,17 @@ namespace InventoryQuest.Managers
             if (currentState == EncounterStates.Preparing)
             {
                 BeginResolution();
-            } else if (currentState == EncounterStates.Cleanup)
+            }
+            else if (currentState == EncounterStates.Cleanup)
             {
                 EndEncounter();
             }
         }
 
-        
+
         void BeginResolution()
         {
-            
+
             if (isResolving) return;
             isResolving = true;
             CurrentState = EncounterStates.Resolving;
@@ -105,7 +108,7 @@ namespace InventoryQuest.Managers
             StartCoroutine(EndEncounterRoutine());
         }
 
-        
+
 
         IEnumerator ResolveEncounterRoutine()
         {
@@ -119,7 +122,7 @@ namespace InventoryQuest.Managers
                     Debug.Log($"Enqueuing {reward}");
                     _rewardManager.EnqueueReward(reward);
                 }
-                
+
                 AwardExperience(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveSuccess?.Invoke(this, EventArgs.Empty);
             }
@@ -133,15 +136,15 @@ namespace InventoryQuest.Managers
             BeginCleanup();
         }
 
-        
 
-        
+
+
 
         IEnumerator EndEncounterRoutine()
         {
             Debug.Log($"Ending encounter...", this);
             yield return new WaitForSeconds(1f);
-            
+
             isEnding = false;
             CurrentState = EncounterStates.Idle;
             OnEncounterComplete?.Invoke(this, EventArgs.Empty);
@@ -149,7 +152,7 @@ namespace InventoryQuest.Managers
 
         void AwardExperience(IDictionary<string, PlayableCharacter> Characters)
         {
-            foreach(var character in Characters)
+            foreach (var character in Characters)
             {
                 character.Value.Stats.CurrentExperience += CurrentEncounter.Stats.Experience;
             }
@@ -159,11 +162,11 @@ namespace InventoryQuest.Managers
         {
             foreach (var character in Characters)
             {
-                
+
             }
         }
 
-        
+
     }
 
     public enum EncounterStates { Idle, Loading, Preparing, Resolving, Cleanup, End}

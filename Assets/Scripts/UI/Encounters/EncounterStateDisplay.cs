@@ -7,12 +7,12 @@ namespace InventoryQuest.UI.Encounters
 {
     public class EncounterStateDisplay : MonoBehaviour
     {
-        EncounterManager _encounterManager;
+        IEncounterManager _encounterManager;
 
         [SerializeField] List<SingleStateDisplay> displays = new List<SingleStateDisplay>();
 
         [Inject]
-        public void Init(EncounterManager encounterManager)
+        public void Init(IEncounterManager encounterManager)
         {
             _encounterManager = encounterManager;
         }
