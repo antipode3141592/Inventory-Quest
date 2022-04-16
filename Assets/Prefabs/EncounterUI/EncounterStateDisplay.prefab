@@ -162,7 +162,7 @@ MonoBehaviour:
   customSpacingSizers:
     items: []
   settingsFallback:
-    ChildAlignment: 0
+    ChildAlignment: 4
     ReverseArrangement: 0
     ChildForceExpandHeight: 1
     ChildForceExpandWidth: 1
@@ -173,17 +173,7 @@ MonoBehaviour:
     Orientation: 0
     screenConfigName: Fallback
   customSettings:
-    items:
-    - ChildAlignment: 4
-      ReverseArrangement: 0
-      ChildForceExpandHeight: 1
-      ChildForceExpandWidth: 1
-      ChildScaleWidth: 0
-      ChildScaleHeight: 0
-      ChildControlWidth: 0
-      ChildControlHeight: 0
-      Orientation: 0
-      screenConfigName: Landscape
+    items: []
   orientation: 0
 --- !u!114 &3669644938361591543
 MonoBehaviour:

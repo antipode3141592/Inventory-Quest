@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Menus
 {
     public class UIInstaller : MonoInstaller
     {

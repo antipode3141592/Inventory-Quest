@@ -48,8 +48,8 @@ namespace InventoryQuest.UI
             Color targetColor =
             state switch
             {
-                HighlightState.Highlight => Color.green,
-                HighlightState.Incorrect => Color.red,
+                HighlightState.Highlight => UIPreferences.TextBuffColor,
+                HighlightState.Incorrect => UIPreferences.TextDeBuffColor,
                 _ => Color.clear
             };
             highlightSprite.color = targetColor;

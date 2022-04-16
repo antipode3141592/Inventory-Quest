@@ -6,7 +6,7 @@ using UnityEngine;
 using Zenject;
 
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Menus
 {
     public class MenuController : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace InventoryQuest.UI
         [SerializeField] GameMenu _gameMenu;
         [SerializeField] AdventureMenu _adventureMenu;
 
-
+        [SerializeField] LoadingScreen _loadingScreen;
 
         Dictionary<Type, Menu> _menus = new Dictionary<Type, Menu>();
 
@@ -53,7 +53,8 @@ namespace InventoryQuest.UI
 
         IEnumerator Initialize()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1.5f);
+            _loadingScreen.Fade();
             InitializeMenus();
         }
 

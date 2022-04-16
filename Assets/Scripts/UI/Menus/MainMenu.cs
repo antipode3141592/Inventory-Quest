@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Menus
 {
     public class MainMenu : Menu
     {

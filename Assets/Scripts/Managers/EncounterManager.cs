@@ -34,8 +34,8 @@ namespace InventoryQuest.Managers
             set
             {
                 Debug.Log($"EncounterManager current state: {value}", this);
-                OnEncounterStateChanged?.Invoke(this, value);
                 currentState = value;
+                OnEncounterStateChanged?.Invoke(this, currentState);
             }
         }
 

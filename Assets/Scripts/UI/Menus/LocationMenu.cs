@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Menus
 {
     public class LocationMenu : Menu
     {
