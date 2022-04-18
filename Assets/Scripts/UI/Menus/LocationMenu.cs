@@ -1,4 +1,5 @@
 using InventoryQuest.Managers;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] string selectedPath = "intro_path";
 
         [SerializeField] TextMeshProUGUI PathNameText;
-        [SerializeField] Button StartAdventureButton;
+        [SerializeField] PressAndHoldButton StartAdventureButton;
 
         [Inject]
         public void Init(IAdventureManager adventureManager, MenuController menuController)
@@ -25,11 +26,16 @@ namespace InventoryQuest.UI.Menus
 
         private void Awake()
         {
-            StartAdventureButton.onClick.AddListener(ChooseSelectedPath);
+            StartAdventureButton.OnPointerHoldSuccess += StartAdventure;
             PathNameText.text = selectedPath;
         }
 
-        void ChooseSelectedPath()
+        private void StartAdventure(object sender, EventArgs e)
+        {
+            ChooseSelectedPath(selectedPath);
+        }
+
+        void ChooseSelectedPath(string selectedPath)
         {
             _menuController.OpenMenu(typeof(AdventureMenu));
             _adventureManager.ChoosePath(selectedPath);
