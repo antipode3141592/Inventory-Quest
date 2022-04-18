@@ -32,13 +32,22 @@ namespace InventoryQuest.UI.Components
             _encounterManager.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
             _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
+            _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
         }
 
-        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        private void OnAdventureCompletedHandler(object sender, EventArgs e)
+        {
+            for (int i = 0; i < adventureEncounterMarkers.Count; i++)
+            {
+                Destroy(adventureEncounterMarkers[i]);
+            }
+        }
+
+        private void OnEncounterCompleteHandler(object sender, string e)
         {
             foreach(var marker in adventureEncounterMarkers)
             {
-
+                marker.HighlightIcon.color = Color.clear;
             }
         }
 
@@ -52,24 +61,36 @@ namespace InventoryQuest.UI.Components
             }
         }
 
-        private void OnEncounterResolveFailureHandler(object sender, EventArgs e)
+        private void OnEncounterResolveFailureHandler(object sender, string e)
+        {
+            foreach (var marker in adventureEncounterMarkers)
+            {
+                if (marker.EncounterId == e)
+                    marker.AdventureIcon.color = UIPreferences.TextDeBuffColor;
+            }
+        }
+
+        private void OnEncounterResolveSuccessHandler(object sender, string e)
+        {
+            foreach (var marker in adventureEncounterMarkers)
+            {
+                if (marker.EncounterId == e)
+                    marker.AdventureIcon.color = UIPreferences.TextBuffColor;
+            }
+        }
+
+        private void OnEncounterResolveStartHandler(object sender, string e)
         {
             
         }
 
-        private void OnEncounterResolveSuccessHandler(object sender, EventArgs e)
+        private void OnEncounterLoadedHandler(object sender, string e)
         {
-            
-        }
-
-        private void OnEncounterResolveStartHandler(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void OnEncounterLoadedHandler(object sender, EventArgs e)
-        {
-            //highlight current encounter
+            foreach (var marker in adventureEncounterMarkers)
+            {
+                if (marker.EncounterId == e)
+                    marker.HighlightIcon.color = UIPreferences.TextBuffColor;
+            }
         }
     }
 }

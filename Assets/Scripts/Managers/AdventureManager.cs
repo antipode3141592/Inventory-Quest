@@ -9,7 +9,6 @@ namespace InventoryQuest.Managers
     public class AdventureManager : MonoBehaviour, IAdventureManager
     {
         IEncounterManager _encounterManager;
-        IRewardManager _rewardManager;
 
         IEncounterDataSource _dataSource;
         IPathDataSource _pathDataSource;
@@ -39,12 +38,11 @@ namespace InventoryQuest.Managers
         }
 
         [Inject]
-        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, IEncounterManager encounterManager, IRewardManager rewardManager)
+        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, IEncounterManager encounterManager)
         {
             _dataSource = dataSource;
             _pathDataSource = pathDataSource;
             _encounterManager = encounterManager;
-            _rewardManager = rewardManager;
         }
 
         private void Awake()
@@ -77,7 +75,7 @@ namespace InventoryQuest.Managers
             OnAdventureStarted?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        private void OnEncounterCompleteHandler(object sender, string e)
         {
             Debug.Log($"{gameObject.name}: {currentState}, OnEncounterCompleteHandler()", this);
             //get next encounter in list

@@ -63,12 +63,12 @@ namespace InventoryQuest.UI
             _encounterManager.OnEncounterComplete -= OnEncounterCompleteHandler;
         }
 
-        private void OnEncounterCompleteHandler(object sender, EventArgs e)
+        private void OnEncounterCompleteHandler(object sender, string e)
         {
             //ClearDisplay();
         }
 
-        void DisplaySuccess(object sender, EventArgs e)
+        void DisplaySuccess(object sender, string e)
         {
             ResultsImage.color = UIPreferences.TextBuffColor;
             encounterSuccessDisplay.gameObject.SetActive(true);
@@ -76,7 +76,7 @@ namespace InventoryQuest.UI
             encounterSuccessDisplay.SuccessDescriptionText.text = _encounterManager.CurrentEncounter.Stats.SuccessMessage;
         }
 
-        void DisplayFailure(object sender, EventArgs e)
+        void DisplayFailure(object sender, string e)
         {
             ResultsImage.color = UIPreferences.TextDeBuffColor;
             encounterFailureDisplay.gameObject.SetActive(true);
@@ -99,7 +99,7 @@ namespace InventoryQuest.UI
             encounterFailureDisplay.gameObject.SetActive(false);
         }
 
-        public void DisplayEncounter(object sender, EventArgs e)
+        public void DisplayEncounter(object sender, string e)
         {
             ClearDisplay();
             encounterFailureDisplay.gameObject.SetActive(false);

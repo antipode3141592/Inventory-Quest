@@ -14,12 +14,12 @@ namespace InventoryQuest.Managers
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
 
-        public event EventHandler OnEncounterLoaded;
-        public event EventHandler OnEncounterStart;
-        public event EventHandler OnEncounterResolveStart;
-        public event EventHandler OnEncounterResolveSuccess;
-        public event EventHandler OnEncounterResolveFailure;
-        public event EventHandler OnEncounterComplete;
+        public event EventHandler<string> OnEncounterLoaded;
+        public event EventHandler<string> OnEncounterStart;
+        public event EventHandler<string> OnEncounterResolveStart;
+        public event EventHandler<string> OnEncounterResolveSuccess;
+        public event EventHandler<string> OnEncounterResolveFailure;
+        public event EventHandler<string> OnEncounterComplete;
 
         public event EventHandler<EncounterStates> OnEncounterStateChanged;
 
@@ -46,7 +46,7 @@ namespace InventoryQuest.Managers
             {
                 CurrentState = EncounterStates.Loading;
                 currentEncounter = value;
-                OnEncounterLoaded?.Invoke(this, EventArgs.Empty);
+                OnEncounterLoaded?.Invoke(this, currentEncounter.Id);
                 CurrentState = EncounterStates.Preparing;
             }
         }
@@ -112,7 +112,7 @@ namespace InventoryQuest.Managers
 
         IEnumerator ResolveEncounterRoutine()
         {
-            OnEncounterResolveStart?.Invoke(this, EventArgs.Empty);
+            OnEncounterResolveStart?.Invoke(this, currentEncounter.Id);
             yield return new WaitForSeconds(1f);
             if (CurrentEncounter.Resolve(_partyManager.CurrentParty))
             {
@@ -124,13 +124,13 @@ namespace InventoryQuest.Managers
                 }
 
                 AwardExperience(_partyManager.CurrentParty.Characters);
-                OnEncounterResolveSuccess?.Invoke(this, EventArgs.Empty);
+                OnEncounterResolveSuccess?.Invoke(this, currentEncounter.Id);
             }
             else
             {
                 Debug.Log($"The Encounter {CurrentEncounter.Name} was a failure!");
                 DistributePenalties(_partyManager.CurrentParty.Characters);
-                OnEncounterResolveFailure?.Invoke(this, EventArgs.Empty);
+                OnEncounterResolveFailure?.Invoke(this, currentEncounter.Id);
             }
             isResolving = false;
             BeginCleanup();
@@ -147,7 +147,7 @@ namespace InventoryQuest.Managers
 
             isEnding = false;
             CurrentState = EncounterStates.Idle;
-            OnEncounterComplete?.Invoke(this, EventArgs.Empty);
+            OnEncounterComplete?.Invoke(this, currentEncounter.Id);
         }
 
         void AwardExperience(IDictionary<string, PlayableCharacter> Characters)

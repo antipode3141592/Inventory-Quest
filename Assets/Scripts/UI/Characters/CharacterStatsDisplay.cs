@@ -57,16 +57,21 @@ namespace InventoryQuest.UI
         void SubcribeToCharacterEvents()
         {
             if (_character is null) return;
-            _character.OnStatsUpdated += OnStatsUpdatedHandler;
+            _character.OnStatsUpdated += OnCharacterStatsUpdatedHandler;
             nameText.text = _character.Stats.DisplayName;
             speciesText.text = _character.Stats.SpeciesId;
+        }
+
+        private void OnCharacterStatsUpdatedHandler(object sender, EventArgs e)
+        {
+            UpdateStatBlock();
         }
 
         void UnsubscribeToCharacterEvents()
         {
             if (_character is null) return;
 
-            _character.OnStatsUpdated -= OnStatsUpdatedHandler;
+            _character.OnStatsUpdated -= OnCharacterStatsUpdatedHandler;
             nameText.text = "";
             speciesText.text = "";
         }
@@ -88,7 +93,7 @@ namespace InventoryQuest.UI
         }
 
 
-        void OnStatsUpdatedHandler (object sender, EventArgs e)
+        void OnStatsUpdatedHandler (object sender, string e)
         {
             UpdateStatBlock();
         }

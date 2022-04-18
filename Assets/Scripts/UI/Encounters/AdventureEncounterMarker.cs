@@ -8,5 +8,10 @@ namespace InventoryQuest.UI.Components
         public Image AdventureIcon;
         public Image HighlightIcon;
         public string EncounterId;
+
+        private void Awake()
+        {
+            HighlightIcon.color = Color.clear;
+        }
     }
 }
