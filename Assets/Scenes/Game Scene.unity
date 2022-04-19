@@ -2487,5 +2487,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8022280321584821414, guid: 0c714c4362cbaa34293618e82d5d6d91, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 32
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c714c4362cbaa34293618e82d5d6d91, type: 3}

@@ -1,4 +1,3 @@
-using Data;
 using Data.Shapes;
 using InventoryQuest.Managers;
 using System;
@@ -8,13 +7,12 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class CursorController : MonoBehaviour, IPointerMoveHandler
+    public class CursorController : MonoBehaviour
     {
-        [SerializeField]
-        Cursor cursorPrefab;
-        [SerializeField]
-        bool hardwareCursorEnable;
-
+        [SerializeField] Cursor cursorPrefab;
+        [SerializeField] bool hardwareCursorEnable;
+        [SerializeField] Transform cursorParentTransform;
+        [SerializeField] Canvas canvas;
         IGameManager _gameManager;
         Cursor _cursor;
 
@@ -26,7 +24,7 @@ namespace InventoryQuest.UI
 
         private void Awake()
         {
-            _cursor = Instantiate<Cursor>(cursorPrefab, transform);
+            _cursor = Instantiate<Cursor>(cursorPrefab, cursorParentTransform);
             _gameManager.OnItemHeld += OnItemHeldHandler;
             _gameManager.OnItemPlaced += OnItemPlacedHandler;
             _gameManager.OnRotateCW += OnItemRotateCW;
@@ -35,9 +33,9 @@ namespace InventoryQuest.UI
             HideItemSprite();
         }
 
-        public void OnPointerMove(PointerEventData eventData)
+        void Update()
         {
-            _cursor.transform.position = eventData.position;
+            _cursor.RectTransform.position = Input.mousePosition;
         }
 
         public void OnItemHeldHandler(object sender, EventArgs e)
@@ -64,7 +62,14 @@ namespace InventoryQuest.UI
         {
             var item = _gameManager.HoldingItem;
             _cursor.itemIcon.sprite = item.Sprite;
+            //set scale
             _cursor.itemIcon.SetNativeSize();
+            //var itemPPU = item.Sprite.pixelsPerUnit;
+            //float scaleFactor = itemPPU / canvas.referencePixelsPerUnit;
+            //Debug.Log($"scaleFactor : {scaleFactor}");
+            //_cursor.itemIcon.rectTransform.sizeDelta = new(canvas.referencePixelsPerUnit, canvas.referencePixelsPerUnit);
+
+
             _cursor.itemIcon.color = Color.white;
             ImageUtilities.RotateSprite(item.Shape.CurrentFacing, _cursor.itemIcon);
         }

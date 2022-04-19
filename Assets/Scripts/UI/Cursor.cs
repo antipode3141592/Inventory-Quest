@@ -12,5 +12,7 @@ namespace InventoryQuest.UI
         [SerializeField] public Image cursorIcon;
         
         [SerializeField] public Image itemIcon;
+
+        public RectTransform RectTransform => transform as RectTransform;
     }
 }

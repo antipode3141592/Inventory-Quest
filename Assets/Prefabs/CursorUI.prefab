@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorPrefab: {fileID: 3824087784194014376, guid: 78fa966d6e31acd40a5545cd4cce56d7, type: 3}
   hardwareCursorEnable: 1
+  cursorParentTransform: {fileID: 8022280321584821408}
+  canvas: {fileID: 8022280321584821413}
 --- !u!1 &8022280321584821409
 GameObject:
   m_ObjectHideFlags: 0
