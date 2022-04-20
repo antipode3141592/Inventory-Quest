@@ -40,10 +40,17 @@ namespace Data.Characters
                 EquipmentSlots[item.SlotType].TryEquip(out _, item);
             }
 
+
             if (Backpack is null) return;
             Backpack.OnItemPlaced += OnBackpackChangedHandler;
             Backpack.OnItemTaken += OnBackpackChangedHandler;
             // add initial Inventory to backpack
+            if (initialInventory is null) return;
+            foreach (IItem item in initialInventory)
+            {
+                ItemPlacementHelpers.TryAutoPlaceToContainer(container: Backpack, item: item); //no special failure path for now
+            }
+
         }
 
         public float CurrentEncumbrance => EquipmentSlots.Where(x => x.Value.EquippedItem is not null).Sum(x => (x.Value.EquippedItem as IItem).Weight);

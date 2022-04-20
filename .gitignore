@@ -74,4 +74,14 @@ crashlytics-build.properties
 /[Aa]ssets/[Pp]lugins/*
 /[Aa]ssets/[Dd]ownloaded Assets/*
 
-/[Aa]ssets/[Tt]hera[Bb]ytes/*
+# Ignore BetterUI files
+/[Aa]ssets/[Tt]heraBytes/*
+
+# Ignore the auto-generated AOT compatibility dll.
+/Assets/Plugins/Sirenix/Assemblies/AOT/*
+
+# Ignore all unpacked demos.
+/Assets/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!/Assets/Plugins/Sirenix/Demos/*.unitypackage 

@@ -26,12 +26,25 @@ namespace InventoryQuest.Managers
 
         private void Awake()
         {
-            Player = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Player"),
-                new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("adventure backpack")) });
-            Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
-                new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("small backpack")) });
+            Player = CharacterFactory.GetCharacter(characterStats: _characterDataSource.GetCharacterStats("Player"),
+                startingEquipment: new IEquipable[] { 
+                    (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("adventure backpack")),
+                    (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("sandal_1")),
+                    (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("shirt_1")),
+                    (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("pants_1"))
+                },
+                startingInventory: new IItem[]
+                {
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("questitem_1")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji"))
+                }
+            );
+            //Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),
+            //    new IEquipable[] { (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("small backpack")) });
             _party.AddCharacter(Player);
-            _party.AddCharacter(Minion);
+            //_party.AddCharacter(Minion);
             //_party = new Party(new PlayableCharacter[] { Player, Minion });
         }
     }

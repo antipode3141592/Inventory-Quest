@@ -85,7 +85,7 @@ namespace Data.Items
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(20, 12),
+                    containerSize: new Coor(12, 6),
                     slotType: EquipmentSlotType.Backpack
                 )
             },
@@ -254,6 +254,32 @@ namespace Data.Items
                     shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.Feet)
             },
+            { "questitem_1", new ItemStats("questitem_1",
+                weight: 40f,
+                goldValue: 1000f, 
+                description: "A crank-powered machine of inscrutable purpose.",
+                rarity: Rarity.rare,
+                spritePath: "Items/questitem_1",
+                shape: ShapeType.QuestShape_1) 
+            },
+            {   "pants_1", new EquipableItemStats("pants_1",
+                    weight: 0.5f,
+                    goldValue: 1f,
+                    description: "Clean pants, classic fit.",
+                    rarity: Rarity.common,
+                    spritePath: "Items/pants_1",
+                    shapeType: ShapeType.Monomino,
+                    slotType: EquipmentSlotType.Legs)
+            },
+            {   "shirt_1", new EquipableItemStats("shirt_1",
+                    weight: 0.1f,
+                    goldValue: 1f,
+                    description: "Comfortable shirt",
+                    rarity: Rarity.common,
+                    spritePath: "Items/shirt_1",
+                    shapeType: ShapeType.Monomino,
+                    slotType: EquipmentSlotType.InnerTorso)
+            }
         };
 
         public ItemDataSourceTest()
