@@ -7,6 +7,9 @@ namespace Data.Shapes
         public Tromino_L(Facing defaultFacing = Facing.Right)
         {
             Id = "tetromino_l";
+            MinoCount = 3;
+            IsChiral = false;
+            IsRotationallySymmetric = false;
             Masks = new Dictionary<Facing, BitMask>
             {
                 { Facing.Right, new BitMask( new bool[,] { { true, false }, { true, true } }) },
@@ -16,6 +19,5 @@ namespace Data.Shapes
             };
             CurrentFacing = defaultFacing;
         }
-        public override bool IsRotationallySymmetric => false;
     }
 }

@@ -7,6 +7,9 @@ namespace Data.Shapes
         public Domino(Facing defaultFacing = Facing.Right)
         {
             Id = "domino";
+            MinoCount = 2;
+            IsChiral = false;
+            IsRotationallySymmetric = false;
             Masks = new Dictionary<Facing, BitMask>
             {
                 { Facing.Right, new BitMask(new bool[,] { { true, true } }) },
@@ -17,8 +20,6 @@ namespace Data.Shapes
             CurrentFacing = defaultFacing;
             
         }
-
-        public override bool IsRotationallySymmetric => false;
     }
 
     

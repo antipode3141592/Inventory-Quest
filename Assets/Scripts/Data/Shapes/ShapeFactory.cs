@@ -28,6 +28,9 @@
                 case ShapeType.Tetromino_I:
                     _shape = new Tetromino_I(facing);
                     break;
+                case ShapeType.QuestShape_1:
+                    _shape = new QuestShape_1(facing);
+                    break;
                 default:
                     _shape = new Monomino(facing);
                     break;

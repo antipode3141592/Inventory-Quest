@@ -7,8 +7,9 @@ namespace Data.Shapes
         public Monomino(Facing defaultFacing = Facing.Right)
         {
             Id = "monomino";
-
-            
+            MinoCount = 1;
+            IsChiral = false;
+            IsRotationallySymmetric = true;
             Masks = new Dictionary<Facing, BitMask>
             {
                 {Facing.Right, new BitMask(new bool[,] { {true } }) },
@@ -18,10 +19,6 @@ namespace Data.Shapes
             };
             CurrentFacing = defaultFacing;
         }
-
-        public override bool IsRotationallySymmetric => true;
-
-
     }
 
     

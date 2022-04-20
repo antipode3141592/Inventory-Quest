@@ -7,9 +7,9 @@ namespace Data.Shapes
         public string Id;
         public Dictionary<Facing, BitMask> Masks;
         public Facing CurrentFacing;
-        public abstract bool IsRotationallySymmetric { get; }
-        public bool IsChiral { get; }
-
+        public bool IsRotationallySymmetric { get; protected set; }
+        public bool IsChiral { get; protected set; }
+        public int MinoCount { get; protected set; }
         public BitMask CurrentMask => Masks[CurrentFacing];
 
         public Coor Size => new Coor(Masks[CurrentFacing].Map.GetLength(0), Masks[CurrentFacing].Map.GetLength(1));
