@@ -1,6 +1,4 @@
-﻿using Data.Encounters;
-
-namespace Data.Encounters
+﻿namespace Data.Encounters
 {
     public class PathFactory
     {

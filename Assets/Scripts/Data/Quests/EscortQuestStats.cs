@@ -2,9 +2,9 @@
 
 namespace Data.Quests
 {
-    public class GatheringQuestStats: IQuestStats
+    public class EscortQuestStats : IQuestStats
     {
-        public GatheringQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, int targetQuantity, string targetItemId)
+        public EscortQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, string escortCharacterId, string targetLocationId)
         {
             Id = id;
             Name = name;
@@ -15,15 +15,16 @@ namespace Data.Quests
             SourceType = sourceType;
             SinkId = sinkId;
             SinkType = sinkType;
-            TargetQuantity = targetQuantity;
-            TargetItemId = targetItemId;
+            EscortCharacterId = escortCharacterId;
+            TargetLocationId = targetLocationId;
         }
-
         #region IQuestStats
         public string Id { get; }
+
         public string Name { get; }
+
         public string Description { get; }
-        
+
         public int Experience { get; }
 
         public string RewardId { get; }
@@ -38,10 +39,8 @@ namespace Data.Quests
 
         #endregion
 
+        public string EscortCharacterId { get; }
 
-        public int TargetQuantity { get; }
-        public string TargetItemId { get; }
-
-        
+        public string TargetLocationId { get; }
     }
 }

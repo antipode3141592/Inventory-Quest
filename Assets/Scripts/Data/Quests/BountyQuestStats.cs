@@ -2,9 +2,9 @@
 
 namespace Data.Quests
 {
-    public class GatheringQuestStats: IQuestStats
+    public class BountyQuestStats : IQuestStats
     {
-        public GatheringQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, int targetQuantity, string targetItemId)
+        public BountyQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, int bountyTargetQuantity, string bountyTargetId, Type bountyTargetType)
         {
             Id = id;
             Name = name;
@@ -15,15 +15,17 @@ namespace Data.Quests
             SourceType = sourceType;
             SinkId = sinkId;
             SinkType = sinkType;
-            TargetQuantity = targetQuantity;
-            TargetItemId = targetItemId;
+            BountyTargetQuantity = bountyTargetQuantity;
+            BountyTargetId = bountyTargetId;
+            BountyTargetType = bountyTargetType;
         }
 
         #region IQuestStats
         public string Id { get; }
+
         public string Name { get; }
         public string Description { get; }
-        
+
         public int Experience { get; }
 
         public string RewardId { get; }
@@ -35,13 +37,13 @@ namespace Data.Quests
         public string SinkId { get; }
 
         public Type SinkType { get; }
-
         #endregion
 
+        public int BountyTargetQuantity { get; }
 
-        public int TargetQuantity { get; }
-        public string TargetItemId { get; }
+        public string BountyTargetId { get; }
 
-        
+        public Type BountyTargetType { get; }
+
     }
 }

@@ -8,5 +8,7 @@ namespace Data.Items
         public EquipmentSlotType SlotType { get; }
         public IList<StatModifier> Modifiers { get; set; }
 
+        //requirements
+
     }
 }

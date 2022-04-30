@@ -5,13 +5,16 @@ namespace Data.Characters
 {
     public class EquipmentSlot
     {
+        public string Id { get; }
+
         public EquipmentSlotType SlotType { get; }
 
         public IEquipable EquippedItem { get; set; }
 
-        public EquipmentSlot(EquipmentSlotType slotType)
+        public EquipmentSlot(EquipmentSlotType slotType, string id = null)
         {
             SlotType = slotType;
+            Id = id is null ? $"{slotType}" : id;
         }
 
         public EventHandler<ModifierEventArgs> OnEquip;

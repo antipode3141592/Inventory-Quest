@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+
+namespace Data.Locations
+{
+    public class LocationDataSourceTest : ILocationDataSource
+    {
+        Dictionary<string, ILocationStats> locations = new()
+        {
+            { "Startington", new LocationStats(id: "Startington", 
+                name: "Startington",
+                thumbnailSpritePath: "/Locations/town_icon_1"
+                ) },
+            { "Destinationville", new LocationStats(id: "Destinationville", 
+                name: "Destinationville",
+                thumbnailSpritePath: "/Locations/town_icon_2"
+                ) }
+        };
+
+        public ILocationStats GetLocationById(string id)
+        {
+            if (!locations.ContainsKey(id)) return null;
+            return locations[id];
+        }
+    }
+}

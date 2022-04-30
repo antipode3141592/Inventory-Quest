@@ -11,8 +11,8 @@ namespace Data.Quests
 
         public string RewardId { get; }
 
-        public bool Evaluate(Party party);
+        public IQuestStats Stats { get; }
 
-        public void Cancel();
+        public bool Evaluate(Party party);
     }
 }

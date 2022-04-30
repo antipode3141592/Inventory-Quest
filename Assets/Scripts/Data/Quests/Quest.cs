@@ -1,10 +1,18 @@
 ﻿using Data.Characters;
-using System;
 
 namespace Data.Quests
 {
     public abstract class Quest : IQuest
     {
+        protected Quest(IQuestStats stats)
+        {
+            Id = stats.Id;
+            Name = stats.Name;
+            Description = stats.Description;
+            RewardId = stats.RewardId;
+            Stats = stats;
+        }
+
         public string Id { get; }
 
         public string Name { get; }
@@ -13,14 +21,8 @@ namespace Data.Quests
 
         public string RewardId { get; }
 
-        public virtual void Cancel()
-        {
-            throw new NotImplementedException();
-        }
+        public IQuestStats Stats { get; }
 
-        public virtual bool Evaluate(Party party)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Evaluate(Party party);
     }
 }
