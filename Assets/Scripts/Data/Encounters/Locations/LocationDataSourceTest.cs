@@ -8,11 +8,11 @@ namespace Data.Locations
         {
             { "Startington", new LocationStats(id: "Startington", 
                 name: "Startington",
-                thumbnailSpritePath: "/Locations/town_icon_1"
+                thumbnailSpritePath: "Locations/town_icon_1"
                 ) },
             { "Destinationville", new LocationStats(id: "Destinationville", 
                 name: "Destinationville",
-                thumbnailSpritePath: "/Locations/town_icon_2"
+                thumbnailSpritePath: "Locations/town_icon_2"
                 ) }
         };
 

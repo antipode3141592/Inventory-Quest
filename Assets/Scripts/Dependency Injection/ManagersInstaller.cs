@@ -22,6 +22,8 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IEncounterManager>().To<EncounterManager>()
                 .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IQuestManager>().To<QuestManager>()
+                .FromComponentInHierarchy().AsSingle();
             
         }
     }

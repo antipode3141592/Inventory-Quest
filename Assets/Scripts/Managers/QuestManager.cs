@@ -12,6 +12,7 @@ namespace InventoryQuest.Managers
     {
         IGameManager _gameManager;
         IPartyManager _partyManager;
+        IQuestDataSource _questDataSource;
         Party _party => _partyManager.CurrentParty;
 
         List<IQuest> availableQuests;
@@ -28,11 +29,11 @@ namespace InventoryQuest.Managers
         public event EventHandler<MessageEventArgs> OnQuestCompleted;
 
         [Inject]
-        public void Init(IGameManager gameManager, IPartyManager partyManager)
+        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource)
         {
             _gameManager = gameManager;
             _partyManager = partyManager;
-
+            _questDataSource = questDataSource;
         }
 
         private void Awake()
@@ -40,6 +41,13 @@ namespace InventoryQuest.Managers
             availableQuests = new();
             currentQuests = new();
             completedQuests = new();
+        }
+
+        private void Start()
+        {
+            var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
+            CurrentQuests.Add(quest);
+            OnQuestAccepted?.Invoke(this, new MessageEventArgs(quest.Id));
         }
 
         public void EvaluateCurrentQuests()

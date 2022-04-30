@@ -1,4 +1,5 @@
 ﻿using Data.Encounters;
+using Data.Locations;
 using System;
 using UnityEngine;
 
@@ -15,9 +16,12 @@ namespace InventoryQuest.Managers
 
         int currentIndex;
 
-        public IPath CurrentPath { get; set; }
-        public ILocation StartLocation { get; set; }
-        public ILocation EndLocation { get; set; }
+        public IPath CurrentPath { get; protected set; }
+        public ILocation StartLocation { get; protected set; }
+        public ILocation EndLocation { get; protected set; }
+
+        public ILocation CurrentLocation { get; protected set; }
+
 
         public event EventHandler OnEncounterListGenerated;
         public event EventHandler OnAdventureStarted;

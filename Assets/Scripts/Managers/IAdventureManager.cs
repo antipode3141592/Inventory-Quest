@@ -1,20 +1,21 @@
 ﻿using Data.Encounters;
+using Data.Locations;
 using System;
 
 namespace InventoryQuest.Managers
 {
     public interface IAdventureManager
     {
-        IPath CurrentPath { get; set; }
-        AdventureStates CurrentState { get; set; }
-        ILocation EndLocation { get; set; }
-        ILocation StartLocation { get; set; }
+        public IPath CurrentPath { get; }
+        public AdventureStates CurrentState { get; }
+        public ILocation EndLocation { get; }
+        public ILocation StartLocation { get; }
 
-        event EventHandler OnAdventureCompleted;
-        event EventHandler OnAdventureStarted;
-        event EventHandler<AdventureStates> OnAdventureStateChanged;
-        event EventHandler OnEncounterListGenerated;
+        public event EventHandler OnAdventureCompleted;
+        public event EventHandler OnAdventureStarted;
+        public event EventHandler<AdventureStates> OnAdventureStateChanged;
+        public event EventHandler OnEncounterListGenerated;
 
-        void ChoosePath(string pathId);
+        public void ChoosePath(string pathId);
     }
 }

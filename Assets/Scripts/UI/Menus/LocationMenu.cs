@@ -14,8 +14,11 @@ namespace InventoryQuest.UI.Menus
 
         [SerializeField] string selectedPath = "intro_path";
 
-        [SerializeField] TextMeshProUGUI PathNameText;
-        [SerializeField] PressAndHoldButton StartAdventureButton;
+        [SerializeField] TextMeshProUGUI pathNameText;
+        [SerializeField] PressAndHoldButton startAdventureButton;
+        [SerializeField] TextMeshProUGUI locationName;
+        [SerializeField] Image locationThumbnailIcon;
+        [SerializeField] Image locationBackground;
 
         [Inject]
         public void Init(IAdventureManager adventureManager, MenuController menuController)
@@ -26,8 +29,7 @@ namespace InventoryQuest.UI.Menus
 
         private void Awake()
         {
-            StartAdventureButton.OnPointerHoldSuccess += StartAdventure;
-            PathNameText.text = selectedPath;
+            startAdventureButton.OnPointerHoldSuccess += StartAdventure;
         }
 
         private void StartAdventure(object sender, EventArgs e)

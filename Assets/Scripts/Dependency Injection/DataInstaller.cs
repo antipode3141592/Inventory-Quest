@@ -1,6 +1,8 @@
 ﻿using Data.Characters;
 using Data.Encounters;
 using Data.Items;
+using Data.Locations;
+using Data.Quests;
 using Data.Rewards;
 using Zenject;
 
@@ -22,6 +24,10 @@ namespace InventoryQuest
                     .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
             Container.Bind<IPathDataSource>()
                     .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
+            Container.Bind<ILocationDataSource>()
+                    .FromInstance(new LocationDataSourceTest()).AsSingle().NonLazy();
+            Container.Bind<IQuestDataSource>()
+                    .FromInstance(new QuestDataSourceTest()).AsSingle().NonLazy();
         }
     }
 }
