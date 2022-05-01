@@ -12,13 +12,13 @@ namespace InventoryQuest.UI.Menus
         IAdventureManager _adventureManager;
         MenuController _menuController;
 
-        [SerializeField] string selectedPath = "intro_path";
-
         [SerializeField] TextMeshProUGUI pathNameText;
         [SerializeField] PressAndHoldButton startAdventureButton;
         [SerializeField] TextMeshProUGUI locationName;
         [SerializeField] Image locationThumbnailIcon;
         [SerializeField] Image locationBackground;
+        [SerializeField] Image destinationLocationImage;
+        [SerializeField] TextMeshProUGUI destinationLocationText;
 
         [Inject]
         public void Init(IAdventureManager adventureManager, MenuController menuController)
@@ -30,25 +30,31 @@ namespace InventoryQuest.UI.Menus
         private void Awake()
         {
             startAdventureButton.OnPointerHoldSuccess += StartAdventure;
+            _adventureManager.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
+            _adventureManager.OnDestinationLocationSet += OnDestinationSelectedHandler;
         }
 
-        private void Start()
+        private void OnDestinationSelectedHandler(object sender, string e)
+        {
+            var stats = _adventureManager.DestinationLocation.Stats;
+            destinationLocationText.text = stats.DisplayName;
+            Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
+            destinationLocationImage.sprite = locationIcon;
+        }
+
+        private void OnCurrentLocationLoadedHandler(object sender, string e)
         {
             var stats = _adventureManager.CurrentLocation.Stats;
-            locationName.text = stats.Name;
+            locationName.text = stats.DisplayName;
             Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
             locationThumbnailIcon.sprite = locationIcon;
         }
 
         private void StartAdventure(object sender, EventArgs e)
         {
-            ChooseSelectedPath(selectedPath);
-        }
-
-        void ChooseSelectedPath(string selectedPath)
-        {
             _menuController.OpenMenu(typeof(AdventureMenu));
-            _adventureManager.ChoosePath(selectedPath);
+            _adventureManager.StartAdventure();
+            
         }
     }
 }

@@ -19,8 +19,7 @@ namespace InventoryQuest.Managers
 
         public IPath CurrentPath { get; protected set; }
         public ILocation StartLocation { get; protected set; }
-        public ILocation EndLocation { get; protected set; }
-
+        public ILocation DestinationLocation { get; protected set; }
         public ILocation CurrentLocation { get; protected set; }
 
 
@@ -28,6 +27,9 @@ namespace InventoryQuest.Managers
         public event EventHandler OnAdventureStarted;
         public event EventHandler OnAdventureCompleted;
         public event EventHandler<AdventureStates> OnAdventureStateChanged;
+        public event EventHandler<string> OnCurrentLocationSet;
+        public event EventHandler<string> OnDestinationLocationSet;
+
 
         AdventureStates currentState;
 
@@ -55,27 +57,33 @@ namespace InventoryQuest.Managers
         {
             currentState = AdventureStates.Idle;
             _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
-
-            
         }
 
         private void Start()
         {
             SetCurrentLocation("Startington");
+            SetDestinationLocation("Destinationville");
         }
 
         public void SetCurrentLocation(string id)
         {
             CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetLocationById(id));
+            OnCurrentLocationSet?.Invoke(this, id);
         }
 
-        public void ChoosePath(string pathId)
+        public void SetDestinationLocation(string id)
+        {
+            DestinationLocation = LocationFactory.GetLocation(_locationDataSource.GetLocationById(id));
+            OnDestinationLocationSet?.Invoke(this, id);
+        }
+
+        void StartPath(IPathStats pathStats)
         {
 
             currentState = AdventureStates.Pathfinding;
             //set current path 
 
-            CurrentPath = PathFactory.GetPath(_pathDataSource.GetPathById(pathId));
+            CurrentPath = PathFactory.GetPath(pathStats);
 
 
             OnEncounterListGenerated?.Invoke(this, EventArgs.Empty);
@@ -113,6 +121,15 @@ namespace InventoryQuest.Managers
                 OnAdventureCompleted?.Invoke(this, EventArgs.Empty);
             }
 
+        }
+
+        public void StartAdventure()
+        {
+            if (DestinationLocation is null) return;
+            if (currentState == AdventureStates.Adventuring) return;
+            var stats = _pathDataSource.GetPathForStartAndEndLocations(CurrentLocation.Stats.Id, DestinationLocation.Stats.Id);
+            if (stats == null) return;
+            StartPath(stats);
         }
 
 
