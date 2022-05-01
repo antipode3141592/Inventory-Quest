@@ -13,6 +13,7 @@ namespace InventoryQuest.Managers
 
         IEncounterDataSource _dataSource;
         IPathDataSource _pathDataSource;
+        ILocationDataSource _locationDataSource;
 
         int currentIndex;
 
@@ -42,17 +43,30 @@ namespace InventoryQuest.Managers
         }
 
         [Inject]
-        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, IEncounterManager encounterManager)
+        public void Init(IEncounterDataSource dataSource, IPathDataSource pathDataSource, IEncounterManager encounterManager, ILocationDataSource locationDataSource)
         {
             _dataSource = dataSource;
             _pathDataSource = pathDataSource;
             _encounterManager = encounterManager;
+            _locationDataSource = locationDataSource;
         }
 
         private void Awake()
         {
             currentState = AdventureStates.Idle;
             _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
+
+            
+        }
+
+        private void Start()
+        {
+            SetCurrentLocation("Startington");
+        }
+
+        public void SetCurrentLocation(string id)
+        {
+            CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetLocationById(id));
         }
 
         public void ChoosePath(string pathId)

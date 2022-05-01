@@ -32,6 +32,14 @@ namespace InventoryQuest.UI.Menus
             startAdventureButton.OnPointerHoldSuccess += StartAdventure;
         }
 
+        private void Start()
+        {
+            var stats = _adventureManager.CurrentLocation.Stats;
+            locationName.text = stats.Name;
+            Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
+            locationThumbnailIcon.sprite = locationIcon;
+        }
+
         private void StartAdventure(object sender, EventArgs e)
         {
             ChooseSelectedPath(selectedPath);

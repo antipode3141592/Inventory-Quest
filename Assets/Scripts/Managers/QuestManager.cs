@@ -13,15 +13,10 @@ namespace InventoryQuest.Managers
         IGameManager _gameManager;
         IPartyManager _partyManager;
         IQuestDataSource _questDataSource;
+        IAdventureManager _adventureManager;
         Party _party => _partyManager.CurrentParty;
-
-        List<IQuest> availableQuests;
-        List<IQuest> currentQuests;
-        List<IQuest> completedQuests;
-
-        public List<IQuest> AvailableQuests => availableQuests;
-        public List<IQuest> CurrentQuests => currentQuests;
-        public List<IQuest> CompletedQuests => completedQuests;
+        public List<IQuest> CurrentQuests { get; } = new();
+        public List<IQuest> CompletedQuests { get; } = new();
 
 
         public event EventHandler<MessageEventArgs> OnQuestAccepted;
@@ -29,18 +24,12 @@ namespace InventoryQuest.Managers
         public event EventHandler<MessageEventArgs> OnQuestCompleted;
 
         [Inject]
-        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource)
+        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource, IAdventureManager adventureManager)
         {
             _gameManager = gameManager;
             _partyManager = partyManager;
             _questDataSource = questDataSource;
-        }
-
-        private void Awake()
-        {
-            availableQuests = new();
-            currentQuests = new();
-            completedQuests = new();
+            _adventureManager = adventureManager;
         }
 
         private void Start()
@@ -52,7 +41,7 @@ namespace InventoryQuest.Managers
 
         public void EvaluateCurrentQuests()
         {
-            foreach (var quest in currentQuests)
+            foreach (var quest in CurrentQuests)
             {
                 if (quest.Evaluate(_party))
                 {
@@ -63,7 +52,7 @@ namespace InventoryQuest.Managers
 
         public void AddQuestToCurrentQuests(IQuest quest)
         {
-            availableQuests.Add(quest);
+            //CurrentQuests
         }
     }
 }

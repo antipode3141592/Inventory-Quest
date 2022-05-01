@@ -76,7 +76,7 @@ namespace Data.Items
                 OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
                 return true;
             }
-            Debug.Log($"TryPlace() failed for {item.Id} at point [{target}]");
+            //Debug.Log($"TryPlace() failed for {item.Id} at point [{target}]");
             return false;
         }
 
@@ -96,12 +96,12 @@ namespace Data.Items
                 if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
                 {
                     item = content.Item;
-                    Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
+                    //Debug.Log($"the item {item.Id} at {target} is associated with these {content.GridSpaces.Count} grid spaces:");
 
                     Contents.Remove(key: Grid[target.row, target.column].storedItemId);
                     foreach (Coor coor in content.GridSpaces)
                     {
-                        Debug.Log($"....{coor.row},{coor.column}");
+                        //Debug.Log($"....{coor.row},{coor.column}");
                         Grid[coor.row, coor.column].IsOccupied = false;
                         Grid[coor.row, coor.column].storedItemId = "";
                     }

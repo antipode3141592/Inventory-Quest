@@ -7,7 +7,6 @@ namespace InventoryQuest.Managers
 {
     public interface IQuestManager
     {
-        List<IQuest> AvailableQuests { get; }
         List<IQuest> CompletedQuests { get; }
         List<IQuest> CurrentQuests { get; }
 

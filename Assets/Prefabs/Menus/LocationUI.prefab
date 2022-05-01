@@ -1091,6 +1091,7 @@ MonoBehaviour:
   pathNameText: {fileID: 5869300949040411178}
   startAdventureButton: {fileID: 1998942340517600688}
   locationName: {fileID: 849112655299883265}
+  locationThumbnailIcon: {fileID: 3373387814440711900}
   locationBackground: {fileID: 5869300948710894274}
 --- !u!1 &5869300949040411177
 GameObject:

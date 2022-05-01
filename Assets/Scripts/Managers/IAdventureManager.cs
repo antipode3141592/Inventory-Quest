@@ -8,6 +8,7 @@ namespace InventoryQuest.Managers
     {
         public IPath CurrentPath { get; }
         public AdventureStates CurrentState { get; }
+        public ILocation CurrentLocation { get; }
         public ILocation EndLocation { get; }
         public ILocation StartLocation { get; }
 

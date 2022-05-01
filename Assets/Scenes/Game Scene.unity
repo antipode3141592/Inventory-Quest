@@ -2659,23 +2659,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7451859667179192805, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
       propertyPath: m_Spacing
-      value: 2
+      value: 3.1999998
       objectReference: {fileID: 0}
     - target: {fileID: 7451859667179192805, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7451859667179192805, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
       propertyPath: m_Padding.m_Left
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7451859667179192805, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
       propertyPath: m_Padding.m_Right
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7451859667179192805, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8e5def7fa983da4bbcbdc7040c94a26, type: 3}
