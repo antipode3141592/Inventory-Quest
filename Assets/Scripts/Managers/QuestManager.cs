@@ -2,9 +2,11 @@
 using Data.Characters;
 using Data.Quests;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Data.Locations;
 
 namespace InventoryQuest.Managers
 {
@@ -30,6 +32,25 @@ namespace InventoryQuest.Managers
             _partyManager = partyManager;
             _questDataSource = questDataSource;
             _adventureManager = adventureManager;
+        }
+
+        private void Awake()
+        {
+            _adventureManager.OnCurrentLocationSet += OnCurrentLocationSetHandler;
+        }
+
+        private void OnCurrentLocationSetHandler(object sender, string e)
+        {
+            //check current quests
+            var quest = CurrentQuests.Find(x => x.Stats.SinkType is ILocation && x.Stats.SinkId == e);
+            if (quest is null) return;
+            if (quest.Evaluate(_party))
+            {
+                Debug.Log($"{quest.Name} is a success!");
+            }
+            //check for uncompleted quests that trigger on entering location
+            //var newquest = _questDataSource.
+
         }
 
         private void Start()

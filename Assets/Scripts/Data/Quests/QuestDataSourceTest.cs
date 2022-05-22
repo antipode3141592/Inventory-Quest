@@ -1,6 +1,7 @@
 ﻿using Data.Characters;
 using Data.Locations;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Quests
 {
@@ -35,6 +36,10 @@ namespace Data.Quests
                 deliveryItemIdsAndQuantities: new (string, int)[]{("questitem_1", 1)})
             }
         };
+
+        public IList<IQuestStats> AvailableQuests { get; }
+
+        public IList<IQuestStats> CompletedQuests { get; }
 
         public IQuestStats GetQuestById(string id)
         {

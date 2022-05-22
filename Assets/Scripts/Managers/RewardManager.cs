@@ -139,7 +139,6 @@ namespace InventoryQuest.Managers
             {
                 SelectedPileId = containerGuid;
                 OnLootPileSelected?.Invoke(this, LootPiles[containerGuid]);
-                //_displayManager.ConnectLootContainer(LootPiles[containerGuid]);
             }
 
         }

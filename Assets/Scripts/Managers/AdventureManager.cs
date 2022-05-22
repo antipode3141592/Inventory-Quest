@@ -117,6 +117,9 @@ namespace InventoryQuest.Managers
             }
             else
             {
+                string currentId = CurrentLocation.Stats.Id;
+                SetCurrentLocation(DestinationLocation.Stats.Id);
+                SetDestinationLocation(currentId);
                 currentState = AdventureStates.Idle;
                 OnAdventureCompleted?.Invoke(this, EventArgs.Empty);
             }

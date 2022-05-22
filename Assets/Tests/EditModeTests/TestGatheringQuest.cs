@@ -2,7 +2,6 @@
 using Data.Characters;
 using Data.Items;
 using Data.Quests;
-using InventoryQuest.Quests;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -35,7 +34,19 @@ namespace InventoryQuest.Testing
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             party = new Party(new PlayableCharacter[] {player, minion_1, minion_2});
 
-            questStats = new GatheringQuestStats("quest_000","get_apples", "gather 5 fuji apples", targetCount, targetItemId,  "ring_charisma_1");
+            questStats = new GatheringQuestStats(
+                id: "quest_000",
+                name: "get_apples", 
+                description: "gather 5 fuji apples",
+                experience: 500,
+                rewardId: "ring_charisma_1",
+                sourceId: "",
+                sourceType: typeof(ICharacter),
+                sinkId: "",
+                sinkType: typeof(ICharacter),
+                targetQuantity: targetCount,
+                targetItemId: targetItemId  
+                );
             quest = new GatheringQuest(questStats);
         }
 
