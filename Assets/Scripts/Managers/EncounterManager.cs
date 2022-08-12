@@ -46,7 +46,7 @@ namespace InventoryQuest.Managers
             {
                 CurrentState = EncounterStates.Loading;
                 currentEncounter = value;
-                OnEncounterLoaded?.Invoke(this, currentEncounter.Id);
+                OnEncounterLoaded?.Invoke(this, value.Id);
                 CurrentState = EncounterStates.Preparing;
             }
         }
