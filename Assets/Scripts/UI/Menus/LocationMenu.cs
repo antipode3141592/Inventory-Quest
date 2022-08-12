@@ -27,8 +27,9 @@ namespace InventoryQuest.UI.Menus
             _menuController = menuController;
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             startAdventureButton.OnPointerHoldSuccess += StartAdventure;
             _adventureManager.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
             _adventureManager.OnDestinationLocationSet += OnDestinationSelectedHandler;

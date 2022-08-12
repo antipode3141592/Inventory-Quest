@@ -12,14 +12,11 @@ namespace InventoryQuest.UI.Menus
     {
         IAdventureManager _adventureManager;
 
-        [SerializeField] MainMenu _mainMenu;
-        [SerializeField] LocationMenu _locationMenu;
-        [SerializeField] GameMenu _gameMenu;
-        [SerializeField] AdventureMenu _adventureMenu;
+        [SerializeField] List<Menu> _menuList;
 
         [SerializeField] LoadingScreen _loadingScreen;
 
-        Dictionary<Type, Menu> _menus = new Dictionary<Type, Menu>();
+        Dictionary<Type, Menu> _menus = new();
 
         Type _mainMenuKey = typeof(MainMenu);
 
@@ -31,79 +28,51 @@ namespace InventoryQuest.UI.Menus
 
         private void Awake()
         {
-            //***********************************************
-            //TODO do this differently, oh god no
-            _menus.Add(_mainMenu.GetType(), _mainMenu);
-            _menus.Add(_locationMenu.GetType(), _locationMenu);
-            _menus.Add(_gameMenu.GetType(), _gameMenu);
-            _menus.Add(_adventureMenu.GetType(), _adventureMenu);
-
-            
-            //***********************************************
+            foreach(var menu in _menuList)
+            {
+                _menus.Add(menu.GetType(), menu);
+            }
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log($"_menus contains {_menus.Count} menus:");
+                foreach (var menu in _menus)
+                    Debug.Log($"{menu.Key.Name}");
+            }
 
             _adventureManager.OnAdventureStarted += OnAdventureStartedHandler;
             _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
         }
 
-        private void Start()
-        {
-            StartCoroutine(Initialize());
-            
-        }
-
-        IEnumerator Initialize()
+        IEnumerator Start()
         {
             yield return new WaitForSeconds(1.5f);
             _loadingScreen.Fade();
-            InitializeMenus();
+            OpenMenu(_mainMenuKey);
         }
 
-        private void OnAdventureCompletedHandler(object sender, EventArgs e)
+        void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
-            _menus[typeof(MainMenu)].gameObject.SetActive(false);
-            _menus[typeof(AdventureMenu)].gameObject.SetActive(false);
-            _menus[typeof(GameMenu)].gameObject.SetActive(false);
-            _menus[typeof(LocationMenu)].gameObject.SetActive(true);
+            OpenMenu(typeof(LocationMenu));
         }
 
-        private void OnAdventureStartedHandler(object sender, EventArgs e)
+        void OnAdventureStartedHandler(object sender, EventArgs e)
         {
-            _menus[typeof(MainMenu)].gameObject.SetActive(false);
-            _menus[typeof(AdventureMenu)].gameObject.SetActive(true);
-            _menus[typeof(GameMenu)].gameObject.SetActive(false);
-            _menus[typeof(LocationMenu)].gameObject.SetActive(false);
+            OpenMenu(typeof(AdventureMenu));
         }
 
-        private void InitializeMenus()
-        {
-            _menus[typeof(MainMenu)].gameObject.SetActive(false);
-            _menus[typeof(AdventureMenu)].gameObject.SetActive(false);
-            _menus[typeof(GameMenu)].gameObject.SetActive(false);
-            _menus[typeof(LocationMenu)].gameObject.SetActive(true);
-        }
+
 
         public void OpenMenu(Type menuType)
         {
+            if (Debug.isDebugBuild)
+                Debug.Log($"OpenMenu({menuType.Name}) called");
             foreach (var menu in _menus)
             {
-                if (menuType == menu.GetType())
-                {
-                    menu.Value.gameObject.SetActive(true);
-                } else
-                {
-                    menu.Value.gameObject.SetActive(true);
-                }
+                if (menuType.Name == menu.Key.Name)
+                    menu.Value.Show();
+                else
+                    menu.Value.Hide();
             }
         }
-    }
-
-    public interface IMenu
-    {
-
-    }
-
-    public abstract class Menu : MonoBehaviour, IMenu
-    {
-
     }
 }
