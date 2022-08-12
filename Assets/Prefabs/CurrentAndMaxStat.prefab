@@ -595,9 +595,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statTypeName: 
+  colorSettings: {fileID: 11400000, guid: ae5a6972b6a683f42847182b88bf18e3, type: 2}
   labelText: {fileID: 7427634155551588445}
   currentStatValueText: {fileID: 9192788610123226304}
   statModifierText: {fileID: 3618296360642593972}
+  fadeOutTime: 0.7
   currentStatMaxValueText: {fileID: 774910054113777220}
 --- !u!1 &8179080630242293715
 GameObject:

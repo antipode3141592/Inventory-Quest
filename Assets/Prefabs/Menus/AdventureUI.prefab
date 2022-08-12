@@ -902,7 +902,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2039
 --- !u!1 &1452528957298006293
 GameObject:
   m_ObjectHideFlags: 0
@@ -6346,7 +6346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3023896438849892011, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 13.95
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
@@ -8610,6 +8610,10 @@ PrefabInstance:
     - target: {fileID: 1162632482276980253, guid: 15bf8166ae7bc624fb2c24daa2f6161b, type: 3}
       propertyPath: m_Padding.m_Bottom
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270583229126340807, guid: 15bf8166ae7bc624fb2c24daa2f6161b, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5270583229126340808, guid: 15bf8166ae7bc624fb2c24daa2f6161b, type: 3}
       propertyPath: m_BlockingMask.m_Bits

@@ -6,8 +6,8 @@ namespace InventoryQuest.UI
 {
     public class StatTextDisplay : MonoBehaviour
     {
-        [SerializeField]
-        protected string statTypeName;
+        [SerializeField] protected string statTypeName;
+        [SerializeField] protected ColorSettings colorSettings;
 
         int previousValue = 0;
 
@@ -41,7 +41,7 @@ namespace InventoryQuest.UI
         public virtual void ShowModifier(int modifier, bool isBuff = true)
         {
             statModifierText.text = $"{modifier}";
-            Color textColor = isBuff ? Color.green : Color.red;
+            Color textColor = isBuff ? colorSettings.BuffColor : colorSettings.DebuffColor;
             statModifierText.color = textColor;
             labelText.color = textColor;
             currentStatValueText.color = textColor;
