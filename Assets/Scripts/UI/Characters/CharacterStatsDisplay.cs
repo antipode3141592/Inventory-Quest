@@ -62,7 +62,7 @@ namespace InventoryQuest.UI
             speciesText.text = _character.Stats.SpeciesId;
         }
 
-        private void OnCharacterStatsUpdatedHandler(object sender, EventArgs e)
+        void OnCharacterStatsUpdatedHandler(object sender, EventArgs e)
         {
             UpdateStatBlock();
         }
@@ -79,17 +79,18 @@ namespace InventoryQuest.UI
         void UpdateStatBlock()
         {
 
-            foreach (var item in _character.Stats.Stats)
+            CharacterStats stats = _character.Stats;
+            foreach (var charStat in stats.Stats)
             {
-                var stat = statTexts.Find(x => x.StatTypeName == item.Key.Name);
+                var stat = statTexts.Find(x => x.StatTypeName == charStat.Key.Name);
                 if (stat is null) return;
-                stat.UpdateText($"{item.Value.CurrentValue}");
+                stat.UpdateText(charStat.Value.CurrentValue);
             }
 
-            healthText.UpdateText($"{_character.Stats.CurrentHealth}", $"{_character.Stats.MaximumHealth}");
-            magicText.UpdateText($"{_character.Stats.CurrentMagicPool}", $"{_character.Stats.MaximumMagicPool}");
-            encumberanceText.UpdateText($"{_character.CurrentEncumbrance:0.#}", $"{_character.Stats.MaximumEncumbrance}");
-            experienceText.UpdateText($"{ _character.Stats.CurrentExperience}", $"{_character.Stats.NextLevelExperience}");
+            healthText.UpdateText(stats.CurrentHealth, stats.MaximumHealth);
+            magicText.UpdateText(stats.CurrentMagicPool, stats.MaximumMagicPool);
+            encumberanceText.UpdateText(_character.CurrentEncumbrance, stats.MaximumEncumbrance);
+            experienceText.UpdateText(stats.CurrentExperience, stats.NextLevelExperience);
         }
 
 

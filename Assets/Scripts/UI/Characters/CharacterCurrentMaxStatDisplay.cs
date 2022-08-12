@@ -8,19 +8,35 @@ namespace InventoryQuest.UI
         [SerializeField]
         protected TextMeshProUGUI currentStatMaxValueText;
 
-        public void UpdateText(string currentValue, string maxValue)
+        public void UpdateText(int currentValue, int maxValue)
         {
-            currentStatValueText.text = currentValue;
-            currentStatMaxValueText.text = maxValue;
+            currentStatValueText.text = $"{currentValue}";
+            currentStatMaxValueText.text = $"{maxValue}";
+        }
+        public void UpdateText(float currentValue, float maxValue)
+        {
+            currentStatValueText.text = $"{currentValue:0.#}";
+            currentStatMaxValueText.text = $"{maxValue:0.#}";
         }
 
-        public override void ShowModifier(string modifier, bool isBuff = true)
+        public override void ShowModifier(int modifier, bool isBuff = true)
         {
-            statModifierText.text = modifier;
+            statModifierText.text = $"{modifier}";
             Color textColor = isBuff ? Color.green : Color.red;
             statModifierText.color = textColor;
             labelText.color = textColor;
             currentStatValueText.color = textColor;
+            StartCoroutine(FadeOutModifier());
+        }
+
+        public void ShowModifier(float modifier, bool isBuff = true)
+        {
+            statModifierText.text = $"{modifier:0.#}";
+            Color textColor = isBuff ? Color.green : Color.red;
+            statModifierText.color = textColor;
+            labelText.color = textColor;
+            currentStatValueText.color = textColor;
+            StartCoroutine(FadeOutModifier());
         }
 
         public override void HideModifier()

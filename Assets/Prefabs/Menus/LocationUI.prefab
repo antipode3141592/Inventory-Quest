@@ -1712,11 +1712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3023896438849892011, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 15.85
       objectReference: {fileID: 0}
     - target: {fileID: 4916607697980942104, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4916607697980942104, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1740,7 +1740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4916607697980942104, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
