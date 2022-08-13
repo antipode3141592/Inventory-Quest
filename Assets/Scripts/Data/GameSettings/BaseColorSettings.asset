@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e498e33ac6246458bb175fcb880b78, type: 3}
   m_Name: BaseColorSettings
   m_EditorClassIdentifier: 
-  BuffColor: {r: 0.3232467, g: 0.44729888, b: 0.754717, a: 1}
+  BuffColor: {r: 0.6608758, g: 0.931339, b: 0.9811321, a: 1}
   DebuffColor: {r: 1, g: 0, b: 0, a: 1}
   HighlightColor: {r: 1, g: 1, b: 1, a: 1}

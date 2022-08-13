@@ -21,7 +21,7 @@ namespace InventoryQuest.UI
 
         public override void ShowModifier(int modifier, bool isBuff = true)
         {
-            statModifierText.text = $"{modifier}";
+            statModifierText.text = $"{modifier:+#;-#;+0}";
             Color textColor = isBuff ? Color.green : Color.red;
             statModifierText.color = textColor;
             labelText.color = textColor;
@@ -31,7 +31,7 @@ namespace InventoryQuest.UI
 
         public void ShowModifier(float modifier, bool isBuff = true)
         {
-            statModifierText.text = $"{modifier:0.#}";
+            statModifierText.text = $"{modifier:+0.#;-0.#;+0}";
             Color textColor = isBuff ? Color.green : Color.red;
             statModifierText.color = textColor;
             labelText.color = textColor;

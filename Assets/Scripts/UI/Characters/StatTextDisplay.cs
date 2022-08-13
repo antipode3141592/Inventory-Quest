@@ -40,7 +40,7 @@ namespace InventoryQuest.UI
 
         public virtual void ShowModifier(int modifier, bool isBuff = true)
         {
-            statModifierText.text = $"{modifier}";
+            statModifierText.text = $"{modifier:+#;-#;+0}";
             Color textColor = isBuff ? colorSettings.BuffColor : colorSettings.DebuffColor;
             statModifierText.color = textColor;
             labelText.color = textColor;

@@ -1,11 +1,12 @@
 ﻿using InventoryQuest.Managers;
+using InventoryQuest.UI.Menus;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class PartyDisplay: MonoBehaviour
+    public class PartyDisplay: MonoBehaviour, IOnMenuShow
     {
         [SerializeField]
         GameObject CharacterPortraitPrefab;
@@ -30,7 +31,7 @@ namespace InventoryQuest.UI
             
         }
 
-        private void OnEnable()
+        public void OnShow()
         {
             PartyMemberSelected(_partyManager.CurrentParty.SelectedPartyMemberGuId);
         }
