@@ -10,6 +10,7 @@ namespace InventoryQuest.UI.Encounters
         [SerializeField] EncounterStates representedState;
         [SerializeField] Image backgroundImage;
         [SerializeField] TextMeshProUGUI stateNameText;
+        [SerializeField] ColorSettings colorSettings;
 
         private void Awake()
         {
@@ -18,7 +19,7 @@ namespace InventoryQuest.UI.Encounters
 
         public void SetHighlight(EncounterStates currentState)
         {
-            backgroundImage.color = currentState == representedState ? UIPreferences.TextBuffColor : UIPreferences.TextDeBuffColor;
+            backgroundImage.color = currentState == representedState ? colorSettings.HighlightColor : Color.clear;
         }
     }
 }

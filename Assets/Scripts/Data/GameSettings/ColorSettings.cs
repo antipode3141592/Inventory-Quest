@@ -6,4 +6,6 @@ public class ColorSettings : ScriptableObject
 {
     public Color BuffColor;
     public Color DebuffColor;
+
+    public Color HighlightColor;
 }

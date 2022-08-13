@@ -13,6 +13,7 @@ namespace InventoryQuest.UI
     {
         IGameManager _gameManager;
 
+        [SerializeField] Image backgroundImage;
         [SerializeField] Image itemImage;
         [SerializeField] TextMeshProUGUI ItemNameText;
         [SerializeField] TextMeshProUGUI ItemDescriptionText;
@@ -34,21 +35,19 @@ namespace InventoryQuest.UI
             _gameManager.OnItemPlaced += OnItemPlacedHandler;
         }
 
-        private void Start()
+        void Start()
         {
-            ClearDisplay();
+            backgroundImage.gameObject.SetActive(false);
         }
 
         void OnItemPlacedHandler(object sender, EventArgs e)
         {
-            //clear display
-            ClearDisplay();
+            backgroundImage.gameObject.SetActive(false);
         }
-
-        
 
         void OnItemHeldHandler(object sender, EventArgs e)
         {
+            backgroundImage.gameObject.SetActive(true);
             //populate display
             DisplayItemDetails(_gameManager.HoldingItem);
         }
@@ -75,21 +74,6 @@ namespace InventoryQuest.UI
                     ItemModifiersTexts[i].text = "";
 
                 }
-            }
-        }
-
-        void ClearDisplay()
-        {
-            itemImage.sprite = null;
-            ItemNameText.text = "";
-            ItemDescriptionText.text = "";
-            ItemRarityText.text = "";
-            ItemValueText.text = "";
-            ItemWeightText.text = "";
-            ShapeTypeText.text = "";
-            foreach (var modText in ItemModifiersTexts)
-            {
-                modText.text = "";
             }
         }
     }

@@ -7,6 +7,7 @@ namespace InventoryQuest.UI.Encounters
 {
     public class EncounterStateDisplay : MonoBehaviour
     {
+        [SerializeField] ColorSettings colorSettings;
         IEncounterManager _encounterManager;
 
         [SerializeField] List<SingleStateDisplay> displays = new List<SingleStateDisplay>();
@@ -24,9 +25,9 @@ namespace InventoryQuest.UI.Encounters
 
         private void OnEncounterStateChangedHandler(object sender, EncounterStates e)
         {
-            foreach(var statDisplay in displays)
+            foreach(var stateDisplay in displays)
             {
-                statDisplay.SetHighlight(e);
+                stateDisplay.SetHighlight(e);
             }
         }
     }
