@@ -11,6 +11,7 @@ namespace InventoryQuest.UI.Menus
     public class MenuController : MonoBehaviour
     {
         IAdventureManager _adventureManager;
+        IEncounterManager _encounterManager;
 
         [SerializeField] List<Menu> _menuList;
 
@@ -21,12 +22,13 @@ namespace InventoryQuest.UI.Menus
         Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(IAdventureManager adventureManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager)
         {
             _adventureManager = adventureManager;
+            _encounterManager = encounterManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             foreach(var menu in _menuList)
             {
@@ -41,6 +43,23 @@ namespace InventoryQuest.UI.Menus
 
             _adventureManager.OnAdventureStarted += OnAdventureStartedHandler;
             _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
+            _adventureManager.OnAdventureStateChanged += OnAdventureStateChanged;
+
+            _encounterManager.OnEncounterStateChanged += OnEncounterStateChanged;
+
+        }
+
+        void OnEncounterStateChanged(object sender, EncounterStates e)
+        {
+            if (e == EncounterStates.Loading)
+                OpenMenu(typeof(TravelingMenu));
+            else if (e == EncounterStates.Preparing)
+                OpenMenu(typeof(AdventureMenu));
+        }
+
+        void OnAdventureStateChanged(object sender, AdventureStates e)
+        {
+            
         }
 
         IEnumerator Start()
@@ -57,7 +76,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnAdventureStartedHandler(object sender, EventArgs e)
         {
-            OpenMenu(typeof(AdventureMenu));
+            OpenMenu(typeof(TravelingMenu));
         }
 
 
