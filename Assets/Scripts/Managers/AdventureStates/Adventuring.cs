@@ -36,6 +36,7 @@ namespace InventoryQuest.Managers
 
         public void OnExit()
         {
+
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
