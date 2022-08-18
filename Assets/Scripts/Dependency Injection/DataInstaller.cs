@@ -1,4 +1,5 @@
-﻿using Data.Characters;
+﻿using Data;
+using Data.Characters;
 using Data.Encounters;
 using Data.Items;
 using Data.Locations;
@@ -12,22 +13,29 @@ namespace InventoryQuest
     {
         public override void InstallBindings()
         {
-            Container.Bind<IItemDataSource>()
-                    .FromInstance(new ItemDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<ICharacterDataSource>()
-                    .FromInstance(new CharacterDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<IEncounterDataSource>()
-                    .FromInstance(new EncounterDataSourceJSON()).AsSingle().NonLazy();
-            Container.Bind<IRewardDataSource>()
-                    .FromInstance(new RewardDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<ILootTableDataSource>()
-                    .FromInstance(new LootTableDataSourceTest()).AsSingle().NonLazy();
-            Container.Bind<IPathDataSource>()
-                    .FromInstance(new PathDataSourceTest()).AsSingle().NonLazy();
+
+
+            LocationDataSourceTest location = new LocationDataSourceTest();
+            PathDataSourceTest path = new PathDataSourceTest();
+
             Container.Bind<ILocationDataSource>()
-                    .FromInstance(new LocationDataSourceTest()).AsSingle().NonLazy();
+                .FromInstance(location).AsSingle();
+            Container.Bind<IItemDataSource>()
+                .FromInstance(new ItemDataSourceTest()).AsSingle();
+            Container.Bind<ICharacterDataSource>()
+                .FromInstance(new CharacterDataSourceTest()).AsSingle();
+            Container.Bind<IEncounterDataSource>()
+                .FromInstance(new EncounterDataSourceJSON()).AsSingle();
+            Container.Bind<IRewardDataSource>()
+                .FromInstance(new RewardDataSourceTest()).AsSingle();
+            Container.Bind<ILootTableDataSource>()
+                .FromInstance(new LootTableDataSourceTest()).AsSingle();
+            Container.Bind<IPathDataSource>()
+                .FromInstance(path).AsSingle();
             Container.Bind<IQuestDataSource>()
-                    .FromInstance(new QuestDataSourceTest()).AsSingle().NonLazy();
+                .FromInstance(new QuestDataSourceTest()).AsSingle();
+            Container.Bind<IGameStateDataSource>()
+                .FromInstance(new GameStateDataSource(location, path)).AsSingle();
         }
     }
 }
