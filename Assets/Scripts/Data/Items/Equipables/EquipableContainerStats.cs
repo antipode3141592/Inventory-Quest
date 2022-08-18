@@ -47,6 +47,8 @@ namespace Data.Items
 
         public EquipmentSlotType SlotType { get; set; }
 
+        public bool IsStackable => false;
 
+        public int MaxStackSize => 1;
     }
 }

@@ -21,6 +21,8 @@ namespace Data.Items
         public bool TryPlace(IItem item, Coor target);
         public bool TryTake(out IItem item, Coor target);
 
+        public bool IsPointInGrid(Coor target);
+
         public bool IsValidPlacement(IItem item, Coor target);
         }
 

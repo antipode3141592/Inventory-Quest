@@ -28,6 +28,10 @@ namespace Data.Items
         
         public bool IsQuestItem { get; }
 
+        public bool IsStackable => false;
+
+        public int MaxStackSize => 1;
+
         public ContainerStats(string itemId, float weight, float goldValue, string description, string spritePath, Coor containerSize, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuestItem = false)
         {
             Id = itemId;

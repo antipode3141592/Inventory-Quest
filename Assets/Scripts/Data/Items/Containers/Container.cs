@@ -20,7 +20,6 @@ namespace Data.Items
         public Shape Shape { get; }
         public Sprite Sprite { get; set; }
 
-
         public Container(ContainerStats stats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -148,7 +147,17 @@ namespace Data.Items
                 if (!square.IsOccupied) return false;
             }
             return true;
-        }        
+        }
+        
+        void AttemptStack(IItem item)
+        {
+            //if item is not stackable, return
+            if (!item.Stats.IsStackable)
+                return;
+            //if an item is adjacent to StackSize or more items of matching criteria, create a stack.
+            // stack shape is identical to constituent items
+            // matching criteria:   item name
+        }
     }
-    
+
 }

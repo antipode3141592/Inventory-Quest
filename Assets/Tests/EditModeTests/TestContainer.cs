@@ -27,7 +27,7 @@ namespace InventoryQuest.Testing
         {
             dataSource = new ItemDataSourceTest();
             MyItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
-            MyItemStats2 = (ItemStats)dataSource.GetItemStats("brass_trinket");
+            MyItemStats2 = (ItemStats)dataSource.GetItemStats("ingot_common");
             backpackStats = (EquipableContainerStats)dataSource.GetItemStats("adventure backpack");
             MyItem = (Item)ItemFactory.GetItem(stats: MyItemStats);
             MyItems = new List<Item>();
@@ -135,6 +135,29 @@ namespace InventoryQuest.Testing
             
         }
 
+        [Test]
+        public void FindMatchingNeighboorsSuccess()
+        {
+            for (int i = 0; i < MyTotalItems; i++)
+            {
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: i, c: i*2 ));
+            }
+            HashSet<string> matchingNeighboors = new();
+            if (ContainerHelpers.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
+                Assert.IsTrue(matchingNeighboors.Count > 0);
+        }
 
+        [Test]
+        public void FindMatchingNeighboorsFail()
+        {
+            for (int i = 0; i < MyTotalItems; i++)
+            {
+                
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i * 2 + 1));
+            }
+            HashSet<string> matchingNeighboors = new();
+            if (ContainerHelpers.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
+                Assert.IsTrue(matchingNeighboors.Count == 0);
+        }
     }
 }

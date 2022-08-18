@@ -29,6 +29,10 @@ namespace Data.Items
 
         public EquipmentSlotType SlotType { get; set; }
 
+        public bool IsStackable => false;
+
+        public int MaxStackSize => 1;
+
         public EquipableItemStats(string itemId, float weight, float goldValue, string description, string spritePath, EquipmentSlotType slotType, ShapeType shapeType = ShapeType.Monomino, Facing defaultFacing = Facing.Right, StatModifier[] modifiers = null, Rarity rarity = Rarity.common, bool isQuest = false)
         {
             Id = itemId;

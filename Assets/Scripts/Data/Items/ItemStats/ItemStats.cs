@@ -19,7 +19,11 @@ namespace Data.Items
         public string SpritePath { get; }
         public bool IsQuestItem { get; }
 
-        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuest = false)
+        public bool IsStackable { get; }
+
+        public int MaxStackSize { get; }
+
+        public ItemStats(string itemId, float weight, float goldValue, string description, string spritePath, ShapeType shape = ShapeType.Monomino, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuest = false, bool isStackable = false, int maxStackSize = 1)
         {
             Id = itemId;
             ShapeType = shape;
@@ -30,6 +34,8 @@ namespace Data.Items
             SpritePath = spritePath;
             Rarity = rarity;
             IsQuestItem = isQuest;
+            IsStackable = isStackable;
+            MaxStackSize = maxStackSize;
         }
     }
 }
