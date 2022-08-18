@@ -1,12 +1,11 @@
 ﻿using Data;
 using Data.Characters;
+using Data.Locations;
 using Data.Quests;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using Data.Locations;
 
 namespace InventoryQuest.Managers
 {
@@ -16,6 +15,8 @@ namespace InventoryQuest.Managers
         IPartyManager _partyManager;
         IQuestDataSource _questDataSource;
         IAdventureManager _adventureManager;
+        IGameStateDataSource _gameStateDataSource;
+
         Party _party => _partyManager.CurrentParty;
         public List<IQuest> CurrentQuests { get; } = new();
         public List<IQuest> CompletedQuests { get; } = new();
@@ -26,20 +27,22 @@ namespace InventoryQuest.Managers
         public event EventHandler<MessageEventArgs> OnQuestCompleted;
 
         [Inject]
-        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource, IAdventureManager adventureManager)
+        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource, IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
         {
             _gameManager = gameManager;
             _partyManager = partyManager;
             _questDataSource = questDataSource;
             _adventureManager = adventureManager;
+            _gameStateDataSource = gameStateDataSource;
         }
+        
 
-        private void Awake()
+        void Awake()
         {
-            _adventureManager.OnCurrentLocationSet += OnCurrentLocationSetHandler;
+            _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationSetHandler;
         }
 
-        private void OnCurrentLocationSetHandler(object sender, string e)
+        void OnCurrentLocationSetHandler(object sender, string e)
         {
             //check current quests
             var quest = CurrentQuests.Find(x => x.Stats.SinkType is ILocation && x.Stats.SinkId == e);
@@ -53,7 +56,7 @@ namespace InventoryQuest.Managers
 
         }
 
-        private void Start()
+        void Start()
         {
             var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
             CurrentQuests.Add(quest);
