@@ -15,6 +15,8 @@ namespace InventoryQuest.UI.Menus
 
         [SerializeField] List<Menu> _menuList;
 
+        string _selectedMenuName;
+
         [SerializeField] LoadingScreen _loadingScreen;
 
         Dictionary<Type, Menu> _menus = new();
@@ -41,12 +43,18 @@ namespace InventoryQuest.UI.Menus
                     Debug.Log($"{menu.Key.Name}");
             }
 
-            _adventureManager.OnAdventureStarted += OnAdventureStartedHandler;
-            _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
-            _adventureManager.OnAdventureStateChanged += OnAdventureStateChanged;
-
             _encounterManager.OnEncounterStateChanged += OnEncounterStateChanged;
 
+            _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
+            _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
+            _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+        }
+
+        IEnumerator Start()
+        {
+            yield return new WaitForSeconds(1.5f);
+            _loadingScreen.Fade();
+            OpenMenu(_mainMenuKey);
         }
 
         void OnEncounterStateChanged(object sender, EncounterStates e)
@@ -57,21 +65,9 @@ namespace InventoryQuest.UI.Menus
                 OpenMenu(typeof(AdventureMenu));
         }
 
-        void OnAdventureStateChanged(object sender, AdventureStates e)
+        void OnPathfindingStartedHandler(object sender, EventArgs e)
         {
-            
-        }
-
-        IEnumerator Start()
-        {
-            yield return new WaitForSeconds(1.5f);
-            _loadingScreen.Fade();
-            OpenMenu(_mainMenuKey);
-        }
-
-        void OnAdventureCompletedHandler(object sender, EventArgs e)
-        {
-            OpenMenu(typeof(LocationMenu));
+            OpenMenu(typeof(WorldMapMenu));
         }
 
         void OnAdventureStartedHandler(object sender, EventArgs e)
@@ -79,16 +75,25 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(TravelingMenu));
         }
 
-
+        void OnAdventureCompletedHandler(object sender, EventArgs e)
+        {
+            OpenMenu(typeof())
+        }
 
         public void OpenMenu(Type menuType)
         {
+            if (menuType.Name == _selectedMenuName)
+                return;
             if (Debug.isDebugBuild)
                 Debug.Log($"OpenMenu({menuType.Name}) called");
             foreach (var menu in _menus)
             {
                 if (menuType.Name == menu.Key.Name)
+                {
                     menu.Value.Show();
+                    _selectedMenuName = menuType.Name;
+                }
+
                 else
                     menu.Value.Hide();
             }

@@ -1,4 +1,5 @@
-﻿using InventoryQuest.Managers;
+﻿using Data;
+using InventoryQuest.Managers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace InventoryQuest.UI.Components
     {
         IAdventureManager _adventureManager;
         IEncounterManager _encounterManager;
+        IGameStateDataSource _gameStateDataSource;
 
         [SerializeField] Transform markerDisplayParentTransform;
 
@@ -21,21 +23,24 @@ namespace InventoryQuest.UI.Components
         [SerializeField] LocationIcon endingLocationIcon;
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;
+            _gameStateDataSource = gameStateDataSource;
         }
 
-        void Awake()
+        void Start()
         {
-            _adventureManager.OnEncounterListGenerated += OnEncounterListGeneratedHandler;
             _encounterManager.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.OnEncounterResolveStart += OnEncounterResolveStartHandler;
             _encounterManager.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
             _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
-            _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
+
+
+            _adventureManager.Adventuring.StateEntered += OnEncounterListGeneratedHandler;
+            _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
@@ -54,7 +59,7 @@ namespace InventoryQuest.UI.Components
 
         void OnEncounterListGeneratedHandler(object sender, EventArgs e)
         {
-            for (int i = 0; i < _adventureManager.CurrentPath.EncounterIds.Count; i++)
+            for (int i = 0; i < _gameStateDataSource.CurrentPath.EncounterIds.Count; i++)
             {
                 if (i >= adventureEncounterMarkers.Count)
                 {
@@ -62,14 +67,14 @@ namespace InventoryQuest.UI.Components
                     adventureEncounterMarkers.Add(go);
                 } else
                     adventureEncounterMarkers[i].gameObject.SetActive(true);
-                adventureEncounterMarkers[i].EncounterId = _adventureManager.CurrentPath.EncounterIds[i];
+                adventureEncounterMarkers[i].EncounterId = _gameStateDataSource.CurrentPath.EncounterIds[i];
                 adventureEncounterMarkers[i].HighlightIcon.color = Color.clear;
                 adventureEncounterMarkers[i].AdventureIcon.color = Color.gray;
 
             }
 
-            startingLocationIcon.Set(Resources.Load<Sprite>(_adventureManager.CurrentLocation.Stats.ThumbnailSpritePath), _adventureManager.CurrentLocation.Stats.DisplayName);
-            endingLocationIcon.Set(Resources.Load<Sprite>(_adventureManager.DestinationLocation.Stats.ThumbnailSpritePath), _adventureManager.DestinationLocation.Stats.DisplayName);
+            startingLocationIcon.Set(Resources.Load<Sprite>(_gameStateDataSource.CurrentLocation.Stats.ThumbnailSpritePath), _gameStateDataSource.CurrentLocation.Stats.DisplayName);
+            endingLocationIcon.Set(Resources.Load<Sprite>(_gameStateDataSource.DestinationLocation.Stats.ThumbnailSpritePath), _gameStateDataSource.DestinationLocation.Stats.DisplayName);
         }
 
         void OnEncounterResolveFailureHandler(object sender, string e)

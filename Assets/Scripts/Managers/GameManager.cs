@@ -41,28 +41,27 @@ namespace InventoryQuest.Managers
             _adventureManager = adventureManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             player = ReInput.players.GetPlayer(playerId);
             currentState = GameStates.Loading;
 
-            //testing stuff
-
-            _adventureManager.OnAdventureStarted += OnAdventureStartedHandler;
-            _adventureManager.OnAdventureCompleted += OnAdventureCompletedHandler;
+            _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
+            _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }
 
-        private void OnAdventureCompletedHandler(object sender, EventArgs e)
+        void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
             Debug.Log($"OnAdventureCompleted handled by {gameObject.name}", this);
+
         }
 
-        private void Update()
+        void Update()
         {
             CheckRotateAction();
         }
 
-        private void OnAdventureStartedHandler(object sender, EventArgs e)
+        void OnAdventureStartedHandler(object sender, EventArgs e)
         {
             ChangeState(GameStates.Encounter);
         }

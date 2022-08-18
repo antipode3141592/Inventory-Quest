@@ -1,3 +1,4 @@
+using Data;
 using InventoryQuest.Managers;
 using System;
 using TMPro;
@@ -10,7 +11,7 @@ namespace InventoryQuest.UI.Menus
     public class LocationMenu : Menu
     {
         IAdventureManager _adventureManager;
-        MenuController _menuController;
+        IGameStateDataSource _gameStateDataSource;
 
         [SerializeField] TextMeshProUGUI pathNameText;
         [SerializeField] PressAndHoldButton startAdventureButton;
@@ -21,41 +22,39 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] TextMeshProUGUI destinationLocationText;
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, MenuController menuController)
+        public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
         {
             _adventureManager = adventureManager;
-            _menuController = menuController;
+            _gameStateDataSource = gameStateDataSource;
         }
 
         protected override void Awake()
         {
             base.Awake();
             startAdventureButton.OnPointerHoldSuccess += StartAdventure;
-            _adventureManager.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
-            _adventureManager.OnDestinationLocationSet += OnDestinationSelectedHandler;
+            _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
+            _gameStateDataSource.OnDestinationLocationSet += OnDestinationSelectedHandler;
         }
 
-        private void OnDestinationSelectedHandler(object sender, string e)
+        void OnDestinationSelectedHandler(object sender, string e)
         {
-            var stats = _adventureManager.DestinationLocation.Stats;
+            var stats = _gameStateDataSource.DestinationLocation.Stats;
             destinationLocationText.text = stats.DisplayName;
             Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
             destinationLocationImage.sprite = locationIcon;
         }
 
-        private void OnCurrentLocationLoadedHandler(object sender, string e)
+        void OnCurrentLocationLoadedHandler(object sender, string e)
         {
-            var stats = _adventureManager.CurrentLocation.Stats;
+            var stats = _gameStateDataSource.CurrentLocation.Stats;
             locationName.text = stats.DisplayName;
             Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
             locationThumbnailIcon.sprite = locationIcon;
         }
 
-        private void StartAdventure(object sender, EventArgs e)
+        void StartAdventure(object sender, EventArgs e)
         {
-            _menuController.OpenMenu(typeof(AdventureMenu));
-            _adventureManager.StartAdventure();
-            
+            _adventureManager.Adventuring.StartAdventure();
         }
     }
 }

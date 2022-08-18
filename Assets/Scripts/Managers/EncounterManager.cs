@@ -47,7 +47,6 @@ namespace InventoryQuest.Managers
                 CurrentState = EncounterStates.Loading;
                 currentEncounter = value;
                 OnEncounterLoaded?.Invoke(this, value.Id);
-                CurrentState = EncounterStates.Preparing;
             }
         }
 
@@ -58,7 +57,7 @@ namespace InventoryQuest.Managers
             _rewardManager = rewardManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             CurrentState = EncounterStates.Idle;
         }
@@ -73,14 +72,12 @@ namespace InventoryQuest.Managers
         //connected to UI Button
         public void Continue()
         {
-            if (currentState == EncounterStates.Preparing)
-            {
+            if (CurrentState == EncounterStates.Loading)
+                ChangeState(EncounterStates.Preparing);
+            else if (currentState == EncounterStates.Preparing)
                 BeginResolution();
-            }
             else if (currentState == EncounterStates.Cleanup)
-            {
                 EndEncounter();
-            }
         }
 
 
@@ -168,6 +165,4 @@ namespace InventoryQuest.Managers
 
 
     }
-
-    public enum EncounterStates { Idle, Loading, Preparing, Resolving, Cleanup, End}
 }

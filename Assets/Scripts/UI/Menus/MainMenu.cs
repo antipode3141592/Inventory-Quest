@@ -1,19 +1,24 @@
 ﻿using System;
 using UnityEngine;
 using Zenject;
+using InventoryQuest;
+using InventoryQuest.Managers;
 
 namespace InventoryQuest.UI.Menus
 {
     public class MainMenu : Menu
     {
+        IAdventureManager _adventureManager;
+
         MenuController _menuController;
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
 
-        public void Init(MenuController menuController)
+        public void Init(MenuController menuController, IAdventureManager adventureManager)
         {
             _menuController = menuController;
+            _adventureManager = adventureManager;   
             
         }
 
@@ -31,7 +36,7 @@ namespace InventoryQuest.UI.Menus
 
         public void Continue()
         {
-            _menuController.OpenMenu(typeof(LocationMenu));
+            _adventureManager.Idle.StartPath();
         }
     }
 }
