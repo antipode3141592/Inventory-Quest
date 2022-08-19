@@ -7,32 +7,29 @@ using UnityEngine.Pool;
 
 namespace Data.Items
 {
-    public class ContainerBase: IItem, IContainer
+    public abstract class ContainerBase: IItem, IContainer
     {
-        public ContainerBase(IContainerStats stats)
+        public ContainerBase(IItemStats stats)
         {
             GuId = Guid.NewGuid().ToString();
             Id = stats.Id;
             Stats = stats;
             Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
-            
             Contents = new Dictionary<string, Content>();
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
-            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
-            Dimensions = stats.ContainerSize;
         }
 
-        public Coor Dimensions { get; }
-        public GridSquare[,] Grid { get; }
+        public Coor Dimensions { get; protected set; }
+        public GridSquare[,] Grid { get; protected set; }
 
-        public string Id { get; }
+        public string Id { get; protected set; }
         
-        public IDictionary<string, Content> Contents { get; }
-        public string GuId { get; }
+        public IDictionary<string, Content> Contents { get; protected set; }
+        public string GuId { get; protected set; }
 
-        public Rarity Rarity { get; }
-        public IItemStats Stats { get; }
-        public Shape Shape { get; }
+        public Rarity Rarity { get; protected set; }
+        public IItemStats Stats { get; protected set; }
+        public Shape Shape { get; protected set; }
         public Sprite Sprite { get; set; }
 
         public bool IsEmpty => ContainerIsEmpty();
@@ -49,11 +46,13 @@ namespace Data.Items
 
         public event EventHandler<GridEventArgs> OnItemPlaced;
         public event EventHandler<GridEventArgs> OnItemTaken;
+        public event EventHandler<HashSet<string>> OnMatchingItems;
+        public event EventHandler<HashSet<string>> OnStackComplete;
 
         public bool IsPointInGrid(Coor target)
         {
-            if ((0 <= target.row && target.row <= Dimensions.row)
-                && (0 <= target.column && target.column <= Dimensions.column))
+            if ((0 <= target.row && target.row < Dimensions.row)
+                && (0 <= target.column && target.column < Dimensions.column))
             {
                 return true;
             }
@@ -85,10 +84,26 @@ namespace Data.Items
             }
         }
 
-        public bool MatchingNeighboors(IItem item, IContainer container, ref HashSet<string> matchingNeighboors)
+        void AfterItemPlaced(IItem item)
         {
+            if (!item.Stats.IsStackable)
+                return;
+            HashSet<string> _neighboors = new();
+            if (MatchingNeighboors(item, _neighboors))
+            {
+                if (_neighboors.Count >= item.Stats.MaxStackSize)
+                    OnStackComplete?.Invoke(this, _neighboors);
+                else
+                    OnMatchingItems?.Invoke(this, _neighboors);
+            }
+        }
+
+        public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
+        {
+            if (!item.Stats.IsStackable)
+                return false;
             int startingCount = matchingNeighboors.Count;
-            Coor startingCoor = container.Contents[item.GuId].AnchorPosition;
+            Coor startingCoor = Contents[item.GuId].AnchorPosition;
             Shape shape = item.Shape;
             for (int r = 0; r < shape.Size.row; r++)
             {
@@ -104,12 +119,13 @@ namespace Data.Items
                             int row = startingCoor.row + r + r1;
                             int column = startingCoor.column + c + c1;
 
-                            if (!container.IsPointInGrid(new(row, column)))
+                            if (!IsPointInGrid(new(row, column)))
                                 break;
-                            if (!container.Grid[row, column].IsOccupied)
+                            Debug.Log($"Grid {Grid.GetLength(0)},{Grid.GetLength(1)} and r,c = {row},{column}, with Dimension {Dimensions.row},{Dimensions.column}");
+                            if (!Grid[row, column].IsOccupied)
                                 break;
-                            string storedItemId = container.Grid[row, column].storedItemId;
-                            string storedGuId = container.Contents[storedItemId].Item.GuId;
+                            string storedItemId = Grid[row, column].storedItemId;
+                            string storedGuId = Contents[storedItemId].Item.GuId;
                             if (storedGuId == item.GuId)
                                 break;
                             if (storedItemId == item.Id)
@@ -126,17 +142,18 @@ namespace Data.Items
             if (matchingNeighboors.Count == startingCount)  //no adjacent 
                 return false;
 
-            HashSet<string> addList = new();
+            HashSet<string> _addList = new();
             foreach (var _item in matchingNeighboors)
             {
-                Debug.Log($"match found for {item.Id}, {item.GuId}: {container.Contents[_item].Item.Id}, {_item}");
                 HashSet<string> _matchingNeighboors = new();
+                foreach (var match in matchingNeighboors)
+                    _matchingNeighboors.Add(match);
                 _matchingNeighboors.Add(item.GuId);
-                if (MatchingNeighboors(container.Contents[_item].Item, container, ref _matchingNeighboors))
+                if (MatchingNeighboors(Contents[_item].Item, _matchingNeighboors))
                     foreach (var __item in _matchingNeighboors)
-                        addList.Add(__item);
+                        _addList.Add(__item);
             }
-            foreach (var addition in addList)
+            foreach (var addition in _addList)
                 matchingNeighboors.Add(addition);
 
             return true;
@@ -163,7 +180,10 @@ namespace Data.Items
                     Grid[tempPointList[i].row, tempPointList[i].column].IsOccupied = true;
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
+
                 OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
+
+                AfterItemPlaced(item);
                 return true;
             }
             return false;

@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Items;
 using Data.Shapes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -91,6 +92,18 @@ namespace InventoryQuest.UI
 
             MyContainer.OnItemPlaced += OnItemChangeHandler;
             MyContainer.OnItemTaken += OnItemChangeHandler;
+            MyContainer.OnMatchingItems += MatchedItems;
+            MyContainer.OnStackComplete += ItemStackComplete;
+        }
+
+        private void ItemStackComplete(object sender, HashSet<string> e)
+        {
+            Debug.Log($"Stack of {e.Count} items complete!");
+        }
+
+        private void MatchedItems(object sender, HashSet<string> e)
+        {
+            Debug.Log($"There are {e.Count} matching adjacent items");
         }
 
         public void DestroyGrid()

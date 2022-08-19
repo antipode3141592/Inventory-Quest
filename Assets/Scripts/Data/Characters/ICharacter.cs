@@ -5,7 +5,7 @@ namespace Data.Characters
 {
     public interface ICharacter
     {
-        IContainer Backpack { get; }
+        ContainerBase Backpack { get; }
         float CurrentEncumbrance { get; }
         string GuId { get; }
         bool IsIncapacitated { get; }

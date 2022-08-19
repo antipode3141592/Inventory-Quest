@@ -16,7 +16,7 @@ namespace Data.Characters
 
         public Dictionary<EquipmentSlotType, EquipmentSlot> EquipmentSlots;
 
-        public IContainer Backpack => EquipmentSlots[EquipmentSlotType.Backpack].EquippedItem as IContainer;
+        public ContainerBase Backpack => EquipmentSlots[EquipmentSlotType.Backpack].EquippedItem as ContainerBase;
 
         public EventHandler OnStatsUpdated;
 

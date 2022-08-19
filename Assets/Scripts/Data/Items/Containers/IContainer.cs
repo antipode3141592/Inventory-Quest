@@ -16,7 +16,8 @@ namespace Data.Items
 
         public event EventHandler<GridEventArgs> OnItemPlaced;
         public event EventHandler<GridEventArgs> OnItemTaken;
-
+        public event EventHandler<HashSet<string>> OnMatchingItems;
+        public event EventHandler<HashSet<string>> OnStackComplete;
 
         public bool TryPlace(IItem item, Coor target);
         public bool TryTake(out IItem item, Coor target);
@@ -25,7 +26,7 @@ namespace Data.Items
 
         public bool IsValidPlacement(IItem item, Coor target);
 
-        public bool MatchingNeighboors(IItem item, IContainer container, ref HashSet<string> matchingNeighboors);        
+        public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors);        
     }
 
 

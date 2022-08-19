@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Items
 {
-    public class EquipableContainerStats : IContainerStats, IEquipableStats
+    public class EquipableContainerStats : IItemStats, IContainerStats, IEquipableStats
     {
         public EquipableContainerStats(string id, string description, float weight, float goldValue, Coor containerSize, string spritePath, ShapeType shapeType, EquipmentSlotType slotType, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common,  bool isQuestItem = false, List<StatModifier> modifiers = null )
         {

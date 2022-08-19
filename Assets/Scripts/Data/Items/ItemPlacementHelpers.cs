@@ -4,7 +4,7 @@
     public static class ItemPlacementHelpers
     {
 
-        public static bool TryAutoPlaceToContainer(IContainer container, IItem item)
+        public static bool TryAutoPlaceToContainer(ContainerBase container, IItem item)
         {
             for (int _r = 0; _r < container.Dimensions.row; _r++)
             {

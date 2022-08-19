@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 namespace Data.Items
 {
-    public class EquipableContainer : ContainerBase, IEquipable, IContainer
+    public class EquipableContainer : ContainerBase, IEquipable
     {
 
         public EquipmentSlotType SlotType { get; }
@@ -19,6 +19,8 @@ namespace Data.Items
 
             SlotType = stats.SlotType;
             Modifiers = stats.Modifiers is not null ? stats.Modifiers : new List<StatModifier>();
+            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
+            Dimensions = stats.ContainerSize;
         }
     }
 }

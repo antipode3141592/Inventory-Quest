@@ -14,7 +14,8 @@ namespace Data.Items
 
         public Container(ContainerStats stats) : base(stats)
         {
-            
+            Grid = new GridSquare[stats.ContainerSize.row, stats.ContainerSize.column];
+            Dimensions = stats.ContainerSize;
         }
     }
 
