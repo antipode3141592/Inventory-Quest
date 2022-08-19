@@ -1,6 +1,6 @@
 ﻿namespace Data.Items
 {
-    public interface IContainerStats
+    public interface IContainerStats: IItemStats
     {
         public Coor ContainerSize { get; }
     }

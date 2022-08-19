@@ -77,7 +77,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
-            OpenMenu(typeof())
+            OpenMenu(typeof(LocationMenu));
         }
 
         public void OpenMenu(Type menuType)

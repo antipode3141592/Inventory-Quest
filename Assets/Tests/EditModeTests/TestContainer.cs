@@ -2,6 +2,7 @@
 using Data.Items;
 using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace InventoryQuest.Testing
 {
@@ -140,11 +141,17 @@ namespace InventoryQuest.Testing
         {
             for (int i = 0; i < MyTotalItems; i++)
             {
-                MyContainer.TryPlace(MyItems2[i], new Coor(r: i, c: i*2 ));
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: i, c: 0 ));
             }
             HashSet<string> matchingNeighboors = new();
-            if (ContainerHelpers.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
+            if (MyContainer.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
+            {
+                Debug.Log($"there are {matchingNeighboors.Count} matching neighboors to item with guid {MyItems2[0].GuId}");
                 Assert.IsTrue(matchingNeighboors.Count > 0);
+                return;
+            }
+            else
+                Assert.Fail();
         }
 
         [Test]
@@ -153,11 +160,13 @@ namespace InventoryQuest.Testing
             for (int i = 0; i < MyTotalItems; i++)
             {
                 
-                MyContainer.TryPlace(MyItems2[i], new Coor(r: 0, c: i * 2 + 1));
+                MyContainer.TryPlace(MyItems2[i], new Coor(r: i * 2, c: 0));
             }
             HashSet<string> matchingNeighboors = new();
-            if (ContainerHelpers.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
-                Assert.IsTrue(matchingNeighboors.Count == 0);
+            if (!MyContainer.MatchingNeighboors(MyItems2[0], MyContainer, ref matchingNeighboors))
+                Assert.Pass();
+            else
+                Assert.Fail();
         }
     }
 }

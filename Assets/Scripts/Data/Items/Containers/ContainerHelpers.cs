@@ -8,6 +8,7 @@ namespace Data.Items
 
         public static bool MatchingNeighboors(IItem item, IContainer container, ref HashSet<string> matchingNeighboors)
         {
+            int startingCount = matchingNeighboors.Count;
             Coor startingCoor = container.Contents[item.GuId].AnchorPosition;
             Shape shape = item.Shape;
             for (int r = 0; r < shape.Size.row; r++)
@@ -43,8 +44,14 @@ namespace Data.Items
                 }
             }
 
-            if (matchingNeighboors.Count == 0)
+            if (matchingNeighboors.Count == 0)  //no adjacent 
                 return false;
+
+            HashSet<string> _matchingNeighboors = new();
+            foreach (var _item in matchingNeighboors)
+                if (MatchingNeighboors(container.Contents[_item].Item, container, ref _matchingNeighboors))
+                    foreach (var __item in _matchingNeighboors)
+                        matchingNeighboors.Add(__item);
             return true;
         }
     }

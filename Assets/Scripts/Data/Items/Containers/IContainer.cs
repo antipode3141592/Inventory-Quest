@@ -24,7 +24,9 @@ namespace Data.Items
         public bool IsPointInGrid(Coor target);
 
         public bool IsValidPlacement(IItem item, Coor target);
-        }
+
+        public bool MatchingNeighboors(IItem item, IContainer container, ref HashSet<string> matchingNeighboors);        
+    }
 
 
 }
