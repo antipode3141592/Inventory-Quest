@@ -15,3 +15,6 @@ MonoBehaviour:
   BuffColor: {r: 0.6608758, g: 0.931339, b: 0.9811321, a: 1}
   DebuffColor: {r: 1, g: 0, b: 0, a: 1}
   HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+  MatchColor: {r: 1, g: 0.6444444, b: 0, a: 0.74509805}
+  TextBuffColor: {r: 0, g: 1, b: 1, a: 1}
+  TextDeBuffColor: {r: 1, g: 0, b: 0, a: 1}

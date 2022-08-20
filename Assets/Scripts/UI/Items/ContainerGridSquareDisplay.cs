@@ -1,6 +1,7 @@
 using Data;
 using Data.Items;
 using InventoryQuest.Managers;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +17,11 @@ namespace InventoryQuest.UI
         Image backgroundSprite;
         [SerializeField]
         Image highlightSprite;
+        [SerializeField]
+        Image matchingHighlightSprite;
+        [SerializeField]
+        ColorSettings colorSettings;
+
 
         bool _isOccupied;
         public bool IsOccupied { 
@@ -38,21 +44,45 @@ namespace InventoryQuest.UI
         }
         public Coor Coordinates { get; set; }
 
-        private void Awake()
+        void Awake()
         {
             _gameManager = FindObjectOfType<GameManager>();
         }
 
-        public void SetHighlightColor(HighlightState state)
+        public void SetHighlightColor(HighlightState state, float timer = 0f)
         {
             Color targetColor =
             state switch
             {
-                HighlightState.Highlight => UIPreferences.TextBuffColor,
-                HighlightState.Incorrect => UIPreferences.TextDeBuffColor,
+                HighlightState.Highlight => colorSettings.TextBuffColor,
+                HighlightState.Incorrect => colorSettings.TextDeBuffColor,
+                HighlightState.Match => colorSettings.MatchColor,
                 _ => Color.clear
             };
             highlightSprite.color = targetColor;
+            if (timer > 0f)
+                StartCoroutine(ResetHighlightOverTime(timer, highlightSprite));
+        }
+
+        public void SetMatchingHighlightColor(HighlightState state, float timer = 0f)
+        {
+            Color targetColor =
+            state switch
+            {
+                HighlightState.Highlight => colorSettings.TextBuffColor,
+                HighlightState.Incorrect => colorSettings.TextDeBuffColor,
+                HighlightState.Match => colorSettings.MatchColor,
+                _ => Color.clear
+            };
+            matchingHighlightSprite.color = targetColor;
+            if (timer > 0f)
+                StartCoroutine(ResetHighlightOverTime(timer, matchingHighlightSprite));
+        }
+
+        IEnumerator ResetHighlightOverTime(float timer, Image image)
+        {
+            yield return new WaitForSeconds(timer);
+            image.color = Color.clear;
         }
 
         public void SetContainer(IContainer container)

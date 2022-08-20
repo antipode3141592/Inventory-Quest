@@ -88,7 +88,7 @@ namespace Data.Items
         {
             if (!item.Stats.IsStackable)
                 return;
-            HashSet<string> _neighboors = new();
+            HashSet<string> _neighboors = HashSetPool<string>.Get(); // new();
             if (MatchingNeighboors(item, _neighboors))
             {
                 if (_neighboors.Count >= item.Stats.MaxStackSize)
@@ -96,45 +96,48 @@ namespace Data.Items
                 else
                     OnMatchingItems?.Invoke(this, _neighboors);
             }
+            HashSetPool<string>.Release(_neighboors);
         }
 
         public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
         {
             if (!item.Stats.IsStackable)
                 return false;
+            matchingNeighboors.Add(item.GuId);
             int startingCount = matchingNeighboors.Count;
-            Coor startingCoor = Contents[item.GuId].AnchorPosition;
             Shape shape = item.Shape;
+            Coor startingCoor = Contents[item.GuId].AnchorPosition;
+            
             for (int r = 0; r < shape.Size.row; r++)
             {
                 for (int c = 0; c < shape.Size.column; c++)
                 {
                     if (!shape.CurrentMask.Map[r, c])
                         break;
-                    //
-                    for (int r1 = -1; r1 < 2; r1++)
+                    
+                    //check orthogonal only
+                    Check(r - 1 + startingCoor.row, c + startingCoor.column);
+                    Check(r + 1 + startingCoor.row, c + startingCoor.column);
+                    Check(r + startingCoor.row, c + 1 + startingCoor.column);
+                    Check(r + startingCoor.row, c - 1 + startingCoor.column);
+
+                    void Check(int r, int c)
                     {
-                        for (int c1 = -1; c1 < 2; c1++)
-                        {
-                            int row = startingCoor.row + r + r1;
-                            int column = startingCoor.column + c + c1;
+                        if (!IsPointInGrid(new(r, c)))
+                            return;
+                        //Debug.Log($"Grid {Grid.GetLength(0)},{Grid.GetLength(1)} and r,c = {row},{column}, with Dimension {Dimensions.row},{Dimensions.column}");
+                        Debug.Log($"checking ({r},{c})...");
+                        if (!Grid[r, c].IsOccupied)
+                            return;
+                        string storedGuId = Grid[r, c].storedItemId;
+                        string storedItemId = Contents[storedGuId].Item.Id;
+                        Debug.Log($"   found a {storedItemId} with guid {storedGuId}");
+                        if (storedItemId != item.Id)
+                            return;
+                        if (matchingNeighboors.Count > 0 && matchingNeighboors.Contains(storedGuId))
+                            return;
 
-                            if (!IsPointInGrid(new(row, column)))
-                                break;
-                            Debug.Log($"Grid {Grid.GetLength(0)},{Grid.GetLength(1)} and r,c = {row},{column}, with Dimension {Dimensions.row},{Dimensions.column}");
-                            if (!Grid[row, column].IsOccupied)
-                                break;
-                            string storedItemId = Grid[row, column].storedItemId;
-                            string storedGuId = Contents[storedItemId].Item.GuId;
-                            if (storedGuId == item.GuId)
-                                break;
-                            if (storedItemId == item.Id)
-                                break;
-                            if (matchingNeighboors.Count > 0 && matchingNeighboors.Contains(storedItemId))
-                                break;
-
-                            matchingNeighboors.Add(storedGuId);
-                        }
+                        matchingNeighboors.Add(storedGuId);
                     }
                 }
             }
@@ -142,20 +145,19 @@ namespace Data.Items
             if (matchingNeighboors.Count == startingCount)  //no adjacent 
                 return false;
 
-            HashSet<string> _addList = new();
+            HashSet<string> _addList = HashSetPool<string>.Get();// new();
             foreach (var _item in matchingNeighboors)
             {
                 HashSet<string> _matchingNeighboors = new();
                 foreach (var match in matchingNeighboors)
                     _matchingNeighboors.Add(match);
-                _matchingNeighboors.Add(item.GuId);
                 if (MatchingNeighboors(Contents[_item].Item, _matchingNeighboors))
                     foreach (var __item in _matchingNeighboors)
                         _addList.Add(__item);
             }
             foreach (var addition in _addList)
                 matchingNeighboors.Add(addition);
-
+            HashSetPool<string>.Release(_addList);
             return true;
         }
 
@@ -182,7 +184,7 @@ namespace Data.Items
                 }
 
                 OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
-
+                
                 AfterItemPlaced(item);
                 return true;
             }

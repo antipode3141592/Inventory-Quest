@@ -99,11 +99,21 @@ namespace InventoryQuest.UI
         private void ItemStackComplete(object sender, HashSet<string> e)
         {
             Debug.Log($"Stack of {e.Count} items complete!");
+            foreach(var item in e)
+            {
+                Debug.Log($"{item}");
+            }
         }
 
         private void MatchedItems(object sender, HashSet<string> e)
         {
             Debug.Log($"There are {e.Count} matching adjacent items");
+            foreach (var itemGuid in e)
+            {
+                Debug.Log($"{itemGuid}");
+                foreach (var coor in MyContainer.Contents[itemGuid].GridSpaces)
+                    squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
+            }
         }
 
         public void DestroyGrid()
