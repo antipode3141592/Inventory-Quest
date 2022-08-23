@@ -5,6 +5,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
+using HighlightState = Data.HighlightState;
 
 namespace InventoryQuest.UI
 {
@@ -13,14 +15,10 @@ namespace InventoryQuest.UI
         IGameManager _gameManager;
         IContainer _container;
 
-        [SerializeField]
-        Image backgroundSprite;
-        [SerializeField]
-        Image highlightSprite;
-        [SerializeField]
-        Image matchingHighlightSprite;
-        [SerializeField]
-        ColorSettings colorSettings;
+        [SerializeField] Image backgroundSprite;
+        [SerializeField] Image highlightSprite;
+        [SerializeField] Image matchingHighlightSprite;
+        [SerializeField] ColorSettings colorSettings;
 
 
         bool _isOccupied;

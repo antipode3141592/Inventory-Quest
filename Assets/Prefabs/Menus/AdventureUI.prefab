@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelTransform: {fileID: 1452528957655846143}
   _itemPanelTransform: {fileID: 1452528957068614100}
-  itemImagePrefab: {fileID: 7533226305058349392, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
+  itemImagePrefab: {fileID: 5441537819867880285, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   gridSquarePrefab: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
   rowMax: 20
   columnMax: 12
@@ -4457,7 +4457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelTransform: {fileID: 1452528959026447437}
   _itemPanelTransform: {fileID: 1452528958589265671}
-  itemImagePrefab: {fileID: 7533226305058349392, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
+  itemImagePrefab: {fileID: 5441537819867880285, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   gridSquarePrefab: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
   rowMax: 12
   columnMax: 6
@@ -8416,6 +8416,26 @@ PrefabInstance:
     - target: {fileID: 6847025705976859519, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
+      propertyPath: m_Spacing
+      value: 3.1999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}

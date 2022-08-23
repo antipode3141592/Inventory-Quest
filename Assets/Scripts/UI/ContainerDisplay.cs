@@ -10,31 +10,23 @@ namespace InventoryQuest.UI
 {
     public class ContainerDisplay : MonoBehaviour
     {
-        [SerializeField]
-        Transform _panelTransform;
+        [SerializeField] Transform _panelTransform;
         
-        [SerializeField]
-        Transform _itemPanelTransform;
+        [SerializeField] Transform _itemPanelTransform;
         
-        [SerializeField]
-        Image itemImagePrefab;
+        [SerializeField] ItemImage itemImagePrefab;
 
-        [SerializeField]
-        ContainerGridSquareDisplay gridSquarePrefab; //square prefab
+        [SerializeField] ContainerGridSquareDisplay gridSquarePrefab; //square prefab
 
         ContainerGridSquareDisplay[,] squares;
-        List<Image> itemImages;
+        List<ItemImage> itemImages;
 
-        [SerializeField]
-        int rowMax;
-        [SerializeField]
-        int columnMax;
+        [SerializeField] int rowMax;
+        [SerializeField] int columnMax;
 
         float squareWidth;
 
-        [SerializeField]
-        ContactFilter2D _contactFilter;
-
+        [SerializeField] ContactFilter2D _contactFilter;
 
         private IContainer myContainer;
         public IContainer MyContainer 
@@ -50,10 +42,10 @@ namespace InventoryQuest.UI
             }
         }
 
-        private void Awake()
+        void Awake()
         {
             squares = new ContainerGridSquareDisplay[rowMax, columnMax];
-            itemImages = new List<Image>();
+            itemImages = new List<ItemImage>();
             squareWidth = gridSquarePrefab.Width;
             InitializeGrid();
         }
@@ -74,7 +66,6 @@ namespace InventoryQuest.UI
                     squares[r, c].gameObject.SetActive(false);
                 }
             }
-
         }
 
         public void SetupGrid()
@@ -96,7 +87,7 @@ namespace InventoryQuest.UI
             MyContainer.OnStackComplete += ItemStackComplete;
         }
 
-        private void ItemStackComplete(object sender, HashSet<string> e)
+        void ItemStackComplete(object sender, HashSet<string> e)
         {
             Debug.Log($"Stack of {e.Count} items complete!");
             foreach(var item in e)
@@ -105,7 +96,7 @@ namespace InventoryQuest.UI
             }
         }
 
-        private void MatchedItems(object sender, HashSet<string> e)
+        void MatchedItems(object sender, HashSet<string> e)
         {
             Debug.Log($"There are {e.Count} matching adjacent items");
             foreach (var itemGuid in e)
@@ -159,12 +150,10 @@ namespace InventoryQuest.UI
                 Facing facing = content.Value.Item.Shape.CurrentFacing;
                 Coor AnchorPosition = content.Value.AnchorPosition;
                 Sprite sprite = content.Value.Item.Sprite;
-
-                Image itemImage = Instantiate<Image>(original: itemImagePrefab, parent: _itemPanelTransform);
-                itemImage.sprite = sprite;
-                itemImage.color = Color.white;
-                itemImage.SetNativeSize();
-                ImageUtilities.RotateSprite(facing, itemImage, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
+                int quantity = content.Value.Quantity;
+                ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
+                itemImage.SetItem(sprite, quantity);
+                ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
                 itemImages.Add(itemImage);
             }
         }
