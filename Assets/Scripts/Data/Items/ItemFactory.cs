@@ -19,7 +19,11 @@
             {
                 return new EquipableContainer(equipableContainerStats);
             }
-
+            StackableItemStats stackableItemStats = stats as StackableItemStats;
+            if (stackableItemStats != null)
+            {
+                return new StackableItem(stackableItemStats);
+            }
             ItemStats itemStats = stats as ItemStats;
             if (itemStats != null)
             {

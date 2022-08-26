@@ -22,6 +22,7 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI ItemWeightText;
         [SerializeField] TextMeshProUGUI ShapeTypeText;
         [SerializeField] List<TextMeshProUGUI> ItemModifiersTexts;
+        [SerializeField] TextMeshProUGUI QuantityText;
 
         [Inject]
         public void Init(IGameManager gameManager)
@@ -75,6 +76,8 @@ namespace InventoryQuest.UI
 
                 }
             }
+            var stackableItem = item as IStackable;
+            QuantityText.text = stackableItem is null ? "" : $"Qty: {stackableItem.Quantity}";
         }
     }
 }

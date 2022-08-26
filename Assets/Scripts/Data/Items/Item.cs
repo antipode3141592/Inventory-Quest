@@ -7,15 +7,6 @@ namespace Data.Items
 {
     public class Item: IItem
     {
-        public string GuId { get; }
-        public string Id { get; }
-
-        public Shape Shape { get; }
-
-        public Sprite Sprite { get; set; }
-
-        public Rarity Rarity { get; }
-
         public Item(IItemStats itemStats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -24,6 +15,15 @@ namespace Data.Items
             Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
             Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
         }
+
+        public string GuId { get; }
+        public string Id { get; }
+
+        public Shape Shape { get; }
+
+        public Sprite Sprite { get; set; }
+
+        public Rarity Rarity { get; }
 
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;

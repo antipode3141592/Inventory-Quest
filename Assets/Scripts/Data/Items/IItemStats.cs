@@ -16,9 +16,5 @@ namespace Data.Items
         public string SpritePath { get; }
 
         public bool IsQuestItem { get; }
-
-        public bool IsStackable { get; }
-
-        public int MaxStackSize { get; }
     }
 }

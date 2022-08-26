@@ -86,22 +86,39 @@ namespace Data.Items
 
         void AfterItemPlaced(IItem item)
         {
-            if (!item.Stats.IsStackable)
+            IStackable stackable = item as IStackable;
+            if (stackable is null)
                 return;
             HashSet<string> _neighboors = HashSetPool<string>.Get(); // new();
             if (MatchingNeighboors(item, _neighboors))
             {
-                if (_neighboors.Count >= item.Stats.MaxStackSize)
+                if (_neighboors.Count >= stackable.MinStackSize)
+                {
                     OnStackComplete?.Invoke(this, _neighboors);
+                    CreateStack(_neighboors.ToList(), Contents[item.GuId].AnchorPosition);
+                }
                 else
                     OnMatchingItems?.Invoke(this, _neighboors);
             }
             HashSetPool<string>.Release(_neighboors);
         }
 
+        void CreateStack(List<string> items, Coor anchorPosition)
+        {
+            StackableItemStats itemStats = Contents[items[0]].Item.Stats as StackableItemStats;
+            if (itemStats is null)
+                return;
+            itemStats.Quantity = items.Count;
+            var item = ItemFactory.GetItem(itemStats);
+            for (int i = 0; i < items.Count; i++)
+                TryTake(item: out _, target: Contents[items[i]].AnchorPosition);
+            TryPlace(item, anchorPosition);
+        }
+
         public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
         {
-            if (!item.Stats.IsStackable)
+            IStackable stackable = item as IStackable;
+            if (stackable is null)
                 return false;
             matchingNeighboors.Add(item.GuId);
             int startingCount = matchingNeighboors.Count;

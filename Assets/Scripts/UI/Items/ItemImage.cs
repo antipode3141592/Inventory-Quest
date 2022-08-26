@@ -12,14 +12,14 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI quantityText;
         [SerializeField] Color quantityVisible;
 
-        public void SetItem(Sprite sprite, int quantity = 0)
+        public void SetItem(Sprite sprite, int quantity = 1)
         {
             Image.sprite = sprite;
 
             Image.color = Color.white;
             Image.SetNativeSize();
 
-            if (quantity > 0)
+            if (quantity > 1)
             {
                 quantityImage.color = quantityVisible;
                 quantityText.text = $"{quantity}";

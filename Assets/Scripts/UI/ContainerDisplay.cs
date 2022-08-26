@@ -28,7 +28,7 @@ namespace InventoryQuest.UI
 
         [SerializeField] ContactFilter2D _contactFilter;
 
-        private IContainer myContainer;
+        IContainer myContainer;
         public IContainer MyContainer 
         {
             get { return myContainer; } 
@@ -147,11 +147,13 @@ namespace InventoryQuest.UI
             if (MyContainer is null) return;
             foreach(var content in MyContainer.Contents)
             {
-                Facing facing = content.Value.Item.Shape.CurrentFacing;
+                IItem item = content.Value.Item;
+                Facing facing = item.Shape.CurrentFacing;
                 Coor AnchorPosition = content.Value.AnchorPosition;
-                Sprite sprite = content.Value.Item.Sprite;
-                int quantity = content.Value.Quantity;
+                Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
+                var stackableItem = item as IStackable;
+                int quantity = stackableItem is null ? 1 : stackableItem.Quantity;
                 itemImage.SetItem(sprite, quantity);
                 ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
                 itemImages.Add(itemImage);
