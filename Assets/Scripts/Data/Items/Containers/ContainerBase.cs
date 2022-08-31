@@ -95,7 +95,7 @@ namespace Data.Items
                 if (_neighboors.Count >= stackable.MinStackSize)
                 {
                     OnStackComplete?.Invoke(this, _neighboors);
-                    CreateStack(_neighboors.ToList(), Contents[item.GuId].AnchorPosition);
+                    CreateStack(_neighboors.ToList(), Contents[item.GuId].AnchorPosition, Contents[item.GuId].Item.Shape.CurrentFacing);
                 }
                 else
                     OnMatchingItems?.Invoke(this, _neighboors);
@@ -103,15 +103,16 @@ namespace Data.Items
             HashSetPool<string>.Release(_neighboors);
         }
 
-        void CreateStack(List<string> items, Coor anchorPosition)
+        void CreateStack(List<string> items, Coor anchorPosition, Facing facing)
         {
             StackableItemStats itemStats = Contents[items[0]].Item.Stats as StackableItemStats;
             if (itemStats is null)
                 return;
             itemStats.Quantity = items.Count;
             var item = ItemFactory.GetItem(itemStats);
+            item.Shape.CurrentFacing = facing;
             for (int i = 0; i < items.Count; i++)
-                TryTake(item: out _, target: Contents[items[i]].AnchorPosition);
+                TryTake(item: out _, target: Contents[items[i]].GridSpaces[0]);
             TryPlace(item, anchorPosition);
         }
 
@@ -142,13 +143,10 @@ namespace Data.Items
                     {
                         if (!IsPointInGrid(new(r, c)))
                             return;
-                        //Debug.Log($"Grid {Grid.GetLength(0)},{Grid.GetLength(1)} and r,c = {row},{column}, with Dimension {Dimensions.row},{Dimensions.column}");
-                        Debug.Log($"checking ({r},{c})...");
                         if (!Grid[r, c].IsOccupied)
                             return;
                         string storedGuId = Grid[r, c].storedItemId;
                         string storedItemId = Contents[storedGuId].Item.Id;
-                        Debug.Log($"   found a {storedItemId} with guid {storedGuId}");
                         if (storedItemId != item.Id)
                             return;
                         if (matchingNeighboors.Count > 0 && matchingNeighboors.Contains(storedGuId))
@@ -180,6 +178,8 @@ namespace Data.Items
 
         public bool TryPlace(IItem item, Coor target)
         {
+            if (Debug.isDebugBuild)
+                Debug.Log($"TryPlace item with guid: {item.GuId}");
             if (IsValidPlacement(item, target))
             {
                 List<Coor> tempPointList = ListPool<Coor>.Get();
@@ -210,6 +210,7 @@ namespace Data.Items
 
         public bool TryTake(out IItem item, Coor target)
         {
+            
             if (IsPointInGrid(target) && Grid[target.row, target.column].IsOccupied)
             {
                 if (Contents.TryGetValue(key: Grid[target.row, target.column].storedItemId, out Content content))
@@ -223,6 +224,8 @@ namespace Data.Items
                     }
                     ListPool<Coor>.Release(content.GridSpaces);
                     OnItemTaken?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal, target, item));
+                    if (Debug.isDebugBuild)
+                        Debug.Log($"TryTake item with guid: {item.GuId}");
                     return true;
                 }
             }
