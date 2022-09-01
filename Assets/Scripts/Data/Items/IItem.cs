@@ -15,5 +15,7 @@ namespace Data.Items
         public Sprite Sprite { get; set; }
 
         public Shape Shape { get; }
+
+        public int Quantity { get; }
     }
 }

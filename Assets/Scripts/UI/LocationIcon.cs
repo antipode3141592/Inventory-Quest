@@ -9,11 +9,13 @@ namespace InventoryQuest.UI
 
         [SerializeField] Image Icon;
         [SerializeField] TextMeshProUGUI LocationName;
+        protected string _locationName;
         
         public void Set(Sprite locationSprite, string locationName)
         {
             Icon.sprite = locationSprite;
             LocationName.text = locationName;
+            _locationName = locationName;
         }
     }
 }

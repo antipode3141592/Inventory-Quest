@@ -1,9 +1,6 @@
 ﻿namespace Data.Encounters
 {
-    public interface IEncounterDataSource
+    public interface IEncounterDataSource: IDataSource<IEncounterStats>
     {
-        public IEncounterStats GetEncounterById(string id);
-
-        public IEncounterStats GetRandomEncounter();
     }
 }

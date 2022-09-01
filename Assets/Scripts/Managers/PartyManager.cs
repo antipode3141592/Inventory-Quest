@@ -38,7 +38,11 @@ namespace InventoryQuest.Managers
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("questitem_1")),
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
-                    ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji"))
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("ore_bloom_common")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("ore_bloom_common")),
+                    ItemFactory.GetItem(_itemDataSource.GetItemStats("ore_bloom_common"))
+
                 }
             );
             //Minion = CharacterFactory.GetCharacter(_characterDataSource.GetCharacterStats("Minion"),

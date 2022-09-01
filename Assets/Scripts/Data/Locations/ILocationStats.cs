@@ -13,5 +13,7 @@ namespace Data.Locations
         public IList<string> CharacterIds { get; }
 
         public IList<string> LocationIds { get; }
+
+        public bool IsKnown { get; }
     }
 }

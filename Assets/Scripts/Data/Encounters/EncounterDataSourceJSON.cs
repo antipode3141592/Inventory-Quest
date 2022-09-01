@@ -14,22 +14,22 @@ namespace Data.Encounters
         public EncounterDataSourceJSON(string filename = "encounterData.json")
         {
             _filename = filename;
-            LoadEncounterData();
+            LoadData();
         }
 
-        public IEncounterStats GetEncounterById(string id)
+        public IEncounterStats GetById(string id)
         {
             if (!encounterDictionary.ContainsKey(id)) return null;
             return encounterDictionary[id];
         }
 
-        public IEncounterStats GetRandomEncounter()
+        public IEncounterStats GetRandom()
         {
             int i = UnityEngine.Random.Range(0, encounterDictionary.Count);
             return encounterDictionary.ElementAt(i).Value;
         }
 
-        public void SaveEncounterData()
+        public void SaveData()
         {
             string saveFilename = PrependPersistencePath(_filename);
 
@@ -47,7 +47,7 @@ namespace Data.Encounters
             }
         }
 
-        void LoadEncounterData()
+        public void LoadData()
         {
             string loadFileName = PrependPersistencePath(_filename);
             if (File.Exists(loadFileName))

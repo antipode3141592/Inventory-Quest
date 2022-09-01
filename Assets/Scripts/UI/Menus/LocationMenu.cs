@@ -14,12 +14,13 @@ namespace InventoryQuest.UI.Menus
         IGameStateDataSource _gameStateDataSource;
 
         [SerializeField] TextMeshProUGUI pathNameText;
-        [SerializeField] PressAndHoldButton startAdventureButton;
         [SerializeField] TextMeshProUGUI locationName;
         [SerializeField] Image locationThumbnailIcon;
         [SerializeField] Image locationBackground;
-        [SerializeField] Image destinationLocationImage;
-        [SerializeField] TextMeshProUGUI destinationLocationText;
+        //[SerializeField] Image destinationLocationImage;
+        //[SerializeField] TextMeshProUGUI destinationLocationText;
+
+        [SerializeField] PressAndHoldButton MainMapButton;
 
         [Inject]
         public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
@@ -31,18 +32,33 @@ namespace InventoryQuest.UI.Menus
         protected override void Awake()
         {
             base.Awake();
-            startAdventureButton.OnPointerHoldSuccess += StartAdventure;
             _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
-            _gameStateDataSource.OnDestinationLocationSet += OnDestinationSelectedHandler;
+            //_gameStateDataSource.OnDestinationLocationSet += OnDestinationSelectedHandler;
+            MainMapButton.OnPointerHoldSuccess += OnMainMapSelected;
         }
 
-        void OnDestinationSelectedHandler(object sender, string e)
+        void OnMainMapSelected(object sender, EventArgs e)
         {
-            var stats = _gameStateDataSource.DestinationLocation.Stats;
-            destinationLocationText.text = stats.DisplayName;
-            Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
-            destinationLocationImage.sprite = locationIcon;
+            _adventureManager.Idle.StartPath();
         }
+
+        //void OnDestinationSelectedHandler(object sender, string e)
+        //{
+        //    if (e is not "")
+        //    {
+        //        var stats = _gameStateDataSource.DestinationLocation.Stats;
+        //        destinationLocationText.text = stats.DisplayName;
+        //        Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
+        //        destinationLocationImage.sprite = locationIcon;
+        //        destinationLocationImage.color = Color.white;
+        //    }
+        //    else
+        //    {
+        //        destinationLocationText.text = "";
+        //        destinationLocationImage.sprite = null;
+        //        destinationLocationImage.color = Color.clear;
+        //    }
+        //}
 
         void OnCurrentLocationLoadedHandler(object sender, string e)
         {
@@ -55,6 +71,11 @@ namespace InventoryQuest.UI.Menus
         void StartAdventure(object sender, EventArgs e)
         {
             _adventureManager.Adventuring.StartAdventure();
+        }
+
+        public void OpenWorldMap()
+        {
+
         }
     }
 }

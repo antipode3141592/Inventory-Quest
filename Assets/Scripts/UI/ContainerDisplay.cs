@@ -152,8 +152,7 @@ namespace InventoryQuest.UI
                 Coor AnchorPosition = content.Value.AnchorPosition;
                 Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
-                var stackableItem = item as IStackable;
-                int quantity = stackableItem is null ? 1 : stackableItem.Quantity;
+                int quantity = item.Quantity;
                 itemImage.SetItem(sprite, quantity);
                 ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
                 itemImages.Add(itemImage);

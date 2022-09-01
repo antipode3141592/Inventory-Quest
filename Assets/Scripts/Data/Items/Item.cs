@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Data.Items
 
 {
-    public class Item: IItem
+    public class Item : IItem
     {
         public Item(IItemStats itemStats)
         {
@@ -14,6 +14,7 @@ namespace Data.Items
             Stats = itemStats;
             Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
             Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
+            Quantity = 1;
         }
 
         public string GuId { get; }
@@ -27,6 +28,8 @@ namespace Data.Items
 
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
+
+        public int Quantity {get; }
 
         public IItemStats Stats { get; }
     }

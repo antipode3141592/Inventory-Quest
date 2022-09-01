@@ -55,7 +55,7 @@ namespace InventoryQuest.Managers
             void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
             //void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
 
-            Func<bool> BeginPathfinding() => () => Idle.BeginPathfinding;
+            Func<bool> BeginPathfinding() => () => Idle.EndIdle;
             Func<bool> BeginAdventure() => () => Pathfinding.BeginAdventure;
             Func<bool> EndAdventure() => () => Adventuring.EndAdventure;
         }

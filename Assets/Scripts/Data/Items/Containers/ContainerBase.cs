@@ -17,6 +17,7 @@ namespace Data.Items
             Shape = ShapeFactory.GetShape(stats.ShapeType, stats.DefaultFacing);
             Contents = new Dictionary<string, Content>();
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
+            Quantity = 1;
         }
 
         public Coor Dimensions { get; protected set; }
@@ -31,6 +32,8 @@ namespace Data.Items
         public IItemStats Stats { get; protected set; }
         public Shape Shape { get; protected set; }
         public Sprite Sprite { get; set; }
+
+        public int Quantity { get; }
 
         public bool IsEmpty => ContainerIsEmpty();
 
@@ -108,9 +111,13 @@ namespace Data.Items
             StackableItemStats itemStats = Contents[items[0]].Item.Stats as StackableItemStats;
             if (itemStats is null)
                 return;
-            itemStats.Quantity = items.Count;
-            var item = ItemFactory.GetItem(itemStats);
+            StackableItem item = ItemFactory.GetItem(itemStats) as StackableItem;
+
             item.Shape.CurrentFacing = facing;
+            int total = 0;
+            foreach(var _item in items)
+                total += Contents[_item].Item.Quantity;
+            item.Quantity = items.Count;
             for (int i = 0; i < items.Count; i++)
                 TryTake(item: out _, target: Contents[items[i]].GridSpaces[0]);
             TryPlace(item, anchorPosition);

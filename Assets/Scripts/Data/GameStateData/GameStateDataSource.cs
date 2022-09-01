@@ -1,7 +1,6 @@
 ﻿using Data.Encounters;
 using Data.Locations;
 using System;
-using Zenject;
 
 namespace Data
 {
@@ -26,13 +25,13 @@ namespace Data
 
         public void SetCurrentLocation(string id)
         {
-            CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetLocationById(id));
+            CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
             OnCurrentLocationSet?.Invoke(this, id);
         }
 
         public void SetDestinationLocation(string id)
         {
-            DestinationLocation = LocationFactory.GetLocation(_locationDataSource.GetLocationById(id));
+            DestinationLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
             OnDestinationLocationSet?.Invoke(this, id);
         }
 

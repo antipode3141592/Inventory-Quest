@@ -5,7 +5,7 @@ namespace Data.Items
 {
     public class StackableItemStats: IItemStats
     {
-        public StackableItemStats(string id, string description, ShapeType shapeType, float weight, float goldValue, string spritePath, int quantity = 1, int minStackSize = 4, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuestItem = false)
+        public StackableItemStats(string id, string description, ShapeType shapeType, float weight, float goldValue, string spritePath, int minStackSize = 4, Facing defaultFacing = Facing.Right, Rarity rarity = Rarity.common, bool isQuestItem = false)
         {
             Id = id;
             Description = description;
@@ -16,7 +16,6 @@ namespace Data.Items
             GoldValue = goldValue;
             SpritePath = spritePath;
             IsQuestItem = isQuestItem;
-            Quantity = quantity;
             MinStackSize = minStackSize;
         }
 

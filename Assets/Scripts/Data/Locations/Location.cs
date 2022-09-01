@@ -5,8 +5,6 @@ namespace Data.Locations
 {
     public class Location : ILocation
     {
-
-
         public IList<ILocation> Locations { get; } = new List<ILocation>();
 
         public IList<ICharacter> Characters { get; } = new List<ICharacter>();
@@ -27,7 +25,7 @@ namespace Data.Locations
             }
             foreach (var location in Stats.LocationIds)
             {
-                Locations.Add(LocationFactory.GetLocation(locationData.GetLocationById(location)));
+                Locations.Add(LocationFactory.GetLocation(locationData.GetById(location)));
             }
         }
     }

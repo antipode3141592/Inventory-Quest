@@ -69,7 +69,6 @@ namespace InventoryQuest.UI
 
         public void UpdateRequirements(object sender, EventArgs e)
         {
-            Debug.Log($"UpdateRequirements() responding to {sender.GetType().Name}");
             if (SkillEncounter is null) return;
             for (int i = 0; i < SkillEncounter.SkillCheckRequirements.Count; i++)
             {

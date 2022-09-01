@@ -48,6 +48,8 @@ namespace InventoryQuest.Managers
 
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+
+            Debug.Log($"{Application.persistentDataPath}");
         }
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)

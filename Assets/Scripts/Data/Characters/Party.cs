@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Data.Characters
 
@@ -17,7 +16,6 @@ namespace Data.Characters
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)
         {
-            Debug.Log($"OnStatsUpdated received from {sender.GetType().Name}"); ;
             OnPartyMemberStatsUpdated?.Invoke(this, e);
         }
 

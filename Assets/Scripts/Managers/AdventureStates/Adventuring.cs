@@ -61,8 +61,8 @@ namespace InventoryQuest.Managers
         void LoadEncounter(string id)
         {
             if (id == string.Empty)
-                _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetRandomEncounter());
-            _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetEncounterById(id));
+                _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetRandom());
+            _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetById(id));
         }
 
         void OnEncounterCompleteHandler(object sender, string e)
@@ -81,6 +81,8 @@ namespace InventoryQuest.Managers
             }
             else
             {
+                _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Stats.Id);
+                _gameStateDataSource.SetDestinationLocation("");
                 EndAdventure = true;
             }
         }

@@ -76,8 +76,7 @@ namespace InventoryQuest.UI
 
                 }
             }
-            var stackableItem = item as IStackable;
-            QuantityText.text = stackableItem is null ? "" : $"Qty: {stackableItem.Quantity}";
+            QuantityText.text = item is not IStackable ? "" : $"Qty: {item.Quantity}";
         }
     }
 }

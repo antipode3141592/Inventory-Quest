@@ -38,7 +38,7 @@ namespace InventoryQuest.Managers
             _lootTableDataSource = lootTableDataSource;
         }
 
-        private void Awake()
+        void Awake()
         {
             _lootTable = new LootTable(_lootTableDataSource);
         }

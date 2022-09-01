@@ -44,7 +44,7 @@ namespace InventoryQuest.UI.Quests
                 DeliveryItems.Add(obj);
             }
 
-            ILocationStats locationStats = _locationDataSource.GetLocationById(deliveryQuestStats.SinkId);
+            ILocationStats locationStats = _locationDataSource.GetById(deliveryQuestStats.SinkId);
             Sprite locationSprite = Resources.Load<Sprite>(locationStats.ThumbnailSpritePath);
             DeliveryLocationImage.sprite = locationSprite;
             DeliveryLocationText.text = locationStats.DisplayName;

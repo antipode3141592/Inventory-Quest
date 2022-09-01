@@ -12,6 +12,13 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI quantityText;
         [SerializeField] Color quantityVisible;
 
+
+        void Awake()
+        {
+            quantityImage.color = Color.clear;
+            quantityText.text = "";
+        }
+
         public void SetItem(Sprite sprite, int quantity = 1)
         {
             Image.sprite = sprite;

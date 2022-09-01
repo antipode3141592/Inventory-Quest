@@ -24,6 +24,8 @@ namespace Data.Items
         public IList<StatModifier> Modifiers { get ; set ; }
         public Sprite Sprite { get; set; }
 
+        public int Quantity { get; }
+
         public EquipableItem(EquipableItemStats stats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -33,6 +35,7 @@ namespace Data.Items
             Modifiers = stats.Modifiers;
             SlotType = stats.SlotType;
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
+            Quantity = 1;
         }
     }
 }

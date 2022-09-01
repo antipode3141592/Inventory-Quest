@@ -1,7 +1,6 @@
 namespace Data.Locations
 {
-    public interface ILocationDataSource
+    public interface ILocationDataSource: IDataSource<ILocationStats>
     {
-        public ILocationStats GetLocationById(string id);
     }
 }

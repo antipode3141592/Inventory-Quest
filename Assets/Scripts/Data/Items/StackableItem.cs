@@ -15,7 +15,7 @@ namespace Data.Items
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
             Rarity = stats.Rarity;
             Stats = stats;
-            Quantity = stats.Quantity;
+            Quantity = 1;
             MinStackSize = stats.MinStackSize;
         }
 

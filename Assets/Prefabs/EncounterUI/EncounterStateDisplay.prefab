@@ -67,15 +67,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5, g: 0.2990566, b: 0.48959607, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 0079609fe8f7f9847a0398997188546c, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -97,15 +97,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
-    m_Right: 8
+    m_Left: 3
+    m_Right: 3
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -113,8 +113,8 @@ MonoBehaviour:
   paddingSizerFallback:
     screenConfigName: 
     OptimizedSize:
-      left: 6
-      right: 6
+      left: 4
+      right: 4
       top: 0
       bottom: 0
     MinSize:
@@ -148,7 +148,43 @@ MonoBehaviour:
       - Mode: 1
         Impact: 1
   customPaddingSizers:
-    items: []
+    items:
+    - screenConfigName: Landscape
+      OptimizedSize:
+        left: 4
+        right: 4
+        top: 0
+        bottom: 0
+      MinSize:
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+      MaxSize:
+        left: 1000
+        right: 1000
+        top: 1000
+        bottom: 1000
+      ModLeft:
+        ExponentialScale: 1
+        SizeModifiers:
+        - Mode: 1
+          Impact: 1
+      ModRight:
+        ExponentialScale: 1
+        SizeModifiers:
+        - Mode: 1
+          Impact: 1
+      ModTop:
+        ExponentialScale: 1
+        SizeModifiers:
+        - Mode: 1
+          Impact: 1
+      ModBottom:
+        ExponentialScale: 1
+        SizeModifiers:
+        - Mode: 1
+          Impact: 1
   spacingSizerFallback:
     screenConfigName: 
     OptimizedSize: 0
@@ -168,7 +204,7 @@ MonoBehaviour:
     ChildForceExpandWidth: 1
     ChildScaleWidth: 0
     ChildScaleHeight: 0
-    ChildControlWidth: 0
+    ChildControlWidth: 1
     ChildControlHeight: 0
     Orientation: 0
     screenConfigName: Fallback
@@ -232,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -290,6 +326,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EncounterState
       objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
 --- !u!224 &1966995486792496491 stripped
@@ -345,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -407,6 +447,10 @@ PrefabInstance:
       propertyPath: representedState
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
 --- !u!114 &372190390922021574 stripped
@@ -462,7 +506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -524,6 +568,10 @@ PrefabInstance:
       propertyPath: representedState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
 --- !u!114 &372190391335551187 stripped
@@ -579,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -641,6 +689,10 @@ PrefabInstance:
       propertyPath: representedState
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
 --- !u!114 &372190391568860924 stripped
@@ -696,7 +748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -758,6 +810,10 @@ PrefabInstance:
       propertyPath: representedState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
 --- !u!114 &372190391618449594 stripped
@@ -813,7 +869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1832066491773114797, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -874,6 +930,10 @@ PrefabInstance:
     - target: {fileID: 4019317054141269754, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
       propertyPath: representedState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5628476248959754050, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}
+      propertyPath: m_fontSize
+      value: 14.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f3fb44296602b4cb22f7a4a84f2f30, type: 3}

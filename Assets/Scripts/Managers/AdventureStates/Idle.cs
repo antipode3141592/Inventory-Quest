@@ -8,11 +8,11 @@ namespace InventoryQuest.Managers
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
 
-        public bool BeginPathfinding;
+        public bool EndIdle;
 
         public void OnEnter()
         {
-            BeginPathfinding = false;
+            EndIdle = false;
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
@@ -28,7 +28,7 @@ namespace InventoryQuest.Managers
 
         public void StartPath()
         {
-            BeginPathfinding = true;
+            EndIdle = true;
         }
     }
 }

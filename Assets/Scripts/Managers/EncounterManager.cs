@@ -26,7 +26,7 @@ namespace InventoryQuest.Managers
         bool isResolving = false;
         bool isEnding = false;
 
-        IEncounter currentEncounter;
+        IEncounter currentEncounter = null;
         EncounterStates currentState;
         EncounterStates CurrentState
         {

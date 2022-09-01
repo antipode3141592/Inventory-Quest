@@ -67,7 +67,7 @@ namespace Data.Encounters
 
         public IPathStats GetPathForStartAndEndLocations(string startLocationId, string endLocationId)
         {
-            var stats = pathStats.Values.First<IPathStats>(x => x.StartLocationId == startLocationId && x.EndLocationId == endLocationId);
+            var stats = pathStats.Values.FirstOrDefault<IPathStats>(x => x.StartLocationId == startLocationId && x.EndLocationId == endLocationId);
             if (stats is null) return null;
             return stats;
         }

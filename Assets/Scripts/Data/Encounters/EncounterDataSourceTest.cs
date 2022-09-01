@@ -101,13 +101,13 @@ namespace Data.Encounters
         }
 
 
-        public IEncounterStats GetEncounterById(string id)
+        public IEncounterStats GetById(string id)
         {
             if(!encounterDictionary.ContainsKey(id)) return null;
             return encounterDictionary[id];
         }
 
-        public IEncounterStats GetRandomEncounter()
+        public IEncounterStats GetRandom()
         {
             int i = UnityEngine.Random.Range(0, encounterDictionary.Count);
             return encounterDictionary.ElementAt(i).Value;
