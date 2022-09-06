@@ -2,6 +2,7 @@
 using Data.Encounters;
 using Data.Locations;
 using FiniteStateMachine;
+using InventoryQuest.Managers.States;
 using System;
 using UnityEngine;
 
@@ -29,9 +30,6 @@ namespace InventoryQuest.Managers
         public ILocation DestinationLocation { get; protected set; }
         public ILocation CurrentLocation { get; protected set; }
 
-        public event EventHandler<string> OnCurrentLocationSet;
-        public event EventHandler<string> OnDestinationLocationSet;
-
         [Inject]
         public void Init(IEncounterDataSource encounterDataSource, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
@@ -55,7 +53,7 @@ namespace InventoryQuest.Managers
             void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
             //void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
 
-            Func<bool> BeginPathfinding() => () => Idle.EndIdle;
+            Func<bool> BeginPathfinding() => () => Idle.EndState;
             Func<bool> BeginAdventure() => () => Pathfinding.BeginAdventure;
             Func<bool> EndAdventure() => () => Adventuring.EndAdventure;
         }

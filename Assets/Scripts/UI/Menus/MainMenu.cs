@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 using InventoryQuest;
 using InventoryQuest.Managers;
+using TMPro;
 
 namespace InventoryQuest.UI.Menus
 {
@@ -10,16 +11,15 @@ namespace InventoryQuest.UI.Menus
     {
         IAdventureManager _adventureManager;
 
-        MenuController _menuController;
+        [SerializeField] TextMeshProUGUI mainText;
+
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
 
-        public void Init(MenuController menuController, IAdventureManager adventureManager)
+        public void Init(IAdventureManager adventureManager)
         {
-            _menuController = menuController;
-            _adventureManager = adventureManager;   
-            
+            _adventureManager = adventureManager;      
         }
 
         protected override void Awake()
@@ -36,7 +36,7 @@ namespace InventoryQuest.UI.Menus
 
         public void Continue()
         {
-            _adventureManager.Idle.StartPath();
+            _adventureManager.Idle.Continue();
         }
     }
 }

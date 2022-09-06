@@ -36,10 +36,10 @@ namespace InventoryQuest.UI
             _encounterManager = encounterManager;
         }
 
-        public void Awake()
+        void Start()
         {
-            _encounterManager.OnEncounterResolveSuccess += OnStatsUpdatedHandler;
-            _encounterManager.OnEncounterResolveFailure += OnStatsUpdatedHandler;
+            _encounterManager.Resolving.OnEncounterResolveSuccess += OnStatsUpdatedHandler;
+            _encounterManager.Resolving.OnEncounterResolveFailure += OnStatsUpdatedHandler;
         }
 
         public PlayableCharacter CurrentCharacter

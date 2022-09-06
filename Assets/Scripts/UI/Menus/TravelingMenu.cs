@@ -1,10 +1,5 @@
 using Data;
 using InventoryQuest.Managers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI.Menus
@@ -16,8 +11,6 @@ namespace InventoryQuest.UI.Menus
         IEncounterManager _encounterManager;
 
         PartyDisplay partyDisplay;
-
-        [SerializeField] Button continueButton;
 
         [Inject]
 
@@ -33,7 +26,6 @@ namespace InventoryQuest.UI.Menus
         {
             base.Awake();
             partyDisplay = GetComponentInChildren<PartyDisplay>();
-            continueButton.onClick.AddListener(Continue);
         }
 
         public override void Show()
@@ -52,11 +44,6 @@ namespace InventoryQuest.UI.Menus
         void PartyMemberSelected(object sender, MessageEventArgs e)
         {
             
-        }
-
-        public void Continue()
-        {
-            _encounterManager.Continue();
         }
     }
 }

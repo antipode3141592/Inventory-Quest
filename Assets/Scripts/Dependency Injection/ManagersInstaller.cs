@@ -1,9 +1,5 @@
-using Data.Characters;
-using Data.Encounters;
-using Data.Items;
-using Data.Rewards;
 using InventoryQuest.Managers;
-
+using InventoryQuest.Traveling;
 using Zenject;
 
 namespace InventoryQuest
@@ -24,7 +20,8 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IQuestManager>().To<QuestManager>()
                 .FromComponentInHierarchy().AsSingle();
-            
+            Container.Bind<IPartyController>().To<TravelingPartyController>()
+                .FromComponentInHierarchy().AsSingle();
         }
     }
 }

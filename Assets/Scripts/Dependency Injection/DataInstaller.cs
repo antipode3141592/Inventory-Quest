@@ -17,6 +17,7 @@ namespace InventoryQuest
 
             LocationDataSourceTest location = new LocationDataSourceTest();
             PathDataSourceTest path = new PathDataSourceTest();
+            EncounterDataSourceJSON encounterSource = new EncounterDataSourceJSON();
 
             Container.Bind<ILocationDataSource>()
                 .FromInstance(location).AsSingle();
@@ -25,7 +26,7 @@ namespace InventoryQuest
             Container.Bind<ICharacterDataSource>()
                 .FromInstance(new CharacterDataSourceTest()).AsSingle();
             Container.Bind<IEncounterDataSource>()
-                .FromInstance(new EncounterDataSourceJSON()).AsSingle();
+                .FromInstance(encounterSource).AsSingle();
             Container.Bind<IRewardDataSource>()
                 .FromInstance(new RewardDataSourceTest()).AsSingle();
             Container.Bind<ILootTableDataSource>()
@@ -35,7 +36,7 @@ namespace InventoryQuest
             Container.Bind<IQuestDataSource>()
                 .FromInstance(new QuestDataSourceTest()).AsSingle();
             Container.Bind<IGameStateDataSource>()
-                .FromInstance(new GameStateDataSource(location, path)).AsSingle();
+                .FromInstance(new GameStateDataSource(location, path, encounterSource)).AsSingle();
         }
     }
 }

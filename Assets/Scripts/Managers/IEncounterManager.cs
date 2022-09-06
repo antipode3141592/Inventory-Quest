@@ -1,20 +1,17 @@
 ﻿using Data.Encounters;
 using System;
+using InventoryQuest.Managers.States;
 
 namespace InventoryQuest.Managers
 {
     public interface IEncounterManager
     {
-        IEncounter CurrentEncounter { get; set; }
 
-        public event EventHandler<string> OnEncounterLoaded;
-        public event EventHandler<string> OnEncounterStart;
-        public event EventHandler<string> OnEncounterResolveStart;
-        public event EventHandler<string> OnEncounterResolveSuccess;
-        public event EventHandler<string> OnEncounterResolveFailure;
-        public event EventHandler<string> OnEncounterComplete;
-        public event EventHandler<EncounterStates> OnEncounterStateChanged;
-
-        void Continue();
+        public Idle Idle { get; }
+        public Wayfairing Wayfairing { get; }
+        public Loading Loading { get; }
+        public Preparing Preparing { get; }
+        public Resolving Resolving { get; }
+        public CleaningUp CleaningUp { get; }
     }
 }

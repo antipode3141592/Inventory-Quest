@@ -32,11 +32,9 @@ namespace InventoryQuest.UI.Components
 
         void Start()
         {
-            _encounterManager.OnEncounterLoaded += OnEncounterLoadedHandler;
-            _encounterManager.OnEncounterResolveStart += OnEncounterResolveStartHandler;
-            _encounterManager.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
-            _encounterManager.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
-            _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
+            _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
+            _encounterManager.Resolving.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
+            _encounterManager.Resolving.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
 
 
             _adventureManager.Adventuring.StateEntered += OnEncounterListGeneratedHandler;
@@ -51,10 +49,6 @@ namespace InventoryQuest.UI.Components
             {
                 adventureEncounterMarkers[i].gameObject.SetActive(false);
             }
-        }
-
-        void OnEncounterCompleteHandler(object sender, string e)
-        {
         }
 
         void OnEncounterListGeneratedHandler(object sender, EventArgs e)
@@ -93,10 +87,6 @@ namespace InventoryQuest.UI.Components
                 if (marker.EncounterId == e)
                     marker.AdventureIcon.color = UIPreferences.TextBuffColor;
             }
-        }
-
-        void OnEncounterResolveStartHandler(object sender, string e)
-        {
         }
 
         void OnEncounterLoadedHandler(object sender, string e)

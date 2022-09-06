@@ -17,8 +17,6 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] TextMeshProUGUI locationName;
         [SerializeField] Image locationThumbnailIcon;
         [SerializeField] Image locationBackground;
-        //[SerializeField] Image destinationLocationImage;
-        //[SerializeField] TextMeshProUGUI destinationLocationText;
 
         [SerializeField] PressAndHoldButton MainMapButton;
 
@@ -33,32 +31,13 @@ namespace InventoryQuest.UI.Menus
         {
             base.Awake();
             _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
-            //_gameStateDataSource.OnDestinationLocationSet += OnDestinationSelectedHandler;
             MainMapButton.OnPointerHoldSuccess += OnMainMapSelected;
         }
 
         void OnMainMapSelected(object sender, EventArgs e)
         {
-            _adventureManager.Idle.StartPath();
+            _adventureManager.Idle.Continue();
         }
-
-        //void OnDestinationSelectedHandler(object sender, string e)
-        //{
-        //    if (e is not "")
-        //    {
-        //        var stats = _gameStateDataSource.DestinationLocation.Stats;
-        //        destinationLocationText.text = stats.DisplayName;
-        //        Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
-        //        destinationLocationImage.sprite = locationIcon;
-        //        destinationLocationImage.color = Color.white;
-        //    }
-        //    else
-        //    {
-        //        destinationLocationText.text = "";
-        //        destinationLocationImage.sprite = null;
-        //        destinationLocationImage.color = Color.clear;
-        //    }
-        //}
 
         void OnCurrentLocationLoadedHandler(object sender, string e)
         {

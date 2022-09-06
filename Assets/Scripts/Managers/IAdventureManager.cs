@@ -1,4 +1,4 @@
-﻿using FiniteStateMachine;
+﻿using InventoryQuest.Managers.States;
 
 namespace InventoryQuest.Managers
 {

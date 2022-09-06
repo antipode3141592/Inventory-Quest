@@ -1,6 +1,8 @@
+using Data;
 using Data.Encounters;
 using InventoryQuest.Managers;
 using InventoryQuest.UI.Components;
+using InventoryQuest.UI.Menus;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,15 +11,14 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class EncounterDisplayController : MonoBehaviour
+    public class EncounterDisplayController : MonoBehaviour, IOnMenuShow
     {
         IEncounterManager _encounterManager;
+        IGameStateDataSource _gameStateDataSource;
 
 
         public TextMeshProUGUI NameText;
         public TextMeshProUGUI DescriptionText;
-        public TextMeshProUGUI EnounterTypeText;
-        public Image ResultsImage;
 
         [SerializeField] PressAndHoldButton continueButton;
 
@@ -30,58 +31,42 @@ namespace InventoryQuest.UI
         //[SerializeField] CraftingEncounterDisplay craftingEncounterDisplay;
 
         [Inject]
-        public void Init(IEncounterManager encounterManager)
+        public void Init(IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
             _encounterManager = encounterManager;
+            _gameStateDataSource = gameStateDataSource;
         }
 
         void Awake()
         {
             ClearDisplay();
-            continueButton.OnPointerHoldSuccess += Continue;
+        }
 
+        void Start()
+        {
+            continueButton.OnPointerHoldSuccess += Continue;
+            _encounterManager.Loading.OnEncounterLoaded += DisplayEncounter;
+            _encounterManager.Resolving.OnEncounterResolveFailure += DisplayFailure;
+            _encounterManager.Resolving.OnEncounterResolveSuccess += DisplaySuccess;
         }
 
         private void Continue(object sender, EventArgs e)
         {
-            _encounterManager.Continue();
-        }
-
-        private void OnEnable()
-        {
-            _encounterManager.OnEncounterLoaded += DisplayEncounter;
-            _encounterManager.OnEncounterResolveFailure += DisplayFailure;
-            _encounterManager.OnEncounterResolveSuccess += DisplaySuccess;
-            _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
-        }
-
-        private void OnDisable()
-        {
-            _encounterManager.OnEncounterLoaded -= DisplayEncounter;
-            _encounterManager.OnEncounterResolveFailure -= DisplayFailure;
-            _encounterManager.OnEncounterResolveSuccess -= DisplaySuccess;
-            _encounterManager.OnEncounterComplete -= OnEncounterCompleteHandler;
-        }
-
-        private void OnEncounterCompleteHandler(object sender, string e)
-        {
-            //ClearDisplay();
+            _encounterManager.Preparing.Continue();
         }
 
         void DisplaySuccess(object sender, string e)
         {
-            ResultsImage.color = UIPreferences.TextBuffColor;
             encounterSuccessDisplay.gameObject.SetActive(true);
             encounterFailureDisplay.gameObject.SetActive(false);
-            encounterSuccessDisplay.SuccessDescriptionText.text = _encounterManager.CurrentEncounter.Stats.SuccessMessage;
+            encounterSuccessDisplay.SuccessDescriptionText.text = _gameStateDataSource.CurrentEncounter.Stats.SuccessMessage;
         }
 
         void DisplayFailure(object sender, string e)
         {
-            ResultsImage.color = UIPreferences.TextDeBuffColor;
             encounterFailureDisplay.gameObject.SetActive(true);
             encounterSuccessDisplay.gameObject.SetActive(false);
-            encounterFailureDisplay.FailureDescriptionText.text = _encounterManager.CurrentEncounter.Stats.FailureMessage;
+            encounterFailureDisplay.FailureDescriptionText.text = _gameStateDataSource.CurrentEncounter.Stats.FailureMessage;
         }
 
         void ClearDisplay()
@@ -89,7 +74,6 @@ namespace InventoryQuest.UI
             Debug.Log($"ClearDisplay()", this);
             NameText.text = "";
             DescriptionText.text = "";
-            EnounterTypeText.text = "";
 
             skillCheckEncounterDisplay.gameObject.SetActive(false);
             restEncounterDisplay.gameObject.SetActive(false);
@@ -105,11 +89,9 @@ namespace InventoryQuest.UI
             encounterFailureDisplay.gameObject.SetActive(false);
             encounterSuccessDisplay.gameObject.SetActive(false);
             Debug.Log($"DisplayEncounter handling...", this);
-            ResultsImage.color = Color.white;
-            var encounter = _encounterManager.CurrentEncounter;
+            var encounter = _gameStateDataSource.CurrentEncounter;
             NameText.text = encounter.Stats.Name;
             DescriptionText.text = encounter.Stats.Description;
-            EnounterTypeText.text = encounter.Stats.Category;
             Debug.Log($"Encounter: {encounter.Stats.Name}, {encounter.Stats.Description}, {encounter.Stats.Category}", this);
             //display encounter details
             SkillCheckEncounter skillEncounter = encounter as SkillCheckEncounter;
@@ -142,6 +124,11 @@ namespace InventoryQuest.UI
                 return;
             }
 
+        }
+
+        public void OnShow()
+        {
+            
         }
     }
 }

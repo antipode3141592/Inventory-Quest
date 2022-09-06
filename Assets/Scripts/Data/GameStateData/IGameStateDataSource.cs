@@ -10,6 +10,10 @@ namespace Data
         public ILocation DestinationLocation { get; }
         public ILocation CurrentLocation { get; }
 
+        public IEncounter CurrentEncounter { get; }
+
+        public int CurrentIndex { get; set; }
+
         public event EventHandler<string> OnCurrentLocationSet;
         public event EventHandler<string> OnDestinationLocationSet;
         public event EventHandler<string> OnCurrentPathSet;
@@ -19,5 +23,7 @@ namespace Data
         public void SetDestinationLocation(string id);
 
         public void SetCurrentPath();
+
+        public void SetCurrentEncounter();
     }
 }

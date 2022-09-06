@@ -3,7 +3,7 @@ using Data.Encounters;
 using FiniteStateMachine;
 using System;
 
-namespace InventoryQuest.Managers
+namespace InventoryQuest.Managers.States
 {
     public class Pathfinding : IState
     {

@@ -43,11 +43,22 @@ namespace InventoryQuest.UI.Menus
                     Debug.Log($"{menu.Key.Name}");
             }
 
-            _encounterManager.OnEncounterStateChanged += OnEncounterStateChanged;
+            _encounterManager.Wayfairing.StateEntered += OnWayfairingStarted;
+            _encounterManager.Preparing.StateEntered += OnPreparingStarted;
 
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+        }
+
+        private void OnPreparingStarted(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(AdventureMenu));
+        }
+
+        private void OnWayfairingStarted(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(TravelingMenu));
         }
 
         IEnumerator Start()
@@ -55,14 +66,6 @@ namespace InventoryQuest.UI.Menus
             yield return new WaitForSeconds(1.5f);
             _loadingScreen.Fade();
             OpenMenu(_mainMenuKey);
-        }
-
-        void OnEncounterStateChanged(object sender, EncounterStates e)
-        {
-            if (e == EncounterStates.Loading)
-                OpenMenu(typeof(TravelingMenu));
-            else if (e == EncounterStates.Preparing)
-                OpenMenu(typeof(AdventureMenu));
         }
 
         void OnPathfindingStartedHandler(object sender, EventArgs e)
@@ -80,7 +83,7 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(LocationMenu));
         }
 
-        public void OpenMenu(Type menuType)
+        void OpenMenu(Type menuType)
         {
             if (menuType.Name == _selectedMenuName)
                 return;

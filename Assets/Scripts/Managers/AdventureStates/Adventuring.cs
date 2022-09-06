@@ -3,7 +3,7 @@ using Data.Encounters;
 using FiniteStateMachine;
 using System;
 
-namespace InventoryQuest.Managers
+namespace InventoryQuest.Managers.States
 {
     public class Adventuring : IState
     {
@@ -12,7 +12,7 @@ namespace InventoryQuest.Managers
         IPathDataSource _pathDataSource;
         IGameStateDataSource _gameStateDataSource;
 
-        int currentIndex;
+
         
         public bool EndAdventure = false;
 
@@ -30,7 +30,6 @@ namespace InventoryQuest.Managers
         {
             EndAdventure = false;
             StartAdventure();
-            _encounterManager.OnEncounterComplete += OnEncounterCompleteHandler;
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
@@ -49,42 +48,7 @@ namespace InventoryQuest.Managers
         {
             _gameStateDataSource.SetCurrentPath();
             if (_gameStateDataSource.CurrentPath == null) return;
-            StartPath();
-        }
-
-        void StartPath()
-        {
-            currentIndex = 0;
-            LoadEncounter(_gameStateDataSource.CurrentPath.EncounterIds[currentIndex]);
-        }
-
-        void LoadEncounter(string id)
-        {
-            if (id == string.Empty)
-                _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetRandom());
-            _encounterManager.CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetById(id));
-        }
-
-        void OnEncounterCompleteHandler(object sender, string e)
-        {
-            BeginNextEncounter();
-        }
-
-        public void BeginNextEncounter()
-        {
-            if (currentIndex < _gameStateDataSource.CurrentPath.Length - 1)
-            {
-                currentIndex++;
-
-                var nextEncounterId = _gameStateDataSource.CurrentPath.EncounterIds[currentIndex];
-                LoadEncounter(nextEncounterId);
-            }
-            else
-            {
-                _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Stats.Id);
-                _gameStateDataSource.SetDestinationLocation("");
-                EndAdventure = true;
-            }
+            _encounterManager.Idle.Continue();
         }
     }
 }

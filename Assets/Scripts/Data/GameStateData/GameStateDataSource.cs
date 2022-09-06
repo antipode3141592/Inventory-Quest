@@ -8,16 +8,21 @@ namespace Data
     {
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
+        IEncounterDataSource _encounterDataSource;
 
-        public GameStateDataSource(ILocationDataSource locationDataSource, IPathDataSource pathDataSource)
+        public GameStateDataSource(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
+            _encounterDataSource = encounterDataSource;
         }
 
         public IPath CurrentPath { get; protected set; }
         public ILocation DestinationLocation { get; protected set; }
         public ILocation CurrentLocation { get; protected set; }
+        public IEncounter CurrentEncounter { get; protected set; }
+
+        public int CurrentIndex { get; set; }
 
         public event EventHandler<string> OnCurrentLocationSet;
         public event EventHandler<string> OnDestinationLocationSet;
@@ -44,5 +49,23 @@ namespace Data
             CurrentPath = PathFactory.GetPath(stats);
             OnCurrentPathSet?.Invoke(this, stats.Id);
         }
+
+        void LoadEncounter(string id)
+        {
+            if (id == string.Empty)
+                CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetRandom());
+            CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetById(id));
+        }
+
+        public void SetCurrentEncounter()
+        {
+            if (CurrentIndex >= CurrentPath.Length) return;
+            string encounterId = CurrentPath.EncounterIds[CurrentIndex];
+            LoadEncounter(encounterId);
+
+        }
+            //    SetCurrentLocation(DestinationLocation.Stats.Id);
+            //    SetDestinationLocation("");
+            //    EndAdventure = true;
     }
 }
