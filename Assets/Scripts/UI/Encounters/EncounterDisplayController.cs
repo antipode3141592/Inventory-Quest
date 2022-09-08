@@ -1,12 +1,12 @@
 using Data;
 using Data.Encounters;
 using InventoryQuest.Managers;
+using InventoryQuest.Managers.States;
 using InventoryQuest.UI.Components;
 using InventoryQuest.UI.Menus;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI
@@ -52,7 +52,10 @@ namespace InventoryQuest.UI
 
         private void Continue(object sender, EventArgs e)
         {
-            _encounterManager.Preparing.Continue();
+            if (_encounterManager.CurrentStateName == typeof(Preparing).Name)
+                _encounterManager.Preparing.Continue();
+            if (_encounterManager.CurrentStateName == typeof(CleaningUp).Name)
+                _encounterManager.CleaningUp.Continue();
         }
 
         void DisplaySuccess(object sender, string e)

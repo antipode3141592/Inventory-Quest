@@ -37,6 +37,7 @@ namespace InventoryQuest.Traveling
             Debug.Log($"MoveAll() called...");
             DistanceMoved = 0f;
             isMoving = true;
+            isIdle = false;
             foreach(var character in partyMembers)
                 character.Move();
 

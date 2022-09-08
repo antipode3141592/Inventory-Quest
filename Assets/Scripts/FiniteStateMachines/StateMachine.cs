@@ -12,6 +12,8 @@ namespace FiniteStateMachine
     {
         IState _currentState;
 
+        public string CurrentStateName => _currentState.GetType().Name;
+
         public event EventHandler<string> OnStateChange;
 
         Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
@@ -38,7 +40,7 @@ namespace FiniteStateMachine
 
             _currentState?.OnExit();
             _currentState = state;
-
+            Debug.Log($"setting new state:  {_currentState}");
             _transitions.TryGetValue(_currentState.GetType(), out _currentTransitions);
             if (_currentTransitions == null)
                 _currentTransitions = EmptyTransitions;

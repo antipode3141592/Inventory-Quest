@@ -8,6 +8,14 @@ namespace InventoryQuest.Managers.States
     {
         IRewardManager _rewardManager;
         IGameStateDataSource _gameStateDataSource;
+        IGroundController _groundController;
+
+        public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource, IGroundController groundController)
+        {
+            _rewardManager = rewardManager;
+            _gameStateDataSource = gameStateDataSource;
+            _groundController = groundController;
+        }
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
@@ -40,7 +48,7 @@ namespace InventoryQuest.Managers.States
             //destroy remaining rewards
             _rewardManager.DestroyRewards();
             //destroy all dropped items
-
+            _groundController.DestroyAllContainedObjects();
             //check for end of path
             _gameStateDataSource.CurrentIndex++;
             if (_gameStateDataSource.CurrentIndex < _gameStateDataSource.CurrentPath.Length)

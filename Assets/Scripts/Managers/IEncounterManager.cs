@@ -6,6 +6,7 @@ namespace InventoryQuest.Managers
 {
     public interface IEncounterManager
     {
+        public string CurrentStateName { get; }
 
         public Idle Idle { get; }
         public Wayfairing Wayfairing { get; }

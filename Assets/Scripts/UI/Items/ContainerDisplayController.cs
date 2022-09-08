@@ -11,17 +11,21 @@ namespace InventoryQuest.UI
     {
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
+        IGroundController _groundController;
+        IEncounterManager _encounterManager;
 
-        [SerializeField]
-        ContainerDisplay characterContainerDisplay;
-        [SerializeField]
-        ContainerDisplay lootContainerDisplay;
+        [SerializeField] ContainerDisplay characterContainerDisplay;
+        [SerializeField] ContainerDisplay lootContainerDisplay;
+        [SerializeField] ContainerDisplay groundContainerDisplay;
+
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IGroundController groundController, IEncounterManager encounterManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
+            _groundController = groundController;
+            _encounterManager = encounterManager;
         }
 
         private void Start()
@@ -29,6 +33,13 @@ namespace InventoryQuest.UI
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnLootPileSelected += OnLootPileSelectedHandler;
+
+            _encounterManager.Preparing.StateEntered += OnEncounterPreparationStarted;
+        }
+
+        private void OnEncounterPreparationStarted(object sender, EventArgs e)
+        {
+            ConnectGroundContainer();
         }
 
         private void OnLootPileSelectedHandler(object sender, Container e)
@@ -42,6 +53,11 @@ namespace InventoryQuest.UI
         }
 
         #region Connect Containers
+        public void ConnectGroundContainer()
+        {
+            groundContainerDisplay.MyContainer = _groundController.GroundContainer;
+        }
+
 
         public void ConnectCharacterContainer(IContainer characterContainer)
         {

@@ -16,8 +16,11 @@ namespace InventoryQuest.Managers
         IRewardManager _rewardManager;
         IPartyController _partyController;
         IGameStateDataSource _gameStateDataSource;
+        IGroundController _groundController;
 
         StateMachine _stateMachine;
+
+        public string CurrentStateName => _stateMachine.CurrentStateName;
 
         Idle _idle;
         Wayfairing _wayfairing;
@@ -34,12 +37,13 @@ namespace InventoryQuest.Managers
         public CleaningUp CleaningUp => _cleaningUp;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPartyController partyController, IGameStateDataSource gameStateDataSource)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IGroundController groundController)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
             _partyController = partyController;
             _gameStateDataSource = gameStateDataSource;
+            _groundController = groundController;
         }
 
         void Awake()
@@ -48,10 +52,10 @@ namespace InventoryQuest.Managers
 
             _idle = new Idle();
             _wayfairing = new Wayfairing(partyController: _partyController);
-            _loading = new Loading(_gameStateDataSource);
+            _loading = new Loading(gameStateDataSource: _gameStateDataSource);
             _preparing = new Preparing(partyController: _partyController);
             _resolving = new Resolving(rewardManager: _rewardManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource);
-            _cleaningUp = new CleaningUp();
+            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, groundController: _groundController);
 
 
             At(_idle, _wayfairing, BeginWayfairing());

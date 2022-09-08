@@ -60,7 +60,7 @@ namespace Data.Items
                     description: "small pile",
                     spritePath: "Items/loot_pile_small",
                     isQuestItem: true,
-                    containerSize: new Coor(r: 5, c: 3))
+                    containerSize: new Coor(r: 3, c: 5))
             },
             {    "loot_pile_medium", new ContainerStats("loot_pile_medium",
                     weight: 0f,
@@ -68,7 +68,7 @@ namespace Data.Items
                     description: "average pile",
                     spritePath: "Items/loot_pile_medium",
                     isQuestItem: true,
-                    containerSize: new Coor(r: 5, c: 4))
+                    containerSize: new Coor(r: 4, c: 5))
             },
             {    "loot_pile_large", new ContainerStats("loot_pile_large",
                     weight: 0f,
@@ -76,7 +76,7 @@ namespace Data.Items
                     description: "large pile",
                     spritePath: "Items/loot_pile_large",
                     isQuestItem: true,
-                    containerSize: new Coor(r: 6, c: 5))
+                    containerSize: new Coor(r: 5, c: 6))
             },
             {    "loot_pile_gigantic", new ContainerStats("loot_pile_gigantic",
                     weight: 0f,
@@ -84,7 +84,7 @@ namespace Data.Items
                     description: "a truly massive pile",
                     spritePath: "Items/loot_pile_gigantic",
                     isQuestItem: true,
-                    containerSize: new Coor(r: 12, c: 6))
+                    containerSize: new Coor(r: 6, c: 12))
             },
 
             {   "adventure backpack", new EquipableContainerStats("adventure backpack",
@@ -94,7 +94,7 @@ namespace Data.Items
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(12, 6),
+                    containerSize: new Coor(4, 8),
                     slotType: EquipmentSlotType.Backpack
                 )
             },
@@ -105,7 +105,7 @@ namespace Data.Items
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(8, 4),
+                    containerSize: new Coor(4, 6),
                     slotType: EquipmentSlotType.Backpack
                 )
             },

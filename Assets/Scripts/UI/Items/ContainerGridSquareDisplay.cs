@@ -25,7 +25,7 @@ namespace InventoryQuest.UI
         public bool IsOccupied { 
             get { return _isOccupied; } 
             set { 
-                backgroundSprite.color = value ? Color.grey : Color.white;
+                backgroundSprite.color = value ? colorSettings.GridOccupiedColor : colorSettings.GridUnoccupiedColor;
                 _isOccupied = value;
             } 
         }
