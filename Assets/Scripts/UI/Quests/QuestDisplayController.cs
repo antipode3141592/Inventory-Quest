@@ -1,9 +1,9 @@
 ﻿using Data;
+using Data.Characters;
 using Data.Items;
 using Data.Locations;
 using Data.Quests;
 using InventoryQuest.Managers;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -15,6 +15,7 @@ namespace InventoryQuest.UI.Quests
         IQuestManager _questManager;
         IItemDataSource _itemDataSource;
         ILocationDataSource _locationDataSource;
+        ICharacterDataSource _characterDataSource;
 
         IQuest selectedQuest;
 
@@ -27,11 +28,12 @@ namespace InventoryQuest.UI.Quests
         [SerializeField] RectTransform questLogParent;
 
         [Inject]
-        public void Init(IQuestManager questManager, IItemDataSource itemDataSource, ILocationDataSource locationDataSource)
+        public void Init(IQuestManager questManager, IItemDataSource itemDataSource, ILocationDataSource locationDataSource, ICharacterDataSource characterDataSource)
         {
             _questManager = questManager;
             _itemDataSource = itemDataSource;
             _locationDataSource = locationDataSource;
+            _characterDataSource = characterDataSource;
         }
 
         private void Awake()
@@ -45,7 +47,7 @@ namespace InventoryQuest.UI.Quests
             foreach (var quest in _questManager.CurrentQuests)
             {
                 QuestDisplay questDisplay = Instantiate<QuestDisplay>(questDisplayPrefab, questLogParent);
-                questDisplay.Init(_itemDataSource, _locationDataSource);
+                questDisplay.Init(_itemDataSource, _locationDataSource, _characterDataSource);
                 questDisplay.SetDisplay(quest);
                 CurrentQuests.Add(questDisplay);
             }
@@ -62,3 +64,4 @@ namespace InventoryQuest.UI.Quests
         }
     }
 }
+

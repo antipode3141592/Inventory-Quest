@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7a44b996fe3d94eb4aed118893c599, type: 3}
+  m_Name: Delivery_Intro
+  m_EditorClassIdentifier: 
+  id: quest_intro_delivery
+  _name: Deliver the Contraption
+  experience: 500
+  description: '"Deliver this to Destinationville and do not delay!" your supervisor
+    had bellowed.  It was only your first day at the courier service, and it was
+    clear no mistakes would be tolerated.  No worry, the town is a short walk away.'
+  rewardId: ring_charisma_1
+  sourceId: messenger_dispatcher
+  sourceType: 0
+  sinkId: stanley
+  sinkType: 0
+  itemIds:
+  - questitem_1
+  quantities: 01000000

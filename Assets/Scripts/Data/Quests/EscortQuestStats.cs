@@ -2,9 +2,9 @@
 
 namespace Data.Quests
 {
-    public class EscortQuestStats : IQuestStats
+    public class EscortQuestStats : IEscortQuestStats
     {
-        public EscortQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, string escortCharacterId, string targetLocationId)
+        public EscortQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, QuestSourceTypes sourceType, string sinkId, QuestSourceTypes sinkType, string escortCharacterId, string targetLocationId)
         {
             Id = id;
             Name = name;
@@ -31,11 +31,11 @@ namespace Data.Quests
 
         public string SourceId { get; }
 
-        public Type SourceType { get; }
+        public QuestSourceTypes SourceType { get; }
 
         public string SinkId { get; }
 
-        public Type SinkType { get; }
+        public QuestSourceTypes SinkType { get; }
 
         #endregion
 

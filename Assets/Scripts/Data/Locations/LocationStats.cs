@@ -4,7 +4,7 @@ namespace Data.Locations
 {
     public class LocationStats : ILocationStats
     {
-        public LocationStats(string id, string name, IList<string> characterIds = null, IList<string> locationIds = null, string thumbnailSpritePath = null, bool isKnown = false)
+        public LocationStats(string id, string name, List<string> characterIds = null, List<string> locationIds = null, string thumbnailSpritePath = null, bool isKnown = false)
         {
             Id = id;
             Name = name;
@@ -21,9 +21,9 @@ namespace Data.Locations
 
         public string DisplayName { get; protected set; }
 
-        public IList<string> CharacterIds { get; }
+        public List<string> CharacterIds { get; }
 
-        public IList<string> LocationIds { get; }
+        public List<string> LocationIds { get; }
 
         public string ThumbnailSpritePath { get; }
 

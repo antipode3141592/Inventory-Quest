@@ -13,14 +13,11 @@ namespace InventoryQuest
     {
         public override void InstallBindings()
         {
-
-
-            LocationDataSourceTest location = new LocationDataSourceTest();
             PathDataSourceTest path = new PathDataSourceTest();
             EncounterDataSourceJSON encounterSource = new EncounterDataSourceJSON();
 
             Container.Bind<ILocationDataSource>()
-                .FromInstance(location).AsSingle();
+                .To<LocationDataSourceScriptableObjectTest>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IItemDataSource>()
                 .FromInstance(new ItemDataSourceTest()).AsSingle();
             Container.Bind<ICharacterDataSource>()
@@ -34,9 +31,9 @@ namespace InventoryQuest
             Container.Bind<IPathDataSource>()
                 .FromInstance(path).AsSingle();
             Container.Bind<IQuestDataSource>()
-                .FromInstance(new QuestDataSourceTest()).AsSingle();
+                .To<QuestDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IGameStateDataSource>()
-                .FromInstance(new GameStateDataSource(location, path, encounterSource)).AsSingle();
+                .To<GameStateDataSource>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

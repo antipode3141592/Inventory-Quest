@@ -10,9 +10,9 @@ namespace Data.Locations
 
         public string ThumbnailSpritePath { get; }
 
-        public IList<string> CharacterIds { get; }
+        public List<string> CharacterIds { get; }
 
-        public IList<string> LocationIds { get; }
+        public List<string> LocationIds { get; }
 
         public bool IsKnown { get; }
     }

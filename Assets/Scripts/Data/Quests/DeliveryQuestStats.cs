@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 
 namespace Data.Quests
 {
-    public class DeliveryQuestStats : IQuestStats
+    public class DeliveryQuestStats : IDeliveryQuestStats
     {
-        public DeliveryQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, IList<(string,int)> deliveryItemIdsAndQuantities)
+        public DeliveryQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, QuestSourceTypes sourceType, string sinkId, QuestSourceTypes sinkType, List<string> itemIdsToDeliver, List<int> quantitiesToDeliver)
         {
             Id = id;
             Name = name;
@@ -16,7 +15,8 @@ namespace Data.Quests
             SourceType = sourceType;
             SinkId = sinkId;
             SinkType = sinkType;
-            DeliveryItemIdsAndQuantities = deliveryItemIdsAndQuantities;
+            ItemIds = itemIdsToDeliver;
+            Quantities = quantitiesToDeliver;
         }
         #region IQuestStats
         public string Id { get; }
@@ -31,13 +31,14 @@ namespace Data.Quests
 
         public string SourceId { get; }
 
-        public Type SourceType { get; }
+        public QuestSourceTypes SourceType { get; }
 
         public string SinkId { get; }
 
-        public Type SinkType { get; }
+        public QuestSourceTypes SinkType { get; }
         #endregion
 
-        public IList<(string, int)> DeliveryItemIdsAndQuantities { get; }
+        public List<string> ItemIds { get; }
+        public List<int> Quantities { get; }
     }
 }

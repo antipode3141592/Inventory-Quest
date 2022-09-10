@@ -1,4 +1,5 @@
-﻿using Data.Items;
+﻿using Data.Characters;
+using Data.Items;
 using Data.Locations;
 using Data.Quests;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace InventoryQuest.UI.Quests
     {
         IItemDataSource _itemDataSource;
         ILocationDataSource _locationDataSource;
+        ICharacterDataSource _characterDataSource;
 
         [SerializeField] DeliveryItemDisplay DeliveryItemPrefab;
         [SerializeField] RectTransform DeliveryItemsParentRect;
@@ -22,32 +24,45 @@ namespace InventoryQuest.UI.Quests
 
         List<DeliveryItemDisplay> DeliveryItems = new();
         
-        public void Init(IItemDataSource itemDataSource, ILocationDataSource locationDataSource)
+        public void Init(IItemDataSource itemDataSource, ILocationDataSource locationDataSource, ICharacterDataSource characterDataSource)
         {
             _itemDataSource = itemDataSource;
             _locationDataSource = locationDataSource;
+            _characterDataSource = characterDataSource;
         }
 
         public void SetDisplay(IQuestStats questStats)
         {
-            DeliveryQuestStats deliveryQuestStats = questStats as DeliveryQuestStats;
+            IDeliveryQuestStats deliveryQuestStats = questStats as IDeliveryQuestStats;
             if (deliveryQuestStats is null) return;
-            foreach((string,int) item in deliveryQuestStats.DeliveryItemIdsAndQuantities)
+            for(int i = 0; i < deliveryQuestStats.ItemIds.Count; i++)
             {
                 var obj = Instantiate<DeliveryItemDisplay>(DeliveryItemPrefab, DeliveryItemsParentRect);
-                IItemStats itemStats = _itemDataSource.GetItemStats(item.Item1);
+                IItemStats itemStats = _itemDataSource.GetItemStats(deliveryQuestStats.ItemIds[i]);
                 obj.SetItem(
                     itemSprite: Resources.Load<Sprite>(itemStats.SpritePath),
                     itemName: itemStats.Id,
-                    quantity: item.Item2
+                    quantity: deliveryQuestStats.Quantities[i]
                     );
                 DeliveryItems.Add(obj);
             }
 
-            ILocationStats locationStats = _locationDataSource.GetById(deliveryQuestStats.SinkId);
-            Sprite locationSprite = Resources.Load<Sprite>(locationStats.ThumbnailSpritePath);
-            DeliveryLocationImage.sprite = locationSprite;
-            DeliveryLocationText.text = locationStats.DisplayName;
+            Sprite sprite = null;
+            string displayName = "";
+            if (deliveryQuestStats.SinkType == QuestSourceTypes.Location)
+            {
+                ILocationStats locationStats = _locationDataSource.GetById(deliveryQuestStats.SinkId);
+                displayName = locationStats.DisplayName;
+                sprite = Resources.Load<Sprite>(locationStats.ThumbnailSpritePath);
+            }
+            if (deliveryQuestStats.SinkType == QuestSourceTypes.Character)
+            {
+                ICharacterStats characterStats = _characterDataSource.GetCharacterStats(deliveryQuestStats.SinkId);
+                displayName = characterStats.DisplayName;
+                sprite = Resources.Load<Sprite>(characterStats.PortraitPath);
+            }
+            DeliveryLocationImage.sprite = sprite;
+            DeliveryLocationText.text = displayName;
         }
 
         public void UpdateDisplay()

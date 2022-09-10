@@ -30,12 +30,21 @@ namespace InventoryQuest.Managers.States
         {
             EndAdventure = false;
             StartAdventure();
+
+            _encounterManager.Idle.StateEntered += EncounterIdle;
             StateEntered?.Invoke(this, EventArgs.Empty);
+        }
+
+        void EncounterIdle(object sender, EventArgs e)
+        {
+            EndAdventure = true;
         }
 
         public void OnExit()
         {
-
+            _encounterManager.Idle.StateEntered -= EncounterIdle;
+            _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Stats.Id);
+            _gameStateDataSource.SetDestinationLocation("");
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 

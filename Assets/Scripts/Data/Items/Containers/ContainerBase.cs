@@ -185,8 +185,8 @@ namespace Data.Items
 
         public bool TryPlace(IItem item, Coor target)
         {
-            if (Debug.isDebugBuild)
-                Debug.Log($"TryPlace item with guid: {item.GuId}");
+            //if (Debug.isDebugBuild)
+            //    Debug.Log($"TryPlace item with guid: {item.GuId}");
             if (IsValidPlacement(item, target))
             {
                 List<Coor> tempPointList = ListPool<Coor>.Get();

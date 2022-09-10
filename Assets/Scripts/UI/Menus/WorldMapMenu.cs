@@ -1,11 +1,11 @@
 using Data;
+using Data.Encounters;
 using InventoryQuest.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI.Menus
@@ -14,8 +14,10 @@ namespace InventoryQuest.UI.Menus
     {
         IGameStateDataSource _gameStateDataSource;
         IAdventureManager _adventureManager;
+        IPathDataSource _pathDataSource;
 
         [SerializeField] List<MapLocationIcon> _mapLocations;
+        [SerializeField] List<MapPathLine> _mapPathLines;
 
         [SerializeField] TextMeshProUGUI _currentLocationText;
         [SerializeField] TextMeshProUGUI _destinationLocationText;
@@ -23,10 +25,11 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] PressAndHoldButton _pressAndHoldButton;
 
         [Inject]
-        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager)
+        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource)
         {
             _gameStateDataSource = gameStateDataSource;
             _adventureManager = adventureManager;
+            _pathDataSource = pathDataSource;
         }
 
         protected override void Awake()
@@ -69,15 +72,40 @@ namespace InventoryQuest.UI.Menus
         {
             if (debounce) return;
             debounce = true;
+            _pathOverviewText.text = "";
             _destinationLocationText.text = $"Destination: {e}";
             _gameStateDataSource.SetDestinationLocation(e);
             if (Debug.isDebugBuild)
                 Debug.Log($"Destination selected : {e}");
+
+            string currentId = _gameStateDataSource.CurrentLocation.Stats.Id;
+            string destinationId = _gameStateDataSource.DestinationLocation.Stats.Id;
             foreach (var location in _mapLocations)
             {
                 location.SetHighlight(location.LocationId == _gameStateDataSource.CurrentLocation.Stats.Id
-                    || location.LocationId == _gameStateDataSource.DestinationLocation?.Stats.Id);
+                    || location.LocationId == _gameStateDataSource.DestinationLocation.Stats.Id);
             }
+
+            foreach (var path in _mapPathLines)
+            {
+
+                
+                if ((path.LocationAId == currentId || path.LocationBId == currentId)
+                    &&(path.LocationAId == destinationId || path.LocationBId == destinationId))
+                {
+                    var stats = _pathDataSource.GetPathForStartAndEndLocations(
+                        startLocationId: currentId,
+                        endLocationId: destinationId);
+                    if (stats == null) return;
+                    _pathOverviewText.text = $"Projected Length: {stats.EncounterIds.Count} Encounters";
+                    path.DisplayPath(stats);
+                }
+                else
+                {
+                    path.HidePath();
+                }
+            }
+
             StartCoroutine(ResetDebounce());
         }
 

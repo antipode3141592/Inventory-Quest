@@ -5,7 +5,7 @@ namespace Data.Quests
 {
     public class EscortQuest : Quest
     {
-        public EscortQuest(EscortQuestStats stats) : base(stats)
+        public EscortQuest(IEscortQuestStats stats) : base(stats)
         {
             EscortCharacterId = stats.EscortCharacterId;
             TargetLocationId = stats.TargetLocationId;

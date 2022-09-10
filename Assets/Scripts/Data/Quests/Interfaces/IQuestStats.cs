@@ -16,10 +16,10 @@ namespace Data.Quests
 
         public string SourceId { get;  }
 
-        public Type SourceType { get; } //could be a location trigger, character dialogue, or other game event
+        public QuestSourceTypes SourceType { get; } //could be a location trigger, character dialogue, or other game event
         
         public string SinkId { get; }
 
-        public Type SinkType { get; }
+        public QuestSourceTypes SinkType { get; }
     }
 }

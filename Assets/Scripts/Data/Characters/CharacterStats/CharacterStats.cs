@@ -63,12 +63,14 @@ namespace Data.Characters
 
         public CharacterStats(
             string name,
+            string id,
             string portraitPath,
             string speciesId,
             Dictionary<Type, int> stats,
             Dictionary<DamageType, DamageResistance> resistances = null,
             IList<EquipmentSlotType> equipmentSlots = null)
         {
+            Id = id;
             Name = name;
             DisplayName = name;
             SpeciesId = speciesId;

@@ -2,9 +2,11 @@
 
 namespace Data.Quests
 {
-    public class GatheringQuestStats: IQuestStats
+
+    //ex:  Gather five schnozberries, Gather a Superior Quality Amberlin Crystal, etc.
+    public class GatheringQuestStats : IGatheringQuestStats
     {
-        public GatheringQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, int targetQuantity, string targetItemId)
+        public GatheringQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, QuestSourceTypes sourceType, string sinkId, QuestSourceTypes sinkType, int targetQuantity, string targetItemId)
         {
             Id = id;
             Name = name;
@@ -23,18 +25,18 @@ namespace Data.Quests
         public string Id { get; }
         public string Name { get; }
         public string Description { get; }
-        
+
         public int Experience { get; }
 
         public string RewardId { get; }
 
         public string SourceId { get; }
 
-        public Type SourceType { get; }
+        public QuestSourceTypes SourceType { get; }
 
         public string SinkId { get; }
 
-        public Type SinkType { get; }
+        public QuestSourceTypes SinkType { get; }
 
         #endregion
 
@@ -42,6 +44,6 @@ namespace Data.Quests
         public int TargetQuantity { get; }
         public string TargetItemId { get; }
 
-        
+
     }
 }

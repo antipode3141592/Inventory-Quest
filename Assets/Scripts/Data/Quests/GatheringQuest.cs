@@ -7,7 +7,7 @@ namespace Data.Quests
     /// </summary>
     public class GatheringQuest : Quest
     {
-        public GatheringQuest(GatheringQuestStats stats) : base(stats)
+        public GatheringQuest(IGatheringQuestStats stats) : base(stats)
         {
             TargetItemId = stats.TargetItemId;
             TargetQuantity = stats.TargetQuantity;

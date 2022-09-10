@@ -4,13 +4,13 @@
     {
         public static Quest GetQuest(IQuestStats questStats)
         {
-            GatheringQuestStats gatheringStats = questStats as GatheringQuestStats;
+            IGatheringQuestStats gatheringStats = questStats as IGatheringQuestStats;
             if (gatheringStats is not null) return new GatheringQuest(gatheringStats);
-            DeliveryQuestStats deliveryStats = questStats as DeliveryQuestStats;
+            IDeliveryQuestStats deliveryStats = questStats as IDeliveryQuestStats;
             if (deliveryStats is not null) return new DeliveryQuest(deliveryStats);
-            BountyQuestStats bountyStats = questStats as BountyQuestStats;
+            IBountyQuestStats bountyStats = questStats as IBountyQuestStats;
             if (bountyStats is not null) return new BountyQuest(bountyStats);
-            EscortQuestStats escortStats = questStats as EscortQuestStats;
+            IEscortQuestStats escortStats = questStats as IEscortQuestStats;
             if (escortStats is not null) return new EscortQuest(escortStats);
             return null;
         }

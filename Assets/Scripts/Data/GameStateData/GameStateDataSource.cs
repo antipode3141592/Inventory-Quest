@@ -1,16 +1,19 @@
 ﻿using Data.Encounters;
 using Data.Locations;
 using System;
+using UnityEngine;
+using Zenject;
 
 namespace Data
 {
-    public class GameStateDataSource : IGameStateDataSource
+    public class GameStateDataSource : MonoBehaviour, IGameStateDataSource
     {
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
         IEncounterDataSource _encounterDataSource;
 
-        public GameStateDataSource(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource)
+        [Inject]
+        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
@@ -36,6 +39,11 @@ namespace Data
 
         public void SetDestinationLocation(string id)
         {
+            if (id == string.Empty)
+            {
+                DestinationLocation = null;
+                return;
+            }
             DestinationLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
             OnDestinationLocationSet?.Invoke(this, id);
         }

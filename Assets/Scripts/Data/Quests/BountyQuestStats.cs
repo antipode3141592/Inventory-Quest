@@ -2,9 +2,11 @@
 
 namespace Data.Quests
 {
-    public class BountyQuestStats : IQuestStats
+
+    //  ex:  defeat five goblins
+    public class BountyQuestStats : IBountyQuestStats
     {
-        public BountyQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, Type sourceType, string sinkId, Type sinkType, int bountyTargetQuantity, string bountyTargetId, Type bountyTargetType)
+        public BountyQuestStats(string id, string name, string description, int experience, string rewardId, string sourceId, QuestSourceTypes sourceType, string sinkId, QuestSourceTypes sinkType, int bountyTargetQuantity, string bountyTargetId)
         {
             Id = id;
             Name = name;
@@ -17,7 +19,6 @@ namespace Data.Quests
             SinkType = sinkType;
             BountyTargetQuantity = bountyTargetQuantity;
             BountyTargetId = bountyTargetId;
-            BountyTargetType = bountyTargetType;
         }
 
         #region IQuestStats
@@ -32,18 +33,15 @@ namespace Data.Quests
 
         public string SourceId { get; }
 
-        public Type SourceType { get; }
+        public QuestSourceTypes SourceType { get; }
 
         public string SinkId { get; }
 
-        public Type SinkType { get; }
+        public QuestSourceTypes SinkType { get; }
         #endregion
 
         public int BountyTargetQuantity { get; }
 
         public string BountyTargetId { get; }
-
-        public Type BountyTargetType { get; }
-
     }
 }

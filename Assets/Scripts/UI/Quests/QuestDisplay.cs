@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Data.Characters;
 using Data.Items;
 using Data.Locations;
 using Data.Quests;
@@ -13,6 +14,7 @@ namespace InventoryQuest.UI.Quests
     {
         IItemDataSource _itemDataSource;
         ILocationDataSource _locationDataSource;
+        ICharacterDataSource _characterDataSource;
 
         [SerializeField] TextMeshProUGUI QuestNameText;
         [SerializeField] TextMeshProUGUI QuestDescriptionText;
@@ -28,10 +30,11 @@ namespace InventoryQuest.UI.Quests
         [SerializeField] RectTransform parentRect;
         IQuestDetailDisplay questDetails;
 
-        public void Init(IItemDataSource itemDataSource, ILocationDataSource locationDataSource)
+        public void Init(IItemDataSource itemDataSource, ILocationDataSource locationDataSource, ICharacterDataSource characterDataSource)
         {
             _itemDataSource = itemDataSource;
             _locationDataSource = locationDataSource;
+            _characterDataSource = characterDataSource;
         }
 
         public void SetDisplay(IQuest quest)
@@ -52,7 +55,7 @@ namespace InventoryQuest.UI.Quests
                 var deliveryQuestDisplay = Instantiate<DeliveryQuestDetailDisplay>(deliveryQuestDisplayPrefab, parentRect);
                 //************************************
                 // should create prefab factory to inject this 
-                deliveryQuestDisplay.Init(_itemDataSource, _locationDataSource);
+                deliveryQuestDisplay.Init(_itemDataSource, _locationDataSource, _characterDataSource);
                 //************************************
                 deliveryQuestDisplay.SetDisplay(
                     questStats: quest.Stats);

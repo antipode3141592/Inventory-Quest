@@ -1,40 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data.Locations
 {
-    public class LocationDataSourceScriptableObjectTest : ScriptableObject, ILocationDataSource
+    public class LocationDataSourceScriptableObjectTest : SerializedMonoBehaviour, ILocationDataSource
     {
-        Dictionary<string, ILocationStats> locations = new()
-        {
-            {
-                "Startington",
-                new LocationStats(id: "Startington",
-                name: "Startington",
-                thumbnailSpritePath: "Locations/town_icon_1"
-                )
-            },
-            {
-                "Destinationville",
-                new LocationStats(id: "Destinationville",
-                name: "Destinationville",
-                thumbnailSpritePath: "Locations/town_icon_2"
-                )
-            },
-            {
-                "forgotten_castle",
-                new LocationStats(id: "forgotten_castle",
-                name: "Forgotten Castle",
-                thumbnailSpritePath: "Locations/forgotten_castle"
-                )
-            },
-            {
-                "forest_outpost",
-                new LocationStats(id: "forest_outpost",
-                name: "Forest Outpost",
-                thumbnailSpritePath: "Locations/forest_outpost")
-            }
-        };
+        [OdinSerialize]
+        Dictionary<string, ILocationStats> locations;
 
         public ILocationStats GetById(string id)
         {

@@ -25,6 +25,9 @@ namespace Data.Characters
             {
                 "Player" => DefaultPlayerStats(),
                 "Minion" => DefaultMinionStats(),
+                "stanley" => DefaultMinionStats(_name: "Stanley", _id: "stanley", _portraitPath: "Portraits/Enemy 05-1"),
+                "messenger_dispatcher" => DefaultMinionStats(_name: "Dispatch", _id: "messenger_dispatcher", _portraitPath: "Portraits/Enemy 22"),
+                "scummy_overseer" => DefaultMinionStats(_name:"Overseer", _id: "scummy_overseer", _portraitPath: "Portraits/Enemy 04-1"),
                 _ => DefaultPlayerStats(),
             };
         }
@@ -37,7 +40,8 @@ namespace Data.Characters
             Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
-                name: "[PLAYER NAME]", 
+                name: "[PLAYER NAME]",
+                id: "player",
                 portraitPath: "Portraits/Enemy 01-1", 
                 speciesId: speciesId,
                 stats: physicalStats, 
@@ -53,10 +57,28 @@ namespace Data.Characters
             Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
-                name: "Minion", 
+                name: "Minion",
+                id: "minion",
                 portraitPath: "Portraits/Enemy 03-1", 
                 speciesId: speciesId,
                 stats: physicalStats, 
+                equipmentSlots: equipmentSlots);
+        }
+
+        public CharacterStats DefaultMinionStats(string _name, string _id, string _portraitPath)
+        {
+            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+
+            string speciesId = "orc";
+
+            Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+
+            return new CharacterStats(
+                name: _name,
+                id: _id,
+                portraitPath: _portraitPath,
+                speciesId: speciesId,
+                stats: physicalStats,
                 equipmentSlots: equipmentSlots);
         }
 
@@ -104,19 +126,6 @@ namespace Data.Characters
             if (SpeciesBaseStats.ContainsKey(id))
                 return SpeciesBaseStats[id];
             return SpeciesBaseStats["human"];   //some serious human bias here
-        }
-    }
-
-
-    public static class PlayableCharacterLeveler
-    {
-        static void AddRanksToCharacter(PlayableCharacter character, IDictionary<Type, int> purchasedRanks)
-        {
-            var statsDictionary = character.Stats.Stats;
-            foreach (var skill in purchasedRanks)
-            {
-                statsDictionary[skill.Key].PurchasedLevels += skill.Value;
-            }
         }
     }
 }

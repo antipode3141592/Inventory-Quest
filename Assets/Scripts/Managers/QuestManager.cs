@@ -40,12 +40,14 @@ namespace InventoryQuest.Managers
         void Awake()
         {
             _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationSetHandler;
+
         }
 
         void OnCurrentLocationSetHandler(object sender, string e)
         {
+            Debug.Log($"QuestManager handling Location Set...", this);
             //check current quests
-            var quest = CurrentQuests.Find(x => x.Stats.SinkType is ILocation && x.Stats.SinkId == e);
+            var quest = CurrentQuests.Find(x => x.Stats.SinkType == QuestSourceTypes.Location && x.Stats.SinkId == e);
             if (quest is null) return;
             if (quest.Evaluate(_party))
             {

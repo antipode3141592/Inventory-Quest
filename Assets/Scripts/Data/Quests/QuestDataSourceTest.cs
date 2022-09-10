@@ -1,7 +1,4 @@
-﻿using Data.Characters;
-using Data.Locations;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Data.Quests
 {
@@ -16,9 +13,9 @@ namespace Data.Quests
                 experience: 500,
                 rewardId: "ring_charisma_1",
                 sourceId: "",
-                sourceType: typeof(ICharacter),
+                sourceType: QuestSourceTypes.Character,
                 sinkId: "",
-                sinkType: typeof(ICharacter),
+                sinkType: QuestSourceTypes.Character,
                 targetQuantity: 5,
                 targetItemId: "apple_fuji"
                 ) 
@@ -29,11 +26,12 @@ namespace Data.Quests
                 description: "\"Deliver this to Destinationville and do not delay!\" your supervisor had bellowed.  It was only your first day at the courier service, and it was clear no mistakes would be tolerated.  No worry, the town is a short walk away.",
                 experience: 500,
                 rewardId: "",
-                sourceId: "",
-                sourceType: typeof (ICharacter),
-                sinkId: "Destinationville",
-                sinkType: typeof(ILocation),
-                deliveryItemIdsAndQuantities: new (string, int)[]{("questitem_1", 1)})
+                sourceId: "messenger_dispatcher",
+                sourceType: QuestSourceTypes.Character,
+                sinkId: "stanley",
+                sinkType: QuestSourceTypes.Character,
+                itemIdsToDeliver: new(){"questitem_1"},
+                quantitiesToDeliver: new() { 1 })
             }
         };
 
