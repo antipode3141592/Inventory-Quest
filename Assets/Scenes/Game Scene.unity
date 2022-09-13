@@ -367,7 +367,6 @@ GameObject:
   m_Component:
   - component: {fileID: 166142396}
   - component: {fileID: 166142397}
-  - component: {fileID: 166142398}
   m_Layer: 0
   m_Name: Background1 (1)
   m_TagString: Untagged
@@ -442,22 +441,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &166142398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166142395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0.7, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!114 &203279845 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1452528958695513183, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
@@ -923,6 +906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415955666}
+  - component: {fileID: 415955667}
   m_Layer: 0
   m_Name: ParallaxBackground
   m_TagString: Untagged
@@ -951,6 +935,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &415955667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415955665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 274338183}
+  parallaxEffectMultiplier: {x: 0, y: 0}
+  infiniteHorizontal: 1
+  infiniteVertical: 0
+  backgrounds:
+  - {fileID: 1729373253}
+  - {fileID: 1808295248}
+  - {fileID: 1177835488}
+  - {fileID: 166142397}
+  - {fileID: 565041118}
+  - {fileID: 1734199704}
 --- !u!1 &503348542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,7 +1023,6 @@ GameObject:
   m_Component:
   - component: {fileID: 565041117}
   - component: {fileID: 565041118}
-  - component: {fileID: 565041119}
   m_Layer: 0
   m_Name: Background1
   m_TagString: Untagged
@@ -1091,22 +1097,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &565041119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565041116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0.8, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!1 &836131669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,7 +2032,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1177835487}
   - component: {fileID: 1177835488}
-  - component: {fileID: 1177835489}
   m_Layer: 0
   m_Name: Background1 (2)
   m_TagString: Untagged
@@ -2117,22 +2106,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1177835489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177835486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0.5, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!1 &1220063484
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,7 +2570,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1729373252}
   - component: {fileID: 1729373253}
-  - component: {fileID: 1729373254}
   m_Layer: 0
   m_Name: Background1 (3)
   m_TagString: Untagged
@@ -2672,22 +2644,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1729373254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1729373251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!1 &1734199702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,7 +2654,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1734199703}
   - component: {fileID: 1734199704}
-  - component: {fileID: 1734199705}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -2773,22 +2728,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1734199705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1734199702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0.9, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!1 &1786095540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2964,7 +2903,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1808295247}
   - component: {fileID: 1808295248}
-  - component: {fileID: 1808295249}
   m_Layer: 0
   m_Name: Background1 (4)
   m_TagString: Untagged
@@ -3039,22 +2977,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1808295249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1808295246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5d5bb34a4457e4cb89798bbfe2ecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0.3, y: 0}
-  infiniteHorizontal: 1
-  infiniteVertical: 0
 --- !u!1 &1892863815
 GameObject:
   m_ObjectHideFlags: 0

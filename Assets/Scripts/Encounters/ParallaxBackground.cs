@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cinemachine;
+using System.Collections.Generic;
 
 public class ParallaxBackground : MonoBehaviour {
 
@@ -8,15 +9,25 @@ public class ParallaxBackground : MonoBehaviour {
     [SerializeField] bool infiniteHorizontal;
     [SerializeField] bool infiniteVertical;
 
+    [SerializeField] List<SpriteRenderer> backgrounds;
+
     Transform cameraTransform;
     Vector3 lastCameraPosition;
     float textureUnitSizeX;
     float textureUnitSizeY;
 
+
+    void Awake()
+    {
+        backgrounds = new(GetComponentsInChildren<SpriteRenderer>());
+    }
+
     void Start() {
         cameraTransform = virtualCamera.transform;
         lastCameraPosition = cameraTransform.position;
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+
+        Sprite sprite = backgrounds[0].sprite;
+        //Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;
         textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
         textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
@@ -24,20 +35,33 @@ public class ParallaxBackground : MonoBehaviour {
 
     void LateUpdate() {
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-        transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+        Vector2 effectMultiplier;
         lastCameraPosition = cameraTransform.position;
+        for(int i = 0; i < backgrounds.Count; i++)
+        {
+            effectMultiplier = new((float)i / (float)backgrounds.Count, (float)i / (float)backgrounds.Count);
+            //Debug.Log($"effectMultiplier = {effectMultiplier}");
+            Transform backgroundTransform = backgrounds[i].gameObject.transform;
+            backgroundTransform.position += new Vector3(deltaMovement.x * effectMultiplier.x, deltaMovement.y * effectMultiplier.y);
+            //transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            
 
-        if (infiniteHorizontal) {
-            if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX) {
-                float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
-                transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
+            if (infiniteHorizontal)
+            {
+                if (Mathf.Abs(cameraTransform.position.x - backgroundTransform.position.x) >= textureUnitSizeX)
+                {
+                    float offsetPositionX = (cameraTransform.position.x - backgroundTransform.position.x) % textureUnitSizeX;
+                    backgroundTransform.position = new Vector3(cameraTransform.position.x + offsetPositionX, backgroundTransform.position.y);
+                }
             }
-        }
 
-        if (infiniteVertical) {
-            if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textureUnitSizeY) {
-                float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textureUnitSizeY;
-                transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offsetPositionY);
+            if (infiniteVertical)
+            {
+                if (Mathf.Abs(cameraTransform.position.y - backgroundTransform.position.y) >= textureUnitSizeY)
+                {
+                    float offsetPositionY = (cameraTransform.position.y - backgroundTransform.position.y) % textureUnitSizeY;
+                    backgroundTransform.position = new Vector3(backgroundTransform.position.x, cameraTransform.position.y + offsetPositionY);
+                }
             }
         }
     }
