@@ -12,6 +12,8 @@ namespace InventoryQuest.Managers
 {
     public class EncounterManager : MonoBehaviour, IEncounterManager
     {
+        [SerializeField] TravelSettings travelSettings;
+
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
         IPartyController _partyController;
@@ -70,7 +72,7 @@ namespace InventoryQuest.Managers
             //void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
 
             Func<bool> BeginWayfairing() => () => _idle.EndState;
-            Func<bool> TargetDistanceMoved() => () => _wayfairing.TotalDistanceMoved >= 30;
+            Func<bool> TargetDistanceMoved() => () => _wayfairing.TotalDistanceMoved >= travelSettings.DefaultDistanceBetweenEncounters;
             Func<bool> IsLoadingComplete() => () => _loading.IsLoaded;
             Func<bool> IsPreparingComplete() => () => _preparing.EndState;
             Func<bool> IsResolvingComplete() => () => _resolving.EndState;

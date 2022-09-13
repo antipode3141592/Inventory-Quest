@@ -7,7 +7,7 @@ namespace InventoryQuest.Traveling
     public class TravelingPartyController : MonoBehaviour, IPartyController
     {
         [SerializeField] List<TravelingCharacter> partyMembers;
-        [SerializeField] protected float _speed = 3f;
+        [SerializeField] TravelSettings travelSettings;
 
         bool isMoving = false;
         bool isIdle = true;
@@ -53,7 +53,7 @@ namespace InventoryQuest.Traveling
         {
             while (isMoving)
             {
-                float travelDistance = Time.deltaTime * _speed;
+                float travelDistance = Time.deltaTime * travelSettings.PartyTravelingSpeed;
                 transform.position = new(travelDistance + transform.position.x, transform.position.y, transform.position.z);
                 DistanceMoved += travelDistance;
                 yield return null;
