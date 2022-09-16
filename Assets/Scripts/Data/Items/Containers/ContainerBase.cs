@@ -112,12 +112,11 @@ namespace Data.Items
             if (itemStats is null)
                 return;
             StackableItem item = ItemFactory.GetItem(itemStats) as StackableItem;
-
             item.Shape.CurrentFacing = facing;
             int total = 0;
             foreach(var _item in items)
                 total += Contents[_item].Item.Quantity;
-            item.Quantity = items.Count;
+            item.Quantity = total;
             for (int i = 0; i < items.Count; i++)
                 TryTake(item: out _, target: Contents[items[i]].GridSpaces[0]);
             TryPlace(item, anchorPosition);

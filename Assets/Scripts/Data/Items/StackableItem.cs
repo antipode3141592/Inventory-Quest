@@ -27,7 +27,7 @@ namespace Data.Items
         public Sprite Sprite { get; set; }
 
         public Rarity Rarity { get; }
-        public float Weight => Stats.Weight;
+        public float Weight => (float)Quantity * Stats.Weight;
         public float Value => Stats.GoldValue;
 
         public IItemStats Stats { get; }

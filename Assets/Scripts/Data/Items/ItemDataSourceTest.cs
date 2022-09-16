@@ -37,7 +37,8 @@ namespace Data.Items
                      description: "a decent chunk of iron, ready to forge",
                      rarity: Rarity.common,
                      spritePath: "Items/common_ingot",
-                     shapeType: ShapeType.Domino) },
+                     shapeType: ShapeType.Domino,
+                     defaultFacing: Facing.Down)},
             {   "ingot_uncommon", new StackableItemStats("ingot_uncommon",
                      weight: 3f,
                      goldValue: 1f,
@@ -94,7 +95,7 @@ namespace Data.Items
                     spritePath: ShapeType.Monomino.ToString(),
                     isQuestItem: true,
                     shapeType: ShapeType.Monomino,
-                    containerSize: new Coor(4, 8),
+                    containerSize: new Coor(6, 10),
                     slotType: EquipmentSlotType.Backpack
                 )
             },

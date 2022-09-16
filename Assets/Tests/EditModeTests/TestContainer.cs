@@ -1,7 +1,6 @@
 ﻿using Data;
 using Data.Items;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,11 +18,11 @@ namespace InventoryQuest.Testing
         //test items
         Item MyItem;
         List<Item> BasicItems;
-        List<Item> StackableItems;
+        List<StackableItem> StackableItems;
 
         int MyTotalItems = 4;
         ItemStats BasicItemStats;
-        ItemStats StackableItemStats;
+        StackableItemStats StackableItemStats;
 
 
         [SetUp]
@@ -31,16 +30,16 @@ namespace InventoryQuest.Testing
         {
             dataSource = new ItemDataSourceTest();
             BasicItemStats = (ItemStats)dataSource.GetItemStats("apple_fuji");
-            StackableItemStats = (ItemStats)dataSource.GetItemStats("ingot_common");
+            StackableItemStats = (StackableItemStats)dataSource.GetItemStats("ingot_common");
             backpackStats = (EquipableContainerStats)dataSource.GetItemStats("adventure backpack");
             lootPileStats = (ContainerStats)dataSource.GetItemStats("loot_pile_small");
             MyItem = (Item)ItemFactory.GetItem(stats: BasicItemStats);
             BasicItems = new List<Item>();
-            StackableItems = new List<Item>();
+            StackableItems = new List<StackableItem>();
             for (int i = 0; i < MyTotalItems; i++)
             {
                 BasicItems.Add((Item)ItemFactory.GetItem(stats: BasicItemStats));
-                StackableItems.Add((Item)ItemFactory.GetItem(stats: StackableItemStats));
+                StackableItems.Add((StackableItem)ItemFactory.GetItem(stats: StackableItemStats));
             }
             Backpack = (ContainerBase)ItemFactory.GetItem(stats: backpackStats);
             LootPile = (ContainerBase)ItemFactory.GetItem(stats: lootPileStats);
@@ -118,10 +117,10 @@ namespace InventoryQuest.Testing
         public void PlaceSeveralItems()
         {
             float initialWeight = Backpack.InitialWeight;
-            float targetWeight = initialWeight + (StackableItems[0].Stats.Weight * (float)MyTotalItems);
+            float targetWeight = initialWeight + (BasicItems[0].Stats.Weight * (float)MyTotalItems);
             for (int i = 0; i < MyTotalItems; i++)
             {
-                Backpack.TryPlace(StackableItems[i], new Coor(r: i, c: 0));
+                Backpack.TryPlace(BasicItems[i], new Coor(r: 0, c: i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (Backpack as IItem).Weight);
         }
@@ -131,7 +130,7 @@ namespace InventoryQuest.Testing
         {
             float initialWeight = Backpack.InitialWeight;
             float targetWeight = initialWeight + (StackableItems[0].Stats.Weight * (float)MyTotalItems);
-            for (int i = 0; i < MyTotalItems; i++)
+            for (int i = 0; i < MyTotalItems-1; i++)
             {
                 Backpack.TryPlace(StackableItems[i], new Coor(r: i, c: 0));
                 Backpack.TryTake(out _, new Coor(r: i, c: 0));
@@ -144,7 +143,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void FindMatchingNeighboorsSuccess()
         {
-            for (int i = 0; i < MyTotalItems; i++)
+            for (int i = 0; i < MyTotalItems - 1; i++)
             {
                 Backpack.TryPlace(StackableItems[i], new Coor(r: i, c: 0 ));
             }
@@ -162,10 +161,10 @@ namespace InventoryQuest.Testing
         [Test]
         public void FindMatchingNeighboorsFail()
         {
-            for (int i = 0; i < MyTotalItems; i++)
+            for (int i = 0; i < MyTotalItems - 1; i++)
             {
                 
-                Backpack.TryPlace(StackableItems[i], new Coor(r: i * 2, c: 0));
+                Backpack.TryPlace(StackableItems[i], new Coor(r: 0, c: i * 4));
             }
             HashSet<string> matchingNeighboors = new();
             if (!Backpack.MatchingNeighboors(StackableItems[0], matchingNeighboors))
@@ -178,11 +177,11 @@ namespace InventoryQuest.Testing
         public void ItemMaxStackSizeMetEventSuccess()
         {
             bool wasCalled = false;
-            Backpack.OnStackComplete += (sender,e) => wasCalled = true;
+            Backpack.OnStackComplete += (sender, e) => wasCalled = true;
 
             for (int i = 0; i < MyTotalItems; i++)
             {
-                Backpack.TryPlace(StackableItems[i], new Coor(r: i, c: 0));
+                Backpack.TryPlace(StackableItems[i], new Coor(r: 0, c: i));
             }
             Assert.IsTrue(wasCalled);
         }
@@ -195,7 +194,7 @@ namespace InventoryQuest.Testing
 
             for (int i = 0; i < 2; i++)
             {
-                Backpack.TryPlace(StackableItems[i], new Coor(r: i, c: 0));
+                Backpack.TryPlace(StackableItems[i], new Coor(r: 0, c: i));
             }
             Assert.IsTrue(wasCalled);
         }
@@ -203,21 +202,21 @@ namespace InventoryQuest.Testing
         [Test]
         public void ItemMaxStackSizeExceededEventSuccess()
         {
-            StackableItems.Add((Item)ItemFactory.GetItem(stats: StackableItemStats));
-            StackableItems.Add((Item)ItemFactory.GetItem(stats: StackableItemStats));
-            StackableItems.Add((Item)ItemFactory.GetItem(stats: StackableItemStats));
+            StackableItems.Add((StackableItem)ItemFactory.GetItem(stats: StackableItemStats));
+            StackableItems.Add((StackableItem)ItemFactory.GetItem(stats: StackableItemStats));
+            StackableItems.Add((StackableItem)ItemFactory.GetItem(stats: StackableItemStats));
 
             Backpack.OnStackComplete += (sender, e) => Assert.IsTrue(e.Count == 7);
 
             Backpack.TryPlace(StackableItems[0], new Coor(r: 0, c: 0));
-            Backpack.TryPlace(StackableItems[1], new Coor(r: 1, c: 0));
-            Backpack.TryPlace(StackableItems[2], new Coor(r: 2, c: 0));
+            Backpack.TryPlace(StackableItems[1], new Coor(r: 0, c: 1));
+            Backpack.TryPlace(StackableItems[2], new Coor(r: 0, c: 2));
 
-            Backpack.TryPlace(StackableItems[3], new Coor(r: 4, c: 0));
-            Backpack.TryPlace(StackableItems[4], new Coor(r: 5, c: 0));
-            Backpack.TryPlace(StackableItems[5], new Coor(r: 6, c: 0));
+            Backpack.TryPlace(StackableItems[3], new Coor(r: 0, c: 4));
+            Backpack.TryPlace(StackableItems[4], new Coor(r: 0, c: 5));
+            Backpack.TryPlace(StackableItems[5], new Coor(r: 0, c: 6));
 
-            Backpack.TryPlace(StackableItems[6], new Coor(r: 3, c: 0));
+            Backpack.TryPlace(StackableItems[6], new Coor(r: 0, c: 3));
             
         }
 
@@ -225,7 +224,7 @@ namespace InventoryQuest.Testing
         public void LootPileHoldsItems()
         {
             for (int i = 0; i < BasicItems.Count; i++)
-                LootPile.TryPlace(BasicItems[i], new(i, 0));
+                LootPile.TryPlace(BasicItems[i], new(0, i));
 
             Assert.IsTrue(LootPile.Contents.Count == BasicItems.Count);
         }

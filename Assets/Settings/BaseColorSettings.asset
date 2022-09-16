@@ -18,3 +18,5 @@ MonoBehaviour:
   MatchColor: {r: 1, g: 0.6444444, b: 0, a: 0.74509805}
   TextBuffColor: {r: 0, g: 1, b: 1, a: 1}
   TextDeBuffColor: {r: 1, g: 0, b: 0, a: 1}
+  GridOccupiedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.6117647}
+  GridUnoccupiedColor: {r: 1, g: 1, b: 1, a: 0.6117647}
