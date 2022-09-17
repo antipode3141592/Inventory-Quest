@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Characters
 {
     public abstract class CompositeStat : IStat
     {
+        public virtual Type Type { get; } 
+
+        public virtual CharacterStatTypes Id { get; }
         public int InitialValue { get; }
 
         public int Modifier { get; set; }
@@ -18,27 +22,6 @@ namespace Data.Characters
         {
             InitialValue = initialValue;
             ConnectedStats = stat;
-        }
-    }
-
-    public class Attack : CompositeStat
-    {
-        public Attack(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
-        {
-        }
-    }
-
-    public class Defense : CompositeStat
-    {
-        public Defense(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
-        {
-        }
-    }
-
-    public class Initiative : CompositeStat
-    {
-        public Initiative(int initialValue, ICollection<IStat> stat) : base(initialValue, stat)
-        {
         }
     }
 }

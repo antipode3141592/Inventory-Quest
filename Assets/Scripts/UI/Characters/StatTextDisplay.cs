@@ -1,26 +1,27 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Data.Characters;
+using Sirenix.OdinInspector;
+using System;
 
 namespace InventoryQuest.UI
 {
     public class StatTextDisplay : MonoBehaviour
     {
-        [SerializeField] protected string statTypeName;
+        [SerializeField][EnumToggleButtons] protected CharacterStatTypes statType;
         [SerializeField] protected ColorSettings colorSettings;
 
         int previousValue = 0;
 
-        public string StatTypeName => statTypeName;
+        public virtual CharacterStatTypes StatTypeName => statType;
 
-        [SerializeField]
-        protected TextMeshProUGUI labelText;
-        [SerializeField]
-        protected TextMeshProUGUI currentStatValueText;
-        [SerializeField]
-        protected TextMeshProUGUI statModifierText;
+        [SerializeField] protected TextMeshProUGUI labelText;
+        [SerializeField] protected TextMeshProUGUI currentStatValueText;
+        [SerializeField] protected TextMeshProUGUI statModifierText;
 
         [SerializeField, Range(0f, 1f)] float fadeOutTime = 0.7f;
+
         protected void Awake()
         {
             HideModifier();
@@ -35,7 +36,6 @@ namespace InventoryQuest.UI
                 ShowModifier(diff, diff >= 0);
                 previousValue = currentValue;
             }
-                
         }
 
         public virtual void ShowModifier(int modifier, bool isBuff = true)

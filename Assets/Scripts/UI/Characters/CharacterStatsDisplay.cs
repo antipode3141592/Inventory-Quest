@@ -1,5 +1,7 @@
 using Data.Characters;
 using InventoryQuest.Managers;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -8,25 +10,18 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class CharacterStatsDisplay : MonoBehaviour
+    public class CharacterStatsDisplay : SerializedMonoBehaviour
     {
         IEncounterManager _encounterManager;
 
-        [SerializeField]
-        List<StatTextDisplay> statTexts = new List<StatTextDisplay>();
-        [SerializeField]
-        CharacterCurrentMaxStatDisplay healthText;
-        [SerializeField]
-        CharacterCurrentMaxStatDisplay magicText;
-        [SerializeField]
-        CharacterCurrentMaxStatDisplay encumberanceText; 
-        [SerializeField]
-        CharacterCurrentMaxStatDisplay experienceText;
-        [SerializeField]
-        TextMeshProUGUI nameText;
+        [OdinSerialize] Dictionary<CharacterStatTypes, StatTextDisplay> statTexts;
+        [SerializeField] CharacterCurrentMaxStatDisplay healthText;
+        [SerializeField] CharacterCurrentMaxStatDisplay magicText;
+        [SerializeField] CharacterCurrentMaxStatDisplay encumberanceText; 
+        [SerializeField] CharacterCurrentMaxStatDisplay experienceText;
+        [SerializeField] TextMeshProUGUI nameText;
 
-        [SerializeField]
-        TextMeshProUGUI speciesText; 
+        [SerializeField] TextMeshProUGUI speciesText; 
 
         PlayableCharacter _character;
 
@@ -78,15 +73,13 @@ namespace InventoryQuest.UI
 
         void UpdateStatBlock()
         {
-
             CharacterStats stats = _character.Stats;
-            foreach (var charStat in stats.Stats)
+            foreach (var charStat in stats.StatDictionary)
             {
-                var stat = statTexts.Find(x => x.StatTypeName == charStat.Key.Name);
+                var stat = statTexts[charStat.Key];
                 if (stat is null) return;
                 stat.UpdateText(charStat.Value.CurrentValue);
             }
-
             healthText.UpdateText(stats.CurrentHealth, stats.MaximumHealth);
             magicText.UpdateText(stats.CurrentMagicPool, stats.MaximumMagicPool);
             encumberanceText.UpdateText(_character.CurrentEncumbrance, stats.MaximumEncumbrance);

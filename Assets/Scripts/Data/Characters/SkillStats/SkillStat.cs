@@ -2,14 +2,22 @@
 
 namespace Data.Characters
 {
-    public class SkillStat : IStat
+    public abstract class SkillStat : IStat
     {
+        protected SkillStat(int initialValue)
+        {
+            InitialValue = initialValue;
+        }
+
+        public virtual Type Type { get; }
+        public virtual CharacterStatTypes Id { get; }
+
         public int InitialValue { get; }
 
         public int PurchasedLevels { get; set; }
 
         public int CurrentValue => InitialValue + PurchasedLevels + Modifier;
 
-        public int Modifier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Modifier { get; set; }
     }
 }

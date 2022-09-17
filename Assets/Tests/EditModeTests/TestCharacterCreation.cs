@@ -1,6 +1,7 @@
 ﻿using Data.Items;
 using Data.Characters;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace InventoryQuest.Testing
 {
@@ -42,6 +43,28 @@ namespace InventoryQuest.Testing
         public void PlayerEquipmentSlotsCorrect()
         {
             Assert.AreEqual(expected: playerStats.EquipmentSlotsTypes.Count, actual: Player.EquipmentSlots.Count);
+        }
+
+        [Test]
+        public void PlayerStartingStatsSetCorrectly()
+        {
+            if (Player.Stats.StatDictionary.Count == 0) 
+                Assert.Fail();
+            foreach (var stat in playerStats.StatDictionary)
+            {
+                if (stat.Value.CurrentValue != Player.Stats.StatDictionary[stat.Key].CurrentValue)
+                    Assert.Fail();
+            }
+            Assert.Pass();
+        }
+
+        [Test]
+        public void AddingRanksToPlayerStrengthSuccess()
+        {
+            int ranks = 2;
+            int initiatlStrength = Player.Stats.Strength.CurrentValue;
+            PlayableCharacterLeveler.AddRanksToCharacterStat(Player, new Dictionary<CharacterStatTypes, int>() { { CharacterStatTypes.Strength, ranks } });
+            Assert.AreEqual(ranks + initiatlStrength, Player.Stats.Strength.CurrentValue);
         }
     }
 }

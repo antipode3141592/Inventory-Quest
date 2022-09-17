@@ -6,6 +6,7 @@ namespace Data.Characters
     public abstract class CharacterStat : IStat
     {
         public virtual Type Type { get; }
+        public virtual CharacterStatTypes Id { get; }
 
         public int InitialValue { get; }
 

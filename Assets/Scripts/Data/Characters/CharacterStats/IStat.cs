@@ -2,6 +2,8 @@
 {
     public interface IStat
     {
+        public CharacterStatTypes Id { get; }
+
         public int InitialValue { get; }
 
         public int PurchasedLevels { get; set; }

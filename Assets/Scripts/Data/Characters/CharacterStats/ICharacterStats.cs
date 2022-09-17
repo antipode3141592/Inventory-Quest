@@ -1,5 +1,4 @@
 ﻿using Data.Items;
-using System;
 using System.Collections.Generic;
 
 namespace Data.Characters
@@ -35,7 +34,7 @@ namespace Data.Characters
         int CurrentMagicPool { get; set; }
 
         
-        IDictionary<Type, IStat> Stats { get; }
+        IDictionary<CharacterStatTypes, IStat> StatDictionary { get; }
         IDictionary<DamageType, DamageResistance> Resistances { get; }
         IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
 
