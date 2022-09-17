@@ -40,11 +40,11 @@ namespace Data.Items
         public bool IsFull => ContainerIsFull();
 
         public float InitialWeight => Stats.Weight;
-        public float Weight => InitialWeight + Contents.Sum(x => x.Value.Item.Stats.Weight);
+        public float Weight => InitialWeight + Contents.Sum(x => x.Value.Item.Weight);
         public float Value => Stats.GoldValue;
-        public float TotalWeight => Contents.Sum(x => x.Value.Item.Stats.Weight) + Weight;
+        public float TotalWeight => Contents.Sum(x => x.Value.Item.Weight) + Weight;
         public float TotalWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue) + Value;
-        public float ContainedWeight => Contents.Sum(x => x.Value.Item.Stats.Weight);
+        public float ContainedWeight => Contents.Sum(x => x.Value.Item.Weight);
         public float ContainedWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue);
 
         public event EventHandler<GridEventArgs> OnItemPlaced;
@@ -116,10 +116,12 @@ namespace Data.Items
             int total = 0;
             foreach(var _item in items)
                 total += Contents[_item].Item.Quantity;
+            Debug.Log($"CreateStack:  qty {total}");
             item.Quantity = total;
             for (int i = 0; i < items.Count; i++)
                 TryTake(item: out _, target: Contents[items[i]].GridSpaces[0]);
             TryPlace(item, anchorPosition);
+            Debug.Log($"ItemQty: {item.Quantity}");
         }
 
         public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
