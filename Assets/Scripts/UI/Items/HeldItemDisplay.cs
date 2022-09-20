@@ -60,7 +60,7 @@ namespace InventoryQuest.UI
             ItemDescriptionText.text = item.Stats.Description;
             ItemRarityText.text = item.Stats.Rarity.ToString();
             ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
-            ItemWeightText.text = $"{item.Stats.Weight:#,###.#} kg";
+            ItemWeightText.text = $"{item.Weight:#,###.#} kg";
             ShapeTypeText.text = item.Stats.ShapeType.ToString();
             var equipableItem = item as EquipableItem;
 

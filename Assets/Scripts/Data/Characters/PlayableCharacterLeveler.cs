@@ -5,12 +5,12 @@ namespace Data.Characters
 {
     public static class PlayableCharacterLeveler
     {
-        static void AddRanksToCharacter(PlayableCharacter character, IDictionary<Type, int> purchasedRanks)
+        public static void AddRanksToCharacterStat(PlayableCharacter character, IDictionary<CharacterStatTypes, int> purchasedRanks)
         {
-            var statsDictionary = character.Stats.Stats;
-            foreach (var skill in purchasedRanks)
+            var statsDictionary = character.Stats.StatDictionary;
+            foreach (var stat in purchasedRanks)
             {
-                statsDictionary[skill.Key].PurchasedLevels += skill.Value;
+                statsDictionary[stat.Key].PurchasedLevels += stat.Value;
             }
         }
     }

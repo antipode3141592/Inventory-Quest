@@ -78,7 +78,8 @@ namespace InventoryQuest.UI
         {
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             Data.HighlightState squareState;
-            if (_character.EquipmentSlots[SlotType].IsValidPlacement(_gameManager.HoldingItem as IEquipable)) { 
+            IEquipable equipable = _gameManager.HoldingItem as IEquipable;
+            if (equipable is not null && _character.EquipmentSlots[SlotType].IsValidPlacement(equipable)) { 
                 squareState = Data.HighlightState.Highlight;
                 
             } 

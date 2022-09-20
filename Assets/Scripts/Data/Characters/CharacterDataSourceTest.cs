@@ -37,7 +37,7 @@ namespace Data.Characters
             EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
             string speciesId = "human";
 
-            Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "[PLAYER NAME]",
@@ -54,7 +54,7 @@ namespace Data.Characters
 
             string speciesId = "orc";
 
-            Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "Minion",
@@ -71,7 +71,7 @@ namespace Data.Characters
 
             string speciesId = "orc";
 
-            Dictionary<Type, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: _name,
@@ -101,18 +101,18 @@ namespace Data.Characters
             return slots;
         }
 
-        Dictionary<Type, int> GetStatsBlock(int[] stats)
+        Dictionary<CharacterStatTypes, int> GetStatsBlock(int[] stats)
         {
-            Dictionary<Type, int> physicalStats = new()
+            Dictionary<CharacterStatTypes, int> physicalStats = new()
             {
-                { typeof(Strength), stats[0] },
-                { typeof(Vitality), stats[1] },
-                { typeof(Agility), stats[2] },
-                { typeof(Speed), stats[3] },
-                { typeof(Charisma), stats[4] },
-                { typeof(Intellect), stats[5] },
-                { typeof(Spirit), stats[6] },
-                { typeof(Arcane), stats[7] }
+                { CharacterStatTypes.Strength, stats[0] },
+                { CharacterStatTypes.Vitality, stats[1] },
+                { CharacterStatTypes.Agility, stats[2] },
+                { CharacterStatTypes.Speed, stats[3] },
+                { CharacterStatTypes.Charisma, stats[4] },
+                { CharacterStatTypes.Intellect, stats[5] },
+                { CharacterStatTypes.Spirit, stats[6] },
+                { CharacterStatTypes.Arcane, stats[7] }
             };
             return physicalStats;
         }
