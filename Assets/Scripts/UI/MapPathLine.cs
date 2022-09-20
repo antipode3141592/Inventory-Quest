@@ -34,7 +34,7 @@ namespace InventoryQuest.UI
         {
             for (int i = 0; i < encounterBackgroundIcons.Count; i++)
             {
-                Destroy(encounterBackgroundIcons[i]);
+                Destroy(encounterBackgroundIcons[i].gameObject);
             }
             encounterBackgroundIcons.Clear();
         }

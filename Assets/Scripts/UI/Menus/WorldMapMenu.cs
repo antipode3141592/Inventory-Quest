@@ -1,5 +1,6 @@
 using Data;
 using Data.Encounters;
+using Data.Locations;
 using InventoryQuest.Managers;
 using System;
 using System.Collections;
@@ -15,6 +16,7 @@ namespace InventoryQuest.UI.Menus
         IGameStateDataSource _gameStateDataSource;
         IAdventureManager _adventureManager;
         IPathDataSource _pathDataSource;
+        ILocationDataSource _locationDataSource;
 
         [SerializeField] List<MapLocationIcon> _mapLocations;
         [SerializeField] List<MapPathLine> _mapPathLines;
@@ -25,11 +27,12 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] PressAndHoldButton _pressAndHoldButton;
 
         [Inject]
-        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource)
+        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource, ILocationDataSource locationDataSource)
         {
             _gameStateDataSource = gameStateDataSource;
             _adventureManager = adventureManager;
             _pathDataSource = pathDataSource;
+            _locationDataSource = locationDataSource;
         }
 
         protected override void Awake()
@@ -57,8 +60,18 @@ namespace InventoryQuest.UI.Menus
             _destinationLocationText.text = "Destination: ...";
             var currentLocationID = _gameStateDataSource.CurrentLocation.Stats.Id;
             foreach (var location in _mapLocations)
+            {
                 if (location)
+                {
+                    ILocationStats stats = _locationDataSource.GetById(location.LocationId);
                     location.SetHighlight(location.LocationId == currentLocationID);
+                    location.gameObject.SetActive(stats.IsKnown);
+                }
+            }
+            foreach (var path in _mapPathLines)
+            {
+                path.HidePath();
+            }
         }
 
         public override void Hide()
