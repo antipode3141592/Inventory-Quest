@@ -1,9 +1,9 @@
 ﻿using Data.Encounters;
 using UnityEngine;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Components
 {
-    public class RestEncounterDisplay : MonoBehaviour
+    public class RestEncounterDisplay : EncounterDisplay
     {
         private RestEncounter restEncounter;
 

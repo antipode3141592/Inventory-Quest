@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Data.Encounters
 {
-    public class CombatEncounterStats : IEncounterStats
+    public class CombatEncounterStats : ICombatEncounterStats
     {
         public string Id => throw new NotImplementedException();
 
@@ -17,15 +17,15 @@ namespace Data.Encounters
 
         public string Category => "Combat";
 
-        public IList<string> RewardIds => throw new NotImplementedException();
+        public List<string> RewardIds => throw new NotImplementedException();
 
-        public IList<Func<bool>> Requirements => throw new NotImplementedException();
+        public List<Func<bool>> Requirements => throw new NotImplementedException();
 
-        public IList<string> PenaltyIds => throw new NotImplementedException();
+        public List<string> PenaltyIds => throw new NotImplementedException();
 
-        public IList<string> CharacterIds { get; }
+        public List<string> CharacterIds { get; }
 
-        public IList<ICharacter> Characters { get; }
+        public List<ICharacter> Characters { get; }
 
         public string SuccessMessage => throw new NotImplementedException();
 

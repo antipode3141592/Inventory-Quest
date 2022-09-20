@@ -10,7 +10,7 @@ namespace InventoryQuest.Testing
     public class TestGatheringQuest
     {
         IQuest quest;
-        GatheringQuestStats questStats;
+        IGatheringQuestStats questStats;
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
         Party party;
@@ -41,9 +41,9 @@ namespace InventoryQuest.Testing
                 experience: 500,
                 rewardId: "ring_charisma_1",
                 sourceId: "",
-                sourceType: typeof(ICharacter),
+                sourceType: QuestSourceTypes.Character,
                 sinkId: "",
-                sinkType: typeof(ICharacter),
+                sinkType: QuestSourceTypes.Character,
                 targetQuantity: targetCount,
                 targetItemId: targetItemId  
                 );
@@ -63,7 +63,7 @@ namespace InventoryQuest.Testing
 
         void AddItems(string itemId, int itemsToMake)
         {
-            List<string> characterKeys = new List<string>(party.Characters.Keys);
+            List<string> characterKeys = new(party.Characters.Keys);
             for (int i = 0; i < itemsToMake; i++)
                 party.Characters[characterKeys[i % characterKeys.Count]].Backpack
                      .TryPlace(ItemFactory.GetItem(itemDataSource.GetItemStats(itemId)), new Coor(0, i));

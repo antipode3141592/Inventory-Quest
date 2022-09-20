@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Components
 {
-    public class SkillCheckEncounterDisplay : MonoBehaviour
+    public class SkillCheckEncounterDisplay : EncounterDisplay
     {
         IPartyManager _partyManager;
 

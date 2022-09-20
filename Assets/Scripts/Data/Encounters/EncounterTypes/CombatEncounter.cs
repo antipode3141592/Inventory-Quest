@@ -7,14 +7,14 @@ namespace Data.Encounters
 {
     public class CombatEncounter : Encounter
     {
-        public CombatEncounter(CombatEncounterStats stats) : base(stats) {
+        public CombatEncounter(ICombatEncounterStats stats) : base(stats) {
             CharacterIds = stats.CharacterIds;
             Characters = stats.Characters;
         }
 
-        public IList<string> CharacterIds { get; }
+        public List<string> CharacterIds { get; }
 
-        public IList<ICharacter> Characters { get; }
+        public List<ICharacter> Characters { get; }
 
 
         public override bool Resolve(Party party)

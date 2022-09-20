@@ -1,15 +1,14 @@
 ﻿using Data.Characters;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Encounters
 {
     public class SkillCheckEncounter : Encounter
     {
-
-
         public IList<SkillCheckRequirement> SkillCheckRequirements;
 
-        public SkillCheckEncounter(SkillCheckEncounterStats stats) : base(stats)
+        public SkillCheckEncounter(ISkillCheckEncounterStats stats) : base(stats)
         {
             SkillCheckRequirements = stats.SkillCheckRequirements;
         }
@@ -31,21 +30,29 @@ namespace Data.Encounters
 
         public bool Check(Party party, SkillCheckRequirement skillCheck)
         {
-            int currentTotal = 0;
-            int maxValue = 0;
+            int partyTotal = 0;
+            int characterTotal = 0;
             foreach (var character in party.Characters.Values)
             {
-                int charSkillTotal = 0;
-                foreach (var type in skillCheck.SkillTypes)
+                //int charSkillTotal = 0;
+                int highestStat = 0;
+                int highestSkill = 0;
+
+                foreach (var stat in skillCheck.StatTypes)
                 {
-                    charSkillTotal += character.Stats.Stats[type].CurrentValue;
+                    highestStat = character.Stats.StatDictionary[stat].CurrentValue > highestStat ? character.Stats.StatDictionary[stat].CurrentValue : highestStat;
+                    //charSkillTotal += character.Stats.StatDictionary[stat].CurrentValue;
                 }
-                currentTotal += charSkillTotal;
-                maxValue = charSkillTotal > maxValue ? charSkillTotal : maxValue;
+                foreach (var skill in skillCheck.SkillTypes)
+                {
+                    highestSkill = character.Stats.StatDictionary[skill].CurrentValue > highestSkill ? character.Stats.StatDictionary[skill].CurrentValue : highestSkill;
+                }
+                partyTotal += highestSkill + highestStat;
+                characterTotal = highestSkill + highestStat > characterTotal ? highestSkill + highestStat : characterTotal;
             }
-            if (maxValue >= skillCheck.TargetValue) 
+            if (characterTotal >= skillCheck.TargetValue) 
                 return true;
-            return (skillCheck.PartyTargetValue >= 0) && (currentTotal >= skillCheck.PartyTargetValue);
+            return (skillCheck.PartyTargetValue > 0) && (partyTotal >= skillCheck.PartyTargetValue);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Data.Encounters
 {
-    public class RestEncounterStats : IEncounterStats
+    public class RestEncounterStats : IRestEncounterStats
     {
-        public RestEncounterStats(string id, string name, string description, int experience, string successMessage, string failureMessage, IList<string> rewardIds, IList<string> penaltyIds = null)
+        public RestEncounterStats(string id, string name, string description, int experience, string successMessage, string failureMessage, List<string> rewardIds, List<string> penaltyIds = null)
         {
             Id = id;
             Name = name;
@@ -38,9 +38,9 @@ namespace Data.Encounters
 
         public string Category => "Rest";
 
-        public IList<string> RewardIds { get; }
+        public List<string> RewardIds { get; }
 
-        public IList<string> PenaltyIds { get; }
+        public List<string> PenaltyIds { get; }
 
         public string SuccessMessage { get; }
 

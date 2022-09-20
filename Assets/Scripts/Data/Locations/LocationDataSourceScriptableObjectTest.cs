@@ -1,7 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Data.Locations
 {

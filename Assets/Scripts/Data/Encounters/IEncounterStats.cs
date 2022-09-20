@@ -12,16 +12,14 @@ namespace Data.Encounters
 
         public string Description { get; }
 
-        public string Category { get; } // display name for encounter Type
-
         public int Experience { get; }
 
         public string SuccessMessage { get; }
 
         public string FailureMessage { get; }
 
-        public IList<string> RewardIds { get; }
+        public List<string> RewardIds { get; }
 
-        public IList<string> PenaltyIds { get; }
+        public List<string> PenaltyIds { get; }
     }
 }

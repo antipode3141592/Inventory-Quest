@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76031fda006fbbd40b419bc3ce8a80fa, type: 3}
+  m_Name: skill_intro_2
+  m_EditorClassIdentifier: 
+  id: intro_2
+  _name: A Quiet Copse of Cedars
+  description: A glimmer catches your eye in a pile of fall branches.  A guardian
+    spirit appears as you approach.
+  category: 
+  experience: 100
+  successMessage: The spirit regards you for a moment before singing a few notes
+    and disappearing.  You search the branches and find a pile of junk and simple
+    silver ring.
+  failureMessage: The spirit shrieks before disappearing along with its charge. 
+    You search the branches and find nothing.
+  rewardIds:
+  - ring_charisma
+  - common_loot_pile_small
+  penaltyIds: []
+  skillCheckRequirements:
+  - StatTypes: 0a000000
+    SkillTypes: 0f000000
+    TargetValue: 15
+    PartyTargetValue: 0

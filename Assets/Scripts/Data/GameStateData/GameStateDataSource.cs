@@ -55,6 +55,7 @@ namespace Data
                 endLocationId: DestinationLocation.Stats.Id);
             if (stats == null) return;
             CurrentPath = PathFactory.GetPath(stats);
+            CurrentIndex = 0;
             OnCurrentPathSet?.Invoke(this, stats.Id);
         }
 

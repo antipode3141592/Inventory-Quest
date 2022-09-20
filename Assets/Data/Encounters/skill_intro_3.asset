@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76031fda006fbbd40b419bc3ce8a80fa, type: 3}
+  m_Name: skill_intro_3
+  m_EditorClassIdentifier: 
+  id: intro_3
+  _name: The City Gates
+  description: At the gates of the city is a small guard station.  You announce yourself
+    and a guard leaves to fetch your delivery receipient.  While waiting, you a notice
+    a dusty bin of junk labeled 'Lost'.  You may be able to convince the remaining
+    guard to give you the pile.
+  category: 
+  experience: 100
+  successMessage: You plea your case for the ancient bin of discard and the guard
+    lets you have a look.
+  failureMessage: The guard is uninterested in helping you with anything.
+  rewardIds:
+  - shortsword_0
+  - common_loot_pile_small
+  penaltyIds: []
+  skillCheckRequirements:
+  - StatTypes: 04000000
+    SkillTypes: 0f000000
+    TargetValue: 15
+    PartyTargetValue: 0

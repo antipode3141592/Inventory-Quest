@@ -6,7 +6,7 @@ namespace Data.Encounters
 {
     public class CraftingEncounter : Encounter
     {
-        public CraftingEncounter(CraftingEncounterStats stats) : base (stats)
+        public CraftingEncounter(ICraftingEncounterStats stats) : base (stats)
         {
             RequiredItemIds = stats.RequiredItemIds;
         }

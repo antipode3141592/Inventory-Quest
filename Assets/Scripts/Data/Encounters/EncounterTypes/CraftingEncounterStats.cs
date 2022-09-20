@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Data.Encounters
 {
-    public class CraftingEncounterStats : IEncounterStats
+    public class CraftingEncounterStats : ICraftingEncounterStats
     {
         public string Id => throw new NotImplementedException();
 
@@ -16,13 +16,11 @@ namespace Data.Encounters
 
         public string Category => "Crafting";
 
-        public IList<string> RewardIds => throw new NotImplementedException();
+        public List<string> RewardIds => throw new NotImplementedException();
 
-        public IList<Func<bool>> Requirements => throw new NotImplementedException();
+        public List<string> PenaltyIds => throw new NotImplementedException();
 
-        public IList<string> PenaltyIds => throw new NotImplementedException();
-
-        public IList<string> RequiredItemIds { get; }
+        public List<string> RequiredItemIds { get; }
 
         public string SuccessMessage { get; }
 

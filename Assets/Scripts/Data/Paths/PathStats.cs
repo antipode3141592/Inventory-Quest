@@ -4,7 +4,7 @@ namespace Data.Encounters
 {
     public class PathStats : IPathStats
     {
-        public PathStats(string id, string name, string startLocationId, string endLocationId, IList<string> encounterIds)
+        public PathStats(string id, string name, string startLocationId, string endLocationId, List<string> encounterIds)
         {
             Id = id;
             Name = name;
@@ -21,6 +21,6 @@ namespace Data.Encounters
 
         public string EndLocationId { get; }
 
-        public IList<string> EncounterIds { get; }
+        public List<string> EncounterIds { get; }
     }
 }

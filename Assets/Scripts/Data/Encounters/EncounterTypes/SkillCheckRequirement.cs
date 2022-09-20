@@ -1,18 +1,21 @@
 ﻿using Data.Characters;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using Sirenix.OdinInspector;
 
 namespace Data.Encounters
 {
+    [Serializable]
     public class SkillCheckRequirement
     {
-        public List<Type> SkillTypes = new();
+        [EnumToggleButtons] public List<CharacterStatTypes> StatTypes = new();
+        [EnumToggleButtons] public List<CharacterStatTypes> SkillTypes = new();
         public int TargetValue;
         public int PartyTargetValue;
 
-        public SkillCheckRequirement(List<Type> skillTypes, int targetValue, int partyTargetValue = -1)
+        public SkillCheckRequirement(List<CharacterStatTypes> statTypes, List<CharacterStatTypes> skillTypes, int targetValue, int partyTargetValue = -1)
         {
+            StatTypes = statTypes;
             SkillTypes = skillTypes;
             TargetValue = targetValue;
             PartyTargetValue = partyTargetValue;
@@ -21,11 +24,10 @@ namespace Data.Encounters
         public SkillCheckRequirement(SkillCheckRequirementData requirementData)
         {
             
-            foreach(var skillName in requirementData.RequiredSkillNames)
-            {
-                var typeName = $"Data.Characters.{skillName}";
-                SkillTypes.Add(Type.GetType(typeName: typeName));
-            }
+            foreach (var skill in requirementData.RequiredSkillTypes)
+                SkillTypes.Add(skill);
+            foreach (var stat in requirementData.RequiredStatsTypes)
+                StatTypes.Add(stat);
             TargetValue = requirementData.TargetValue;
             PartyTargetValue = requirementData.PartyTargetValue;
 
@@ -33,14 +35,24 @@ namespace Data.Encounters
 
         public override string ToString() 
         {
-            string skillTypes = SkillTypes[0].Name;
-            for (int i = 1; i < SkillTypes.Count; i++)
+            string statTypes = $"{StatTypes[0]}";
+            for (int i = 1; i < StatTypes.Count; i++)
+                statTypes += $" or {StatTypes[i]}";
+            if (SkillTypes.Count > 0)
             {
-                skillTypes += $" + {SkillTypes[i].Name}";
+                string skillTypes = $"{SkillTypes[0]}";
+                for (int j = 1; j < SkillTypes.Count; j++)
+                    skillTypes += $" or {SkillTypes[j]}";
+                if (PartyTargetValue <= 0)
+                    return $"{statTypes} + {skillTypes} : {TargetValue}";
+                return $"{statTypes} + {skillTypes} : {TargetValue} or party {PartyTargetValue}";
             }
-            if (PartyTargetValue < 0)
-                return $"{skillTypes} : {TargetValue}";
-            return $"{skillTypes} : {TargetValue} or combined {PartyTargetValue}";
+            else
+            {
+                if (PartyTargetValue <= 0)
+                    return $"{statTypes} : {TargetValue}";
+                return $"{statTypes} : {TargetValue} or party {PartyTargetValue}";
+            }
         }
     }
 }

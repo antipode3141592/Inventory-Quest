@@ -1,5 +1,4 @@
 ﻿using Data.Characters;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    new SkillCheckRequirement(new List<Type>() { typeof(Strength) }, 20, 60)
+                    new SkillCheckRequirement(new () { CharacterStatTypes.Strength }, new(), 20, 60)
                 })
             },
             {
@@ -38,8 +37,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new List<Type>() { typeof(Vitality) }, 20) },
-                    { new SkillCheckRequirement(new List<Type>() { typeof(Strength) }, 20) }
+                    { new SkillCheckRequirement(new () { CharacterStatTypes.Strength, CharacterStatTypes.Vitality }, new() {CharacterStatTypes.Climb}, 20) }
                 })
             },
             {
@@ -55,7 +53,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new List<Type>() { typeof(Spirit) }, 30) }
+                    { new SkillCheckRequirement(new () { CharacterStatTypes.Spirit }, new(), 30) }
                 })
             },
             {

@@ -22,9 +22,10 @@ namespace InventoryQuest.UI
 
         [SerializeField] PressAndHoldButton continueButton;
 
+        //[OdinSerialize] Dictionary<string, EncounterDisplay> encounterDisplays;
+
         [SerializeField] EncounterSuccessDisplay encounterSuccessDisplay;
         [SerializeField] EncounterFailureDisplay encounterFailureDisplay;
-
         [SerializeField] RestEncounterDisplay restEncounterDisplay;
         [SerializeField] SkillCheckEncounterDisplay skillCheckEncounterDisplay;
         //[SerializeField] CombatEncounterDisplay combatEncounterDisplay;
@@ -37,18 +38,22 @@ namespace InventoryQuest.UI
             _gameStateDataSource = gameStateDataSource;
         }
 
-        void Awake()
-        {
-            ClearDisplay();
-        }
-
         void Start()
         {
+            ClearDisplay();
             continueButton.OnPointerHoldSuccess += Continue;
             _encounterManager.Loading.OnEncounterLoaded += DisplayEncounter;
             _encounterManager.Resolving.OnEncounterResolveFailure += DisplayFailure;
             _encounterManager.Resolving.OnEncounterResolveSuccess += DisplaySuccess;
         }
+
+        //void Display(string encounterId)
+        //{
+        //    foreach(var display in encounterDisplays)
+        //    {
+        //        display.Value.gameObject.SetActive(display.Key == encounterId);
+        //    }
+        //}
 
         private void Continue(object sender, EventArgs e)
         {
@@ -60,16 +65,25 @@ namespace InventoryQuest.UI
 
         void DisplaySuccess(object sender, string e)
         {
+
             encounterSuccessDisplay.gameObject.SetActive(true);
-            encounterFailureDisplay.gameObject.SetActive(false);
             encounterSuccessDisplay.SuccessDescriptionText.text = _gameStateDataSource.CurrentEncounter.Stats.SuccessMessage;
+
+            encounterFailureDisplay.gameObject.SetActive(false);
+            restEncounterDisplay.gameObject.SetActive(false);
+            skillCheckEncounterDisplay.gameObject.SetActive(false);
+            
         }
 
         void DisplayFailure(object sender, string e)
         {
             encounterFailureDisplay.gameObject.SetActive(true);
-            encounterSuccessDisplay.gameObject.SetActive(false);
             encounterFailureDisplay.FailureDescriptionText.text = _gameStateDataSource.CurrentEncounter.Stats.FailureMessage;
+
+            encounterSuccessDisplay.gameObject.SetActive(false);
+            restEncounterDisplay.gameObject.SetActive(false);
+            skillCheckEncounterDisplay.gameObject.SetActive(false);
+            
         }
 
         void ClearDisplay()
@@ -80,22 +94,19 @@ namespace InventoryQuest.UI
 
             skillCheckEncounterDisplay.gameObject.SetActive(false);
             restEncounterDisplay.gameObject.SetActive(false);
-            //combatEncounterDisplay.gameObject.SetActive(false);
-            //craftingEncounterDisplay.gameObject.SetActive(false);
             encounterSuccessDisplay.gameObject.SetActive(false);
             encounterFailureDisplay.gameObject.SetActive(false);
+            //combatEncounterDisplay.gameObject.SetActive(false);
+            //craftingEncounterDisplay.gameObject.SetActive(false);
         }
 
         public void DisplayEncounter(object sender, string e)
         {
             ClearDisplay();
-            encounterFailureDisplay.gameObject.SetActive(false);
-            encounterSuccessDisplay.gameObject.SetActive(false);
-            Debug.Log($"DisplayEncounter handling...", this);
             var encounter = _gameStateDataSource.CurrentEncounter;
             NameText.text = encounter.Stats.Name;
             DescriptionText.text = encounter.Stats.Description;
-            Debug.Log($"Encounter: {encounter.Stats.Name}, {encounter.Stats.Description}, {encounter.Stats.Category}", this);
+            Debug.Log($"Encounter: {encounter.Stats.Name}, {encounter.Stats.Description}", this);
             //display encounter details
             SkillCheckEncounter skillEncounter = encounter as SkillCheckEncounter;
             if (skillEncounter is not null)

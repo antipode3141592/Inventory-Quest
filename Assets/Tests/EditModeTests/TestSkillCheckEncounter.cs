@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace InventoryQuest.Testing
 {
-    public class TestEncounters
+    public class TestSkillCheckEncounter
     {
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
@@ -27,9 +27,9 @@ namespace InventoryQuest.Testing
             EquipableItemStats EquipableStats;
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            encounterDataSource = new EncounterDataSourceJSON();
+            encounterDataSource = new EncounterDataSourceTest();
 
-            currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetEncounterById(encounterId));
+            currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetById(encounterId));
 
             playerStats = characterDataSource.GetCharacterStats("Player");
             backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
@@ -51,20 +51,6 @@ namespace InventoryQuest.Testing
             party = null;
             partyMember = null;
             equipableItem = null;
-        }
-
-        [Test]
-        public void EncounterDataSourceJSON()
-        {
-            
-            Assert.That(encounterDataSource is EncounterDataSourceJSON);
-        }
-
-        [Test]
-        public void EncounterDataSourceJSONLoadSuccess()
-        {
-
-            Assert.IsTrue(encounterDataSource.GetEncounterById(encounterId) is IEncounterStats);
         }
 
         [Test]
@@ -100,7 +86,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void RandomEncounterCreateSuccess()
         {
-            IEncounter encounter = (IEncounter)EncounterFactory.GetEncounter(encounterDataSource.GetRandomEncounter());
+            IEncounter encounter = (IEncounter)EncounterFactory.GetEncounter(encounterDataSource.GetRandom());
             Assert.IsTrue(encounter is IEncounter);
         }
 

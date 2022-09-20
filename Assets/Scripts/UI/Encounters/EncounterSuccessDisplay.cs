@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace InventoryQuest.UI.Components
 {
-    public class EncounterSuccessDisplay : MonoBehaviour
+    public class EncounterSuccessDisplay : EncounterDisplay
     {
         public TextMeshProUGUI SuccessDescriptionText;
     }

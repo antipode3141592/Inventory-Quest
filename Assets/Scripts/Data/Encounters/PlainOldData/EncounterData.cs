@@ -11,7 +11,6 @@ namespace Data.Encounters
 
         public string Description;
 
-        public string Category;
 
         public int Experience;
 
@@ -28,7 +27,6 @@ namespace Data.Encounters
             Id = stats.Id;
             Name = stats.Name;
             Description = stats.Description;
-            Category = stats.Category;
             Experience = stats.Experience;
             SuccessMessage = stats.SuccessMessage;
             FailureMessage = stats.FailureMessage;
