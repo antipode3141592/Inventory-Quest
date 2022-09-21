@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Data.Encounters
 {
     [Serializable]
     public class SkillCheckRequirement
     {
+        [SerializeField, TextArea(1,5)] public string Description;
         [EnumToggleButtons] public List<CharacterStatTypes> StatTypes = new();
         [EnumToggleButtons] public List<CharacterStatTypes> SkillTypes = new();
         public int TargetValue;

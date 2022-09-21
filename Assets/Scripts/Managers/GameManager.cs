@@ -54,7 +54,7 @@ namespace InventoryQuest.Managers
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
-            Debug.Log($"OnAdventureCompleted handled by {gameObject.name}", this);
+            _adventureManager.Idle.Continue();
 
         }
 
