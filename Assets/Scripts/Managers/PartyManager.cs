@@ -26,7 +26,7 @@ namespace InventoryQuest.Managers
 
         private void Awake()
         {
-            Player = CharacterFactory.GetCharacter(characterStats: _characterDataSource.GetCharacterStats("Player"),
+            Player = (PlayableCharacter)CharacterFactory.GetCharacter(baseStats: _characterDataSource.GetById("Player"),
                 startingEquipment: new IEquipable[] { 
                     (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("adventure backpack")),
                     (IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats("sandal_1")),

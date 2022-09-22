@@ -2,6 +2,7 @@
 using Data.Characters;
 using Data.Items;
 using NUnit.Framework;
+using System.Linq;
 
 namespace InventoryQuest.Testing
 {
@@ -12,7 +13,7 @@ namespace InventoryQuest.Testing
 
         PlayableCharacter Player;
         EquipableItem Sword;
-        CharacterStats playerStats;
+        ICharacterStats playerStats;
         EquipableContainerStats backpackStats;
         EquipableItemStats EquipableStats;
         IEquipable backpack;
@@ -22,11 +23,11 @@ namespace InventoryQuest.Testing
         {
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            playerStats = characterDataSource.GetCharacterStats("Player");
+            playerStats = characterDataSource.GetById("Player");
             backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
             backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
             EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_1");
-            Player = CharacterFactory.GetCharacter(playerStats, new IEquipable[] { backpack });
+            Player = (PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { backpack });
             Sword = (EquipableItem)ItemFactory.GetItem(EquipableStats); 
         }
 
@@ -54,7 +55,7 @@ namespace InventoryQuest.Testing
         [Test]
         public void TakeItemFromBackpackAndEquip()
         {
-            int initialAttackValue = Player.Stats.Attack.CurrentValue;
+            int initialAttackValue = Player.StatDictionary[StatTypes.Attack].CurrentValue;
             int calculatedAttackValue = initialAttackValue + 1;
             Player.Backpack.TryPlace(Sword, new Coor(0, 0));
             string swordId = Sword.GuId;
@@ -63,36 +64,35 @@ namespace InventoryQuest.Testing
             {
 
                 EquipmentSlotType slotType = Sword.SlotType;
-                if (Player.EquipmentSlots.ContainsKey(slotType))
+                var slot = Player.EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == slotType);
+                if (slot is not null)
                 {
-                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item as IEquipable);
+                    slot.TryEquip(out var oldItem, item as IEquipable);
                         
                 }
-
             }
-            Assert.AreEqual(swordId, (Player.EquipmentSlots[Sword.SlotType].EquippedItem as IItem).GuId);
-            Assert.AreEqual(calculatedAttackValue, Player.Stats.Attack.CurrentValue);
+            Assert.AreEqual(swordId, (Player.EquipmentSlots.Values.First(x => x.SlotType == Sword.SlotType).EquippedItem as IItem).GuId);
+            Assert.AreEqual(calculatedAttackValue, Player.StatDictionary[StatTypes.Attack].CurrentValue);
         }
 
         [Test]
         public void TakeItemFromBackpackEquipAndUnequip()
         {
-            float startingStrength = Player.Stats.Strength.CurrentValue;
+            float startingStrength = Player.StatDictionary[StatTypes.Strength].CurrentValue;
             Player.Backpack.TryPlace(Sword, new Coor(0, 0));
             EquipmentSlotType slotType = Sword.SlotType;
             string swordId = Sword.GuId;
             if (Player.Backpack.TryTake(out var item, new Coor(0, 0)))
             {
-
-                
-                if (Player.EquipmentSlots.ContainsKey(slotType))
+                var slot = Player.EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == slotType);
+                if (slot is not null)
                 {
-                    Player.EquipmentSlots[slotType].TryEquip(out var oldItem, item as IEquipable);
-                    Player.EquipmentSlots[slotType].TryUnequip(out var _item);
+                    slot.TryEquip(out var oldItem, item as IEquipable);
+                    slot.TryUnequip(out var _item);
                 }
             }
-            Assert.AreEqual(null, Player.EquipmentSlots[slotType].EquippedItem);
-            Assert.AreEqual(startingStrength, Player.Stats.Strength.CurrentValue);
+            Assert.AreEqual(null, Player.EquipmentSlots.Values.First(x => x.SlotType == Sword.SlotType).EquippedItem);
+            Assert.AreEqual(startingStrength, Player.StatDictionary[StatTypes.Strength].CurrentValue);
         }
 
     }

@@ -120,7 +120,7 @@ namespace Data.Items
                      slotType: EquipmentSlotType.OneHandedWeapon,
                      defaultFacing: Facing.Down,
                      modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,1)}
+                        new(StatTypes.Strength ,OperatorType.Add,1)}
                      )
             },
             {   "basic_sword_15", new EquipableItemStats("basic_sword_15",
@@ -133,7 +133,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                            new(typeof(Strength),OperatorType.Add,15)}
+                            new(StatTypes.Strength, OperatorType.Add,15)}
                     )
             },
             {    "basic_crossbow_1", new EquipableItemStats("basic_crossbow_1",
@@ -146,7 +146,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.TwoHandedWeapon,
                     defaultFacing: Facing.Right,
                     modifiers: new StatModifier[] {
-                            new(typeof(Agility),OperatorType.Add,1)}
+                            new(StatTypes.Agility, OperatorType.Add,1)}
                     )
             },
             {   "basic_shortsword_0", new EquipableItemStats("basic_shortsword_0",
@@ -171,7 +171,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,1)}
+                        new(StatTypes.Strength, OperatorType.Add,1)}
                     )
             },
             {   "basic_shortsword_3", new EquipableItemStats("basic_shortsword_3",
@@ -184,7 +184,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,3)}
+                        new(StatTypes.Strength, OperatorType.Add,3)}
                     )
             },
             {   "basic_sword_3", new EquipableItemStats("basic_sword_3",
@@ -197,7 +197,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,5)}
+                        new(StatTypes.Strength, OperatorType.Add,5)}
                     )
             },
             {   "basic_sword_5", new EquipableItemStats("basic_sword_5",
@@ -210,7 +210,7 @@ namespace Data.Items
                     slotType: EquipmentSlotType.OneHandedWeapon,
                     defaultFacing: Facing.Down,
                     modifiers: new StatModifier[] {
-                        new(typeof(Strength),OperatorType.Add,5)}
+                        new(StatTypes.Strength, OperatorType.Add,5)}
                     )
             },
             {   "ring_charisma_5", new EquipableItemStats("ring_charisma_5",
@@ -222,7 +222,7 @@ namespace Data.Items
                     shapeType: ShapeType.Monomino,
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
-                        new(typeof(Charisma), OperatorType.Add, 5)}
+                        new(StatTypes.Charisma, OperatorType.Add, 5)}
                     )
             },
             {   "ring_spirit_25", new EquipableItemStats("ring_spirit_25",
@@ -234,7 +234,7 @@ namespace Data.Items
                     shapeType: ShapeType.Monomino,
                     slotType: EquipmentSlotType.Ring,
                     modifiers: new StatModifier[] {
-                        new(typeof(Spirit), OperatorType.Add, 15)}
+                        new(StatTypes.Spirit, OperatorType.Add, 15)}
                     )
             },
             {   "boot_1", new EquipableItemStats("boot_1",

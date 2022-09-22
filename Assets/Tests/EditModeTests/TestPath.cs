@@ -1,11 +1,10 @@
 using Data.Encounters;
-using Zenject;
 using NUnit.Framework;
 
 namespace InventoryQuest.Testing
 {
     [TestFixture]
-    public class TestPath : ZenjectUnitTestFixture
+    public class TestPath
     {
         IPath path;
         IPathStats stats;

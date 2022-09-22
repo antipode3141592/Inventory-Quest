@@ -40,12 +40,12 @@ namespace Data.Encounters
 
                 foreach (var stat in skillCheck.StatTypes)
                 {
-                    highestStat = character.Stats.StatDictionary[stat].CurrentValue > highestStat ? character.Stats.StatDictionary[stat].CurrentValue : highestStat;
+                    highestStat = character.StatDictionary[stat].CurrentValue > highestStat ? character.StatDictionary[stat].CurrentValue : highestStat;
                     //charSkillTotal += character.Stats.StatDictionary[stat].CurrentValue;
                 }
                 foreach (var skill in skillCheck.SkillTypes)
                 {
-                    highestSkill = character.Stats.StatDictionary[skill].CurrentValue > highestSkill ? character.Stats.StatDictionary[skill].CurrentValue : highestSkill;
+                    highestSkill = character.StatDictionary[skill].CurrentValue > highestSkill ? character.StatDictionary[skill].CurrentValue : highestSkill;
                 }
                 partyTotal += highestSkill + highestStat;
                 characterTotal = highestSkill + highestStat > characterTotal ? highestSkill + highestStat : characterTotal;

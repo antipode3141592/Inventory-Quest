@@ -9,12 +9,12 @@ namespace InventoryQuest.UI
 {
     public class StatTextDisplay : MonoBehaviour
     {
-        [SerializeField][EnumToggleButtons] protected CharacterStatTypes statType;
+        [SerializeField][EnumToggleButtons] protected StatTypes statType;
         [SerializeField] protected ColorSettings colorSettings;
 
         int previousValue = 0;
 
-        public virtual CharacterStatTypes StatTypeName => statType;
+        public virtual StatTypes StatTypeName => statType;
 
         [SerializeField] protected TextMeshProUGUI labelText;
         [SerializeField] protected TextMeshProUGUI currentStatValueText;

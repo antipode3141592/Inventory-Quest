@@ -14,20 +14,15 @@ namespace InventoryQuest.UI
         IGameManager _gameManager;
         PlayableCharacter _character;
 
-        [SerializeField]
-        EquipmentSlotType _slotType;
+        [SerializeField] string _slotId;
 
-        [SerializeField]
-        Image backgroundSprite;
-        [SerializeField]
-        Image highlightSprite;
-        [SerializeField]
-        Image equippedItemSprite;
-        [SerializeField]
-        TextMeshProUGUI slotTypeText;
+        [SerializeField] Image backgroundSprite;
+        [SerializeField] Image highlightSprite;
+        [SerializeField] Image equippedItemSprite;
+        [SerializeField] TextMeshProUGUI slotTypeText;
 
 
-        public EquipmentSlotType SlotType => _slotType;
+        public string SlotId => _slotId;
 
         [Inject]
         public void Init(IGameManager gameManager)
@@ -37,7 +32,7 @@ namespace InventoryQuest.UI
 
         private void Awake()
         {
-            slotTypeText.text = SlotType.ToString();
+            slotTypeText.text = SlotId.ToString();
         }
 
         public void SetCharacter(PlayableCharacter character)
@@ -60,7 +55,7 @@ namespace InventoryQuest.UI
         public void CheckIsOccupied()
         {
             if (_character is null) return;
-            if (_character.EquipmentSlots[SlotType].EquippedItem is null)
+            if (_character.EquipmentSlots[SlotId].EquippedItem is null)
             {
                 backgroundSprite.color = Color.white;
                 equippedItemSprite.sprite = null;
@@ -68,7 +63,7 @@ namespace InventoryQuest.UI
             else
             {
                 backgroundSprite.color = Color.grey;
-                equippedItemSprite.sprite = (_character.EquipmentSlots[SlotType].EquippedItem as IItem).Sprite;
+                equippedItemSprite.sprite = (_character.EquipmentSlots[SlotId].EquippedItem as IItem).Sprite;
             }
 
 
@@ -79,7 +74,7 @@ namespace InventoryQuest.UI
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             Data.HighlightState squareState;
             IEquipable equipable = _gameManager.HoldingItem as IEquipable;
-            if (equipable is not null && _character.EquipmentSlots[SlotType].IsValidPlacement(equipable)) { 
+            if (equipable is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipable)) { 
                 squareState = Data.HighlightState.Highlight;
                 
             } 
@@ -101,7 +96,7 @@ namespace InventoryQuest.UI
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Encounter:
-                    if (_character.EquipmentSlots[SlotType].TryUnequip(out var currentEquipment))
+                    if (_character.EquipmentSlots[SlotId].TryUnequip(out var currentEquipment))
                     {
                         if (currentEquipment is null) return;
                         _gameManager.HoldingItem = currentEquipment as IItem;
@@ -112,14 +107,14 @@ namespace InventoryQuest.UI
                     }
                     break;
                 case GameStates.ItemHolding:
-                    if (_character.EquipmentSlots[SlotType].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
+                    if (_character.EquipmentSlots[SlotId].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
                     {
                         _gameManager.HoldingItem = previousItem as IItem;
                         if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Encounter);
                         else _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.grey;
                         equippedItemSprite.color = Color.white;
-                        equippedItemSprite.sprite = (_character.EquipmentSlots[SlotType].EquippedItem as IItem).Sprite;
+                        equippedItemSprite.sprite = (_character.EquipmentSlots[SlotId].EquippedItem as IItem).Sprite;
                     }
                     break;
                 default:

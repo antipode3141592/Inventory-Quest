@@ -10,7 +10,7 @@ namespace Data.Characters
         }
 
         public virtual Type Type { get; }
-        public virtual CharacterStatTypes Id { get; }
+        public virtual StatTypes Id { get; }
 
         public int InitialValue { get; }
 

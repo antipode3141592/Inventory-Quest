@@ -10,7 +10,7 @@ namespace InventoryQuest.Testing
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
         PlayableCharacter Player;
-        CharacterStats playerStats;
+        ICharacterStats playerStats;
         EquipableContainerStats backpackStats;
         IEquipable backpack;
 
@@ -21,8 +21,8 @@ namespace InventoryQuest.Testing
             characterDataSource = new CharacterDataSourceTest();
             backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
             backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
-            playerStats = characterDataSource.GetCharacterStats("Player");
-            Player = CharacterFactory.GetCharacter(characterStats:playerStats, startingEquipment: new IEquipable[] { backpack });
+            playerStats = characterDataSource.GetById("Player");
+            Player = (PlayableCharacter)CharacterFactory.GetCharacter(baseStats:playerStats, startingEquipment: new IEquipable[] { backpack });
 
         }
 
@@ -48,11 +48,11 @@ namespace InventoryQuest.Testing
         [Test]
         public void PlayerStartingStatsSetCorrectly()
         {
-            if (Player.Stats.StatDictionary.Count == 0) 
+            if (Player.StatDictionary.Count == 0) 
                 Assert.Fail();
-            foreach (var stat in playerStats.StatDictionary)
+            foreach (var stat in Player.StatDictionary)
             {
-                if (stat.Value.CurrentValue != Player.Stats.StatDictionary[stat.Key].CurrentValue)
+                if (stat.Value.CurrentValue != Player.StatDictionary[stat.Key].CurrentValue)
                     Assert.Fail();
             }
             Assert.Pass();
@@ -62,9 +62,9 @@ namespace InventoryQuest.Testing
         public void AddingRanksToPlayerStrengthSuccess()
         {
             int ranks = 2;
-            int initiatlStrength = Player.Stats.Strength.CurrentValue;
-            PlayableCharacterLeveler.AddRanksToCharacterStat(Player, new Dictionary<CharacterStatTypes, int>() { { CharacterStatTypes.Strength, ranks } });
-            Assert.AreEqual(ranks + initiatlStrength, Player.Stats.Strength.CurrentValue);
+            int initiatlStrength = Player.StatDictionary[StatTypes.Strength].CurrentValue;
+            PlayableCharacterLeveler.AddRanksToCharacterStat(Player, new Dictionary<StatTypes, int>() { { StatTypes.Strength, ranks } });
+            Assert.AreEqual(ranks + initiatlStrength, Player.StatDictionary[StatTypes.Strength].CurrentValue);
         }
     }
 }

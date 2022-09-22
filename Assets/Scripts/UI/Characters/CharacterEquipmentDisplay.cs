@@ -13,7 +13,7 @@ namespace InventoryQuest.UI
         IPartyManager _partyManager;
         PlayableCharacter _character;
 
-        Dictionary<EquipmentSlotType, EquipmentSlotDisplay> _equipmentSlots = new Dictionary<EquipmentSlotType, EquipmentSlotDisplay>();
+        Dictionary<string, EquipmentSlotDisplay> _equipmentSlots = new();
 
         [Inject]
         public void Init(IPartyManager partyManager)
@@ -21,24 +21,28 @@ namespace InventoryQuest.UI
             _partyManager = partyManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             var slots = GetComponentsInChildren<EquipmentSlotDisplay>();
             foreach (var slot in slots)
             {
-                _equipmentSlots.Add(slot.SlotType, slot);
+                _equipmentSlots.Add(slot.SlotId, slot);
             }   
         }
 
-        private void Start()
+        void Start()
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelect;
         }
 
-        private void OnPartyMemberSelect(object sender, MessageEventArgs e)
+        void OnPartyMemberSelect(object sender, MessageEventArgs e)
         {
             _character = _partyManager.CurrentParty.Characters[e.Message];
-            foreach(var slot in _equipmentSlots)
+
+            //TODO display proper template for species
+
+            foreach (var slot in _equipmentSlots)
+                //foreach (var slotDisplay in _character.EquipmentSlots)
             {
                 if (_character.EquipmentSlots.ContainsKey(slot.Key))
                 {

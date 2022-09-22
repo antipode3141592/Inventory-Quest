@@ -14,7 +14,7 @@ namespace InventoryQuest.UI
     {
         IEncounterManager _encounterManager;
 
-        [OdinSerialize] Dictionary<CharacterStatTypes, StatTextDisplay> statTexts;
+        [OdinSerialize] Dictionary<StatTypes, StatTextDisplay> statTexts;
         [SerializeField] CharacterCurrentMaxStatDisplay healthText;
         [SerializeField] CharacterCurrentMaxStatDisplay magicText;
         [SerializeField] CharacterCurrentMaxStatDisplay encumberanceText; 
@@ -23,7 +23,7 @@ namespace InventoryQuest.UI
 
         [SerializeField] TextMeshProUGUI speciesText; 
 
-        PlayableCharacter _character;
+        ICharacter _character;
 
         [Inject]
         public void Init(IEncounterManager encounterManager)
@@ -37,7 +37,7 @@ namespace InventoryQuest.UI
             _encounterManager.Resolving.OnEncounterResolveFailure += OnStatsUpdatedHandler;
         }
 
-        public PlayableCharacter CurrentCharacter
+        public ICharacter CurrentCharacter
         {
             get { return _character; }
             set
@@ -53,7 +53,7 @@ namespace InventoryQuest.UI
         {
             if (_character is null) return;
             _character.OnStatsUpdated += OnCharacterStatsUpdatedHandler;
-            nameText.text = _character.Stats.DisplayName;
+            nameText.text = _character.DisplayName;
             speciesText.text = _character.Stats.SpeciesId;
         }
 
@@ -73,17 +73,16 @@ namespace InventoryQuest.UI
 
         void UpdateStatBlock()
         {
-            CharacterStats stats = _character.Stats;
-            foreach (var charStat in stats.StatDictionary)
+            foreach (var charStat in _character.StatDictionary)
             {
                 var stat = statTexts[charStat.Key];
                 if (stat is null) return;
                 stat.UpdateText(charStat.Value.CurrentValue);
             }
-            healthText.UpdateText(stats.CurrentHealth, stats.MaximumHealth);
-            magicText.UpdateText(stats.CurrentMagicPool, stats.MaximumMagicPool);
-            encumberanceText.UpdateText(_character.CurrentEncumbrance, stats.MaximumEncumbrance);
-            experienceText.UpdateText(stats.CurrentExperience, stats.NextLevelExperience);
+            healthText.UpdateText(_character.CurrentHealth, _character.MaximumHealth);
+            magicText.UpdateText(_character.CurrentMagicPool, _character.MaximumMagicPool);
+            encumberanceText.UpdateText(_character.CurrentEncumbrance, _character.MaximumEncumbrance);
+            experienceText.UpdateText(_character.CurrentExperience, _character.NextLevelExperience);
         }
 
 

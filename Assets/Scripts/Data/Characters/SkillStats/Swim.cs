@@ -9,6 +9,6 @@ namespace Data.Characters
         }
 
         public override Type Type => typeof(Swim);
-        public override CharacterStatTypes Id => CharacterStatTypes.Swim;
+        public override StatTypes Id => StatTypes.Swim;
     }
 }

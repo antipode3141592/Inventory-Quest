@@ -57,8 +57,8 @@ namespace InventoryQuest.UI.Quests
             }
             if (deliveryQuestStats.SinkType == QuestSourceTypes.Character)
             {
-                ICharacterStats characterStats = _characterDataSource.GetCharacterStats(deliveryQuestStats.SinkId);
-                displayName = characterStats.DisplayName;
+                ICharacterStats characterStats = _characterDataSource.GetById(deliveryQuestStats.SinkId);
+                displayName = characterStats.Name;
                 sprite = Resources.Load<Sprite>(characterStats.PortraitPath);
             }
             DeliveryLocationImage.sprite = sprite;

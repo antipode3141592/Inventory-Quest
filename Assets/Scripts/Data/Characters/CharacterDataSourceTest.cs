@@ -18,7 +18,7 @@ namespace Data.Characters
             {"troll", new int[] { 14, 12, 8, 8, 10, 8, 12, 8 } }
         };
 
-        public CharacterStats GetCharacterStats(string id)
+        public ICharacterStats GetById(string id)
         {
 
             return id switch
@@ -37,7 +37,7 @@ namespace Data.Characters
             EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
             string speciesId = "human";
 
-            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "[PLAYER NAME]",
@@ -54,7 +54,7 @@ namespace Data.Characters
 
             string speciesId = "orc";
 
-            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "Minion",
@@ -71,7 +71,7 @@ namespace Data.Characters
 
             string speciesId = "orc";
 
-            Dictionary<CharacterStatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
+            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: _name,
@@ -101,24 +101,20 @@ namespace Data.Characters
             return slots;
         }
 
-        Dictionary<CharacterStatTypes, int> GetStatsBlock(int[] stats)
+        Dictionary<StatTypes, int> GetStatsBlock(int[] stats)
         {
-            Dictionary<CharacterStatTypes, int> physicalStats = new()
+            Dictionary<StatTypes, int> physicalStats = new()
             {
-                { CharacterStatTypes.Strength, stats[0] },
-                { CharacterStatTypes.Vitality, stats[1] },
-                { CharacterStatTypes.Agility, stats[2] },
-                { CharacterStatTypes.Speed, stats[3] },
-                { CharacterStatTypes.Charisma, stats[4] },
-                { CharacterStatTypes.Intellect, stats[5] },
-                { CharacterStatTypes.Spirit, stats[6] },
-                { CharacterStatTypes.Arcane, stats[7] }
+                { StatTypes.Strength, stats[0] },
+                { StatTypes.Vitality, stats[1] },
+                { StatTypes.Agility, stats[2] },
+                { StatTypes.Speed, stats[3] },
+                { StatTypes.Charisma, stats[4] },
+                { StatTypes.Intellect, stats[5] },
+                { StatTypes.Spirit, stats[6] },
+                { StatTypes.Arcane, stats[7] }
             };
             return physicalStats;
-        }
-        public CharacterStats GetRandomCharacterStats(Rarity rarity)
-        {
-            throw new NotImplementedException();
         }
 
         int[] GetSpeciesBaseStats(string id)
@@ -126,6 +122,11 @@ namespace Data.Characters
             if (SpeciesBaseStats.ContainsKey(id))
                 return SpeciesBaseStats[id];
             return SpeciesBaseStats["human"];   //some serious human bias here
+        }
+
+        public ICharacterStats GetRandom()
+        {
+            throw new NotImplementedException();
         }
     }
 }

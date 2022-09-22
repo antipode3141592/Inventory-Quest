@@ -11,6 +11,6 @@ namespace Data.Characters
         }
 
         public override Type Type => typeof(Climb);
-        public override CharacterStatTypes Id => CharacterStatTypes.Climb;
+        public override StatTypes Id => StatTypes.Climb;
     }
 }

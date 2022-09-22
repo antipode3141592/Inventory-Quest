@@ -21,7 +21,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    new SkillCheckRequirement(new () { CharacterStatTypes.Strength }, new(), 20, 60)
+                    new SkillCheckRequirement(new () { StatTypes.Strength }, new(), 20, 60)
                 })
             },
             {
@@ -37,7 +37,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new () { CharacterStatTypes.Strength, CharacterStatTypes.Vitality }, new() {CharacterStatTypes.Climb}, 20) }
+                    { new SkillCheckRequirement(new () { StatTypes.Strength, StatTypes.Vitality }, new() {StatTypes.Climb}, 20) }
                 })
             },
             {
@@ -53,7 +53,7 @@ namespace Data.Encounters
                 penaltyIds: new List<string>() { },
                 skillCheckRequirements: new List<SkillCheckRequirement>()
                 {
-                    { new SkillCheckRequirement(new () { CharacterStatTypes.Spirit }, new(), 30) }
+                    { new SkillCheckRequirement(new () { StatTypes.Spirit }, new(), 30) }
                 })
             },
             {

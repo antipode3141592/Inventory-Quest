@@ -51,7 +51,7 @@ namespace InventoryQuest.UI
                     PartyDisplayList.Add(portrait);
                 }
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.PartyDisplayOrder[i]];
-                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.Stats.DisplayName, imagePath: character.Stats.PortraitPath);
+                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.DisplayName, imagePath: character.Stats.PortraitPath);
                 PartyDisplayList[i].PartyDisplay = this;
                 if (_partyManager.CurrentParty.SelectedPartyMemberGuId == character.GuId)
                 {

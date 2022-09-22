@@ -18,7 +18,7 @@ namespace InventoryQuest
             Container.Bind<IItemDataSource>()
                 .FromInstance(new ItemDataSourceTest()).AsSingle();
             Container.Bind<ICharacterDataSource>()
-                .FromInstance(new CharacterDataSourceTest()).AsSingle();
+                .To<CharacterSODataSource>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IEncounterDataSource>()
                 .To<EncounterDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IRewardDataSource>()

@@ -5,9 +5,9 @@ namespace Data.Characters
 {
     public class CharacterFactory
     {
-        public static PlayableCharacter GetCharacter(CharacterStats characterStats, IList<IEquipable> startingEquipment = null, IList<IItem> startingInventory = null)
+        public static ICharacter GetCharacter(ICharacterStats baseStats, IList<IEquipable> startingEquipment = null, IList<IItem> startingInventory = null)
         {
-            PlayableCharacter character = new PlayableCharacter(characterStats, startingEquipment, startingInventory);
+            PlayableCharacter character = new (baseStats, startingEquipment, startingInventory);
             return character;
         }
     }

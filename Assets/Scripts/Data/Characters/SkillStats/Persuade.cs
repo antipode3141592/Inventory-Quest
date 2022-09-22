@@ -9,6 +9,6 @@ namespace Data.Characters
         }
 
         public override Type Type => typeof(Persuade);
-        public override CharacterStatTypes Id => CharacterStatTypes.Persuade;
+        public override StatTypes Id => StatTypes.Persuade;
     }
 }

@@ -26,11 +26,11 @@ namespace InventoryQuest.Testing
         {
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            player = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Player"),
+            player = (PlayableCharacter)CharacterFactory.GetCharacter(characterDataSource.GetById("Player"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
-            minion_1 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
+            minion_1 = (PlayableCharacter)CharacterFactory.GetCharacter(characterDataSource.GetById("Minion"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
-            minion_2 = CharacterFactory.GetCharacter(characterDataSource.GetCharacterStats("Minion"),
+            minion_2 = (PlayableCharacter)CharacterFactory.GetCharacter(characterDataSource.GetById("Minion"),
                 new IEquipable[] { (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")) });
             party = new Party(new PlayableCharacter[] {player, minion_1, minion_2});
 

@@ -10,12 +10,12 @@ namespace Data.Encounters
     public class SkillCheckRequirement
     {
         [SerializeField, TextArea(1,5)] public string Description;
-        [EnumToggleButtons] public List<CharacterStatTypes> StatTypes = new();
-        [EnumToggleButtons] public List<CharacterStatTypes> SkillTypes = new();
+        [EnumToggleButtons] public List<StatTypes> StatTypes = new();
+        [EnumToggleButtons] public List<StatTypes> SkillTypes = new();
         public int TargetValue;
         public int PartyTargetValue;
 
-        public SkillCheckRequirement(List<CharacterStatTypes> statTypes, List<CharacterStatTypes> skillTypes, int targetValue, int partyTargetValue = -1)
+        public SkillCheckRequirement(List<StatTypes> statTypes, List<StatTypes> skillTypes, int targetValue, int partyTargetValue = -1)
         {
             StatTypes = statTypes;
             SkillTypes = skillTypes;

@@ -21,7 +21,7 @@ namespace Data.Locations
         {
             foreach (var character in Stats.CharacterIds)
             {
-                Characters.Add(CharacterFactory.GetCharacter(characterData.GetCharacterStats(character)));
+                Characters.Add(CharacterFactory.GetCharacter(characterData.GetById(character)));
             }
             foreach (var location in Stats.LocationIds)
             {

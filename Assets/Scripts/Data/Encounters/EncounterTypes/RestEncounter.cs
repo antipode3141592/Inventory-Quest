@@ -14,7 +14,7 @@ namespace Data.Encounters
             {
 
                 //restore health and magic
-                character.Stats.CurrentHealth = character.Stats.MaximumHealth;
+                character.CurrentHealth = character.MaximumHealth;
             }
             return true;
         }

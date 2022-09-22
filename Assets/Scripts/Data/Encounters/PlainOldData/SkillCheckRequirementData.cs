@@ -7,8 +7,8 @@ namespace Data.Encounters
     [Serializable]
     public class SkillCheckRequirementData
     {
-        public List<CharacterStatTypes> RequiredStatsTypes = new ();
-        public List<CharacterStatTypes> RequiredSkillTypes = new ();
+        public List<StatTypes> RequiredStatsTypes = new ();
+        public List<StatTypes> RequiredSkillTypes = new ();
         public int TargetValue;
         public int PartyTargetValue;
         public SkillCheckRequirementData(SkillCheckRequirement requirement)
@@ -21,7 +21,7 @@ namespace Data.Encounters
             PartyTargetValue = requirement.PartyTargetValue;
         }
 
-        public SkillCheckRequirementData(List<CharacterStatTypes> requiredStatsTypes, List<CharacterStatTypes> requiredSkillTypes, int targetValue, int partyTargetValue)
+        public SkillCheckRequirementData(List<StatTypes> requiredStatsTypes, List<StatTypes> requiredSkillTypes, int targetValue, int partyTargetValue)
         {
             RequiredStatsTypes = requiredStatsTypes;    
             RequiredSkillTypes = requiredSkillTypes;

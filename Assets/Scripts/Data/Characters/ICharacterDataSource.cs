@@ -1,8 +1,6 @@
 ﻿namespace Data.Characters
 {
-    public interface ICharacterDataSource
+    public interface ICharacterDataSource: IDataSource<ICharacterStats>
     {
-        public CharacterStats GetRandomCharacterStats(Rarity rarity);
-        public CharacterStats GetCharacterStats(string id);
     }
 }

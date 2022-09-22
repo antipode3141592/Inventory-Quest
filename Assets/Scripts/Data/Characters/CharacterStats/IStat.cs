@@ -2,7 +2,7 @@
 {
     public interface IStat
     {
-        public CharacterStatTypes Id { get; }
+        public StatTypes Id { get; }
 
         public int InitialValue { get; }
 

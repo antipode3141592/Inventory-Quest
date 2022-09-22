@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Data.Characters;
+using System;
 
 namespace Data
 {
     [Serializable]
     public class StatModifier
     {
-        public Type StatType;
+        public StatTypes StatType;
         public OperatorType OperatorType;
         public int AdjustmentValue;
 
-        public StatModifier(Type statType, OperatorType operatorType, int adjustmentValue)
+        public StatModifier(StatTypes statType, OperatorType operatorType, int adjustmentValue)
         {
             StatType = statType;
             OperatorType = operatorType;
@@ -19,10 +20,10 @@ namespace Data
         public override string ToString()
         {
             if (OperatorType == OperatorType.Add) {
-                return $"{StatType.Name} + {AdjustmentValue}";
+                return $"{StatType} + {AdjustmentValue}";
             } else if (OperatorType == OperatorType.Multiply)
             {
-                return $"{StatType.Name} x {AdjustmentValue}";
+                return $"{StatType} x {AdjustmentValue}";
             }
             return "";
         }
