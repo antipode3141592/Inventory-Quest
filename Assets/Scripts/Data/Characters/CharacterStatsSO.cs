@@ -13,13 +13,14 @@ namespace Data.Characters
         [SerializeField]  string portraitPath;
         [SerializeField]  SpeciesBaseStatsSO species;
 
-        [SerializeField]  Dictionary<StatTypes, int> initialStats;
-        [SerializeField]  Dictionary<DamageType, DamageResistance> resistances;
+        [SerializeField]  Dictionary<StatTypes, int> initialStats = new();
+        [SerializeField]  Dictionary<DamageType, DamageResistance> resistances = new();
 
         public string Id => id;
         public string Name => _name;
         public string PortraitPath => portraitPath;
         public string SpeciesId => species.Id;
+        public ISpeciesBaseStats SpeciesBaseStats => species;
 
         public IDictionary<StatTypes, int> InitialStats => initialStats;
         public IDictionary<DamageType, DamageResistance> Resistances => resistances;

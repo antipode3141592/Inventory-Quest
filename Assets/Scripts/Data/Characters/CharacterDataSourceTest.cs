@@ -6,17 +6,48 @@ namespace Data.Characters
 {
     public class CharacterDataSourceTest : ICharacterDataSource
     {
-        Dictionary<string, int[]> SpeciesBaseStats = new Dictionary<string, int[]>()
+        Dictionary<string, ISpeciesBaseStats> SpeciesBaseStats = new ()
         {
-            {"human", new int[] { 10, 10, 10, 10, 10, 10, 10, 10 } },
-            {"orc", new int[] { 12, 12, 12, 12, 10, 10, 6, 6 } },
-            {"goblin", new int[] { 8, 8, 12, 12, 8, 12, 10, 10 } },
-            {"dryad", new int[] { 8, 12, 8, 8, 12, 12, 12, 8 } },
-            {"mer", new int[] { 12, 8, 12, 8, 10, 10, 8, 12 } },
-            {"tooloo", new int[] { 6, 14, 6, 6, 12, 12, 12, 12 } },
-            {"octopod", new int[] { 12, 8, 12, 8, 8, 14, 6, 12 } },
-            {"troll", new int[] { 14, 12, 8, 8, 10, 8, 12, 8 } }
+            {"human", new SpeciesBaseStats(
+                id: "human", 
+                baseStats: new Dictionary<StatTypes, int>()
+                { 
+                    {StatTypes.Strength, 10 },
+                    {StatTypes.Vitality, 10 },
+                    {StatTypes.Agility, 10 },
+                    {StatTypes.Speed, 10 },
+                    {StatTypes.Charisma, 10 },
+                    {StatTypes.Intellect, 10 },
+                    {StatTypes.Spirit, 10 },
+                    {StatTypes.Arcane, 10 }
+                },
+                slotTypes: GetDefaultEquipmentSlotTypes()) 
+            },
+            {"orc",
+                new SpeciesBaseStats(
+                id: "orc",
+                baseStats: new Dictionary<StatTypes, int>()
+                {
+                    {StatTypes.Strength, 12 },
+                    {StatTypes.Vitality, 12 },
+                    {StatTypes.Agility, 12 },
+                    {StatTypes.Speed, 12 },
+                    {StatTypes.Charisma, 10 },
+                    {StatTypes.Intellect, 10 },
+                    {StatTypes.Spirit, 6 },
+                    {StatTypes.Arcane, 6 }
+                },
+                slotTypes: GetDefaultEquipmentSlotTypes())
+            }
         };
+
+
+//            {"goblin", new int[] { 8, 8, 12, 12, 8, 12, 10, 10 } },
+//            { "dryad", new int[] { 8, 12, 8, 8, 12, 12, 12, 8 } },
+//            { "mer", new int[] { 12, 8, 12, 8, 10, 10, 8, 12 } },
+//            { "tooloo", new int[] { 6, 14, 6, 6, 12, 12, 12, 12 } },
+//            { "octopod", new int[] { 12, 8, 12, 8, 8, 14, 6, 12 } },
+//            { "troll", new int[] { 14, 12, 8, 8, 10, 8, 12, 8 } }
 
         public ICharacterStats GetById(string id)
         {
@@ -34,57 +65,52 @@ namespace Data.Characters
 
         public CharacterStats DefaultPlayerStats()
         {
-            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+            var equipmentSlots = GetDefaultEquipmentSlotTypes();
             string speciesId = "human";
-
-            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "[PLAYER NAME]",
                 id: "player",
-                portraitPath: "Portraits/Enemy 01-1", 
-                speciesId: speciesId,
-                stats: physicalStats, 
+                portraitPath: "Portraits/Enemy 01-1",
+                species: GetSpeciesBaseStats(speciesId),
+                initialStats: new(),
                 equipmentSlots: equipmentSlots);
         }
 
         public CharacterStats DefaultMinionStats()
         {
-            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+            var equipmentSlots = GetDefaultEquipmentSlotTypes();
 
             string speciesId = "orc";
-
-            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: "Minion",
                 id: "minion",
                 portraitPath: "Portraits/Enemy 03-1", 
-                speciesId: speciesId,
-                stats: physicalStats, 
+                species: GetSpeciesBaseStats(speciesId),
+                initialStats: new(), 
                 equipmentSlots: equipmentSlots);
         }
 
         public CharacterStats DefaultMinionStats(string _name, string _id, string _portraitPath)
         {
-            EquipmentSlotType[] equipmentSlots = GetDefaultEquipmentSlotTypes();
+            var equipmentSlots = GetDefaultEquipmentSlotTypes();
 
             string speciesId = "orc";
-
-            Dictionary<StatTypes, int> physicalStats = GetStatsBlock(GetSpeciesBaseStats(speciesId));
 
             return new CharacterStats(
                 name: _name,
                 id: _id,
                 portraitPath: _portraitPath,
-                speciesId: speciesId,
-                stats: physicalStats,
+                species: GetSpeciesBaseStats(speciesId),
+                initialStats: new(),
                 equipmentSlots: equipmentSlots);
         }
 
-        EquipmentSlotType[] GetDefaultEquipmentSlotTypes()
+        static List<EquipmentSlotType> GetDefaultEquipmentSlotTypes()
         {
-            EquipmentSlotType[] slots = {
+            List<EquipmentSlotType> slots = new()
+            {
                 EquipmentSlotType.OneHandedWeapon,
                 EquipmentSlotType.Shield,
                 EquipmentSlotType.Head,
@@ -95,29 +121,14 @@ namespace Data.Characters
                 EquipmentSlotType.Feet,
                 EquipmentSlotType.Neck,
                 EquipmentSlotType.Ring,
+                EquipmentSlotType.Ring,
                 EquipmentSlotType.Hands,
                 EquipmentSlotType.Backpack
             };
             return slots;
         }
 
-        Dictionary<StatTypes, int> GetStatsBlock(int[] stats)
-        {
-            Dictionary<StatTypes, int> physicalStats = new()
-            {
-                { StatTypes.Strength, stats[0] },
-                { StatTypes.Vitality, stats[1] },
-                { StatTypes.Agility, stats[2] },
-                { StatTypes.Speed, stats[3] },
-                { StatTypes.Charisma, stats[4] },
-                { StatTypes.Intellect, stats[5] },
-                { StatTypes.Spirit, stats[6] },
-                { StatTypes.Arcane, stats[7] }
-            };
-            return physicalStats;
-        }
-
-        int[] GetSpeciesBaseStats(string id)
+        ISpeciesBaseStats GetSpeciesBaseStats(string id)
         {
             if (SpeciesBaseStats.ContainsKey(id))
                 return SpeciesBaseStats[id];

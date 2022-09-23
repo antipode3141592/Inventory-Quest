@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: BaseStats
+    - Name: baseStats
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[Data.Characters.StatTypes,
         Data],[System.Int32, mscorlib]], mscorlib
@@ -143,5 +143,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  Id: human
-  SlotTypes: 000000000100000002000000030000000400000005000000070000000b0000000b0000000e000000
+  id: human
+  slotTypes: 00000000010000000200000003000000040000000500000006000000070000000e0000000b0000000b000000

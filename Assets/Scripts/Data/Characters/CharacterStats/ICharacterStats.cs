@@ -11,6 +11,7 @@ namespace Data.Characters
         public string PortraitPath { get; }
         public string SpeciesId { get; }
 
+        public ISpeciesBaseStats SpeciesBaseStats { get; }
         public IDictionary<StatTypes, int> InitialStats { get; }
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }

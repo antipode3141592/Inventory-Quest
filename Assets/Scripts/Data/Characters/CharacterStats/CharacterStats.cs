@@ -12,6 +12,8 @@ namespace Data.Characters
         public string Name { get; }
         public string PortraitPath { get; }
         public string SpeciesId { get; }
+        public ISpeciesBaseStats SpeciesBaseStats { get; }
+
 
         public IDictionary<StatTypes, int> InitialStats { get; }
         public IDictionary<DamageType, DamageResistance> Resistances { get; } = new Dictionary<DamageType, DamageResistance>();
@@ -21,20 +23,21 @@ namespace Data.Characters
             string name,
             string id,
             string portraitPath,
-            string speciesId,
-            Dictionary<StatTypes, int> stats,
+            ISpeciesBaseStats species,
+            Dictionary<StatTypes, int> initialStats,
             Dictionary<DamageType, DamageResistance> resistances = null,
             IList<EquipmentSlotType> equipmentSlots = null)
         {
             Id = id;
             Name = name;
-            SpeciesId = speciesId;
+            SpeciesBaseStats = species;
+            SpeciesId = species.Id;
             PortraitPath = portraitPath;
 
             Resistances = resistances;
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
 
-            InitialStats = stats;
+            InitialStats = initialStats;
         }
 
 

@@ -45,17 +45,27 @@ namespace Data.Characters
             EquipmentSlots = new Dictionary<string, EquipmentSlot>();
             StatDictionary = new Dictionary<StatTypes, IStat>();
 
+            //
             var initialStats = characterStats.InitialStats;
-            var baseStats = characterStats.SpeciesId;
+            var baseStats = characterStats.SpeciesBaseStats.BaseStats;
+
             //base stats
-            var strength = new Strength(initialStats[StatTypes.Strength]);
-            var vitality = new Vitality(initialStats[StatTypes.Vitality]);
-            var agility = new Agility(initialStats[StatTypes.Agility]);
-            var speed = new Speed(initialStats[StatTypes.Speed]);
-            var charisma = new Charisma(initialStats[StatTypes.Charisma]);
-            var intellect = new Intellect(initialStats[StatTypes.Intellect]);
-            var spirit = new Spirit(initialStats[StatTypes.Spirit]);
-            var arcane = new Arcane(initialStats[StatTypes.Arcane]);
+            var strength = new Strength(
+                initialStats.ContainsKey(StatTypes.Strength) ? baseStats[StatTypes.Strength] + initialStats[StatTypes.Strength] : baseStats[StatTypes.Strength]);
+            var vitality = new Vitality(
+                initialStats.ContainsKey(StatTypes.Vitality) ? baseStats[StatTypes.Vitality] + initialStats[StatTypes.Vitality] : baseStats[StatTypes.Vitality]);
+            var agility = new Agility(
+                initialStats.ContainsKey(StatTypes.Agility) ? baseStats[StatTypes.Agility] + initialStats[StatTypes.Agility] : baseStats[StatTypes.Agility]);
+            var speed = new Speed(
+                initialStats.ContainsKey(StatTypes.Speed) ? baseStats[StatTypes.Speed] + initialStats[StatTypes.Speed] : baseStats[StatTypes.Speed]);
+            var charisma = new Charisma(
+                initialStats.ContainsKey(StatTypes.Charisma) ? baseStats[StatTypes.Charisma] + initialStats[StatTypes.Charisma] : baseStats[StatTypes.Charisma]);
+            var intellect = new Intellect(
+                initialStats.ContainsKey(StatTypes.Intellect) ? baseStats[StatTypes.Intellect] + initialStats[StatTypes.Intellect] : baseStats[StatTypes.Intellect]);
+            var spirit = new Spirit(
+                initialStats.ContainsKey(StatTypes.Spirit) ? baseStats[StatTypes.Spirit] + initialStats[StatTypes.Spirit] : baseStats[StatTypes.Spirit]);
+            var arcane = new Arcane(
+                initialStats.ContainsKey(StatTypes.Arcane) ? baseStats[StatTypes.Arcane] + initialStats[StatTypes.Arcane] : baseStats[StatTypes.Arcane]);
 
             //derived stats
             var attack = new Attack(
@@ -103,7 +113,12 @@ namespace Data.Characters
 
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
-                var slot = new EquipmentSlot(slotType);
+                int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
+                string id = slotType.ToString();
+                if (matchCount > 0)
+                    id += $"_{matchCount}";
+
+                var slot = new EquipmentSlot(slotType, id);
                 EquipmentSlots.Add(key: slot.Id, value: slot);
                 slot.OnEquip += OnEquipHandler;
                 slot.OnUnequip += OnUnequipHandler;
