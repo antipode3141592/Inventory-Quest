@@ -11,7 +11,7 @@ namespace Data.Characters
 
         public ICharacterStats GetById(string id)
         {
-            return _characterStats.FirstOrDefault(x => x.Id == id);
+            return _characterStats.FirstOrDefault(x => x.Id == id.ToLower());
         }
 
         public ICharacterStats GetRandom()

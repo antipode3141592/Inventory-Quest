@@ -34,6 +34,7 @@ namespace InventoryQuest.UI.Quests
         public void SetDisplay(IQuestStats questStats)
         {
             IDeliveryQuestStats deliveryQuestStats = questStats as IDeliveryQuestStats;
+            Debug.Log($"{deliveryQuestStats.Name}");
             if (deliveryQuestStats is null) return;
             for(int i = 0; i < deliveryQuestStats.ItemIds.Count; i++)
             {
@@ -49,13 +50,13 @@ namespace InventoryQuest.UI.Quests
 
             Sprite sprite = null;
             string displayName = "";
-            if (deliveryQuestStats.SinkType == QuestSourceTypes.Location)
+            if (deliveryQuestStats.SinkType == QuestSourceTypes.Location && deliveryQuestStats.SinkId != "")
             {
                 ILocationStats locationStats = _locationDataSource.GetById(deliveryQuestStats.SinkId);
                 displayName = locationStats.DisplayName;
                 sprite = Resources.Load<Sprite>(locationStats.ThumbnailSpritePath);
             }
-            if (deliveryQuestStats.SinkType == QuestSourceTypes.Character)
+            if (deliveryQuestStats.SinkType == QuestSourceTypes.Character && deliveryQuestStats.SinkId != "")
             {
                 ICharacterStats characterStats = _characterDataSource.GetById(deliveryQuestStats.SinkId);
                 displayName = characterStats.Name;
