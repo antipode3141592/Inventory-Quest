@@ -114,7 +114,7 @@ namespace Data.Characters
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
                 int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
-                string id = slotType.ToString();
+                string id = slotType.ToString().ToLower();
                 if (matchCount > 0)
                     id += $"_{matchCount}";
 
