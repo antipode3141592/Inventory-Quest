@@ -55,6 +55,7 @@ namespace InventoryQuest.UI
         public void CheckIsOccupied()
         {
             if (_character is null) return;
+            if (!_character.EquipmentSlots.ContainsKey(SlotId)) return;
             if (_character.EquipmentSlots[SlotId].EquippedItem is null)
             {
                 backgroundSprite.color = Color.white;

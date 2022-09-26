@@ -45,6 +45,7 @@ namespace Data.Characters
         public PlayableCharacter(ICharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
         {
             GuId = Guid.NewGuid().ToString();
+            DisplayName = characterStats.Name;
             Stats = characterStats;
             EquipmentSlots = new Dictionary<string, EquipmentSlot>();
             StatDictionary = new Dictionary<StatTypes, IStat>();

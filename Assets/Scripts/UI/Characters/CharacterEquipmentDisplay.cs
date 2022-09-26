@@ -18,6 +18,7 @@ namespace InventoryQuest.UI
         PlayableCharacter _character;
 
         Dictionary<string, EquipmentSlotDisplay> _equipmentSlots = new();
+        Dictionary<string, WeaponGroup> _weaponGroups = new();
 
         [Inject]
         public void Init(IPartyManager partyManager)
@@ -28,9 +29,14 @@ namespace InventoryQuest.UI
         void Awake()
         {
             var slots = GetComponentsInChildren<EquipmentSlotDisplay>(includeInactive: true);
+            var weaponGroups = GetComponentsInChildren<WeaponGroup>(includeInactive: true);
             foreach (var slot in slots)
             {
                 _equipmentSlots.Add(slot.SlotId, slot);
+            }
+            foreach (var group in weaponGroups)
+            {
+                _weaponGroups.Add(group.WeaponProficiencyName, group);
             }
             weaponProficiencySwitch.buttonPressed += SwitchWeaponProficiency;
         }
@@ -65,17 +71,20 @@ namespace InventoryQuest.UI
 
         void ShowActiveWeaponSlots()
         {
-            foreach (var s in _equipmentSlots)
-                s.Value.gameObject.SetActive(true);
-            foreach (var prof in _character.WeaponProficiencies)
+            foreach(var group in _weaponGroups)
             {
-                foreach (var slot in prof.EquipmentSlots)
+                if (group.Key == _character.CurrentWeaponProficiency.Name)
                 {
-                    string v = slot.ToString().ToLower();
-                    Debug.Log($"prof slot: {v}");
-                    var _slot = _equipmentSlots.Values.First(x => x.SlotId == v);
-                    if (prof.Name == _character.CurrentWeaponProficiency.Name)
-                        _slot.gameObject.SetActive(false);
+                    group.Value.gameObject.SetActive(true);
+                    foreach(var slot in group.Value.WeaponSlots)
+                    {
+                        slot.SetCharacter(_character);
+                        slot.CheckIsOccupied();
+                    }
+                }
+                else
+                {
+                    group.Value.gameObject.SetActive(false);
                 }
             }
             weaponProficiencySwitch.UpdateText(_character.CurrentWeaponProficiency.Name);

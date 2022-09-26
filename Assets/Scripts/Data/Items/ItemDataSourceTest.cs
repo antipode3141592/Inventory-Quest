@@ -143,7 +143,7 @@ namespace Data.Items
                     rarity: Rarity.common,
                     spritePath: "Items/basic_crossbow_1",
                     shapeType: ShapeType.Tetromino_T,
-                    slotType: EquipmentSlotType.TwoHandedWeapon,
+                    slotType: EquipmentSlotType.RangedWeapon,
                     defaultFacing: Facing.Right,
                     modifiers: new StatModifier[] {
                             new(StatTypes.Agility, OperatorType.Add,1)}

@@ -1,27 +1,27 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponProficiencySwitch : MonoBehaviour
+public class WeaponProficiencySwitch : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField] TextMeshProUGUI proficiencyText;
-    [SerializeField] Button button;
 
     public event EventHandler buttonPressed;
-
-    void Awake()
-    {
-        button.onClick.AddListener(ButtonOnPointerUp);
-    }
-
-    void ButtonOnPointerUp()
-    {
-        buttonPressed?.Invoke(this, EventArgs.Empty);
-    }
 
     public void UpdateText(string text)
     {
         proficiencyText.text = text;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        buttonPressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        
     }
 }
