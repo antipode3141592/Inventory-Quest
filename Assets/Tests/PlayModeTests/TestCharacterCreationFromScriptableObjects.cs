@@ -13,8 +13,6 @@ public class TestCharacterCreationFromScriptableObjects : SceneTestFixture
 
     void CommonInstall()
     {
-        //StaticContext.Container.Bind<ICharacterDataSource>()
-        //    .To<CharacterSODataSource>().FromComponentInHierarchy().AsSingle();
 
     }
 

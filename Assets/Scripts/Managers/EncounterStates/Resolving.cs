@@ -74,7 +74,7 @@ namespace InventoryQuest.Managers.States
         {
             foreach (var character in Characters)
             {
-                character.Value.Stats.CurrentExperience += _gameStateDataSource.CurrentEncounter.Stats.Experience;
+                character.Value.CurrentExperience += _gameStateDataSource.CurrentEncounter.Stats.Experience;
             }
         }
 

@@ -11,6 +11,7 @@ namespace Data.Characters
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
+        public IList<IWeaponProficiency> WeaponProficiencies { get; }
         public ContainerBase Backpack { get; }
 
         public float CurrentEncumbrance { get; }
@@ -38,5 +39,6 @@ namespace Data.Characters
         public void OnBackpackChangedHandler(object sender, EventArgs e);
         public void OnEquipHandler(object sender, ModifierEventArgs e);
         public void OnUnequipHandler(object sender, ModifierEventArgs e);
+        public void ChangeToNextWeapon();
     }
 }

@@ -8,35 +8,39 @@ namespace Data.Characters
     //characters 
     public class PlayableCharacter : ICharacter
     {
+        int weaponProficiencyIndex = 0;
+
         public string GuId { get; }
         public string DisplayName { get; set; }
         public int CurrentHealth { get; set; }
-        public int CurrentMagicPool { get; set; }
-        public int MaximumHealth => StatDictionary[StatTypes.Vitality].CurrentValue + (HealthPerLevel * CurrentLevel);
-        public int MaximumMagicPool => StatDictionary[StatTypes.Arcane].CurrentValue + StatDictionary[StatTypes.Spirit].CurrentValue + (MagicPerLevel * CurrentLevel);
-
-
         public int HealthPerLevel { get; } = 5;
+        public int MaximumHealth => StatDictionary[StatTypes.Vitality].CurrentValue + (HealthPerLevel * CurrentLevel);
         public int MagicPerLevel { get; } = 5;
-
+        public int CurrentMagicPool { get; set; }
+        public int MaximumMagicPool => StatDictionary[StatTypes.Arcane].CurrentValue + StatDictionary[StatTypes.Spirit].CurrentValue + (MagicPerLevel * CurrentLevel);
         public float MaximumEncumbrance => StatDictionary[StatTypes.Strength].CurrentValue * 15;
-
         public int CurrentExperience { get; set; }
-
         public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
-
         public int CurrentLevel { get; set; }
 
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
+        public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
+        public IList<IWeaponProficiency> WeaponProficiencies { get; } = new List<IWeaponProficiency>();
+        public IWeaponProficiency CurrentWeaponProficiency { get; set; }
 
         public ICharacterStats Stats { get; }
 
-        public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
-
         public ContainerBase Backpack => (ContainerBase)EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == EquipmentSlotType.Backpack).EquippedItem;
+        public float CurrentEncumbrance => EquipmentSlots
+            .Where(x => x.Value.EquippedItem is not null)
+            .Sum(x => (x.Value.EquippedItem as IItem).Weight);
+        public bool IsIncapacitated => CurrentHealth <= 0;
+
 
         public event EventHandler OnStatsUpdated;
+
+
 
         public PlayableCharacter(ICharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
         {
@@ -113,22 +117,26 @@ namespace Data.Characters
 
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
-                int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
-                string id = slotType.ToString().ToLower();
-                if (matchCount > 0)
-                    id += $"_{matchCount}";
-
-                var slot = new EquipmentSlot(slotType, id);
-                EquipmentSlots.Add(key: slot.Id, value: slot);
-                slot.OnEquip += OnEquipHandler;
-                slot.OnUnequip += OnUnequipHandler;
+                AddEquipmentSlot(slotType);
             }
+
+            foreach (var prof in characterStats.WeaponProficiencies)
+            {
+                foreach (var slotType in prof.EquipmentSlots)
+                {
+                    AddEquipmentSlot(slotType);
+                }
+                WeaponProficiencies.Add(prof);
+            }
+            weaponProficiencyIndex = 0;
+            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex];
 
             if (initialEquipment is null) return;
             foreach (IEquipable item in initialEquipment)
             {
                 //iterate through slots, equip to first available valid placement for each piece of equipment
-                foreach (var slot in EquipmentSlots) {
+                foreach (var slot in EquipmentSlots)
+                {
                     if (slot.Value.IsValidPlacement(item))
                     {
                         if (slot.Value.TryEquip(out _, item))
@@ -148,14 +156,20 @@ namespace Data.Characters
             {
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container: Backpack, item: item); //no special failure path for now
             }
+
+            void AddEquipmentSlot(EquipmentSlotType slotType)
+            {
+                int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
+                string id = slotType.ToString().ToLower();
+                if (matchCount > 0)
+                    id += $"_{matchCount}";
+
+                var slot = new EquipmentSlot(slotType, id);
+                EquipmentSlots.Add(key: slot.Id, value: slot);
+                slot.OnEquip += OnEquipHandler;
+                slot.OnUnequip += OnUnequipHandler;
+            }
         }
-
-        public float CurrentEncumbrance => EquipmentSlots
-            .Where(x => x.Value.EquippedItem is not null)
-            .Sum(x => (x.Value.EquippedItem as IItem).Weight);
-
-        public bool IsIncapacitated => CurrentHealth <= 0;
-
 
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
@@ -213,6 +227,12 @@ namespace Data.Characters
                 default:
                     break;
             }
+        }
+
+        public void ChangeToNextWeapon()
+        {
+            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++%WeaponProficiencies.Count];
+
         }
     }
 }

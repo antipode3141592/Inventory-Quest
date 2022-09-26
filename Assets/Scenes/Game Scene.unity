@@ -3487,7 +3487,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  _characterStats: []
+  _characterStats:
+  - {fileID: 11400000, guid: 838a58632d23dbd47ba159a529c0c86a, type: 2}
+  - {fileID: 11400000, guid: e1b88689c6192cf42ae10d3020489887, type: 2}
+  - {fileID: 11400000, guid: beb423e1d7be77343a33eb4d2774172b, type: 2}
+  - {fileID: 11400000, guid: 13f31438d2ad41a45bbc689f1881ea9a, type: 2}
+  - {fileID: 11400000, guid: 05255f6990bb0f64599157d77336858a, type: 2}
 --- !u!1 &2117114105
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,6 +3943,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2121364319523834910, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290700967072782222, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290700967072782222, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290700967072782222, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290700967072782222, guid: 4ed63ecc57b24f644a3f8083cada22f6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

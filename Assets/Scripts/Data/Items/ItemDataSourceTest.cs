@@ -46,7 +46,7 @@ namespace Data.Items
                      rarity: Rarity.uncommon,
                      spritePath: "Items/uncommon_ingot",
                      shapeType: ShapeType.Domino) },
-            { 
+            {
                 "ore_bloom_common", new StackableItemStats("ore_bloom_common",
                     weight: 5f,
                     goldValue: 1f,
@@ -266,11 +266,12 @@ namespace Data.Items
             },
             { "questitem_1", new ItemStats("questitem_1",
                 weight: 40f,
-                goldValue: 1000f, 
+                goldValue: 1000f,
                 description: "A crank-powered machine of inscrutable purpose.",
                 rarity: Rarity.rare,
                 spritePath: "Items/questitem_1",
-                shape: ShapeType.QuestShape_1) 
+                isQuest: true,
+                shape: ShapeType.QuestShape_1)
             },
             {   "pants_1", new EquipableItemStats("pants_1",
                     weight: 0.5f,

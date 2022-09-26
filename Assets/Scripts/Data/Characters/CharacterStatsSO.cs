@@ -15,6 +15,7 @@ namespace Data.Characters
 
         [SerializeField]  Dictionary<StatTypes, int> initialStats = new();
         [SerializeField]  Dictionary<DamageType, DamageResistance> resistances = new();
+        [SerializeField]  List<IWeaponProficiency> weaponProficiencies = new();
 
         public string Id => id;
         public string Name => _name;
@@ -25,5 +26,7 @@ namespace Data.Characters
         public IDictionary<StatTypes, int> InitialStats => initialStats;
         public IDictionary<DamageType, DamageResistance> Resistances => resistances;
         public IList<EquipmentSlotType> EquipmentSlotsTypes => species.SlotTypes;
+
+        public IList<IWeaponProficiency> WeaponProficiencies => weaponProficiencies;
     }
 }

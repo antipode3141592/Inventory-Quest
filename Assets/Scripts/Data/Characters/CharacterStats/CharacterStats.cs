@@ -19,6 +19,8 @@ namespace Data.Characters
         public IDictionary<DamageType, DamageResistance> Resistances { get; } = new Dictionary<DamageType, DamageResistance>();
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
 
+        public IList<IWeaponProficiency> WeaponProficiencies { get; }
+
         public CharacterStats(
             string name,
             string id,
@@ -26,7 +28,8 @@ namespace Data.Characters
             ISpeciesBaseStats species,
             Dictionary<StatTypes, int> initialStats,
             Dictionary<DamageType, DamageResistance> resistances = null,
-            IList<EquipmentSlotType> equipmentSlots = null)
+            IList<EquipmentSlotType> equipmentSlots = null,
+            IList<IWeaponProficiency> weaponProficiencies = null)
         {
             Id = id;
             Name = name;
@@ -34,8 +37,9 @@ namespace Data.Characters
             SpeciesId = species.Id;
             PortraitPath = portraitPath;
 
-            Resistances = resistances;
+            Resistances = resistances is not null ? resistances : new();
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();
+            WeaponProficiencies = weaponProficiencies is not null ? weaponProficiencies : new List<IWeaponProficiency>();
 
             InitialStats = initialStats;
         }
