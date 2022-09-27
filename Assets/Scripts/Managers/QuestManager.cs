@@ -43,6 +43,13 @@ namespace InventoryQuest.Managers
 
         }
 
+        void Start()
+        {
+            var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
+            CurrentQuests.Add(quest);
+            OnQuestAccepted?.Invoke(this, new MessageEventArgs(quest.Id));
+        }
+
         void OnCurrentLocationSetHandler(object sender, string e)
         {
             Debug.Log($"QuestManager handling Location Set...", this);
@@ -58,11 +65,23 @@ namespace InventoryQuest.Managers
 
         }
 
-        void Start()
+        public void EvaluateLocationCharacterQuests(string characterId)
         {
-            var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
-            CurrentQuests.Add(quest);
-            OnQuestAccepted?.Invoke(this, new MessageEventArgs(quest.Id));
+            var character = _gameStateDataSource.CurrentLocation.Characters.Find(x => x.GuId == characterId);
+            Debug.Log($"QuestManager handling Character Guid{characterId} , Id {character.Stats.Id} Selected...", this);
+            //check current quests
+            var quest = CurrentQuests.Find(x => x.Stats.SinkType == QuestSourceTypes.Character && x.Stats.SinkId == character.Stats.Id);
+            if (quest is null) return;
+            if (quest.Evaluate(_party))
+            {
+                Debug.Log($"{quest.Name} is a success!");
+                CompletedQuests.Add(quest);
+                CurrentQuests.Remove(quest);
+                quest.Process(_party);
+                foreach (var _character in _party.Characters)
+                    _character.Value.CurrentExperience += quest.Stats.Experience;
+
+            }
         }
 
         public void EvaluateCurrentQuests()
