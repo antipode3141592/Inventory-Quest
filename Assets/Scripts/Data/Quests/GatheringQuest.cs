@@ -25,5 +25,10 @@ namespace Data.Quests
             if (targetCount == TargetQuantity) return true;
             return false;
         }
+
+        public override void Process(Party party)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -5,9 +5,9 @@ namespace Data.Locations
 {
     public class Location : ILocation
     {
-        public IList<ILocation> Locations { get; } = new List<ILocation>();
+        public List<ILocation> Locations { get; } = new List<ILocation>();
 
-        public IList<ICharacter> Characters { get; } = new List<ICharacter>();
+        public List<ICharacter> Characters { get; } = new List<ICharacter>();
 
         public ILocationStats Stats { get; }
 

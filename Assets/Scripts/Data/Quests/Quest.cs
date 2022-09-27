@@ -24,5 +24,6 @@ namespace Data.Quests
         public IQuestStats Stats { get; }
 
         public abstract bool Evaluate(Party party);
+        public abstract void Process(Party party);
     }
 }

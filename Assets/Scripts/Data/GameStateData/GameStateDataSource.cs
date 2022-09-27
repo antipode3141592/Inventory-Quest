@@ -1,4 +1,5 @@
-﻿using Data.Encounters;
+﻿using Data.Characters;
+using Data.Encounters;
 using Data.Locations;
 using System;
 using UnityEngine;
@@ -8,16 +9,18 @@ namespace Data
 {
     public class GameStateDataSource : MonoBehaviour, IGameStateDataSource
     {
+        ICharacterDataSource _characterDataSource;
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
         IEncounterDataSource _encounterDataSource;
 
         [Inject]
-        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource)
+        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource, ICharacterDataSource characterDataSource)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
             _encounterDataSource = encounterDataSource;
+            _characterDataSource = characterDataSource;
         }
 
         public IPath CurrentPath { get; protected set; }
@@ -34,6 +37,7 @@ namespace Data
         public void SetCurrentLocation(string id)
         {
             CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
+            CurrentLocation.InitializeLocation(_characterDataSource, _locationDataSource);
             OnCurrentLocationSet?.Invoke(this, id);
         }
 

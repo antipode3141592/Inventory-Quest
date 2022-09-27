@@ -19,5 +19,10 @@ namespace Data.Quests
         {
             throw new NotImplementedException();
         }
+
+        public override void Process(Party party)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
