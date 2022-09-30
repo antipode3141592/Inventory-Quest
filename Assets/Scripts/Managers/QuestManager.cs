@@ -22,9 +22,9 @@ namespace InventoryQuest.Managers
         public List<IQuest> CompletedQuests { get; } = new();
 
 
-        public event EventHandler<MessageEventArgs> OnQuestAccepted;
-        public event EventHandler<MessageEventArgs> OnQuestCanceled;
-        public event EventHandler<MessageEventArgs> OnQuestCompleted;
+        public event EventHandler<string> OnQuestAccepted;
+        public event EventHandler<string> OnQuestCanceled;
+        public event EventHandler<string> OnQuestCompleted;
 
         [Inject]
         public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource, IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
@@ -47,7 +47,7 @@ namespace InventoryQuest.Managers
         {
             var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
             CurrentQuests.Add(quest);
-            OnQuestAccepted?.Invoke(this, new MessageEventArgs(quest.Id));
+            OnQuestAccepted?.Invoke(this, quest.Id);
         }
 
         void OnCurrentLocationSetHandler(object sender, string e)
@@ -80,7 +80,7 @@ namespace InventoryQuest.Managers
                 quest.Process(_party);
                 foreach (var _character in _party.Characters)
                     _character.Value.CurrentExperience += quest.Stats.Experience;
-
+                OnQuestCompleted?.Invoke(this, quest.Id);
             }
         }
 

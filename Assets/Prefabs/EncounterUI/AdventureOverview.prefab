@@ -189,10 +189,10 @@ MonoBehaviour:
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 3.1999998
+  m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
     items: []
   spacingSizerFallback:
     screenConfigName: 
-    OptimizedSize: 8
+    OptimizedSize: 0
     MinSize: 0
     MaxSize: 300
     Mod:
@@ -255,7 +255,7 @@ MonoBehaviour:
     ChildForceExpandWidth: 1
     ChildScaleWidth: 0
     ChildScaleHeight: 0
-    ChildControlWidth: 0
+    ChildControlWidth: 1
     ChildControlHeight: 0
     Orientation: 0
     screenConfigName: Fallback

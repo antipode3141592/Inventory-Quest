@@ -33,12 +33,8 @@ namespace InventoryQuest.UI
 
         public void OnShow()
         {
-            PartyMemberSelected(_partyManager.CurrentParty.SelectedPartyMemberGuId);
-        }
-
-        private void Start()
-        {
             SetPortraits();
+            PartyMemberSelected(_partyManager.CurrentParty.SelectedPartyMemberGuId);
         }
 
         public void SetPortraits()

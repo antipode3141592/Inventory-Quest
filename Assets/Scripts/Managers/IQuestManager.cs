@@ -10,9 +10,9 @@ namespace InventoryQuest.Managers
         List<IQuest> CompletedQuests { get; }
         List<IQuest> CurrentQuests { get; }
 
-        event EventHandler<MessageEventArgs> OnQuestAccepted;
-        event EventHandler<MessageEventArgs> OnQuestCanceled;
-        event EventHandler<MessageEventArgs> OnQuestCompleted;
+        event EventHandler<string> OnQuestAccepted;
+        event EventHandler<string> OnQuestCanceled;
+        event EventHandler<string> OnQuestCompleted;
 
         void AddQuestToCurrentQuests(IQuest quest);
         void EvaluateCurrentQuests();

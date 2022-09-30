@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,9 @@ namespace InventoryQuest.Traveling
 
         public float DistanceMoved { get; protected set; } = 0;
 
-        private void Awake()
+        public event EventHandler<float> TravelPercentageUpdate;
+
+        void Awake()
         {
             isMoving = false;
             isIdle = true;
@@ -23,7 +26,6 @@ namespace InventoryQuest.Traveling
         public void IdleAll()
         {
             if (isIdle) return;
-            Debug.Log($"IdleAll() called...");
             isIdle = true;
             isMoving = false;
 
@@ -34,7 +36,6 @@ namespace InventoryQuest.Traveling
         public void MoveAll()
         {
             if (isMoving) return;
-            Debug.Log($"MoveAll() called...");
             DistanceMoved = 0f;
             isMoving = true;
             isIdle = false;
@@ -56,6 +57,7 @@ namespace InventoryQuest.Traveling
                 float travelDistance = Time.deltaTime * travelSettings.PartyTravelingSpeed;
                 transform.position = new(travelDistance + transform.position.x, transform.position.y, transform.position.z);
                 DistanceMoved += travelDistance;
+                TravelPercentageUpdate?.Invoke(this, DistanceMoved / travelSettings.DefaultDistanceBetweenEncounters);
                 yield return null;
             }
 

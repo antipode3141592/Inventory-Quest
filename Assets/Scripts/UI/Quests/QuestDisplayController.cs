@@ -41,7 +41,7 @@ namespace InventoryQuest.UI.Quests
             _questManager.OnQuestAccepted += OnQuestAcceptedHandler;
         }
 
-        private void OnQuestAcceptedHandler(object sender, MessageEventArgs e)
+        private void OnQuestAcceptedHandler(object sender, string e)
         {
             if (_questManager.CurrentQuests.Count == 0) return;
             foreach (var quest in _questManager.CurrentQuests)

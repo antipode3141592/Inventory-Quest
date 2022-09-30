@@ -50,7 +50,7 @@ namespace InventoryQuest.UI
 
         void SetFill(float fillPercentage)
         {
-            fillForeground.rectTransform.localScale = new Vector3(x: fillPercentage, y: 1f, z: 1f);
+            fillForeground.rectTransform.localScale = new Vector3(x: Mathf.Clamp01(fillPercentage), y: 1f, z: 1f);
         }
 
         public void OnPointerClick(PointerEventData eventData)

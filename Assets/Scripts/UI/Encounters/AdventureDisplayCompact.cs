@@ -32,6 +32,8 @@ namespace InventoryQuest.UI.Components
 
         void Start()
         {
+            _encounterManager.Wayfairing.StateEntered += OnWayfairingEnteredHandler;
+            _encounterManager.Preparing.StateEntered += OnPreparingEnteredHandler;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.Resolving.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.Resolving.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
@@ -40,6 +42,26 @@ namespace InventoryQuest.UI.Components
             _adventureManager.Adventuring.StateEntered += OnEncounterListGeneratedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }
+
+        void OnWayfairingEnteredHandler(object sender, EventArgs e)
+        {
+            for (int i = 0; i < adventureEncounterMarkers.Count; i++)
+            {
+                if (i == _gameStateDataSource.CurrentIndex)
+                    adventureEncounterMarkers[i].SubscribeToTravel();
+            }
+        }
+
+        void OnPreparingEnteredHandler(object sender, EventArgs e)
+        {
+            for(int i = 0; i < adventureEncounterMarkers.Count; i++)
+            {
+                if (i == _gameStateDataSource.CurrentIndex)
+                    adventureEncounterMarkers[i].UnsubscribeToTravel(); 
+            }
+        }
+
+        
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
@@ -97,6 +119,7 @@ namespace InventoryQuest.UI.Components
             {
                 if (marker.EncounterId == e)
                 {
+                    
                     marker.HighlightIcon.color = Color.white;
                     if (Debug.isDebugBuild)
                         Debug.Log($"setting highlight for {marker.EncounterId}");
