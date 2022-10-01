@@ -12,6 +12,7 @@ namespace InventoryQuest.UI.Menus
     {
         IAdventureManager _adventureManager;
         IEncounterManager _encounterManager;
+        IGameManager _gameManager;
 
         [SerializeField] List<Menu> _menuList;
 
@@ -24,10 +25,11 @@ namespace InventoryQuest.UI.Menus
         Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IGameManager gameManager)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;
+            _gameManager = gameManager;
         }
 
         void Awake()
@@ -43,12 +45,19 @@ namespace InventoryQuest.UI.Menus
                     Debug.Log($"{menu.Key.Name}");
             }
 
+            _gameManager.OnGameBegin += OnGameBeginHandler;
+
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStarted;
             _encounterManager.Preparing.StateEntered += OnPreparingStarted;
 
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+        }
+
+        private void OnGameBeginHandler(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(LocationMenu));
         }
 
         private void OnPreparingStarted(object sender, EventArgs e)

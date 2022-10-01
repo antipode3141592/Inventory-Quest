@@ -34,6 +34,7 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
+        public event EventHandler OnGameBegin;
 
         [Inject]
         public void Init(IAdventureManager adventureManager)
@@ -49,7 +50,7 @@ namespace InventoryQuest.Managers
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
 
-            Debug.Log($"{Application.persistentDataPath}");
+        
         }
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
@@ -95,6 +96,11 @@ namespace InventoryQuest.Managers
                 OnRotateCCW?.Invoke(this, new RotationEventArgs(facing));
                 return;
             }
+        }
+
+        public void BeginGame()
+        {
+            OnGameBegin?.Invoke(this, EventArgs.Empty);
         }
     }
 

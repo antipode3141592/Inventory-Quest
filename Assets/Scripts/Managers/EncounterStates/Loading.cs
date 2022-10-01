@@ -25,6 +25,7 @@ namespace InventoryQuest.Managers.States
             IsLoaded = false;
             _gameStateDataSource.SetCurrentEncounter();
             OnEncounterLoaded?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
+            PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Description);
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 

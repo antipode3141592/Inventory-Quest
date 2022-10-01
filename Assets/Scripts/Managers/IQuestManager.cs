@@ -16,7 +16,7 @@ namespace InventoryQuest.Managers
 
         void AddQuestToCurrentQuests(IQuest quest);
         void EvaluateCurrentQuests();
-        public void EvaluateLocationCharacterQuests(string characterId);
+        public void EvaluateLocationCharacterQuests(string characterGuId);
 
     }
 }

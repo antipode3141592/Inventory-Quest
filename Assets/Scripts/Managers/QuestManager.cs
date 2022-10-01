@@ -65,10 +65,13 @@ namespace InventoryQuest.Managers
 
         }
 
-        public void EvaluateLocationCharacterQuests(string characterId)
+        public void EvaluateLocationCharacterQuests(string characterGuId)
         {
-            var character = _gameStateDataSource.CurrentLocation.Characters.Find(x => x.GuId == characterId);
-            Debug.Log($"QuestManager handling Character Guid{characterId} , Id {character.Stats.Id} Selected...", this);
+            var character = _gameStateDataSource.CurrentLocation.Characters.Find(x => x.GuId == characterGuId);
+            Debug.Log($"QuestManager handling Character Guid{characterGuId} , Id {character.Stats.Id} Selected...", this);
+            //check dialogue
+            PixelCrushers.DialogueSystem.DialogueManager.StartConversation("Dispatch/Initial");
+
             //check current quests
             var quest = CurrentQuests.Find(x => x.Stats.SinkType == QuestSourceTypes.Character && x.Stats.SinkId == character.Stats.Id);
             if (quest is null) return;

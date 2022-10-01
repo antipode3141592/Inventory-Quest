@@ -40,6 +40,12 @@ namespace InventoryQuest.UI.Menus
             MainMapButton.OnPointerHoldSuccess += OnMainMapSelected;
         }
 
+        public override void Show()
+        {
+            base.Show();
+            SetupCharacters();
+        }
+
         public override void Hide()
         {
             base.Hide();
@@ -63,7 +69,11 @@ namespace InventoryQuest.UI.Menus
             locationName.text = stats.DisplayName;
             Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
             locationThumbnailIcon.sprite = locationIcon;
+            SetupCharacters();
+        }
 
+        private void SetupCharacters()
+        {
             for (int i = 0; i < locationCharacterPortraits.Count; i++)
             {
                 if (i < _gameStateDataSource.CurrentLocation.Characters.Count)
@@ -71,7 +81,8 @@ namespace InventoryQuest.UI.Menus
                     locationCharacterPortraits[i].gameObject.SetActive(true);
                     locationCharacterPortraits[i].SetUpPortrait(_gameStateDataSource.CurrentLocation.Characters[i]);
                     locationCharacterPortraits[i].PortraitSelected += OnPortraitSelected;
-                } else
+                }
+                else
                 {
                     locationCharacterPortraits[i].gameObject.SetActive(false);
                 }
@@ -80,6 +91,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnPortraitSelected(object sender, string e)
         {
+            
             _questManager.EvaluateLocationCharacterQuests(e);
         }
 

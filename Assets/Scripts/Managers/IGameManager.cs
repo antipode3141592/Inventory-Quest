@@ -6,15 +6,16 @@ namespace InventoryQuest.Managers
 {
     public interface IGameManager
     {
-        GameStates CurrentState { get; }
-        IItem HoldingItem { get; set; }
-
-        void ChangeState(GameStates targetState);
-        void CheckRotateAction();
-
         public event EventHandler OnItemHeld;
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
+        public event EventHandler OnGameBegin;
+
+        public GameStates CurrentState { get; }
+        public IItem HoldingItem { get; set; }
+        public void ChangeState(GameStates targetState);
+        public void CheckRotateAction();
+        public void BeginGame();
     }
 }

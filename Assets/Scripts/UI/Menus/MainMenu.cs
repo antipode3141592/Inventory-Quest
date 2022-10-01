@@ -12,6 +12,7 @@ namespace InventoryQuest.UI.Menus
     {
         IAdventureManager _adventureManager;
         IPartyManager _partyManager;
+        IGameManager _gameManager;
 
         [SerializeField] TextMeshProUGUI mainText;
         [SerializeField] TMP_InputField characterName;
@@ -20,10 +21,11 @@ namespace InventoryQuest.UI.Menus
 
         [Inject]
 
-        public void Init(IAdventureManager adventureManager, IPartyManager partyManager)
+        public void Init(IAdventureManager adventureManager, IPartyManager partyManager, IGameManager gameManager)
         {
             _adventureManager = adventureManager;
             _partyManager = partyManager;
+            _gameManager = gameManager;
         }
 
         protected override void Awake()
@@ -44,7 +46,8 @@ namespace InventoryQuest.UI.Menus
         public void Continue()
         {
             _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.SelectedPartyMemberGuId).DisplayName = characterName.text;
-            _adventureManager.Idle.Continue();
+
+            _gameManager.BeginGame();
         }
     }
 }
