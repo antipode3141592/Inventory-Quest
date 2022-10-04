@@ -57,13 +57,14 @@ namespace InventoryQuest.Managers.States
                     Debug.Log($"Enqueuing {reward}");
                     _rewardManager.EnqueueReward(reward);
                 }
-
+                PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Stats.SuccessMessage);
                 AwardExperience(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveSuccess?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }
             else
             {
                 Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} was a failure!");
+                PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Stats.FailureMessage);
                 DistributePenalties(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveFailure?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }

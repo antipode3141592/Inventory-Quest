@@ -34,7 +34,7 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
-        public event EventHandler OnGameBegin;
+        public event EventHandler OnGameBegining;
 
         [Inject]
         public void Init(IAdventureManager adventureManager)
@@ -100,7 +100,7 @@ namespace InventoryQuest.Managers
 
         public void BeginGame()
         {
-            OnGameBegin?.Invoke(this, EventArgs.Empty);
+            OnGameBegining?.Invoke(this, EventArgs.Empty);
         }
     }
 

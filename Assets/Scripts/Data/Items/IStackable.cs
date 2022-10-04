@@ -1,6 +1,6 @@
 ﻿namespace Data.Items
 {
-    public interface IStackable
+    public interface IStackable: IItemComponent
     {
         public int MinStackSize { get;}
     }

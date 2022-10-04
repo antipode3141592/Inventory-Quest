@@ -26,6 +26,8 @@ namespace Data.Items
 
         public int Quantity { get; }
 
+        public List<IItemComponent> Components { get; }
+
         public EquipableItem(EquipableItemStats stats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -36,6 +38,7 @@ namespace Data.Items
             SlotType = stats.SlotType;
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
             Quantity = 1;
+            Components = new();
         }
     }
 }

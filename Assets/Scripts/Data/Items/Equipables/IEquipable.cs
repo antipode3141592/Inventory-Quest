@@ -3,7 +3,7 @@
 namespace Data.Items
 
 {
-    public interface IEquipable
+    public interface IEquipable : IItemComponent
     {
         public EquipmentSlotType SlotType { get; }
         public IList<StatModifier> Modifiers { get; set; }

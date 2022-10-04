@@ -18,14 +18,17 @@ namespace InventoryQuest.Managers.States
 
         public event EventHandler<string> OnEncounterLoaded;
 
-        public bool IsLoaded { get; private set; } = false;
+        public bool IsLoaded { get; set; } = false;
+
+        public bool ManageInventory { get; set; } = false;
 
         public void OnEnter()
         {
             IsLoaded = false;
+            ManageInventory = false;
             _gameStateDataSource.SetCurrentEncounter();
             OnEncounterLoaded?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
-            PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Description);
+            //PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Description);
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
@@ -36,7 +39,7 @@ namespace InventoryQuest.Managers.States
 
         public void Tick()
         {
-            IsLoaded = true;
+
         }
 
       

@@ -2,9 +2,9 @@
 
 namespace Data.Shapes
 {
-    public abstract class Shape : IRotatable
+    public abstract class Shape : IShape
     {
-        public string Id;
+        public string Id { get; protected set; }
         public Dictionary<Facing, BitMask> Masks;
         public Facing CurrentFacing;
         public bool IsRotationallySymmetric { get; protected set; }
@@ -13,6 +13,8 @@ namespace Data.Shapes
         public BitMask CurrentMask => Masks[CurrentFacing];
 
         public Coor Size => new Coor(Masks[CurrentFacing].Map.GetLength(0), Masks[CurrentFacing].Map.GetLength(1));
+
+        public Dictionary<Facing, HashSet<Coor>> Points { get; } = new();
 
         /// <summary>
         /// 
@@ -23,7 +25,7 @@ namespace Data.Shapes
             //update facing
 
             int v = (int)CurrentFacing + direction;
-            
+
             var endFacing = v % Masks.Count < 0 ? (Facing)(Masks.Count - 1) : (Facing)(v % Masks.Count);
             CurrentFacing = endFacing;
             return endFacing;

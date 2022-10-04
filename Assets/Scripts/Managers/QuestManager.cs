@@ -1,7 +1,9 @@
 ﻿using Data;
+using Data.Items;
 using Data.Characters;
 using Data.Locations;
 using Data.Quests;
+using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +13,9 @@ namespace InventoryQuest.Managers
 {
     public class QuestManager : MonoBehaviour, IQuestManager
     {
-        IGameManager _gameManager;
         IPartyManager _partyManager;
         IQuestDataSource _questDataSource;
-        IAdventureManager _adventureManager;
+        IItemDataSource _itemDataSource;
         IGameStateDataSource _gameStateDataSource;
 
         Party _party => _partyManager.CurrentParty;
@@ -27,20 +28,17 @@ namespace InventoryQuest.Managers
         public event EventHandler<string> OnQuestCompleted;
 
         [Inject]
-        public void Init(IGameManager gameManager, IPartyManager partyManager, IQuestDataSource questDataSource, IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
+        public void Init(IPartyManager partyManager, IQuestDataSource questDataSource, IGameStateDataSource gameStateDataSource, IItemDataSource itemDataSource)
         {
-            _gameManager = gameManager;
             _partyManager = partyManager;
             _questDataSource = questDataSource;
-            _adventureManager = adventureManager;
             _gameStateDataSource = gameStateDataSource;
+            _itemDataSource = itemDataSource;
         }
-        
 
         void Awake()
         {
-            _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationSetHandler;
-
+            Lua.RegisterFunction("AddItemToParty", this, SymbolExtensions.GetMethodInfo(() => AddItemToPartyInventory(string.Empty)));
         }
 
         void Start()
@@ -48,21 +46,6 @@ namespace InventoryQuest.Managers
             var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
             CurrentQuests.Add(quest);
             OnQuestAccepted?.Invoke(this, quest.Id);
-        }
-
-        void OnCurrentLocationSetHandler(object sender, string e)
-        {
-            Debug.Log($"QuestManager handling Location Set...", this);
-            //check current quests
-            var quest = CurrentQuests.Find(x => x.Stats.SinkType == QuestSourceTypes.Location && x.Stats.SinkId == e);
-            if (quest is null) return;
-            if (quest.Evaluate(_party))
-            {
-                Debug.Log($"{quest.Name} is a success!");
-            }
-            //check for uncompleted quests that trigger on entering location
-            //var newquest = _questDataSource.
-
         }
 
         public void EvaluateLocationCharacterQuests(string characterGuId)
@@ -101,6 +84,20 @@ namespace InventoryQuest.Managers
         public void AddQuestToCurrentQuests(IQuest quest)
         {
             //CurrentQuests
+        }
+
+        public void AddItemToPartyInventory(string itemId)
+        {
+            var item = ItemFactory.GetItem(_itemDataSource.GetItemStats(itemId));
+            if (item is null) return;
+            foreach(var character in _partyManager.CurrentParty.Characters)
+                if (ItemPlacementHelpers.TryAutoPlaceToContainer(character.Value.Backpack, item))
+                    return;
+        }
+
+        public void AddCharacterToParty(string characterId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

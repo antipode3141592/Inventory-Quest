@@ -15,5 +15,7 @@ namespace Data.Locations
         public List<string> LocationIds { get; }
 
         public bool IsKnown { get; }
+
+        public string ScenePath { get; }
     }
 }

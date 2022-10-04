@@ -27,14 +27,14 @@ namespace InventoryQuest.Managers
         Idle _idle;
         Wayfairing _wayfairing;
         Loading _loading;
-        Preparing _preparing;
+        ManagingInventory _managingInventory;
         Resolving _resolving;
         CleaningUp _cleaningUp;
 
         public Idle Idle => _idle;
         public Wayfairing Wayfairing => _wayfairing;
         public Loading Loading => _loading;
-        public Preparing Preparing => _preparing;
+        public ManagingInventory ManagingInventory => _managingInventory;
         public Resolving Resolving => _resolving;
         public CleaningUp CleaningUp => _cleaningUp;
 
@@ -55,15 +55,16 @@ namespace InventoryQuest.Managers
             _idle = new Idle();
             _wayfairing = new Wayfairing(partyController: _partyController);
             _loading = new Loading(gameStateDataSource: _gameStateDataSource);
-            _preparing = new Preparing(partyController: _partyController);
+            _managingInventory = new ManagingInventory(partyController: _partyController);
             _resolving = new Resolving(rewardManager: _rewardManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource);
             _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, groundController: _groundController);
 
 
             At(_idle, _wayfairing, BeginWayfairing());
             At(_wayfairing, _loading, TargetDistanceMoved());
-            At(_loading, _preparing, IsLoadingComplete());
-            At(_preparing, _resolving, IsPreparingComplete());
+            At(_loading, _managingInventory, IsLoadingComplete());
+            At(_loading, _resolving, SkipInventoryStep());
+            At(_managingInventory, _resolving, IsPreparingComplete());
             At(_resolving, _cleaningUp, IsResolvingComplete());
             At(_cleaningUp, _idle, IsCleaningUpComplete());
             At(_cleaningUp, _wayfairing, IsNextEncounterAvailable());
@@ -73,8 +74,9 @@ namespace InventoryQuest.Managers
 
             Func<bool> BeginWayfairing() => () => _idle.EndState;
             Func<bool> TargetDistanceMoved() => () => _wayfairing.TotalDistanceMoved >= travelSettings.DefaultDistanceBetweenEncounters;
-            Func<bool> IsLoadingComplete() => () => _loading.IsLoaded;
-            Func<bool> IsPreparingComplete() => () => _preparing.EndState;
+            Func<bool> IsLoadingComplete() => () => _loading.ManageInventory;
+            Func<bool> SkipInventoryStep() => () => _loading.IsLoaded;
+            Func<bool> IsPreparingComplete() => () => _managingInventory.EndState;
             Func<bool> IsResolvingComplete() => () => _resolving.EndState;
             Func<bool> IsCleaningUpComplete() => () => _cleaningUp.EndState && !_cleaningUp.EncounterAvailable;
             Func<bool> IsNextEncounterAvailable() => () => _cleaningUp.EndState && _cleaningUp.EncounterAvailable;

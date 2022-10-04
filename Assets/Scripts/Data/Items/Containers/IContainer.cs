@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Items
 {
-    public interface IContainer
+    public interface IContainer: IItemComponent
     {
         public float InitialWeight { get; }
         public bool IsEmpty { get; }

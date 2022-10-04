@@ -4,11 +4,11 @@ using System;
 
 namespace InventoryQuest.Managers.States
 {
-    public class Preparing : IState
+    public class ManagingInventory : IState
     {
         IPartyController _partyController;
 
-        public Preparing(IPartyController partyController)
+        public ManagingInventory(IPartyController partyController)
         {
             _partyController = partyController;
         }

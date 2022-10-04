@@ -18,6 +18,7 @@ namespace Data.Items
             Contents = new Dictionary<string, Content>();
             Sprite = Resources.Load<Sprite>(stats.SpritePath);
             Quantity = 1;
+            Components = new();
         }
 
         public Coor Dimensions { get; protected set; }
@@ -34,6 +35,8 @@ namespace Data.Items
         public Sprite Sprite { get; set; }
 
         public int Quantity { get; }
+
+        public List<IItemComponent> Components { get; }
 
         public bool IsEmpty => ContainerIsEmpty();
 

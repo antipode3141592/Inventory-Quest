@@ -1,5 +1,6 @@
 ﻿using Data.Shapes;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data.Items
@@ -15,6 +16,7 @@ namespace Data.Items
             Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
             Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
             Quantity = 1;
+            Components = new();
         }
 
         public string GuId { get; }
@@ -30,6 +32,8 @@ namespace Data.Items
         public float Value => Stats.GoldValue;
 
         public int Quantity {get; }
+
+        public List<IItemComponent> Components { get; }
 
         public IItemStats Stats { get; }
     }

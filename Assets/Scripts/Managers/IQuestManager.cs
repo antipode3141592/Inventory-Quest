@@ -18,5 +18,8 @@ namespace InventoryQuest.Managers
         void EvaluateCurrentQuests();
         public void EvaluateLocationCharacterQuests(string characterGuId);
 
+        public void AddItemToPartyInventory(string itemId);
+        public void AddCharacterToParty(string characterId);
+
     }
 }

@@ -10,7 +10,7 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
-        public event EventHandler OnGameBegin;
+        public event EventHandler OnGameBegining;
 
         public GameStates CurrentState { get; }
         public IItem HoldingItem { get; set; }

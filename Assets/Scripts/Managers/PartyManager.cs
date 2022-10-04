@@ -35,7 +35,7 @@ namespace InventoryQuest.Managers
                 },
                 startingInventory: new IItem[]
                 {
-                    ItemFactory.GetItem(_itemDataSource.GetItemStats("questitem_1")),
+                    //ItemFactory.GetItem(_itemDataSource.GetItemStats("questitem_1")),
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),
                     ItemFactory.GetItem(_itemDataSource.GetItemStats("apple_fuji")),

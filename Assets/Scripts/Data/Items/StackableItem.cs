@@ -1,5 +1,6 @@
 ﻿using Data.Shapes;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data.Items
@@ -17,6 +18,7 @@ namespace Data.Items
             Stats = stats;
             Quantity = 1;
             MinStackSize = stats.MinStackSize;
+            Components = new();
         }
 
         public string GuId { get; }
@@ -33,6 +35,9 @@ namespace Data.Items
         public IItemStats Stats { get; }
 
         public int Quantity { get; set; }
+
+        public List<IItemComponent> Components { get; }
+
         public int MinStackSize { get; }
     }
 }

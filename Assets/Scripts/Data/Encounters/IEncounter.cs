@@ -15,12 +15,21 @@ namespace Data.Encounters
 
         public IEncounterStats Stats { get; }
 
+        //public IList<IChoice> Choices { get; }
+
         public IList<string> RewardIds { get; }
 
         public IList<string> PenaltyIds { get; }
 
         public bool Resolve(Party party);
 
+
+    }
+
+    public interface IChoice
+    {
+        string Name { get; }
+        string Description { get; }
 
     }
 }

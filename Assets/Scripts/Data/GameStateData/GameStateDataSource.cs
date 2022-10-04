@@ -3,6 +3,7 @@ using Data.Encounters;
 using Data.Locations;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Data
@@ -34,11 +35,17 @@ namespace Data
         public event EventHandler<string> OnDestinationLocationSet;
         public event EventHandler<string> OnCurrentPathSet;
 
+        void Start()
+        {
+            SetCurrentLocation("Startington");
+        }
+
         public void SetCurrentLocation(string id)
         {
             CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
             CurrentLocation.InitializeLocation(_characterDataSource, _locationDataSource);
-            OnCurrentLocationSet?.Invoke(this, id);
+            
+            OnCurrentLocationSet?.Invoke(this, $"{CurrentLocation.Stats.ScenePath}");
         }
 
         public void SetDestinationLocation(string id)

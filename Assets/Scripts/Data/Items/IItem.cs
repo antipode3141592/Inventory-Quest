@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Data.Shapes;
+using System.Collections.Generic;
 
 namespace Data.Items
 
@@ -17,5 +18,7 @@ namespace Data.Items
         public Shape Shape { get; }
 
         public int Quantity { get; }
+
+        public List<IItemComponent> Components { get; }
     }
 }
