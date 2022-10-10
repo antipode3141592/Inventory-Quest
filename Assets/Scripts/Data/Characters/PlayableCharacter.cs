@@ -27,7 +27,7 @@ namespace Data.Characters
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; } = new List<IWeaponProficiency>();
-        public IWeaponProficiency CurrentWeaponProficiency { get; set; }
+        public IWeaponProficiency CurrentWeaponProficiency { get; protected set; }
 
         public ICharacterStats Stats { get; }
 
@@ -130,7 +130,7 @@ namespace Data.Characters
                 WeaponProficiencies.Add(prof);
             }
             weaponProficiencyIndex = 0;
-            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex];
+            CurrentWeaponProficiency = WeaponProficiencies.Count > 0 ? WeaponProficiencies[weaponProficiencyIndex] : null;
 
             if (initialEquipment is null) return;
             foreach (IEquipable item in initialEquipment)

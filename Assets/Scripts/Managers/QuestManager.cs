@@ -1,11 +1,7 @@
 ﻿using Data;
-using Data.Items;
 using Data.Characters;
-using Data.Locations;
-using Data.Quests;
+using Data.Items;
 using PixelCrushers.DialogueSystem;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -14,76 +10,22 @@ namespace InventoryQuest.Managers
     public class QuestManager : MonoBehaviour, IQuestManager
     {
         IPartyManager _partyManager;
-        IQuestDataSource _questDataSource;
         IItemDataSource _itemDataSource;
-        IGameStateDataSource _gameStateDataSource;
 
         Party _party => _partyManager.CurrentParty;
-        public List<IQuest> CurrentQuests { get; } = new();
-        public List<IQuest> CompletedQuests { get; } = new();
-
-
-        public event EventHandler<string> OnQuestAccepted;
-        public event EventHandler<string> OnQuestCanceled;
-        public event EventHandler<string> OnQuestCompleted;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IQuestDataSource questDataSource, IGameStateDataSource gameStateDataSource, IItemDataSource itemDataSource)
+        public void Init(IPartyManager partyManager, IItemDataSource itemDataSource)
         {
             _partyManager = partyManager;
-            _questDataSource = questDataSource;
-            _gameStateDataSource = gameStateDataSource;
             _itemDataSource = itemDataSource;
-        }
-
-        void Awake()
-        {
-            Lua.RegisterFunction("AddItemToParty", this, SymbolExtensions.GetMethodInfo(() => AddItemToPartyInventory(string.Empty)));
         }
 
         void Start()
         {
-            var quest = QuestFactory.GetQuest(_questDataSource.GetQuestById("quest_intro_delivery"));
-            CurrentQuests.Add(quest);
-            OnQuestAccepted?.Invoke(this, quest.Id);
-        }
-
-        public void EvaluateLocationCharacterQuests(string characterGuId)
-        {
-            var character = _gameStateDataSource.CurrentLocation.Characters.Find(x => x.GuId == characterGuId);
-            Debug.Log($"QuestManager handling Character Guid{characterGuId} , Id {character.Stats.Id} Selected...", this);
-            //check dialogue
-            PixelCrushers.DialogueSystem.DialogueManager.StartConversation("Dispatch/Initial");
-
-            //check current quests
-            var quest = CurrentQuests.Find(x => x.Stats.SinkType == QuestSourceTypes.Character && x.Stats.SinkId == character.Stats.Id);
-            if (quest is null) return;
-            if (quest.Evaluate(_party))
-            {
-                Debug.Log($"{quest.Name} is a success!");
-                CompletedQuests.Add(quest);
-                CurrentQuests.Remove(quest);
-                quest.Process(_party);
-                foreach (var _character in _party.Characters)
-                    _character.Value.CurrentExperience += quest.Stats.Experience;
-                OnQuestCompleted?.Invoke(this, quest.Id);
-            }
-        }
-
-        public void EvaluateCurrentQuests()
-        {
-            foreach (var quest in CurrentQuests)
-            {
-                if (quest.Evaluate(_party))
-                {
-
-                }
-            }
-        }
-
-        public void AddQuestToCurrentQuests(IQuest quest)
-        {
-            //CurrentQuests
+            Lua.RegisterFunction("AddItemToParty", this, SymbolExtensions.GetMethodInfo(() => AddItemToPartyInventory(string.Empty)));
+            Lua.RegisterFunction("CountItemInParty", this, SymbolExtensions.GetMethodInfo(() => CountItemInPartyInventory(string.Empty)));
+            Lua.RegisterFunction("RemoveItemFromParty", this, SymbolExtensions.GetMethodInfo(() => RemoveItemFromPartyInventory(string.Empty, 0)));
         }
 
         public void AddItemToPartyInventory(string itemId)
@@ -95,9 +37,65 @@ namespace InventoryQuest.Managers
                     return;
         }
 
-        public void AddCharacterToParty(string characterId)
+        public double CountItemInPartyInventory(string itemId)
         {
-            throw new NotImplementedException();
+            double runningTotal = 0;
+            foreach (var character in _partyManager.CurrentParty.Characters)
+            {
+                foreach (var content in character.Value.Backpack.Contents)
+                {
+                    if (content.Value.Item.Id == itemId)
+                    {
+                        runningTotal += content.Value.Item.Quantity;
+                    }
+                }
+                foreach (var slot in character.Value.EquipmentSlots)
+                {
+                    var equippedItem = slot.Value.EquippedItem as IItem;
+                    if (slot.Value.EquippedItem is not null)
+                    {
+                        if (equippedItem.Id == itemId)
+                        {
+                            runningTotal += equippedItem.Quantity;
+                        }
+
+                    }
+                }
+            }
+            return runningTotal;
+        }
+
+        public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
+        {
+            double runningTotal = 0;
+            foreach (var character in _partyManager.CurrentParty.Characters)
+            {
+                foreach (var content in character.Value.Backpack.Contents)
+                {
+                    if (content.Value.Item.Id == itemId)
+                    {
+                        runningTotal += content.Value.Item.Quantity;
+                        character.Value.Backpack.TryTake(out _, content.Value.GridSpaces[0]);
+                        if (runningTotal >= minToRemove)
+                            return;
+                    }
+                }
+                foreach (var slot in character.Value.EquipmentSlots)
+                {
+                    var equippedItem = slot.Value.EquippedItem as IItem;
+                    if (slot.Value.EquippedItem is not null)
+                    {
+                        if (equippedItem.Id == itemId)
+                        {
+                            runningTotal += equippedItem.Quantity;
+                            slot.Value.TryUnequip(out _);
+                            if (runningTotal >= minToRemove)
+                                return;
+                        }
+
+                    }
+                }
+            }
         }
     }
 }

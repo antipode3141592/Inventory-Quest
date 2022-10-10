@@ -8,7 +8,7 @@ namespace InventoryQuest.Managers
     {
         void DestroyRewards();
         void EnqueueReward(string rewardId);
-        void ProcessRewards();
+        bool ProcessRewards();
         void SelectLootPile(string containerGuid);
 
         public IDictionary<string, Container> LootPiles { get; }

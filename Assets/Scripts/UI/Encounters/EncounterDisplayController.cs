@@ -57,8 +57,8 @@ namespace InventoryQuest.UI
 
         private void Continue(object sender, EventArgs e)
         {
-            if (_encounterManager.CurrentStateName == typeof(Preparing).Name)
-                _encounterManager.Preparing.Continue();
+            if (_encounterManager.CurrentStateName == typeof(ManagingInventory).Name)
+                _encounterManager.ManagingInventory.Continue();
             if (_encounterManager.CurrentStateName == typeof(CleaningUp).Name)
                 _encounterManager.CleaningUp.Continue();
         }

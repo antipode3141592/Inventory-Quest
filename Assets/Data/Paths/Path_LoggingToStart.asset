@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133a414ef9d381f4b8b6e4947ad5a4ce, type: 3}
   m_Name: Path_LoggingToStart
   m_EditorClassIdentifier: 
-  id: 
+  id: logging_to_start
   _name: 
-  startLocationStats: {fileID: 0}
-  endLocationStats: {fileID: 0}
+  startLocationStats: {fileID: 11400000, guid: c7b5923c6bd26c145abcfdc1e728c444, type: 2}
+  endLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
   encounterIds: []

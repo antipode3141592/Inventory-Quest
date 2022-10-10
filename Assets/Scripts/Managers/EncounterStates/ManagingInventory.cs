@@ -21,7 +21,7 @@ namespace InventoryQuest.Managers.States
         public void OnEnter()
         {
             EndState = false;
-            _partyController.IdleAll();
+            //_partyController.IdleAll();
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 

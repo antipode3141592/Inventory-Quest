@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Items;
 using Data.Rewards;
+using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace InventoryQuest.Managers
 {
     public class RewardManager : MonoBehaviour, IRewardManager
     {
+        IPartyManager _partyManager;
         IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
@@ -31,8 +33,9 @@ namespace InventoryQuest.Managers
         public event EventHandler<Container> OnLootPileSelected;
 
         [Inject]
-        public void Init(IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource)
+        public void Init(IPartyManager partyManager, IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource)
         {
+            _partyManager = partyManager;
             _dataSource = dataSource;
             _rewardDataSource = rewardDataSource;
             _lootTableDataSource = lootTableDataSource;
@@ -41,6 +44,15 @@ namespace InventoryQuest.Managers
         void Awake()
         {
             _lootTable = new LootTable(_lootTableDataSource);
+            Lua.RegisterFunction("RewardExperience", this, SymbolExtensions.GetMethodInfo(() => RewardExperience(0)));
+        }
+
+        public void RewardExperience(double experience)
+        {
+            foreach (var character in _partyManager.CurrentParty.Characters)
+            {
+                character.Value.CurrentExperience += (int)experience;
+            }
         }
 
         #region Processing Rewards Queue
@@ -56,10 +68,11 @@ namespace InventoryQuest.Managers
             rewardQueue.Enqueue(reward);
         }
 
-        public void ProcessRewards()
+        public bool ProcessRewards()
         {
-            if (isProcessing) return;
+            if (isProcessing) return false;
             isProcessing = true;
+            int rewardsProcessed = rewardQueue.Count;
             OnRewardsProcessStart?.Invoke(this, EventArgs.Empty);
             while (rewardQueue.Count > 0)
             {
@@ -68,6 +81,7 @@ namespace InventoryQuest.Managers
             }
             isProcessing = false;
             OnRewardsProcessComplete?.Invoke(this, EventArgs.Empty);
+            return rewardsProcessed > 0;
         }
 
 

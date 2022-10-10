@@ -12,6 +12,7 @@ namespace Data.Characters
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; }
+        public IWeaponProficiency CurrentWeaponProficiency { get; }
         public ContainerBase Backpack { get; }
 
         public float CurrentEncumbrance { get; }

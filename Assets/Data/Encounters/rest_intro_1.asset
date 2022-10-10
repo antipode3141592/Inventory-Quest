@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: intro_1
   _name: A Lovely Day
-  description: You step out of Startington and begin walking the road to Destinationville,
-    toward your delivery's receipient.  It's your first day on the job, but it's
-    a warm, clear day and you feel nothing could go wrong!
-  category: 
+  description: It's your first day on the job, but it's a warm, clear day and you
+    feel nothing could go wrong!
   experience: 0
   successMessage: The walk was pleasant and uneventful.  The path ahead leads through
     small coniferous forest just before Destinationville.

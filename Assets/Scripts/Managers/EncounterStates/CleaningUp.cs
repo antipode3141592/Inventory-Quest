@@ -20,6 +20,8 @@ namespace InventoryQuest.Managers.States
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
 
+        public event EventHandler RequestShowInventory;
+
         public bool EndState { get; private set; } = false;
 
         public bool EncounterAvailable { get; private set; } = false;
@@ -29,10 +31,19 @@ namespace InventoryQuest.Managers.States
             EndState = false;
             EncounterAvailable = false;
             StateEntered?.Invoke(this, EventArgs.Empty);
+            if (_rewardManager.ProcessRewards())
+            {
+                RequestShowInventory?.Invoke(this, EventArgs.Empty);
+            } 
+            else
+            {
+                Continue();
+            }
         }
 
         public void OnExit()
         {
+            
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -45,7 +56,7 @@ namespace InventoryQuest.Managers.States
         {
             if (EndState) return;
             EndState = true;
-            //destroy remaining rewards
+
             _rewardManager.DestroyRewards();
             //destroy all dropped items
             _groundController.DestroyAllContainedObjects();

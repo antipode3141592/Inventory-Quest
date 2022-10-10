@@ -6,104 +6,106 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Zenject;
 
-public class TestCharacterCreationFromScriptableObjects : SceneTestFixture
+namespace InventoryQuest.Testing
 {
-    readonly string playerId = "player";
-    readonly string sceneName = "Test_Characters";
-
-    void CommonInstall()
+    public class TestCharacterCreationFromScriptableObjects : SceneTestFixture
     {
+        readonly string playerId = "player";
+        readonly string sceneName = "Test_Characters";
 
-    }
+        void CommonInstall()
+        {
 
-    [UnityTest]
-    public IEnumerator TestCharacterStatRetrievable()
-    {
-        CommonInstall();
+        }
 
-        yield return LoadScene(sceneName);
+        [UnityTest]
+        public IEnumerator TestCharacterStatRetrievable()
+        {
+            CommonInstall();
 
-        var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
-        var playerStats = characterDataSource.GetById(playerId);
-        Assert.That(playerStats is not null);
-    }
+            yield return LoadScene(sceneName);
 
-    [UnityTest]
-    public IEnumerator TestCharacterFactoryCreationSuccess()
-    {
-        CommonInstall();
+            var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
+            var playerStats = characterDataSource.GetById(playerId);
+            Assert.That(playerStats is not null);
+        }
 
-        yield return LoadScene(sceneName);
+        [UnityTest]
+        public IEnumerator TestCharacterFactoryCreationSuccess()
+        {
+            CommonInstall();
 
-        var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
-        var playerStats = characterDataSource.GetById(playerId);
-        var player = CharacterFactory.GetCharacter(playerStats);
+            yield return LoadScene(sceneName);
 
-        Assert.That(player is not null);
-    }
+            var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
+            var playerStats = characterDataSource.GetById(playerId);
+            var player = CharacterFactory.GetCharacter(playerStats);
 
-    [UnityTest]
-    public IEnumerator TestCreatedCharacterWithInitialStatsSuccess()
-    {
-        CommonInstall();
+            Assert.That(player is not null);
+        }
 
-        yield return LoadScene(sceneName);
+        [UnityTest]
+        public IEnumerator TestCreatedCharacterWithInitialStatsSuccess()
+        {
+            CommonInstall();
 
-        var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
-        var playerStats = characterDataSource.GetById(playerId);
-        int addedStrength = playerStats.InitialStats[StatTypes.Strength];
+            yield return LoadScene(sceneName);
 
-        int targetStrength = playerStats.SpeciesBaseStats.BaseStats[StatTypes.Strength] + addedStrength;
+            var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
+            var playerStats = characterDataSource.GetById(playerId);
+            int addedStrength = playerStats.InitialStats[StatTypes.Strength];
 
-        var player = CharacterFactory.GetCharacter(playerStats);
+            int targetStrength = playerStats.SpeciesBaseStats.BaseStats[StatTypes.Strength] + addedStrength;
 
-        Assert.IsTrue(player.StatDictionary[StatTypes.Strength].CurrentValue == targetStrength);
-    }
+            var player = CharacterFactory.GetCharacter(playerStats);
 
-    [UnityTest]
-    public IEnumerator TestCreatedCharacterWithInitialEquipmentSuccess()
-    {
-        CommonInstall();
+            Assert.IsTrue(player.StatDictionary[StatTypes.Strength].CurrentValue == targetStrength);
+        }
 
-        yield return LoadScene(sceneName);
+        [UnityTest]
+        public IEnumerator TestCreatedCharacterWithInitialEquipmentSuccess()
+        {
+            CommonInstall();
 
-        var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
-        var itemDataSource = SceneContainer.Resolve<IItemDataSource>();
+            yield return LoadScene(sceneName);
 
-        var playerStats = characterDataSource.GetById(playerId);
-        
+            var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
+            var itemDataSource = SceneContainer.Resolve<IItemDataSource>();
 
-        var startingEquipment = new IEquipable[] {
+            var playerStats = characterDataSource.GetById(playerId);
+
+
+            var startingEquipment = new IEquipable[] {
             (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")),
         };
 
-        var player = CharacterFactory.GetCharacter(
-            baseStats: playerStats,
-            startingEquipment: startingEquipment);
+            var player = CharacterFactory.GetCharacter(
+                baseStats: playerStats,
+                startingEquipment: startingEquipment);
 
 
-        Assert.That(player.Backpack.Id == "adventure backpack");
-        
-    }
+            Assert.That(player.Backpack.Id == "adventure backpack");
 
-    [UnityTest]
-    public IEnumerator TestCreatedCharacterWithStartingInventorySuccess()
-    {
-        CommonInstall();
+        }
 
-        yield return LoadScene(sceneName);
+        [UnityTest]
+        public IEnumerator TestCreatedCharacterWithStartingInventorySuccess()
+        {
+            CommonInstall();
 
-        var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
-        var itemDataSource = SceneContainer.Resolve<IItemDataSource>();
+            yield return LoadScene(sceneName);
 
-        var playerStats = characterDataSource.GetById(playerId);
+            var characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
+            var itemDataSource = SceneContainer.Resolve<IItemDataSource>();
+
+            var playerStats = characterDataSource.GetById(playerId);
 
 
-        var startingEquipment = new IEquipable[] {
+            var startingEquipment = new IEquipable[] {
             (IEquipable)ItemFactory.GetItem(itemDataSource.GetItemStats("adventure backpack")),
         };
 
-        var startingInventory = new IItem[]{
+            var startingInventory = new IItem[]{
             ItemFactory.GetItem(itemDataSource.GetItemStats("questitem_1")),
             ItemFactory.GetItem(itemDataSource.GetItemStats("apple_fuji")),
             ItemFactory.GetItem(itemDataSource.GetItemStats("apple_fuji")),
@@ -113,20 +115,21 @@ public class TestCharacterCreationFromScriptableObjects : SceneTestFixture
             ItemFactory.GetItem(itemDataSource.GetItemStats("ore_bloom_common"))
         };
 
-        float targetWeight = ((IItem)startingEquipment[0]).Weight;
-        foreach (var item in startingInventory)
-        {
-            targetWeight += item.Weight;
+            float targetWeight = ((IItem)startingEquipment[0]).Weight;
+            foreach (var item in startingInventory)
+            {
+                targetWeight += item.Weight;
+            }
+
+            var player = CharacterFactory.GetCharacter(
+                baseStats: playerStats,
+                startingEquipment: startingEquipment,
+                startingInventory: startingInventory);
+
+            Assert.That(Mathf.Abs(player.CurrentEncumbrance - targetWeight) < 0.01);
+
         }
 
-        var player = CharacterFactory.GetCharacter(
-            baseStats: playerStats,
-            startingEquipment: startingEquipment,
-            startingInventory: startingInventory);
-
-        Assert.That(Mathf.Abs(player.CurrentEncumbrance - targetWeight) < 0.01);
 
     }
-
-
 }

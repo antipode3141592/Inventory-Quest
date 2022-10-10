@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 namespace InventoryQuest.UI
 {
@@ -15,9 +16,11 @@ namespace InventoryQuest.UI
         [SerializeField] Color fillColor;
         [SerializeField] Image fillBackground;
         [SerializeField] Image fillForeground;
-        [SerializeField] public event EventHandler OnPointerHoldSuccess;
-        [SerializeField] public event EventHandler OnTimerStart;
-        [SerializeField] public event EventHandler OnTimerReset;
+        [SerializeField] TextMeshProUGUI buttonText;
+
+        public event EventHandler OnPointerHoldSuccess;
+        public event EventHandler OnTimerStart;
+        public event EventHandler OnTimerReset;
 
 
         private void Awake()
@@ -73,6 +76,11 @@ namespace InventoryQuest.UI
             timer = 0f;
             SetFill(0f);
             OnTimerReset?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void UpdateButtonText(string text)
+        {
+            buttonText.text = text;
         }
     }
 }

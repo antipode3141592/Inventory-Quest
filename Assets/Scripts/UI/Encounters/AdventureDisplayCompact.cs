@@ -33,7 +33,7 @@ namespace InventoryQuest.UI.Components
         void Start()
         {
             _encounterManager.Wayfairing.StateEntered += OnWayfairingEnteredHandler;
-            _encounterManager.Preparing.StateEntered += OnPreparingEnteredHandler;
+            _encounterManager.ManagingInventory.StateEntered += OnPreparingEnteredHandler;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.Resolving.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.Resolving.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;

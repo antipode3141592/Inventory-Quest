@@ -42,8 +42,6 @@ namespace InventoryQuest.UI.Menus
             {
                 location.OnLocationSelected += OnLocationSelectedHandler;
             }
-            _gameStateDataSource.SetCurrentLocation("Startington");
-
             _pressAndHoldButton.OnPointerHoldSuccess += OnPathSelected;
         }
 

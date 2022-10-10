@@ -1,5 +1,6 @@
 ﻿using Data;
 using FiniteStateMachine;
+using InventoryQuest.Traveling;
 using System;
 
 namespace InventoryQuest.Managers.States
@@ -7,10 +8,12 @@ namespace InventoryQuest.Managers.States
     public class Loading : IState
     {
         IGameStateDataSource _gameStateDataSource;
+        IPartyController _partyController;
 
-        public Loading(IGameStateDataSource gameStateDataSource)
+        public Loading(IGameStateDataSource gameStateDataSource, IPartyController partyController)
         {
             _gameStateDataSource = gameStateDataSource;
+            _partyController = partyController;
         }
 
         public event EventHandler StateEntered;
@@ -34,6 +37,7 @@ namespace InventoryQuest.Managers.States
 
         public void OnExit()
         {
+            _partyController.IdleAll();
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 

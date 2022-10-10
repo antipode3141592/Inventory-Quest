@@ -15,7 +15,7 @@ namespace InventoryQuest.UI
         [SerializeField] WeaponProficiencySwitch weaponProficiencySwitch;
 
         IPartyManager _partyManager;
-        PlayableCharacter _character;
+        ICharacter _character;
 
         Dictionary<string, EquipmentSlotDisplay> _equipmentSlots = new();
         Dictionary<string, WeaponGroup> _weaponGroups = new();
@@ -46,9 +46,9 @@ namespace InventoryQuest.UI
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelect;
         }
 
-        void OnPartyMemberSelect(object sender, MessageEventArgs e)
+        void OnPartyMemberSelect(object sender, string e)
         {
-            _character = _partyManager.CurrentParty.Characters[e.Message];
+            _character = _partyManager.CurrentParty.Characters[e];
 
             //TODO display proper template for species
 
@@ -71,9 +71,10 @@ namespace InventoryQuest.UI
 
         void ShowActiveWeaponSlots()
         {
-            foreach(var group in _weaponGroups)
+            weaponProficiencySwitch.gameObject.SetActive(true);
+            foreach (var group in _weaponGroups)
             {
-                if (group.Key == _character.CurrentWeaponProficiency.Name)
+                if (_character.CurrentWeaponProficiency is not null && group.Key == _character.CurrentWeaponProficiency.Name)
                 {
                     group.Value.gameObject.SetActive(true);
                     foreach(var slot in group.Value.WeaponSlots)
@@ -87,7 +88,14 @@ namespace InventoryQuest.UI
                     group.Value.gameObject.SetActive(false);
                 }
             }
-            weaponProficiencySwitch.UpdateText(_character.CurrentWeaponProficiency.Name);
+            if (_character.CurrentWeaponProficiency is null)
+            {
+                weaponProficiencySwitch.gameObject.SetActive(false);
+            }
+            else
+            {
+                weaponProficiencySwitch.UpdateText(_character.CurrentWeaponProficiency.Name);
+            }
         }
 
         void SwitchWeaponProficiency(object sender, EventArgs e)

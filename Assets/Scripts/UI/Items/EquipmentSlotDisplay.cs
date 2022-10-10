@@ -12,7 +12,7 @@ namespace InventoryQuest.UI
     public class EquipmentSlotDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         IGameManager _gameManager;
-        PlayableCharacter _character;
+        ICharacter _character;
 
         [SerializeField] string _slotId;
 
@@ -35,7 +35,7 @@ namespace InventoryQuest.UI
             slotTypeText.text = SlotId.ToString();
         }
 
-        public void SetCharacter(PlayableCharacter character)
+        public void SetCharacter(ICharacter character)
         {
             _character = character;
         }

@@ -11,7 +11,7 @@ namespace Data.Characters
 
         public string SelectedPartyMemberGuId { get; set; }
 
-        public EventHandler<MessageEventArgs> OnPartyMemberSelected;
+        public EventHandler<string> OnPartyMemberSelected;
         public EventHandler OnPartyMemberStatsUpdated;
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace Data.Characters
         {
             if (!Characters.ContainsKey(characterId)) return null;
             SelectedPartyMemberGuId = characterId;
-            OnPartyMemberSelected?.Invoke(this, new MessageEventArgs(characterId));
+            OnPartyMemberSelected?.Invoke(this, characterId);
             return Characters[characterId];
         }
 

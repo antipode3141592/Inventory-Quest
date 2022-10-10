@@ -34,12 +34,13 @@ namespace InventoryQuest.UI
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnLootPileSelected += OnLootPileSelectedHandler;
 
-            _encounterManager.Preparing.StateEntered += OnEncounterPreparationStarted;
+            _encounterManager.ManagingInventory.StateEntered += OnEncounterPreparationStarted;
         }
 
         private void OnEncounterPreparationStarted(object sender, EventArgs e)
         {
-            ConnectGroundContainer();
+            if (groundContainerDisplay.isActiveAndEnabled)
+                ConnectGroundContainer();
         }
 
         private void OnLootPileSelectedHandler(object sender, Container e)
@@ -82,9 +83,9 @@ namespace InventoryQuest.UI
         #endregion
 
 
-        void OnPartyMemberSelectedHandler(object sender, MessageEventArgs e)
+        void OnPartyMemberSelectedHandler(object sender, string e)
         {
-            var container = _partyManager.CurrentParty.Characters[e.Message].Backpack;
+            var container = _partyManager.CurrentParty.Characters[e].Backpack;
             if (container is null) return;
             ConnectCharacterContainer(container);
         }

@@ -21,7 +21,6 @@ namespace InventoryQuest.Testing
         List<IItem> BasicItems;
         List<StackableItem> StackableItems;
 
-        int MyTotalItems = 4;
         ItemStats BasicItemStats;
         StackableItemStats StackableItemStats;
 

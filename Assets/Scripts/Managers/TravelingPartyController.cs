@@ -1,12 +1,16 @@
+using InventoryQuest.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest.Traveling
 {
     public class TravelingPartyController : MonoBehaviour, IPartyController
     {
+        IPartyManager _partyManager;
+
         [SerializeField] List<TravelingCharacter> partyMembers;
         [SerializeField] TravelSettings travelSettings;
 
@@ -17,10 +21,28 @@ namespace InventoryQuest.Traveling
 
         public event EventHandler<float> TravelPercentageUpdate;
 
+        [Inject]
+        public void Init(IPartyManager partyManager)
+        {
+            _partyManager = partyManager;
+        }
+
         void Awake()
         {
             isMoving = false;
             isIdle = true;
+        }
+
+        void Start()
+        {
+            _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelected;
+        }
+
+        void OnPartyMemberSelected(object sender, string e)
+        {
+            int partyCount = _partyManager.CurrentParty.Characters.Count;
+            for (int i = 0; i < partyMembers.Count; i++)
+                partyMembers[i].gameObject.SetActive(i < partyCount);
         }
 
         public void IdleAll()
@@ -29,7 +51,7 @@ namespace InventoryQuest.Traveling
             isIdle = true;
             isMoving = false;
 
-            foreach (var character in partyMembers)
+            foreach (var character in partyMembers.FindAll(x => x.isActiveAndEnabled))
                 character.Idle();
         }
 
@@ -39,7 +61,7 @@ namespace InventoryQuest.Traveling
             DistanceMoved = 0f;
             isMoving = true;
             isIdle = false;
-            foreach(var character in partyMembers)
+            foreach(var character in partyMembers.FindAll(x => x.isActiveAndEnabled))
                 character.Move();
 
             StartCoroutine(Movement());

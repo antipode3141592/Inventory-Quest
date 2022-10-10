@@ -3,7 +3,6 @@ using Data.Characters;
 using Data.Encounters;
 using Data.Items;
 using Data.Locations;
-using Data.Quests;
 using Data.Rewards;
 using Zenject;
 
@@ -27,8 +26,6 @@ namespace InventoryQuest
                 .FromInstance(new LootTableDataSourceTest()).AsSingle();
             Container.Bind<IPathDataSource>()
                 .To<PathDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IQuestDataSource>()
-                .To<QuestDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IGameStateDataSource>()
                 .To<GameStateDataSource>().FromComponentInHierarchy().AsSingle();
         }

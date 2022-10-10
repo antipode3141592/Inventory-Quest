@@ -45,34 +45,47 @@ namespace InventoryQuest.UI.Menus
                     Debug.Log($"{menu.Key.Name}");
             }
 
-            _gameManager.OnGameBegin += OnGameBeginHandler;
+            _gameManager.OnGameBegining += OnGameBegin;
 
-            _encounterManager.Wayfairing.StateEntered += OnWayfairingStarted;
-            _encounterManager.Preparing.StateEntered += OnPreparingStarted;
+            _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
+            _encounterManager.ManagingInventory.StateEntered += OnManagingInventoryStart;
+            _encounterManager.Resolving.StateEntered += OnResolvingStart;
+            _encounterManager.CleaningUp.RequestShowInventory += OnCleaningUpShowInventory;
 
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }
 
-        private void OnGameBeginHandler(object sender, EventArgs e)
+        void OnCleaningUpShowInventory(object sender, EventArgs e)
+        {
+            Debug.Log($"OnCleaningUpShowInventory()");
+            OpenMenu(typeof(AdventureMenu));
+        }
+
+        void OnResolvingStart(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(TravelingMenu));
+        }
+
+        void OnGameBegin(object sender, EventArgs e)
         {
             OpenMenu(typeof(LocationMenu));
         }
 
-        private void OnPreparingStarted(object sender, EventArgs e)
+        void OnManagingInventoryStart(object sender, EventArgs e)
         {
             OpenMenu(typeof(AdventureMenu));
         }
 
-        private void OnWayfairingStarted(object sender, EventArgs e)
+        void OnWayfairingStart(object sender, EventArgs e)
         {
             OpenMenu(typeof(TravelingMenu));
         }
 
         IEnumerator Start()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             _loadingScreen.Fade();
             OpenMenu(_mainMenuKey);
         }

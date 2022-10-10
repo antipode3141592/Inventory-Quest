@@ -16,7 +16,6 @@ MonoBehaviour:
   _name: A Quiet Copse of Cedars
   description: A glimmer catches your eye in a pile of fall branches.  A guardian
     spirit appears as you approach.
-  category: 
   experience: 100
   successMessage: The spirit regards you for a moment before singing a few notes
     and disappearing.  You search the branches and find a pile of junk and simple
@@ -28,7 +27,8 @@ MonoBehaviour:
   - common_loot_pile_small
   penaltyIds: []
   skillCheckRequirements:
-  - StatTypes: 0a000000
+  - Description: Persuade
+    StatTypes: 0a000000
     SkillTypes: 0f000000
     TargetValue: 15
     PartyTargetValue: 0
