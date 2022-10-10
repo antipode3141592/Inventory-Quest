@@ -87,6 +87,14 @@ namespace Data.Items
                     isQuestItem: true,
                     containerSize: new Coor(r: 6, c: 12))
             },
+            {    "logging_pile", new ContainerStats("logging_pile",
+                    weight: 0f,
+                    goldValue: 0f,
+                    description: "a group of loggable trees",
+                    spritePath: "Items/logging",
+                    isQuestItem: true,
+                    containerSize: new Coor(r: 20, c: 10))
+            },
 
             {   "adventure backpack", new EquipableContainerStats("adventure backpack",
                     weight: 2f,
@@ -264,14 +272,14 @@ namespace Data.Items
                     shapeType: ShapeType.Domino,
                     slotType: EquipmentSlotType.Feet)
             },
-            { "questitem_1", new ItemStats("questitem_1",
-                weight: 40f,
-                goldValue: 1000f,
-                description: "A crank-powered machine of inscrutable purpose.",
-                rarity: Rarity.rare,
-                spritePath: "Items/questitem_1",
-                isQuest: true,
-                shape: ShapeType.QuestShape_1)
+            {   "questitem_1", new ItemStats("questitem_1",
+                    weight: 40f,
+                    goldValue: 1000f,
+                    description: "A crank-powered machine of inscrutable purpose.",
+                    rarity: Rarity.rare,
+                    spritePath: "Items/questitem_1",
+                    isQuest: true,
+                    shape: ShapeType.QuestShape_1)
             },
             {   "pants_1", new EquipableItemStats("pants_1",
                     weight: 0.5f,
@@ -290,6 +298,25 @@ namespace Data.Items
                     spritePath: "Items/shirt_1",
                     shapeType: ShapeType.Monomino,
                     slotType: EquipmentSlotType.InnerTorso)
+            },
+            {   "wagon_standard", new EquipableContainerStats("wagon_standard",
+                    weight: 2f,
+                    goldValue: 5f,
+                    description: "a wagon",
+                    spritePath: ShapeType.Monomino.ToString(),
+                    isQuestItem: true,
+                    shapeType: ShapeType.Monomino,
+                    containerSize: new Coor(8, 20),
+                    slotType: EquipmentSlotType.Backpack) 
+            },
+            {
+                "log_standard", new ItemStats("log_standard",
+                    weight: 420f,
+                    goldValue: 100f,
+                    description: "A massive log, ready for milling.",
+                    rarity: Rarity.common,
+                    spritePath: "Items/log_standard",
+                    shape: ShapeType.log_standard)
             }
         };
 

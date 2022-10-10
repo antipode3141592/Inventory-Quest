@@ -34,6 +34,9 @@
                 case ShapeType.QuestShape_1:
                     _shape = new QuestShape_1(facing);
                     break;
+                case ShapeType.log_standard:
+                    _shape = new Log_Standard(facing);
+                    break;
                 default:
                     _shape = new Monomino(facing);
                     break;

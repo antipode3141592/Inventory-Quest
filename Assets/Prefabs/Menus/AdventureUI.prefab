@@ -2655,7 +2655,7 @@ MonoBehaviour:
   _itemPanelTransform: {fileID: 1452528958589265671}
   itemImagePrefab: {fileID: 5441537819867880285, guid: 1813eff3f98164c44bdde34be4cee6d9, type: 3}
   gridSquarePrefab: {fileID: 4968341920047878502, guid: 6cca95d4a2258b14c863fb1422e9ea22, type: 3}
-  rowMax: 10
+  rowMax: 20
   columnMax: 10
   _contactFilter:
     useTriggers: 1
@@ -3321,7 +3321,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 280, y: 0}
-  m_SizeDelta: {x: 426.74, y: 440.71}
+  m_SizeDelta: {x: 426.74, y: 768}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &1452528959107749757
 Canvas:
@@ -4069,7 +4069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7992656769253781933
 RectTransform:
   m_ObjectHideFlags: 0

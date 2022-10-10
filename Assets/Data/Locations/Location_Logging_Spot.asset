@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2321ee6bf177ec849942a9cad1b68ed2, type: 3}
-  m_Name: Location_Startington
+  m_Name: Location_Logging_Spot
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,12 +21,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  id: Startington
-  _name: Startington
-  displayName: Startington
-  thumbnailSpritePath: Locations/town_icon_1
+  id: logging_spot
+  _name: Logging Spot
+  displayName: Designated Logging Area
+  thumbnailSpritePath: Items/logging
   scenePath: Assets/Scenes/Locations/location_Startington.unity
   characterIds:
-  - messenger_dispatcher
+  - logging_manager
   locationIds: []
   isKnown: 1

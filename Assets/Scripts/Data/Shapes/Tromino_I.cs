@@ -20,6 +20,4 @@ namespace Data.Shapes
             CurrentFacing = defaultFacing;
         }
     }
-
-    
 }

@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2321ee6bf177ec849942a9cad1b68ed2, type: 3}
   m_Name: Location_Destinationville
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   id: Destinationville
+  _name: Destinationville
   displayName: Destinationville
   thumbnailSpritePath: Locations/town_icon_2
-  _name: Destinationville
+  scenePath: Assets/Scenes/Locations/location_Destinationville.unity
   characterIds:
   - stanley
   - scummy_overseer
