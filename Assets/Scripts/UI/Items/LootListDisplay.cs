@@ -1,29 +1,46 @@
 ﻿using InventoryQuest.Managers;
+using InventoryQuest.UI.Menus;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Menus
 {
-    public class LootListDisplay : MonoBehaviour
+    public class LootListDisplay : MonoBehaviour, IOnMenuShow
     {
         IRewardManager _rewardManager;
+        IHarvestManager _harvestManager;
+
         readonly List<LootIcon> lootIcons = new();
 
         [SerializeField]
         LootIcon _lootIconPrefab;
 
         [Inject]
-        public void Init(IRewardManager rewardManager)
+        public void Init(IRewardManager rewardManager, IHarvestManager harvestManager)
         {
             _rewardManager = rewardManager;
+            _harvestManager = harvestManager;
         }
 
         private void Awake()
         {
             _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
+
+            _harvestManager.Harvesting.StateEntered += OnHarvestStartedHandler;
+            _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
+        }
+
+        private void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
+        {
+            DestroyLootPiles();
+        }
+
+        private void OnHarvestStartedHandler(object sender, EventArgs e)
+        {
+            SetLootPiles();
         }
 
         private void OnRewardsClearedHandler(object sender, EventArgs e)
@@ -72,6 +89,11 @@ namespace InventoryQuest.UI
                 Destroy(lootIcons[i].gameObject);
             }
             lootIcons.Clear();
+        }
+
+        public void OnShow()
+        {
+            throw new NotImplementedException();
         }
     }
 }

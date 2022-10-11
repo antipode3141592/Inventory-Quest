@@ -1,9 +1,6 @@
-using PixelCrushers.QuestMachine;
-using PixelCrushers;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using PixelCrushers.QuestMachine;
+using UnityEngine;
 
 namespace Data.Characters
 {
@@ -22,16 +19,7 @@ namespace Data.Characters
 
         public void Chat()
         {
-            //Debug.Log($"Start Chatting!");
-            //if (!_questGiver.HasOfferableOrActiveQuest()) 
-            //{
-            //    Debug.Log($"No Quests available!");
-            //    var conversations = DialogueManager.DatabaseManager.MasterDatabase.conversations.FindAll(x => x.ActorID. == _dialogueActor.actor);
             DialogueManager.StartConversation(_dialogueActor.actor);
-            //    return;
-            //}
-            //Debug.Log($"Quests available!");
-            //_questGiver.StartDialogueWithPlayer();
         }
 
         void OnMouseUpAsButton()

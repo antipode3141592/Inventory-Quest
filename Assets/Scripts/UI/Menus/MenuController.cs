@@ -12,11 +12,13 @@ namespace InventoryQuest.UI.Menus
     {
         IAdventureManager _adventureManager;
         IEncounterManager _encounterManager;
+        IHarvestManager _harvestManager;
         IGameManager _gameManager;
 
         [SerializeField] List<Menu> _menuList;
 
-        string _selectedMenuName;
+        Type _currentMenuType;
+        Type _previousMenuType;
 
         [SerializeField] LoadingScreen _loadingScreen;
 
@@ -25,11 +27,13 @@ namespace InventoryQuest.UI.Menus
         Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IGameManager gameManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;
+            _harvestManager = harvestManager;
             _gameManager = gameManager;
+
         }
 
         void Awake()
@@ -55,6 +59,19 @@ namespace InventoryQuest.UI.Menus
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+
+            _harvestManager.Harvesting.StateEntered += OnHarvestingStartedHandler;
+            _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
+        }
+
+        void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
+        {
+            OpenPreviousMenu();   
+        }
+
+        void OnHarvestingStartedHandler(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(AdventureMenu));
         }
 
         void OnCleaningUpShowInventory(object sender, EventArgs e)
@@ -107,7 +124,7 @@ namespace InventoryQuest.UI.Menus
 
         void OpenMenu(Type menuType)
         {
-            if (menuType.Name == _selectedMenuName)
+            if (_currentMenuType is not null && menuType.Name == _currentMenuType.Name)
                 return;
             if (Debug.isDebugBuild)
                 Debug.Log($"OpenMenu({menuType.Name}) called");
@@ -116,12 +133,18 @@ namespace InventoryQuest.UI.Menus
                 if (menuType.Name == menu.Key.Name)
                 {
                     menu.Value.Show();
-                    _selectedMenuName = menuType.Name;
+                    _previousMenuType = _currentMenuType;
+                    _currentMenuType = menuType;
                 }
 
                 else
                     menu.Value.Hide();
             }
+        }
+
+        void OpenPreviousMenu()
+        {
+            OpenMenu(_previousMenuType);
         }
     }
 }

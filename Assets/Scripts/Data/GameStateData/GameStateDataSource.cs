@@ -1,19 +1,21 @@
 ﻿using Data.Characters;
 using Data.Encounters;
 using Data.Locations;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Data
 {
-    public class GameStateDataSource : MonoBehaviour, IGameStateDataSource
+    public class GameStateDataSource : SerializedMonoBehaviour, IGameStateDataSource
     {
         ICharacterDataSource _characterDataSource;
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
         IEncounterDataSource _encounterDataSource;
+
+        [SerializeField] ILocationStats startingLocation;
 
         [Inject]
         public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource, ICharacterDataSource characterDataSource)
@@ -37,7 +39,7 @@ namespace Data
 
         void Start()
         {
-            SetCurrentLocation("Startington");
+            SetCurrentLocation(startingLocation.Id);
         }
 
         public void SetCurrentLocation(string id)

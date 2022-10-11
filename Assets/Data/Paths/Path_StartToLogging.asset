@@ -16,4 +16,5 @@ MonoBehaviour:
   _name: 
   startLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
   endLocationStats: {fileID: 11400000, guid: c7b5923c6bd26c145abcfdc1e728c444, type: 2}
-  encounterIds: []
+  encounterIds:
+  - intro_return_1

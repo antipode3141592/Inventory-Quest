@@ -25,8 +25,8 @@ MonoBehaviour:
   _name: Logging Spot
   displayName: Designated Logging Area
   thumbnailSpritePath: Items/logging
-  scenePath: Assets/Scenes/Locations/location_Startington.unity
+  scenePath: Assets/Scenes/Locations/location_logging_stand.unity
   characterIds:
   - logging_manager
   locationIds: []
-  isKnown: 0
+  isKnown: 1

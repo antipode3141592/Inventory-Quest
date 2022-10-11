@@ -134,6 +134,18 @@ namespace InventoryQuest.Managers
 
         #endregion
 
+        #region HarvestFunctions
+        public void AddLoot(string containerId, string itemId, int quantity)
+        {
+            var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(containerId));
+            LootPiles.Add(lootPile.GuId, lootPile);
+            for (int i = 0; i < quantity; i++)
+            {
+                ItemPlacementHelpers.TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemId)));
+            }
+        }
+
+        #endregion
 
         #region Item Placement Functions
         void PlaceRandomLootInContainer(Container container, string lootTableId)
