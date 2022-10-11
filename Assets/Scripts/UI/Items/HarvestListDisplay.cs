@@ -7,60 +7,45 @@ using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
-    public class LootListDisplay : MonoBehaviour, IOnMenuShow, IItemPileDisplay
+    public class HarvestListDisplay: MonoBehaviour, IItemPileDisplay, IOnMenuShow
     {
-        IRewardManager _rewardManager;
         IHarvestManager _harvestManager;
 
-        readonly List<LootIcon> lootIcons = new();
+        readonly List<LootIcon> pileIcons = new();
 
         [SerializeField]
         LootIcon _lootIconPrefab;
 
         [Inject]
-        public void Init(IRewardManager rewardManager, IHarvestManager harvestManager)
-        {
-            _rewardManager = rewardManager;
+        public void Init(IHarvestManager harvestManager)
+        { 
             _harvestManager = harvestManager;
         }
 
-        private void Awake()
+        void Start()
         {
-            _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
-            _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
-
             _harvestManager.Harvesting.StateEntered += OnHarvestStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
         }
 
-        private void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
+        void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
         {
             DestroyPiles();
         }
 
-        private void OnHarvestStartedHandler(object sender, EventArgs e)
-        {
-            SetPiles();
-        }
-
-        private void OnRewardsClearedHandler(object sender, EventArgs e)
-        {
-            DestroyPiles();
-        }
-
-        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
+        void OnHarvestStartedHandler(object sender, EventArgs e)
         {
             SetPiles();
         }
 
         public void PileSelected(string containerGuid)
         {
-            foreach (var icon in lootIcons)
+            foreach (var icon in pileIcons)
             {
                 if (icon.ContainerGuid == containerGuid)
                 {
                     icon.IsSelected = true;
-                    _rewardManager.SelectPile(containerGuid);
+                    _harvestManager.SelectPile(containerGuid);
                 }
                 else
                     icon.IsSelected = false;
@@ -69,14 +54,14 @@ namespace InventoryQuest.UI.Menus
 
         public void SetPiles()
         {
-            if (_rewardManager.Piles.Count == 0) return;
-            foreach (var pile in _rewardManager.Piles.Values)
+            if (_harvestManager.Piles.Count == 0) return;
+            foreach (var pile in _harvestManager.Piles.Values)
             {
                 LootIcon icon = Instantiate<LootIcon>(_lootIconPrefab, transform);
                 icon.PileDisplay = this;
                 icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Stats.SpritePath);
                 icon.IsSelected = false;
-                lootIcons.Add(icon);
+                pileIcons.Add(icon);
 
             }
 
@@ -84,16 +69,15 @@ namespace InventoryQuest.UI.Menus
 
         public void DestroyPiles()
         {
-            for (int i = 0; i < lootIcons.Count; i++)
+            for (int i = 0; i < pileIcons.Count; i++)
             {
-                Destroy(lootIcons[i].gameObject);
+                Destroy(pileIcons[i].gameObject);
             }
-            lootIcons.Clear();
+            pileIcons.Clear();
         }
 
         public void OnShow()
         {
-            
         }
     }
 }

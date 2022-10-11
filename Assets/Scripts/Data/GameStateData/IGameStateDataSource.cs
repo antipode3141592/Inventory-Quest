@@ -1,6 +1,7 @@
 ﻿using Data.Encounters;
 using Data.Locations;
 using System;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -11,6 +12,8 @@ namespace Data
         public ILocation CurrentLocation { get; }
 
         public IEncounter CurrentEncounter { get; }
+
+        public ICollection<string> KnownLocations { get; }
 
         public int CurrentIndex { get; set; }
 

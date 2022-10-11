@@ -2517,7 +2517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5610108571534675700, guid: e598127558decca40b5a4c16c2aafacf, type: 3}
       propertyPath: locationAId
-      value: startington
+      value: Startington
       objectReference: {fileID: 0}
     - target: {fileID: 5610108571534675700, guid: e598127558decca40b5a4c16c2aafacf, type: 3}
       propertyPath: locationBId

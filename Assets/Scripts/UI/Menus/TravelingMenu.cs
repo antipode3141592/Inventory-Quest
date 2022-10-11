@@ -15,15 +15,14 @@ namespace InventoryQuest.UI.Menus
         IEncounterManager _encounterManager;
         IGameStateDataSource _gameStateDataSource;
 
-        PartyDisplay partyDisplay;
+        [SerializeField] PartyDisplay partyDisplay;
 
         [SerializeField] TextMeshProUGUI encounterText;
         [SerializeField] List<PressAndHoldButton> choiceButtons;
         [SerializeField] GameObject encounterDisplayGroup;
 
         [Inject]
-
-        public void OnInit(IPartyManager partyManager, IAdventureManager adventureManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
+        public void Init(IPartyManager partyManager, IAdventureManager adventureManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
             _partyManager = partyManager;
             _adventureManager = adventureManager;
@@ -35,7 +34,6 @@ namespace InventoryQuest.UI.Menus
         protected override void Awake()
         {
             base.Awake();
-            partyDisplay = GetComponentInChildren<PartyDisplay>();
             choiceButtons[0].OnPointerHoldSuccess += Retreat;
             choiceButtons[1].OnPointerHoldSuccess += Inventory;
             choiceButtons[2].OnPointerHoldSuccess += Resolve;

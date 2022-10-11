@@ -6,8 +6,9 @@ namespace Data.Locations
 {
     public class LocationDataSourceScriptableObjectTest : SerializedMonoBehaviour, ILocationDataSource
     {
-        [OdinSerialize]
-        Dictionary<string, ILocationStats> locations;
+        [OdinSerialize] Dictionary<string, ILocationStats> locations;
+
+        public IDictionary<string, ILocationStats> Locations => locations;
 
         public ILocationStats GetById(string id)
         {

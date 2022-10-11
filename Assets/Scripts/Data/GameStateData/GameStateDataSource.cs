@@ -1,8 +1,10 @@
 ﻿using Data.Characters;
 using Data.Encounters;
 using Data.Locations;
+using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -31,6 +33,8 @@ namespace Data
         public ILocation CurrentLocation { get; protected set; }
         public IEncounter CurrentEncounter { get; protected set; }
 
+        public ICollection<string> KnownLocations { get; } = new HashSet<string>();
+
         public int CurrentIndex { get; set; }
 
         public event EventHandler<string> OnCurrentLocationSet;
@@ -40,6 +44,13 @@ namespace Data
         void Start()
         {
             SetCurrentLocation(startingLocation.Id);
+            foreach(var location in _locationDataSource.Locations)
+            {
+                if (location.Value.IsKnown)
+                    KnownLocations.Add(location.Value.Id);
+            }
+
+            Lua.RegisterFunction("RevealLocation", this, SymbolExtensions.GetMethodInfo(() => RevealLocation(string.Empty)));
         }
 
         public void SetCurrentLocation(string id)
@@ -86,8 +97,13 @@ namespace Data
             LoadEncounter(encounterId);
 
         }
-            //    SetCurrentLocation(DestinationLocation.Stats.Id);
-            //    SetDestinationLocation("");
-            //    EndAdventure = true;
+        
+        public void RevealLocation(string locationId)
+        {
+            if (_locationDataSource.GetById(locationId) is not null)
+            {
+                KnownLocations.Add(locationId);
+            }
+        }
     }
 }

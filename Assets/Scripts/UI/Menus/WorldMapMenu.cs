@@ -63,7 +63,7 @@ namespace InventoryQuest.UI.Menus
                 {
                     ILocationStats stats = _locationDataSource.GetById(location.LocationId);
                     location.SetHighlight(location.LocationId == currentLocationID);
-                    location.gameObject.SetActive(stats.IsKnown);
+                    location.gameObject.SetActive(_gameStateDataSource.KnownLocations.Contains(stats.Id));
                 }
             }
             foreach (var path in _mapPathLines)
@@ -81,7 +81,7 @@ namespace InventoryQuest.UI.Menus
         bool debounce = false;
         void OnLocationSelectedHandler(object sender, string e)
         {
-            if (debounce) return;
+            if (debounce || _gameStateDataSource.CurrentLocation.Stats.Id == e) return;
             debounce = true;
             _pathOverviewText.text = "";
             _destinationLocationText.text = $"Destination: {e}";

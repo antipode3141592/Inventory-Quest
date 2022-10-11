@@ -1,9 +1,13 @@
-﻿using InventoryQuest.Managers.States;
+﻿using Data.Items;
+using InventoryQuest.Managers.States;
+using System.Collections.Generic;
 
 namespace InventoryQuest.Managers
 {
     public interface IHarvestManager
     {
+        public IDictionary<string, Container> Piles { get; }
+
         public HarvestTypes CurrentHarvestType { get; }
 
         public Idle Idle { get; }
@@ -13,5 +17,11 @@ namespace InventoryQuest.Managers
         public CleaningUpHarvest CleaningUpHarvest { get; }
 
         public void BeginHarvest(HarvestTypes harvestType);
+
+        public void PopulateHarvest(string containerId, string itemId, int quantity);
+
+        public void DestroyHarvest();
+
+        public void SelectPile(string containerGuid);
     }
 }

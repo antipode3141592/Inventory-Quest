@@ -17,8 +17,8 @@ MonoBehaviour:
   description: It's your first day on the job, but it's a warm, clear day and you
     feel nothing could go wrong!
   experience: 0
-  successMessage: The walk was pleasant and uneventful.  The path ahead leads through
-    small coniferous forest just before Destinationville.
+  successMessage: Fragrant lilac and magnolia fill the air, making for a particularly
+    pleasant walk.
   failureMessage: 
   rewardIds: []
   penaltyIds: []

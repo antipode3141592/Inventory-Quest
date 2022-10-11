@@ -669,6 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterPortraitPrefab: {fileID: 7384396024342420614, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
+  _characterStatsDisplays: []
 --- !u!1 &8940217901432268361
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuTransform: {fileID: 8940217900659074340}
+  partyDisplay: {fileID: 8940217900998046538}
   encounterText: {fileID: 6167357399387891532}
   choiceButtons:
   - {fileID: 6440906200265844594}

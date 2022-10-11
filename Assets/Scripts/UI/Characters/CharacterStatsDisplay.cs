@@ -73,6 +73,7 @@ namespace InventoryQuest.UI
 
         void UpdateStatBlock()
         {
+            if (_character is null) return;
             foreach (var charStat in _character.StatDictionary)
             {
                 var stat = statTexts[charStat.Key];

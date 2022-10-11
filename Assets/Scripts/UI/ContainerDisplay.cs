@@ -3,6 +3,7 @@ using Data.Items;
 using Data.Shapes;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace InventoryQuest.UI
 {
@@ -42,13 +43,18 @@ namespace InventoryQuest.UI
 
         void Awake()
         {
+            InitializeDisplay();
+        }
+
+        #region Grid Creation and Destruction
+        [Button]
+        public void InitializeDisplay()
+        {
             squares = new ContainerGridSquareDisplay[rowMax, columnMax];
             itemImages = new List<ItemImage>();
             squareWidth = gridSquarePrefab.Width;
             InitializeGrid();
         }
-
-        #region Grid Creation and Destruction
 
         public void InitializeGrid()
         {
@@ -82,24 +88,12 @@ namespace InventoryQuest.UI
             MyContainer.OnItemPlaced += OnItemChangeHandler;
             MyContainer.OnItemTaken += OnItemChangeHandler;
             MyContainer.OnMatchingItems += MatchedItems;
-            //MyContainer.OnStackComplete += ItemStackComplete;
         }
-
-        //void ItemStackComplete(object sender, HashSet<string> e)
-        //{
-        //    Debug.Log($"Stack of {e.Count} items complete!");
-        //    foreach (var item in e)
-        //    {
-        //        Debug.Log($"{item}");
-        //    }
-        //}
 
         void MatchedItems(object sender, HashSet<string> e)
         {
-            //Debug.Log($"There are {e.Count} matching adjacent items");
             foreach (var itemGuid in e)
             {
-                //Debug.Log($"{itemGuid}");
                 foreach (var coor in MyContainer.Contents[itemGuid].GridSpaces)
                     squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
             }

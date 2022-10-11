@@ -8,8 +8,7 @@ namespace Data.Encounters
 {
     public class PathDataSourceSOTest: SerializedMonoBehaviour, IPathDataSource
     {
-        [OdinSerialize]
-        Dictionary<string, IPathStats> pathStats;
+        [OdinSerialize] Dictionary<string, IPathStats> pathStats;
 
         public IPathStats GetPathById(string id)
         {

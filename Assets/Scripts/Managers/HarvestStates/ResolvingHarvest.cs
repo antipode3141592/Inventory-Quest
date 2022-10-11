@@ -29,7 +29,7 @@ namespace InventoryQuest.Managers.States
         {
         }
 
-        void Resolve()
+        public void Resolve()
         {
             //do some calculations on harvested stuff
             IsDone = true;

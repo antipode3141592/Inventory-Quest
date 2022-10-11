@@ -32,7 +32,7 @@ namespace InventoryQuest.UI
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
-            _rewardManager.OnLootPileSelected += OnLootPileSelectedHandler;
+            _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
 
             _encounterManager.ManagingInventory.StateEntered += OnEncounterPreparationStarted;
         }

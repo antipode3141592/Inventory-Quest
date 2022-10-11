@@ -5,12 +5,12 @@ namespace InventoryQuest.Managers.States
 {
     public class CleaningUpHarvest : IState
     {
-        IRewardManager _rewardManager;
+        IHarvestManager _harvestManager;
 
         public bool IsDone;
-        public CleaningUpHarvest(IRewardManager rewardManager)
+        public CleaningUpHarvest(IHarvestManager harvestManager)
         {
-            _rewardManager = rewardManager;
+            _harvestManager = harvestManager;
         }
 
         public event EventHandler StateEntered;
@@ -19,7 +19,7 @@ namespace InventoryQuest.Managers.States
         public void OnEnter()
         {
             IsDone = true;
-            _rewardManager.DestroyRewards();
+            _harvestManager.DestroyHarvest();
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
@@ -30,6 +30,7 @@ namespace InventoryQuest.Managers.States
 
         public void Tick()
         {
+
         }
     }
 }

@@ -76,7 +76,6 @@ namespace InventoryQuest.UI.Menus
 
         void OnCleaningUpShowInventory(object sender, EventArgs e)
         {
-            Debug.Log($"OnCleaningUpShowInventory()");
             OpenMenu(typeof(AdventureMenu));
         }
 

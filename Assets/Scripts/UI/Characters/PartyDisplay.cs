@@ -8,10 +8,9 @@ namespace InventoryQuest.UI
 {
     public class PartyDisplay: MonoBehaviour, IOnMenuShow
     {
-        [SerializeField]
-        GameObject CharacterPortraitPrefab;
+        [SerializeField] GameObject CharacterPortraitPrefab;
 
-        CharacterStatsDisplay _characterStatsDisplay;
+        [SerializeField] List<CharacterStatsDisplay> _characterStatsDisplays;
 
         List<CharacterPortrait> PartyDisplayList;
 
@@ -19,16 +18,14 @@ namespace InventoryQuest.UI
         
                 
         [Inject]
-        public void Init(CharacterStatsDisplay characterStatsDisplay, IPartyManager partyManager)
+        public void Init(IPartyManager partyManager)
         {
-            _characterStatsDisplay = characterStatsDisplay;
             _partyManager = partyManager;
         }
 
         void Awake()
         {
             PartyDisplayList = new List<CharacterPortrait>();
-            
         }
 
         public void OnShow()
@@ -52,12 +49,14 @@ namespace InventoryQuest.UI
                 if (_partyManager.CurrentParty.SelectedPartyMemberGuId == character.GuId)
                 {
                     PartyDisplayList[i].IsSelected = true;
-                    _characterStatsDisplay.CurrentCharacter = _partyManager.CurrentParty.SelectCharacter(character.GuId);
+                    foreach (var display in _characterStatsDisplays)
+                    {
+                        display.CurrentCharacter = _partyManager.CurrentParty.SelectCharacter(character.GuId);
+                    }
                 } else
                 {
                     PartyDisplayList[i].IsSelected = false;
                 }
-
             }
         }
         
@@ -69,7 +68,10 @@ namespace InventoryQuest.UI
                 {
                     portrait.IsSelected = true;
                     var character = _partyManager.CurrentParty.SelectCharacter(characterGuid);
-                    _characterStatsDisplay.CurrentCharacter = character;
+                    foreach (var display in _characterStatsDisplays)
+                    {
+                        display.CurrentCharacter = character;
+                    }
                 }
                 else
                     portrait.IsSelected = false;

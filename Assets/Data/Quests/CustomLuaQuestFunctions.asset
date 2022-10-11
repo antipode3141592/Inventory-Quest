@@ -26,3 +26,6 @@ MonoBehaviour:
   - functionName: AddCharacterToParty
     parameters: 02000000
     returnValue: 0
+  - functionName: RevealLocation
+    parameters: 02000000
+    returnValue: 0

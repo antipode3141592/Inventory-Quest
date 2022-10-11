@@ -19,7 +19,7 @@ namespace InventoryQuest.Managers
 
         bool isProcessing = false;
 
-        public IDictionary<string, Container> LootPiles { get; } = new Dictionary<string, Container>();
+        public IDictionary<string, Container> Piles { get; } = new Dictionary<string, Container>();
 
         List<IItem> deleteItems = new List<IItem>();
 
@@ -30,7 +30,7 @@ namespace InventoryQuest.Managers
         public event EventHandler OnRewardsProcessStart;
         public event EventHandler OnRewardsProcessComplete;
         public event EventHandler OnRewardsCleared;
-        public event EventHandler<Container> OnLootPileSelected;
+        public event EventHandler<Container> OnPileSelected;
 
         [Inject]
         public void Init(IPartyManager partyManager, IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource)
@@ -93,7 +93,7 @@ namespace InventoryQuest.Managers
             if (itemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
-                LootPiles.Add(lootPile.GuId, lootPile);
+                Piles.Add(lootPile.GuId, lootPile);
                 ItemPlacementHelpers.TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemReward.ItemId)));
                 PlaceRandomLootInContainer(lootPile, "common_loot");
             }
@@ -101,7 +101,7 @@ namespace InventoryQuest.Managers
             if (randomItemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
-                LootPiles.Add(lootPile.GuId, lootPile);
+                Piles.Add(lootPile.GuId, lootPile);
                 PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
             }
             CharacterReward characterReward = reward as CharacterReward;
@@ -115,7 +115,7 @@ namespace InventoryQuest.Managers
         {
             Debug.Log($"Destroying reward piles and items", this);
             deleteItems.Clear();
-            foreach (var container in LootPiles.Values)
+            foreach (var container in Piles.Values)
             {
                 foreach (var content in container.Contents.Values)
                 {
@@ -128,21 +128,8 @@ namespace InventoryQuest.Managers
             {
                 deleteItems[i] = null;
             }
-            LootPiles.Clear();
+            Piles.Clear();
             OnRewardsCleared?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
-        #region HarvestFunctions
-        public void AddLoot(string containerId, string itemId, int quantity)
-        {
-            var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(containerId));
-            LootPiles.Add(lootPile.GuId, lootPile);
-            for (int i = 0; i < quantity; i++)
-            {
-                ItemPlacementHelpers.TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemId)));
-            }
         }
 
         #endregion
@@ -159,12 +146,12 @@ namespace InventoryQuest.Managers
         }
         #endregion
 
-        public void SelectLootPile(string containerGuid)
+        public void SelectPile(string containerGuid)
         {
-            if (LootPiles.ContainsKey(containerGuid))
+            if (Piles.ContainsKey(containerGuid))
             {
                 SelectedPileId = containerGuid;
-                OnLootPileSelected?.Invoke(this, LootPiles[containerGuid]);
+                OnPileSelected?.Invoke(this, Piles[containerGuid]);
             }
 
         }

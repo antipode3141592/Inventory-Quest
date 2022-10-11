@@ -10,16 +10,13 @@ namespace InventoryQuest.Managers.States
 
         public bool IsDone;
 
-        public LoadingHarvest(IRewardManager rewardManager, IHarvestManager harvestManager)
+        public LoadingHarvest(IHarvestManager harvestManager)
         {
-            _rewardManager = rewardManager;
             _harvestManager = harvestManager;
         }
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
-
-        
 
         public void OnEnter()
         {
@@ -42,7 +39,7 @@ namespace InventoryQuest.Managers.States
             switch (harvestType)
             {
                 case HarvestTypes.Forest:
-                    _rewardManager.AddLoot("logging_pile", "log_standard", 5);
+                    _harvestManager.PopulateHarvest("logging_pile", "log_standard", 5);
                     break;
                 case HarvestTypes.Mine:
                     break;

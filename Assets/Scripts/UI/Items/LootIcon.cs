@@ -14,7 +14,7 @@ namespace InventoryQuest.UI
         [SerializeField]
         public string ContainerGuid { get; private set; }
 
-        public LootListDisplay LootListDisplay;
+        public IItemPileDisplay PileDisplay;
 
         bool isSelected;
         public bool IsSelected
@@ -42,7 +42,7 @@ namespace InventoryQuest.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log($"LootPile {ContainerGuid} Selected", gameObject);
-            LootListDisplay.LootPileSelected(ContainerGuid);
+            PileDisplay.PileSelected(ContainerGuid);
         }
     }
 }
