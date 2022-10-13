@@ -54,8 +54,6 @@ namespace InventoryQuest.Managers
             if (id == "wagon")
             {
                 equipment.Add("wagon_standard");
-                inventory.Add("log_standard");
-                inventory.Add("log_standard");
                 AddCharacterWithEquipmentToParty(id,
                     startingEquipment: equipment,
                     startingInventory: inventory);

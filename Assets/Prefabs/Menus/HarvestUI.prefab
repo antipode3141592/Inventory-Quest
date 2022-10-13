@@ -894,7 +894,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 10000
+  m_SortingOrder: 700
   m_TargetDisplay: 0
 --- !u!114 &714647062454887586
 MonoBehaviour:
@@ -2609,6 +2609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuTransform: {fileID: 1967110314093342128}
+  harvestContainerDisplay: {fileID: 8288876740886947291}
+  characterContainerDisplay: {fileID: 2209632980313777354}
+  continueButton: {fileID: 3291830665751798791}
 --- !u!1 &5982082757053143532
 GameObject:
   m_ObjectHideFlags: 0
@@ -4988,6 +4991,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
+--- !u!114 &3291830665751798791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9134867156805571683, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
+  m_PrefabInstance: {fileID: 6011038639576379492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453a667716591584788607e06967ba9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5437858232198173005 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1737360911188091177, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}

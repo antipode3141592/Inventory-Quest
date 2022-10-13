@@ -1,9 +1,5 @@
 ﻿using FiniteStateMachine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryQuest.Managers.States
 {
@@ -16,7 +12,7 @@ namespace InventoryQuest.Managers.States
 
         public void OnEnter()
         {
-            IsDone = false;
+            IsDone = true;
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 

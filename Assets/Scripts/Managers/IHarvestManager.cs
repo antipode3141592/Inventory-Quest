@@ -1,5 +1,6 @@
 ﻿using Data.Items;
 using InventoryQuest.Managers.States;
+using System;
 using System.Collections.Generic;
 
 namespace InventoryQuest.Managers
@@ -23,5 +24,7 @@ namespace InventoryQuest.Managers
         public void DestroyHarvest();
 
         public void SelectPile(string containerGuid);
+
+        public event EventHandler<Container> OnPileSelected;
     }
 }

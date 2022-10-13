@@ -11,54 +11,36 @@ namespace InventoryQuest.UI
     {
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
-        IGroundController _groundController;
-        IEncounterManager _encounterManager;
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
         [SerializeField] ContainerDisplay lootContainerDisplay;
-        [SerializeField] ContainerDisplay groundContainerDisplay;
 
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IGroundController groundController, IEncounterManager encounterManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
-            _groundController = groundController;
-            _encounterManager = encounterManager;
         }
 
-        private void Start()
+        void Start()
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
-
-            _encounterManager.ManagingInventory.StateEntered += OnEncounterPreparationStarted;
         }
 
-        private void OnEncounterPreparationStarted(object sender, EventArgs e)
-        {
-            if (groundContainerDisplay.isActiveAndEnabled)
-                ConnectGroundContainer();
-        }
-
-        private void OnLootPileSelectedHandler(object sender, Container e)
+        void OnLootPileSelectedHandler(object sender, Container e)
         {
             ConnectLootContainer(e);
         }
 
-        private void OnRewardsClearedHandler(object sender, EventArgs e)
+        void OnRewardsClearedHandler(object sender, EventArgs e)
         {
             DisconnectLootContainer();
         }
 
         #region Connect Containers
-        public void ConnectGroundContainer()
-        {
-            groundContainerDisplay.MyContainer = _groundController.GroundContainer;
-        }
-
 
         public void ConnectCharacterContainer(IContainer characterContainer)
         {

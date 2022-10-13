@@ -573,6 +573,14 @@ PrefabInstance:
       propertyPath: actor
       value: Dispatch
       objectReference: {fileID: 0}
+    - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_questList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_questList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 89b841aed80f9704da95236748ff0584, type: 2}
     - target: {fileID: 7561862266982161171, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Name
       value: Dispatch

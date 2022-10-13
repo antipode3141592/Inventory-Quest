@@ -1114,7 +1114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterContainerDisplay: {fileID: 1697846496}
   lootContainerDisplay: {fileID: 203279845}
-  groundContainerDisplay: {fileID: 0}
 --- !u!4 &836131671
 Transform:
   m_ObjectHideFlags: 0

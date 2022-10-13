@@ -71,7 +71,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnHarvestingStartedHandler(object sender, EventArgs e)
         {
-            OpenMenu(typeof(AdventureMenu));
+            OpenMenu(typeof(HarvestMenu));
         }
 
         void OnCleaningUpShowInventory(object sender, EventArgs e)

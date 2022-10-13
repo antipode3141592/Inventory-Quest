@@ -12,8 +12,6 @@ namespace InventoryQuest.UI
 {
     public class CharacterStatsDisplay : SerializedMonoBehaviour
     {
-        IEncounterManager _encounterManager;
-
         [OdinSerialize] Dictionary<StatTypes, StatTextDisplay> statTexts;
         [SerializeField] CharacterCurrentMaxStatDisplay healthText;
         [SerializeField] CharacterCurrentMaxStatDisplay magicText;
@@ -24,18 +22,6 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI speciesText; 
 
         ICharacter _character;
-
-        [Inject]
-        public void Init(IEncounterManager encounterManager)
-        {
-            _encounterManager = encounterManager;
-        }
-
-        void Start()
-        {
-            _encounterManager.Resolving.OnEncounterResolveSuccess += OnStatsUpdatedHandler;
-            _encounterManager.Resolving.OnEncounterResolveFailure += OnStatsUpdatedHandler;
-        }
 
         public ICharacter CurrentCharacter
         {

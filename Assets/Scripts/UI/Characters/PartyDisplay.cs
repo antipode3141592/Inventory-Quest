@@ -8,6 +8,8 @@ namespace InventoryQuest.UI
 {
     public class PartyDisplay: MonoBehaviour, IOnMenuShow
     {
+        [SerializeField] bool interactable;
+
         [SerializeField] GameObject CharacterPortraitPrefab;
 
         [SerializeField] List<CharacterStatsDisplay> _characterStatsDisplays;
