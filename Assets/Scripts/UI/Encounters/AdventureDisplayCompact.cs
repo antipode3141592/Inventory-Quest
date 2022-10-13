@@ -33,7 +33,7 @@ namespace InventoryQuest.UI.Components
         void Start()
         {
             _encounterManager.Wayfairing.StateEntered += OnWayfairingEnteredHandler;
-            _encounterManager.ManagingInventory.StateEntered += OnPreparingEnteredHandler;
+            _encounterManager.Resolving.StateEntered += OnResolvingStarted;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.Resolving.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.Resolving.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
@@ -52,7 +52,7 @@ namespace InventoryQuest.UI.Components
             }
         }
 
-        void OnPreparingEnteredHandler(object sender, EventArgs e)
+        void OnResolvingStarted(object sender, EventArgs e)
         {
             for(int i = 0; i < adventureEncounterMarkers.Count; i++)
             {
