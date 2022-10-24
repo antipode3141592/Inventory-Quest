@@ -24,7 +24,7 @@ namespace InventoryQuest.UI.Menus
             _harvestManager = harvestManager;
         }
 
-        private void Awake()
+        void Start()
         {
             _rewardManager.OnRewardsProcessComplete += OnRewardsProcessCompleteHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
@@ -33,22 +33,22 @@ namespace InventoryQuest.UI.Menus
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
         }
 
-        private void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
+        void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
         {
             DestroyPiles();
         }
 
-        private void OnHarvestStartedHandler(object sender, EventArgs e)
+        void OnHarvestStartedHandler(object sender, EventArgs e)
         {
             SetPiles();
         }
 
-        private void OnRewardsClearedHandler(object sender, EventArgs e)
+        void OnRewardsClearedHandler(object sender, EventArgs e)
         {
             DestroyPiles();
         }
 
-        private void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
+        void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
         {
             SetPiles();
         }

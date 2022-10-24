@@ -35,6 +35,17 @@ namespace InventoryQuest.UI.Menus
             
         }
 
+        public override void Show()
+        {
+            base.Show();
+            characterName.Select();
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+        }
+
         void OnContinueButtonHeld(object sender, EventArgs e)
         {
 

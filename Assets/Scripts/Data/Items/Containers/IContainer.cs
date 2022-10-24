@@ -14,8 +14,8 @@ namespace Data.Items
         public GridSquare[,] Grid { get; }
         public Coor Dimensions { get; }
 
-        public event EventHandler<GridEventArgs> OnItemPlaced;
-        public event EventHandler<GridEventArgs> OnItemTaken;
+        public event EventHandler<string> OnItemPlaced;
+        public event EventHandler<string> OnItemTaken;
         public event EventHandler<HashSet<string>> OnMatchingItems;
         public event EventHandler<HashSet<string>> OnStackComplete;
 

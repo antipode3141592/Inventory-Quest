@@ -37,10 +37,8 @@ namespace Data.Characters
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
         public bool IsIncapacitated => CurrentHealth <= 0;
 
-
         public event EventHandler OnStatsUpdated;
-
-
+        public event EventHandler<string> OnItemAddedToBackpack;
 
         public PlayableCharacter(ICharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
         {
@@ -148,8 +146,7 @@ namespace Data.Characters
 
             //if backpack present (some characters have no backpack), subscribe to container events
             if (Backpack is null) return;
-            Backpack.OnItemPlaced += OnBackpackChangedHandler;
-            Backpack.OnItemTaken += OnBackpackChangedHandler;
+            SubscribeToBackpackEvents();
 
             // add any initial Inventory to backpack
             if (initialInventory is null) return;
@@ -193,7 +190,7 @@ namespace Data.Characters
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnBackpackChangedHandler(object sender, EventArgs e)
+        public void OnBackpackContentsChangedHandler(object sender, string e)
         {
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
@@ -234,6 +231,18 @@ namespace Data.Characters
         {
             CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++%WeaponProficiencies.Count];
 
+        }
+
+        void SubscribeToBackpackEvents()
+        {
+            Backpack.OnItemPlaced += OnBackpackContentsChangedHandler;
+            Backpack.OnItemTaken += OnBackpackContentsChangedHandler;
+        }
+
+        void UnsubscribeToBackpackEvents()
+        {
+            Backpack.OnItemPlaced -= OnBackpackContentsChangedHandler;
+            Backpack.OnItemTaken -= OnBackpackContentsChangedHandler;
         }
     }
 }

@@ -101,7 +101,7 @@ namespace InventoryQuest.Managers.States
 
 
 
-        void AwardExperience(IDictionary<string, PlayableCharacter> Characters)
+        void AwardExperience(IDictionary<string, ICharacter> Characters)
         {
             foreach (var character in Characters)
             {
@@ -109,7 +109,7 @@ namespace InventoryQuest.Managers.States
             }
         }
 
-        void DistributePenalties(IDictionary<string, PlayableCharacter> Characters)
+        void DistributePenalties(IDictionary<string, ICharacter> Characters)
         {
             foreach (var character in Characters)
             {

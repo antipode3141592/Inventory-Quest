@@ -113,7 +113,7 @@ namespace InventoryQuest.UI
             MyContainer.OnItemTaken -= OnItemChangeHandler;
         }
 
-        public void OnItemChangeHandler(object sender, GridEventArgs e)
+        public void OnItemChangeHandler(object sender, string e)
         {
             UpdateGridState();
             RemoveAllItemSprites();

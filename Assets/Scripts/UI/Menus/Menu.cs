@@ -10,16 +10,20 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] protected Transform menuTransform;
         protected Vector3 _originalPosition;
         protected List<IOnMenuShow> _subMenus = new();
+        protected List<IOnMenuHide> _subMenusHide = new();
 
         protected virtual void Awake()
         {
             _originalPosition = menuTransform.position;
             _subMenus.AddRange(GetComponentsInChildren<IOnMenuShow>());
+            _subMenusHide.AddRange(GetComponentsInChildren<IOnMenuHide>());
         }
 
         public virtual void Hide()
         {
             menuTransform.position = _originalPosition + offset;
+            foreach (var menu in _subMenusHide)
+                menu.OnHide();
         }
 
         public virtual void Show()

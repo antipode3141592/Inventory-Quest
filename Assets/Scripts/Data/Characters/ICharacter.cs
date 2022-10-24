@@ -36,8 +36,10 @@ namespace Data.Characters
         //events
         public event EventHandler OnStatsUpdated;
 
+        public event EventHandler<string> OnItemAddedToBackpack;
+
         //event handlers
-        public void OnBackpackChangedHandler(object sender, EventArgs e);
+        public void OnBackpackContentsChangedHandler(object sender, string e);
         public void OnEquipHandler(object sender, ModifierEventArgs e);
         public void OnUnequipHandler(object sender, ModifierEventArgs e);
         public void ChangeToNextWeapon();

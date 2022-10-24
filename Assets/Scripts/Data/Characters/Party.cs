@@ -6,25 +6,27 @@ namespace Data.Characters
 {
     public class Party
     {
-        public Dictionary<string, PlayableCharacter> Characters;
+        public Dictionary<string, ICharacter> Characters;
         public List<string> PartyDisplayOrder;
 
         public string SelectedPartyMemberGuId { get; set; }
 
-        public EventHandler<string> OnPartyMemberSelected;
-        public EventHandler OnPartyMemberStatsUpdated;
+        public event EventHandler<string> OnPartyMemberSelected;
+        public event EventHandler OnPartyMemberStatsUpdated;
+        public event  EventHandler OnPartyCompositionChanged;
+        public event EventHandler<string> OnItemAddedToPartyInventory;
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)
         {
             OnPartyMemberStatsUpdated?.Invoke(this, e);
         }
 
-        public Party(PlayableCharacter[] characters = null)
+        public Party(ICharacter[] characters = null)
         {
-            Characters = new Dictionary<string, PlayableCharacter>();
+            Characters = new Dictionary<string, ICharacter>();
             PartyDisplayOrder = new List<string>();
             if (characters == null) return;
-            foreach (PlayableCharacter character in characters)
+            foreach (ICharacter character in characters)
             {
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
@@ -34,15 +36,23 @@ namespace Data.Characters
         }
 
 
-        public void AddCharacter(PlayableCharacter character)
+        public void AddCharacter(ICharacter character)
         {
             if (character is null) return;
             Characters.Add(character.GuId, character);
             PartyDisplayOrder.Add(character.GuId);
             SelectedPartyMemberGuId = character.GuId;
             character.OnStatsUpdated += OnStatsUpdatedHandler;
+            character.OnItemAddedToBackpack += OnItemAddedToCharacterBackpack;
+            OnPartyCompositionChanged?.Invoke(this, EventArgs.Empty);
         }
-        public PlayableCharacter SelectCharacter(string characterId)
+
+        void OnItemAddedToCharacterBackpack(object sender, string e)
+        {
+            
+        }
+
+        public ICharacter SelectCharacter(string characterId)
         {
             if (!Characters.ContainsKey(characterId)) return null;
             SelectedPartyMemberGuId = characterId;

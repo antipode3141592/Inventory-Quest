@@ -50,8 +50,8 @@ namespace Data.Items
         public float ContainedWeight => Contents.Sum(x => x.Value.Item.Weight);
         public float ContainedWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue);
 
-        public event EventHandler<GridEventArgs> OnItemPlaced;
-        public event EventHandler<GridEventArgs> OnItemTaken;
+        public event EventHandler<string> OnItemPlaced;
+        public event EventHandler<string> OnItemTaken;
         public event EventHandler<HashSet<string>> OnMatchingItems;
         public event EventHandler<HashSet<string>> OnStackComplete;
 
@@ -211,7 +211,7 @@ namespace Data.Items
                     Grid[tempPointList[i].row, tempPointList[i].column].storedItemId = item.GuId;
                 }
 
-                OnItemPlaced?.Invoke(this, new GridEventArgs(tempPointList.ToArray(), HighlightState.Normal, target, item));
+                OnItemPlaced?.Invoke(this, item.Id);
                 
                 AfterItemPlaced(item);
                 return true;
@@ -234,7 +234,7 @@ namespace Data.Items
                         Grid[coor.row, coor.column].storedItemId = "";
                     }
                     ListPool<Coor>.Release(content.GridSpaces);
-                    OnItemTaken?.Invoke(this, new GridEventArgs(content.GridSpaces.ToArray(), HighlightState.Normal, target, item));
+                    OnItemTaken?.Invoke(this, item.Id);
                     if (Debug.isDebugBuild)
                         Debug.Log($"TryTake item with guid: {item.GuId}");
                     return true;

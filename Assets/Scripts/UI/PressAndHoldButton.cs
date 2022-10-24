@@ -3,11 +3,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Rewired;
+using InventoryQuest.UI.Menus;
 
 namespace InventoryQuest.UI
 {
-    public class PressAndHoldButton : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+    public class PressAndHoldButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
+        Player player;
+        int playerId = 0;
+
+        bool selected = false;
         float timer = 0f;
         bool enableTimer = false;
         float fillRatio = 0f;
@@ -22,14 +28,17 @@ namespace InventoryQuest.UI
         public event EventHandler OnTimerStart;
         public event EventHandler OnTimerReset;
 
+        Selectable selectable;
 
-        private void Awake()
+        public void Select() => selectable.Select();
+
+        void Awake()
         {
+            player = ReInput.players.GetPlayer(playerId);
             fillForeground.color = fillColor;
-        }
 
-        void OnEnable()
-        {
+            selectable = GetComponent<Selectable>();
+
             timer = 0f;
             enableTimer = false;
             fillRatio = 0f;
@@ -38,17 +47,26 @@ namespace InventoryQuest.UI
 
         void Update()
         {
-            if (!enableTimer) return;
-            timer += Time.deltaTime;
-            //calculate percent complete
-            fillRatio = timer/MinHoldTime;
-            //apply percentage to fillForeground
-            SetFill(fillRatio);
+            if (!selected) return;
 
-            //if timer >= HoldTimer, do the thing
-            if (timer < MinHoldTime) return;
-            OnPointerHoldSuccess?.Invoke(this, EventArgs.Empty);
-            enableTimer = false;
+            if (player.GetButtonDown("UISubmit"))
+                EnableTimer();
+            else if (player.GetButtonUp("UISubmit"))
+                ResetTimer();
+            else if (player.GetButton("UISubmit"))
+            {
+                if (!enableTimer) return;
+
+                timer += Time.deltaTime;
+
+                fillRatio = timer / MinHoldTime;
+                //apply percentage to fillForeground
+                SetFill(fillRatio);
+                if (timer < MinHoldTime) return;
+
+                OnPointerHoldSuccess?.Invoke(this, EventArgs.Empty);
+                enableTimer = false;
+            }
         }
 
         void SetFill(float fillPercentage)
@@ -56,22 +74,15 @@ namespace InventoryQuest.UI
             fillForeground.rectTransform.localScale = new Vector3(x: Mathf.Clamp01(fillPercentage), y: 1f, z: 1f);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        void EnableTimer()
         {
-
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            //enable timer;
             enableTimer = true;
             timer = 0f;
             OnTimerStart?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        void ResetTimer()
         {
-            //reset timer
             enableTimer = false;
             timer = 0f;
             SetFill(0f);
@@ -81,6 +92,17 @@ namespace InventoryQuest.UI
         public void UpdateButtonText(string text)
         {
             buttonText.text = text;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            selected = true;
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            selected = false;
+            ResetTimer();
         }
     }
 }

@@ -39,18 +39,18 @@ namespace InventoryQuest.UI.Menus
             choiceButtons[2].OnPointerHoldSuccess += Resolve;
         }
 
-        private void Resolve(object sender, EventArgs e)
+        void Resolve(object sender, EventArgs e)
         {
             encounterDisplayGroup.SetActive(false);
             _encounterManager.Loading.IsLoaded = true;
         }
 
-        private void Inventory(object sender, EventArgs e)
+        void Inventory(object sender, EventArgs e)
         {
             _encounterManager.Loading.ManageInventory = true;
         }
 
-        private void Retreat(object sender, EventArgs e)
+        void Retreat(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
@@ -77,6 +77,7 @@ namespace InventoryQuest.UI.Menus
             var encounter = _gameStateDataSource.CurrentEncounter;       
             encounterText.text = encounter.Description;
 
+            choiceButtons[1].Select();
         }
 
         public override void Hide()

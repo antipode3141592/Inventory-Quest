@@ -11,6 +11,8 @@ public class ParallaxBackground : MonoBehaviour {
 
     [SerializeField] List<SpriteRenderer> backgrounds;
 
+    List<Vector2> effectMultipliers;
+
     Transform cameraTransform;
     Vector3 lastCameraPosition;
     float textureUnitSizeX;
@@ -20,9 +22,11 @@ public class ParallaxBackground : MonoBehaviour {
     void Awake()
     {
         backgrounds = new(GetComponentsInChildren<SpriteRenderer>());
+        effectMultipliers = new List<Vector2>();
     }
 
-    void Start() {
+    void Start()
+    {
         cameraTransform = virtualCamera.transform;
         lastCameraPosition = cameraTransform.position;
 
@@ -31,20 +35,20 @@ public class ParallaxBackground : MonoBehaviour {
         Texture2D texture = sprite.texture;
         textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
         textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
+
+        for (int i = 0; i < backgrounds.Count; i++)
+        {
+            effectMultipliers.Add(new((float)i / (float)backgrounds.Count, (float)i / (float)backgrounds.Count));
+        }
     }
 
-    void LateUpdate() {
+    void Update() {
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-        Vector2 effectMultiplier;
         lastCameraPosition = cameraTransform.position;
         for(int i = 0; i < backgrounds.Count; i++)
         {
-            effectMultiplier = new((float)i / (float)backgrounds.Count, (float)i / (float)backgrounds.Count);
-            //Debug.Log($"effectMultiplier = {effectMultiplier}");
             Transform backgroundTransform = backgrounds[i].gameObject.transform;
-            backgroundTransform.position += new Vector3(deltaMovement.x * effectMultiplier.x, deltaMovement.y * effectMultiplier.y);
-            //transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
-            
+            backgroundTransform.position += new Vector3(deltaMovement.x * effectMultipliers[i].x, deltaMovement.y * effectMultipliers[i].y);   
 
             if (infiniteHorizontal)
             {
