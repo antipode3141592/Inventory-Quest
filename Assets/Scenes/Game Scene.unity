@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 166142396}
   - component: {fileID: 166142397}
   m_Layer: 0
-  m_Name: Background1 (1)
+  m_Name: Background2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,16 +856,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 274338183}
-  parallaxEffectMultiplier: {x: 0, y: 0}
   infiniteHorizontal: 1
   infiniteVertical: 0
   backgrounds:
-  - {fileID: 1729373253}
-  - {fileID: 1808295248}
-  - {fileID: 1177835488}
-  - {fileID: 166142397}
-  - {fileID: 565041118}
   - {fileID: 1734199704}
+  - {fileID: 565041118}
+  - {fileID: 166142397}
+  - {fileID: 1177835488}
+  - {fileID: 1808295248}
+  - {fileID: 1729373253}
+  backgroundSOs:
+  - {fileID: 11400000, guid: 82a70299e2997b249994b27eb3db76d1, type: 2}
 --- !u!1 &503348542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,7 +1566,7 @@ GameObject:
   - component: {fileID: 1177835487}
   - component: {fileID: 1177835488}
   m_Layer: 0
-  m_Name: Background1 (2)
+  m_Name: Background3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3667,7 +3668,7 @@ GameObject:
   - component: {fileID: 1729373252}
   - component: {fileID: 1729373253}
   m_Layer: 0
-  m_Name: Background1 (3)
+  m_Name: Background5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4000,7 +4001,7 @@ GameObject:
   - component: {fileID: 1808295247}
   - component: {fileID: 1808295248}
   m_Layer: 0
-  m_Name: Background1 (4)
+  m_Name: Background4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
