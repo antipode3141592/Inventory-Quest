@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: intro_1
   _name: A Lovely Day
-  description: It's your first day on the job, but it's a warm, clear day and you
-    feel nothing could go wrong!
+  description: 
   experience: 0
-  successMessage: Fragrant lilac and magnolia fill the air, making for a particularly
-    pleasant walk.
+  successMessage: It's a lovely day and lilac fills the air, making for a pleasant
+    walk.
   failureMessage: 
   rewardIds: []
   penaltyIds: []

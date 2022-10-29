@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: intro_return_1
   _name: Intro Return - Encounter One
-  description: Climb a tree to anchor a rope so the party may pass.
-  category: 
+  description: Climb a tree to anchor a rope so the party may pass. (Strength or
+    Vitality + Climb)
   experience: 300
   successMessage: success!
   failureMessage: failure!
   rewardIds: []
   penaltyIds: []
   skillCheckRequirements:
-  - StatTypes: 0000000001000000
+  - Description: 
+    StatTypes: 0000000001000000
     SkillTypes: 0d000000
     TargetValue: 15
     PartyTargetValue: 0
