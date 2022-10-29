@@ -15,12 +15,12 @@ namespace Data.Rewards
 
         public RandomItemRewardStats(string lootContainerId, string lootTableId)
         {
-            LootContainerId = lootContainerId;
-            LootTableId = lootTableId;
+            _lootContainerId = lootContainerId;
+            _lootTableId = lootTableId;
         }
 
-        public string LootContainerId { get; }
+        public string LootContainerId => _lootContainerId;
 
-        public string LootTableId { get; }
+        public string LootTableId => _lootTableId;
     }
 }
