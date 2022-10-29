@@ -1,4 +1,6 @@
 ﻿using Data.Characters;
+using Data.Penalties;
+using Data.Rewards;
 using System;
 using System.Collections.Generic;
 
@@ -10,8 +12,8 @@ namespace Data.Encounters
         protected Encounter(IEncounterStats encounterStats)
         {
             GuId = Guid.NewGuid().ToString();
-            RewardIds = encounterStats.RewardIds;
-            PenaltyIds = encounterStats.PenaltyIds;
+            Rewards = encounterStats.Rewards;
+            Penalties = encounterStats.Penalties;
             Stats = encounterStats;
         }
 
@@ -27,9 +29,9 @@ namespace Data.Encounters
 
         public IEncounterStats Stats { get; }
 
-        public IList<string> RewardIds { get; }
+        public IList<IRewardStats> Rewards { get; }
 
-        public IList<string> PenaltyIds { get; }
+        public IList<IPenaltyStats> Penalties { get; }
 
         public abstract bool Resolve(Party party);
     }

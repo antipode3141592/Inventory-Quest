@@ -1,4 +1,5 @@
 ﻿using Data.Items;
+using Data.Rewards;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace InventoryQuest.Managers
         public event EventHandler<Container> OnPileSelected;
 
         public void DestroyRewards();
-        public void EnqueueReward(string rewardId);
+        public void EnqueueReward(IRewardStats reward);
         public bool ProcessRewards();
         public void SelectPile(string containerGuid);
     }

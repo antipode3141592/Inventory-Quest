@@ -23,18 +23,6 @@ namespace Data.Encounters
             PartyTargetValue = partyTargetValue;
         }
 
-        public SkillCheckRequirement(SkillCheckRequirementData requirementData)
-        {
-            
-            foreach (var skill in requirementData.RequiredSkillTypes)
-                SkillTypes.Add(skill);
-            foreach (var stat in requirementData.RequiredStatsTypes)
-                StatTypes.Add(stat);
-            TargetValue = requirementData.TargetValue;
-            PartyTargetValue = requirementData.PartyTargetValue;
-
-        }
-
         public override string ToString() 
         {
             string statTypes = $"{StatTypes[0]}";

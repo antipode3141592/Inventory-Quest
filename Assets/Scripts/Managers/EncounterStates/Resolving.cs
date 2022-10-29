@@ -11,12 +11,14 @@ namespace InventoryQuest.Managers.States
     public class Resolving : IState
     {
         IRewardManager _rewardManager;
+        IPenaltyManager _penaltyManager;
         IPartyManager _partyManager;
         IGameStateDataSource _gameStateDataSource;
 
-        public Resolving(IRewardManager rewardManager, IPartyManager partyManager, IGameStateDataSource gameStateDataSource)
+        public Resolving(IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyManager partyManager, IGameStateDataSource gameStateDataSource)
         {
             _rewardManager = rewardManager;
+            _penaltyManager = penaltyManager;
             _partyManager = partyManager;
             _gameStateDataSource = gameStateDataSource;
         }
@@ -63,10 +65,13 @@ namespace InventoryQuest.Managers.States
             if (_gameStateDataSource.CurrentEncounter.Resolve(_partyManager.CurrentParty))
             {
                 Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} is a success!");
-                foreach (var reward in _gameStateDataSource.CurrentEncounter.RewardIds)
+                if (_gameStateDataSource.CurrentEncounter.Rewards is not null)
                 {
-                    Debug.Log($"Enqueuing {reward}");
-                    _rewardManager.EnqueueReward(reward);
+                    foreach (var reward in _gameStateDataSource.CurrentEncounter.Rewards)
+                    {
+                        Debug.Log($"Enqueuing {reward}");
+                        _rewardManager.EnqueueReward(reward);
+                    }
                 }
                 _message = _gameStateDataSource.CurrentEncounter.Stats.SuccessMessage;
                 messageDuration = CalculateLength(_message.Length);
@@ -77,6 +82,14 @@ namespace InventoryQuest.Managers.States
             else
             {
                 Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} was a failure!");
+                if (_gameStateDataSource.CurrentEncounter.Penalties is not null)
+                {
+                    foreach (var penalty in _gameStateDataSource.CurrentEncounter.Penalties)
+                    {
+                        Debug.Log($"Enqueing {penalty}");
+                        _penaltyManager.EnqueuePenalty(penalty);
+                    }
+                }
                 _message = _gameStateDataSource.CurrentEncounter.Stats.FailureMessage;
                 messageDuration = CalculateLength(_message.Length);
                 DistributePenalties(_partyManager.CurrentParty.Characters);

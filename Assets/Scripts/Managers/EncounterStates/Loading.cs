@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Encounters;
 using FiniteStateMachine;
 using InventoryQuest.Traveling;
 using System;
@@ -30,9 +31,17 @@ namespace InventoryQuest.Managers.States
             IsLoaded = false;
             ManageInventory = false;
             _gameStateDataSource.SetCurrentEncounter();
-            OnEncounterLoaded?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
-            //PixelCrushers.DialogueSystem.DialogueManager.ShowAlert(_gameStateDataSource.CurrentEncounter.Description);
             StateEntered?.Invoke(this, EventArgs.Empty);
+
+            IRestEncounterStats restEncounter = _gameStateDataSource.CurrentEncounter.Stats as IRestEncounterStats;
+            //rest encounters auto-resolve
+            if (restEncounter is not null)
+            {
+                IsLoaded = true;
+                return;
+            }
+            OnEncounterLoaded?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
+            
         }
 
         public void OnExit()

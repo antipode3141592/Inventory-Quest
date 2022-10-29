@@ -16,13 +16,8 @@ namespace InventoryQuest.UI
         IEncounterManager _encounterManager;
         IGameStateDataSource _gameStateDataSource;
 
-
         public TextMeshProUGUI NameText;
         public TextMeshProUGUI DescriptionText;
-
-        [SerializeField] PressAndHoldButton continueButton;
-
-        //[OdinSerialize] Dictionary<string, EncounterDisplay> encounterDisplays;
 
         [SerializeField] EncounterSuccessDisplay encounterSuccessDisplay;
         [SerializeField] EncounterFailureDisplay encounterFailureDisplay;
@@ -41,26 +36,9 @@ namespace InventoryQuest.UI
         void Start()
         {
             ClearDisplay();
-            continueButton.OnPointerHoldSuccess += Continue;
             _encounterManager.Loading.OnEncounterLoaded += DisplayEncounter;
             _encounterManager.Resolving.OnEncounterResolveFailure += DisplayFailure;
             _encounterManager.Resolving.OnEncounterResolveSuccess += DisplaySuccess;
-        }
-
-        //void Display(string encounterId)
-        //{
-        //    foreach(var display in encounterDisplays)
-        //    {
-        //        display.Value.gameObject.SetActive(display.Key == encounterId);
-        //    }
-        //}
-
-        private void Continue(object sender, EventArgs e)
-        {
-            if (_encounterManager.CurrentStateName == typeof(ManagingInventory).Name)
-                _encounterManager.ManagingInventory.Continue();
-            if (_encounterManager.CurrentStateName == typeof(CleaningUp).Name)
-                _encounterManager.CleaningUp.Continue();
         }
 
         void DisplaySuccess(object sender, string e)

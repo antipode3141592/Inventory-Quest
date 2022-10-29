@@ -1,21 +1,23 @@
-﻿namespace Data.Rewards
+﻿using UnityEngine;
+
+namespace Data.Rewards
 {
     public class RandomItemRewardStats : IRewardStats
     {
-        public RandomItemRewardStats(string id, string name, string description, string lootContainerId, string lootTableId)
+        [SerializeField] string _lootContainerId;
+        [SerializeField] string _lootTableId;
+
+        public RandomItemRewardStats()
         {
-            Id = id;
-            Name = name;
-            Description = description;
+            _lootContainerId = "loot_pile_small";
+            _lootTableId = "common_loot";
+        }
+
+        public RandomItemRewardStats(string lootContainerId, string lootTableId)
+        {
             LootContainerId = lootContainerId;
             LootTableId = lootTableId;
         }
-
-        public string Id { get; }
-
-        public string Name { get; }
-
-        public string Description { get; }
 
         public string LootContainerId { get; }
 

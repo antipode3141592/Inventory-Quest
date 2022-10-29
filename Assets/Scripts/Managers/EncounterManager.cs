@@ -17,6 +17,7 @@ namespace InventoryQuest.Managers
 
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
+        IPenaltyManager _penaltyManager;
         IPartyController _partyController;
         IGameStateDataSource _gameStateDataSource;
         IGroundController _groundController;
@@ -40,10 +41,11 @@ namespace InventoryQuest.Managers
         public CleaningUp CleaningUp => _cleaningUp;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IGroundController groundController)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IGroundController groundController)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
+            _penaltyManager = penaltyManager;
             _partyController = partyController;
             _gameStateDataSource = gameStateDataSource;
             _groundController = groundController;
@@ -57,7 +59,7 @@ namespace InventoryQuest.Managers
             _wayfairing = new Wayfairing(partyController: _partyController);
             _loading = new Loading(gameStateDataSource: _gameStateDataSource, partyController: _partyController);
             _managingInventory = new ManagingInventory(partyController: _partyController);
-            _resolving = new Resolving(rewardManager: _rewardManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource);
+            _resolving = new Resolving(rewardManager: _rewardManager, penaltyManager: _penaltyManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource);
             _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, groundController: _groundController);
 
 

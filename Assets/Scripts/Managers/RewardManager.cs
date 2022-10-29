@@ -12,7 +12,6 @@ namespace InventoryQuest.Managers
     public class RewardManager : MonoBehaviour, IRewardManager
     {
         IPartyManager _partyManager;
-        IRewardDataSource _rewardDataSource;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
         LootTable _lootTable;
@@ -25,7 +24,7 @@ namespace InventoryQuest.Managers
 
         public string SelectedPileId;
 
-        Queue<IReward> rewardQueue = new();
+        Queue<IRewardStats> rewardQueue = new();
 
         public event EventHandler OnRewardsProcessStart;
         public event EventHandler OnRewardsProcessComplete;
@@ -33,11 +32,10 @@ namespace InventoryQuest.Managers
         public event EventHandler<Container> OnPileSelected;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IItemDataSource dataSource, IRewardDataSource rewardDataSource, ILootTableDataSource lootTableDataSource)
+        public void Init(IPartyManager partyManager, IItemDataSource dataSource,  ILootTableDataSource lootTableDataSource)
         {
             _partyManager = partyManager;
             _dataSource = dataSource;
-            _rewardDataSource = rewardDataSource;
             _lootTableDataSource = lootTableDataSource;
         }
 
@@ -57,15 +55,9 @@ namespace InventoryQuest.Managers
 
         #region Processing Rewards Queue
 
-        public void EnqueueReward(string rewardId)
+        public void EnqueueReward(IRewardStats rewardStats)
         {
-            Debug.Log($"EnqueueReward({rewardId})...");
-            //get IRewardStats from IRewardDataSource
-            var stats = _rewardDataSource.GetRewardById(rewardId);
-            //get IReward from RewardFactory
-            var reward = RewardFactory.GetReward(stats);
-            if (reward is null) return;
-            rewardQueue.Enqueue(reward);
+            rewardQueue.Enqueue(rewardStats);
         }
 
         public bool ProcessRewards()
@@ -86,10 +78,9 @@ namespace InventoryQuest.Managers
 
 
 
-        void ProcessReward(IReward reward)
+        void ProcessReward(IRewardStats rewardStats)
         {
-            Debug.Log($"Processing Reward {reward.Name}", this);
-            ItemReward itemReward = reward as ItemReward;
+            ItemRewardStats itemReward = rewardStats as ItemRewardStats;
             if (itemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
@@ -97,17 +88,17 @@ namespace InventoryQuest.Managers
                 ItemPlacementHelpers.TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemReward.ItemId)));
                 PlaceRandomLootInContainer(lootPile, "common_loot");
             }
-            RandomItemReward randomItemReward = reward as RandomItemReward;
+            RandomItemRewardStats randomItemReward = rewardStats as RandomItemRewardStats;
             if (randomItemReward is not null)
             {
                 var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
                 Piles.Add(lootPile.GuId, lootPile);
                 PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
             }
-            CharacterReward characterReward = reward as CharacterReward;
+            CharacterRewardStats characterReward = rewardStats as CharacterRewardStats;
             if (characterReward is not null)
             {
-
+                _partyManager.AddCharacterToParty(characterReward.CharacterId);
             }
         }
 

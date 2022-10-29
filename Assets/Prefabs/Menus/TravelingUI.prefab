@@ -668,6 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c190ba3da7d3a684d9e95a4a9625538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 0
   CharacterPortraitPrefab: {fileID: 7384396024342420614, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
   _characterStatsDisplays: []
 --- !u!1 &8940217901432268361
@@ -833,7 +834,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1077853372429421800, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Name
-      value: PressAndHoldButton
+      value: RetreatChoice
       objectReference: {fileID: 0}
     - target: {fileID: 1737360911188091177, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Pivot.x
@@ -1134,7 +1135,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1077853372429421800, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Name
-      value: PressAndHoldButton (2)
+      value: ResolveChoice
       objectReference: {fileID: 0}
     - target: {fileID: 1077853372429421800, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_IsActive
@@ -1259,7 +1260,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1077853372429421800, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Name
-      value: PressAndHoldButton (1)
+      value: InventoryChoice
       objectReference: {fileID: 0}
     - target: {fileID: 1737360911188091177, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Pivot.x

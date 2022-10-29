@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Data.Encounters;
 
 namespace InventoryQuest.UI.Menus
 {
@@ -34,7 +35,8 @@ namespace InventoryQuest.UI.Menus
         protected override void Awake()
         {
             base.Awake();
-            choiceButtons[0].OnPointerHoldSuccess += Retreat;
+            choiceButtons[0].gameObject.SetActive(false);
+            //choiceButtons[0].OnPointerHoldSuccess += Retreat;
             choiceButtons[1].OnPointerHoldSuccess += Inventory;
             choiceButtons[2].OnPointerHoldSuccess += Resolve;
         }
@@ -58,7 +60,6 @@ namespace InventoryQuest.UI.Menus
         public override void Show()
         {
             base.Show();
-            partyDisplay.OnShow();
             _partyManager.CurrentParty.OnPartyMemberSelected += PartyMemberSelected;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             
@@ -76,6 +77,19 @@ namespace InventoryQuest.UI.Menus
             
             var encounter = _gameStateDataSource.CurrentEncounter;       
             encounterText.text = encounter.Description;
+
+            IRestEncounterStats encounterCheck = encounter.Stats as IRestEncounterStats;
+            if (encounterCheck is not null)
+            {
+
+            }
+
+            ISkillCheckEncounterStats skillCheck = encounter.Stats as ISkillCheckEncounterStats;
+            if (skillCheck is not null)
+            {
+                string choiceText = skillCheck.SkillCheckRequirements[0].Description;
+                //choiceButtons[2].UpdateButtonText(choiceText);
+            }
 
             choiceButtons[1].Select();
         }

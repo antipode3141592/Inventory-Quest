@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Data.Penalties;
+using Data.Rewards;
+using System.Collections.Generic;
 
 
 namespace Data.Encounters
@@ -18,8 +20,8 @@ namespace Data.Encounters
 
         public string FailureMessage { get; }
 
-        public List<string> RewardIds { get; }
+        public List<IRewardStats> Rewards { get; }
 
-        public List<string> PenaltyIds { get; }
+        public List<IPenaltyStats> Penalties { get; }
     }
 }

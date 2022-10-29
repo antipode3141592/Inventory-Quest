@@ -1,4 +1,6 @@
 using Data.Characters;
+using Data.Penalties;
+using Data.Rewards;
 using System.Collections.Generic;
 
 namespace Data.Encounters
@@ -17,10 +19,9 @@ namespace Data.Encounters
 
         //public IList<IChoice> Choices { get; }
 
-        public IList<string> RewardIds { get; }
+        public IList<IRewardStats> Rewards { get; }
 
-        public IList<string> PenaltyIds { get; }
-
+        public IList<IPenaltyStats> Penalties { get; }
         public bool Resolve(Party party);
 
 

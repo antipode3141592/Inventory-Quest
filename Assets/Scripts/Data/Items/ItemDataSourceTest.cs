@@ -233,7 +233,7 @@ namespace Data.Items
                         new(StatTypes.Charisma, OperatorType.Add, 5)}
                     )
             },
-            {   "ring_spirit_25", new EquipableItemStats("ring_spirit_25",
+            {   "ring_spirit_15", new EquipableItemStats("ring_spirit_15",
                     weight: 0.1f,
                     goldValue: 500f,
                     description: "A golden ring that radiates spirit energy",

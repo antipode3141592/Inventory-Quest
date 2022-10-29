@@ -66,7 +66,7 @@ namespace InventoryQuest.UI
         {
             foreach (var portrait in PartyDisplayList)
             {
-                if (portrait.CharacterGuid == characterGuid)
+                if (interactable && portrait.CharacterGuid == characterGuid)
                 {
                     portrait.IsSelected = true;
                     var character = _partyManager.CurrentParty.SelectCharacter(characterGuid);
