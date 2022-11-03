@@ -6,13 +6,14 @@ namespace Data.Items
     public interface IContainer: IItemComponent
     {
         public float InitialWeight { get; }
+        public float Weight { get; }
         public bool IsEmpty { get; }
 
         public bool IsFull { get; }
 
         public IDictionary<string, Content> Contents { get; }
-        public GridSquare[,] Grid { get; }
-        public Coor Dimensions { get; }
+        public IDictionary<Coor, GridSquare> Grid { get; }
+        public string GuId { get; }
 
         public event EventHandler<string> OnItemPlaced;
         public event EventHandler<string> OnItemTaken;

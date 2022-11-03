@@ -14,12 +14,10 @@ namespace Data.Characters
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; }
         public IWeaponProficiency CurrentWeaponProficiency { get; }
-        public ContainerBase Backpack { get; }
+        public IContainer Backpack { get; }
 
         public float CurrentEncumbrance { get; }
         public float MaximumEncumbrance { get; }
-
-        public bool IsIncapacitated { get; }
 
         public int MaximumHealth { get; }
         public int MaximumMagicPool { get; }
@@ -27,17 +25,23 @@ namespace Data.Characters
         public int CurrentMagicPool { get; set; }
         public int HealthPerLevel { get; }
         public int MagicPerLevel { get; }
-
         public int CurrentExperience { get; set; }
         public int NextLevelExperience { get; }
         public int CurrentLevel { get; set; }
 
         public ICharacterStats Stats { get; }
 
+        public bool IsIncapacitated { get; }
+        public bool IsDying { get; }
+        public bool IsDead { get; }
+
         //events
         public event EventHandler OnStatsUpdated;
 
         public event EventHandler<string> OnItemAddedToBackpack;
+
+        public event EventHandler OnDying;
+        public event EventHandler OnDead;
 
         //event handlers
         public void OnBackpackContentsChangedHandler(object sender, string e);

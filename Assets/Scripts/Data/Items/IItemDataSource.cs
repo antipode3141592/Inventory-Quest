@@ -1,12 +1,7 @@
 ﻿namespace Data.Items
 {
-    public interface IItemDataSource
+    public interface IItemDataSource: IDataSource<IItemStats>
     {
-        public IItemStats GetRandomItemStats(Rarity rarity);
-
-        public IItemStats GetItemStats(string id);
-
-        
-
+        public IItemStats GetItemByRarity(Rarity rarity);
     }
 }

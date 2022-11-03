@@ -75,14 +75,11 @@ namespace InventoryQuest.UI
         public void SetupGrid()
         {
             if (MyContainer is null) return;
-            for (int r = 0; r < MyContainer.Dimensions.row; r++)
-            {
-                for (int c = 0; c < MyContainer.Dimensions.column; c++)
-                {
-                    squares[r, c].SetContainer(MyContainer);
-                    squares[r, c].gameObject.SetActive(true);
-                    squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
-                }
+            foreach(var point in MyContainer.Grid) 
+            { 
+                squares[point.Key.row, point.Key.column].SetContainer(MyContainer);
+                squares[point.Key.row, point.Key.column].gameObject.SetActive(true);
+                squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
 
             MyContainer.OnItemPlaced += OnItemChangeHandler;
@@ -125,12 +122,9 @@ namespace InventoryQuest.UI
 
         public void UpdateGridState()
         {
-            for (int r = 0; r < MyContainer.Dimensions.row; r++)
+            foreach (var point in MyContainer.Grid)
             {
-                for (int c = 0; c < MyContainer.Dimensions.column; c++)
-                {
-                    squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
-                }
+                squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
         }
 
@@ -140,7 +134,7 @@ namespace InventoryQuest.UI
             foreach(var content in MyContainer.Contents)
             {
                 IItem item = content.Value.Item;
-                Facing facing = item.Shape.CurrentFacing;
+                Facing facing = item.CurrentFacing;
                 Coor AnchorPosition = content.Value.AnchorPosition;
                 Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);

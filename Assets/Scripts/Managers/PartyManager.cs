@@ -66,7 +66,7 @@ namespace InventoryQuest.Managers
 
         void AddCharacterWithEquipmentToParty(string id, IList<string> startingEquipment = null, IList<string> startingInventory = null)
         {
-            List<IEquipable> equipment = new();
+            List<IItem> equipment = new();
             List<IItem> items = new();
 
             
@@ -75,14 +75,14 @@ namespace InventoryQuest.Managers
             {
                 foreach(var _equipment in startingEquipment)
                 {
-                    equipment.Add((IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats(_equipment)));
+                    equipment.Add(ItemFactory.GetItem(_itemDataSource.GetById(_equipment)));
                 }
             }
             if (startingInventory is not null)
             {
                 foreach(var _item in startingInventory)
                 {
-                    items.Add(ItemFactory.GetItem(_itemDataSource.GetItemStats(_item)));
+                    items.Add(ItemFactory.GetItem(_itemDataSource.GetById(_item)));
                 }
             }
 

@@ -19,6 +19,7 @@ namespace Data.Characters
         public int MagicPerLevel { get; } = 5;
         public int CurrentMagicPool { get; set; }
         public int MaximumMagicPool => StatDictionary[StatTypes.Arcane].CurrentValue + StatDictionary[StatTypes.Spirit].CurrentValue + (MagicPerLevel * CurrentLevel);
+
         public float MaximumEncumbrance => StatDictionary[StatTypes.Strength].CurrentValue * 15;
         public int CurrentExperience { get; set; }
         public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
@@ -32,16 +33,20 @@ namespace Data.Characters
 
         public ICharacterStats Stats { get; }
 
-        public ContainerBase Backpack => (ContainerBase)EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == EquipmentSlotType.Backpack).EquippedItem;
+        public IContainer Backpack => (IContainer)EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == EquipmentSlotType.Backpack).EquippedItem;
         public float CurrentEncumbrance => EquipmentSlots
             .Where(x => x.Value.EquippedItem is not null)
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
         public bool IsIncapacitated => CurrentHealth <= 0;
+        public bool IsDying { get; protected set; } = false;
+        public bool IsDead { get; protected set; } = false;
 
         public event EventHandler OnStatsUpdated;
         public event EventHandler<string> OnItemAddedToBackpack;
+        public event EventHandler OnDying;
+        public event EventHandler OnDead;
 
-        public PlayableCharacter(ICharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
+        public PlayableCharacter(ICharacterStats characterStats, IList<IItem> initialEquipment, IList<IItem> initialInventory = null)
         {
             GuId = Guid.NewGuid().ToString();
             DisplayName = characterStats.Name;
@@ -132,17 +137,18 @@ namespace Data.Characters
             CurrentWeaponProficiency = WeaponProficiencies.Count > 0 ? WeaponProficiencies[weaponProficiencyIndex] : null;
 
             if (initialEquipment is null) return;
-            foreach (IEquipable item in initialEquipment)
+            foreach (var item in initialEquipment)
             {
                 //iterate through slots, equip to first available valid placement for each piece of equipment
-                foreach (var slot in EquipmentSlots)
-                {
-                    if (slot.Value.IsValidPlacement(item))
+                if (item.Components.ContainsKey(typeof(IEquipable)))
+                    foreach (var slot in EquipmentSlots)
                     {
-                        if (slot.Value.TryEquip(out _, item))
-                            break;
+                        if (slot.Value.IsValidPlacement(item))
+                        {
+                            if (slot.Value.TryEquip(out _, item))
+                                break;
+                        }
                     }
-                }
             }
 
             //if backpack present (some characters have no backpack), subscribe to container events
@@ -244,6 +250,17 @@ namespace Data.Characters
         {
             Backpack.OnItemPlaced -= OnBackpackContentsChangedHandler;
             Backpack.OnItemTaken -= OnBackpackContentsChangedHandler;
+        }
+
+        public void DealDamage(int damageAmount, DamageType damageType)
+        {
+            if (IsDead || IsDying) return;
+            CurrentHealth -= damageAmount - Resistances[damageType].CurrentValue;
+        }
+
+        public void HealDamage(int healAmount)
+        {
+
         }
     }
 }

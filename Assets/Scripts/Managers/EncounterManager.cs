@@ -20,7 +20,6 @@ namespace InventoryQuest.Managers
         IPenaltyManager _penaltyManager;
         IPartyController _partyController;
         IGameStateDataSource _gameStateDataSource;
-        IGroundController _groundController;
 
         StateMachine _stateMachine;
 
@@ -41,14 +40,13 @@ namespace InventoryQuest.Managers
         public CleaningUp CleaningUp => _cleaningUp;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IGroundController groundController)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
             _penaltyManager = penaltyManager;
             _partyController = partyController;
             _gameStateDataSource = gameStateDataSource;
-            _groundController = groundController;
         }
 
         void Awake()
@@ -60,7 +58,7 @@ namespace InventoryQuest.Managers
             _loading = new Loading(gameStateDataSource: _gameStateDataSource, partyController: _partyController);
             _managingInventory = new ManagingInventory(partyController: _partyController);
             _resolving = new Resolving(rewardManager: _rewardManager, penaltyManager: _penaltyManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource);
-            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, groundController: _groundController);
+            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource);
 
 
             At(_idle, _wayfairing, BeginWayfairing());

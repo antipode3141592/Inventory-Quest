@@ -4,9 +4,9 @@ namespace Data.Items
 {
     public class ContainerEventArgs : EventArgs
     {
-        public Container Container;
+        public IContainer Container;
 
-        public ContainerEventArgs(Container container)
+        public ContainerEventArgs(IContainer container)
         {
             Container = container;
         }

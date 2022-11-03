@@ -9,8 +9,6 @@ namespace InventoryQuest
     {
         public override void InstallBindings()
         {
-            Container.Bind<IGroundController>().To<GroundController>()
-                .FromComponentInHierarchy().AsSingle();
             Container.Bind<IPartyController>().To<TravelingPartyController>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IPartyManager>().To<PartyManager>()

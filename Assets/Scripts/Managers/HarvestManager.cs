@@ -32,11 +32,11 @@ namespace InventoryQuest.Managers
 
         public HarvestTypes CurrentHarvestType => currentHarvestType;
 
-        public IDictionary<string, Container> Piles { get; } = new Dictionary<string, Container>();
+        public IDictionary<string, IContainer> Piles { get; } = new Dictionary<string, IContainer>();
         List<IItem> deleteItems = new List<IItem>();
 
         public event EventHandler OnHarvestCleared;
-        public event EventHandler<Container> OnPileSelected;
+        public event EventHandler<IContainer> OnPileSelected;
 
         [Inject]
         public void Init(IItemDataSource itemDataSource)
@@ -89,11 +89,13 @@ namespace InventoryQuest.Managers
 
         public void PopulateHarvest(string containerId, string itemId, int quantity)
         {
-            var harvestPile = (Container)ItemFactory.GetItem((ContainerStats)_itemDataSource.GetItemStats(containerId));
-            Piles.Add(harvestPile.GuId, harvestPile);
+            var harvestPile = ItemFactory.GetItem(_itemDataSource.GetById(containerId));
+            var harvestContainer = (IContainer)harvestPile.Components[typeof(IContainer)];
+            if (harvestContainer is null) return;
+            Piles.Add(harvestPile.GuId, harvestContainer);
             for (int i = 0; i < quantity; i++)
             {
-                ItemPlacementHelpers.TryAutoPlaceToContainer(harvestPile, ItemFactory.GetItem(_itemDataSource.GetItemStats(itemId)));
+                ItemPlacementHelpers.TryAutoPlaceToContainer(harvestPile.Components[typeof(IContainer)] as IContainer, ItemFactory.GetItem(_itemDataSource.GetById(itemId)));
             }
         }
 
@@ -106,7 +108,7 @@ namespace InventoryQuest.Managers
                 {
                     deleteItems.Add(content.Item);
                 }
-                deleteItems.Add(container);
+                deleteItems.Add(container.Item);
             }
 
             for (int i = 0; i < deleteItems.Count; i++)

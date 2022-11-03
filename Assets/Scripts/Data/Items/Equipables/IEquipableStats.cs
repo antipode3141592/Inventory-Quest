@@ -3,10 +3,10 @@
 namespace Data.Items
 
 {
-    public interface IEquipableStats
+    public interface IEquipableStats : IItemComponentStats
     {
-        public List<StatModifier> Modifiers { get; set; }
+        public List<StatModifier> Modifiers { get; }
 
-        public EquipmentSlotType SlotType { get; set; }
+        public EquipmentSlotType SlotType { get; }
     }
 }

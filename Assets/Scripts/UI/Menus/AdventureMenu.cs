@@ -52,7 +52,7 @@ namespace InventoryQuest.UI.Menus
             characterContainerDisplay.MyContainer = container;
         }
 
-        void OnLootPileSelectedHandler(object sender, Container e)
+        void OnLootPileSelectedHandler(object sender, IContainer e)
         {
             lootContainerDisplay.MyContainer = e;
         }

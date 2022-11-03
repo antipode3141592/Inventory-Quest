@@ -30,7 +30,7 @@ namespace InventoryQuest.UI
             _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
         }
 
-        void OnLootPileSelectedHandler(object sender, Container e)
+        void OnLootPileSelectedHandler(object sender, IContainer e)
         {
             ConnectLootContainer(e);
         }

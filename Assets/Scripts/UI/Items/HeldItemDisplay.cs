@@ -20,7 +20,6 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI ItemRarityText;
         [SerializeField] TextMeshProUGUI ItemValueText;
         [SerializeField] TextMeshProUGUI ItemWeightText;
-        [SerializeField] TextMeshProUGUI ShapeTypeText;
         [SerializeField] List<TextMeshProUGUI> ItemModifiersTexts;
         [SerializeField] TextMeshProUGUI QuantityText;
 
@@ -61,21 +60,20 @@ namespace InventoryQuest.UI
             ItemRarityText.text = item.Stats.Rarity.ToString();
             ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
-            ShapeTypeText.text = item.Stats.ShapeType.ToString();
-            var equipableItem = item as EquipableItem;
-
-            for(int i = 0; i < ItemModifiersTexts.Count; i++)
-            {
-                if (equipableItem is not null && equipableItem.Modifiers.Count > i)
-                { 
-                    ItemModifiersTexts[i].text = equipableItem.Modifiers[i].ToString();
-                }
-                else
+            var equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            if (equipable is not null) 
+                for(int i = 0; i < ItemModifiersTexts.Count; i++)
                 {
-                    ItemModifiersTexts[i].text = "";
+                    if (equipable.Modifiers.Count > i)
+                    { 
+                        ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
+                    }
+                    else
+                    {
+                        ItemModifiersTexts[i].text = "";
 
+                    }
                 }
-            }
             QuantityText.text = item is not IStackable ? "" : $"Qty: {item.Quantity}";
         }
     }

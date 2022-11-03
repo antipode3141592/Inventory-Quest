@@ -9,7 +9,7 @@ namespace Data.Characters
 
         public EquipmentSlotType SlotType { get; }
 
-        public IEquipable EquippedItem { get; set; }
+        public IItem EquippedItem { get; set; }
 
         public EquipmentSlot(EquipmentSlotType slotType, string id = null)
         {
@@ -20,33 +20,36 @@ namespace Data.Characters
         public EventHandler<ModifierEventArgs> OnEquip;
         public EventHandler<ModifierEventArgs> OnUnequip;
 
-        public bool TryEquip(out IEquipable previousItem, IEquipable item)
+        public bool TryEquip(out IItem previousItem, IItem item)
         {
             previousItem = null;
             if (item is null) return false;
-            if (IsValidPlacement(item))
-            {
-                TryUnequip(out previousItem);
-                EquippedItem = item;
-                OnEquip?.Invoke(this, new ModifierEventArgs(EquippedItem.Modifiers));
-                return true;
-            }
-            return false;
+            IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            if (equipable is null || equipable.SlotType != SlotType) return false;
+
+            TryUnequip(out previousItem);
+            EquippedItem = item;
+            OnEquip?.Invoke(this, new ModifierEventArgs(equipable.Modifiers));
+            return true;
         }
 
-        public bool TryUnequip(out IEquipable item)
+        public bool TryUnequip(out IItem item)
         {
             item = null;
             if (EquippedItem == null) return false;
             item = EquippedItem;
             EquippedItem = null;
-            OnUnequip?.Invoke(this, new ModifierEventArgs(item.Modifiers));
+            IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            if (equipable is null) return false;
+            OnUnequip?.Invoke(this, new ModifierEventArgs(equipable.Modifiers));
             return true;
         }
 
-        public bool IsValidPlacement(IEquipable item)
+        public bool IsValidPlacement(IItem item)
         {
-            return item.SlotType == SlotType;
+            var equipable = (IEquipable)item.Components[typeof(IEquipable)];
+            if (equipable is null) return false;
+            return equipable.SlotType == SlotType;
         }
     }
 }

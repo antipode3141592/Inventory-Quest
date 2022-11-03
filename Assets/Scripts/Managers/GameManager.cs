@@ -83,17 +83,16 @@ namespace InventoryQuest.Managers
 
             if (rotateCW)
             {
-                var facing = HoldingItem.Shape.Rotate(1);
-                Debug.Log($"CheckRotateAction() detected CW action");
-                OnRotateCW?.Invoke(this, new RotationEventArgs(facing));
+                HoldingItem.Rotate(1);
+                OnRotateCW?.Invoke(this, new RotationEventArgs(HoldingItem.CurrentFacing));
                 return;
             }
 
             if (rotateCCW)
             {
-                var facing = HoldingItem.Shape.Rotate(-1);
+                HoldingItem.Rotate(-1);
                 Debug.Log($"CheckRotateAction() detected CCW action");
-                OnRotateCCW?.Invoke(this, new RotationEventArgs(facing));
+                OnRotateCCW?.Invoke(this, new RotationEventArgs(HoldingItem.CurrentFacing));
                 return;
             }
         }

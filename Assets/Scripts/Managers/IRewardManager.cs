@@ -7,12 +7,12 @@ namespace InventoryQuest.Managers
 {
     public interface IRewardManager
     {
-        public IDictionary<string, Container> Piles { get; }
+        public IDictionary<string, IContainer> Piles { get; }
 
         public event EventHandler OnRewardsProcessStart;
         public event EventHandler OnRewardsProcessComplete;
         public event EventHandler OnRewardsCleared;
-        public event EventHandler<Container> OnPileSelected;
+        public event EventHandler<IContainer> OnPileSelected;
 
         public void DestroyRewards();
         public void EnqueueReward(IRewardStats reward);

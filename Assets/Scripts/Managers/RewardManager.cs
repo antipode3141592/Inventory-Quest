@@ -18,7 +18,7 @@ namespace InventoryQuest.Managers
 
         bool isProcessing = false;
 
-        public IDictionary<string, Container> Piles { get; } = new Dictionary<string, Container>();
+        public IDictionary<string, IContainer> Piles { get; } = new Dictionary<string, IContainer>();
 
         List<IItem> deleteItems = new List<IItem>();
 
@@ -29,7 +29,7 @@ namespace InventoryQuest.Managers
         public event EventHandler OnRewardsProcessStart;
         public event EventHandler OnRewardsProcessComplete;
         public event EventHandler OnRewardsCleared;
-        public event EventHandler<Container> OnPileSelected;
+        public event EventHandler<IContainer> OnPileSelected;
 
         [Inject]
         public void Init(IPartyManager partyManager, IItemDataSource dataSource,  ILootTableDataSource lootTableDataSource)
@@ -83,15 +83,16 @@ namespace InventoryQuest.Managers
             ItemRewardStats itemReward = rewardStats as ItemRewardStats;
             if (itemReward is not null)
             {
-                var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats("loot_pile_small"));
-                Piles.Add(lootPile.GuId, lootPile);
-                ItemPlacementHelpers.TryAutoPlaceToContainer(lootPile, ItemFactory.GetItem(_dataSource.GetItemStats(itemReward.ItemId)));
-                PlaceRandomLootInContainer(lootPile, "common_loot");
+                var lootPile = (IItem)ItemFactory.GetItem(_dataSource.GetById("loot_pile_small"));
+                var lootContainer = (IContainer)lootPile.Components[typeof(IContainer)];
+                Piles.Add(lootPile.GuId, lootContainer);
+                ItemPlacementHelpers.TryAutoPlaceToContainer(lootContainer, ItemFactory.GetItem(_dataSource.GetById(itemReward.ItemId)));
+                PlaceRandomLootInContainer(lootContainer, "common_loot");
             }
             RandomItemRewardStats randomItemReward = rewardStats as RandomItemRewardStats;
             if (randomItemReward is not null)
             {
-                var lootPile = (Container)ItemFactory.GetItem((ContainerStats)_dataSource.GetItemStats(randomItemReward.LootContainerId));
+                var lootPile = (IContainer)ItemFactory.GetItem(_dataSource.GetById(randomItemReward.LootContainerId));
                 Piles.Add(lootPile.GuId, lootPile);
                 PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
             }
@@ -112,7 +113,7 @@ namespace InventoryQuest.Managers
                 {
                     deleteItems.Add(content.Item);
                 }
-                deleteItems.Add(container);
+                deleteItems.Add(container.Item);
             }
 
             for (int i = 0; i < deleteItems.Count; i++)
@@ -126,12 +127,12 @@ namespace InventoryQuest.Managers
         #endregion
 
         #region Item Placement Functions
-        void PlaceRandomLootInContainer(Container container, string lootTableId)
+        void PlaceRandomLootInContainer(IContainer container, string lootTableId)
         {
             while (!container.IsFull)
             {
                 Rarity rarity = _lootTable.GetRandomRarity(lootTableId);
-                IItem item = ItemFactory.GetItem(_dataSource.GetRandomItemStats(rarity));
+                IItem item = ItemFactory.GetItem(_dataSource.GetItemByRarity(rarity));
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container, item);
             }
         }

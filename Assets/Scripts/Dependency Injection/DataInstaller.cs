@@ -4,6 +4,8 @@ using Data.Encounters;
 using Data.Items;
 using Data.Locations;
 using Data.Rewards;
+using Data.Shapes;
+using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest
@@ -13,19 +15,21 @@ namespace InventoryQuest
         public override void InstallBindings()
         {
             Container.Bind<ILocationDataSource>()
-                .To<LocationDataSourceScriptableObjectTest>().FromComponentInHierarchy().AsSingle();
+                .To<LocationDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IItemDataSource>()
-                .FromInstance(new ItemDataSourceTest()).AsSingle();
+                .To<ItemDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<ICharacterDataSource>()
-                .To<CharacterSODataSource>().FromComponentInHierarchy().AsSingle();
+                .To<CharacterDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IEncounterDataSource>()
-                .To<EncounterDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
+                .To<EncounterDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<ILootTableDataSource>()
                 .FromInstance(new LootTableDataSourceTest()).AsSingle();
             Container.Bind<IPathDataSource>()
-                .To<PathDataSourceSOTest>().FromComponentInHierarchy().AsSingle();
+                .To<PathDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IGameStateDataSource>()
                 .To<GameStateDataSource>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<IShapeDataSource>()
+                .To<ShapeDataSource>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

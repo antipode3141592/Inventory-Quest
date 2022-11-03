@@ -71,7 +71,7 @@ namespace InventoryQuest.UI
 
 
             _cursor.itemIcon.color = Color.white;
-            ImageUtilities.RotateSprite(item.Shape.CurrentFacing, _cursor.itemIcon);
+            ImageUtilities.RotateSprite(item.CurrentFacing, _cursor.itemIcon);
         }
 
         public void HideItemSprite()

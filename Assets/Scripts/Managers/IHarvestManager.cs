@@ -7,7 +7,7 @@ namespace InventoryQuest.Managers
 {
     public interface IHarvestManager
     {
-        public IDictionary<string, Container> Piles { get; }
+        public IDictionary<string, IContainer> Piles { get; }
 
         public HarvestTypes CurrentHarvestType { get; }
 
@@ -25,6 +25,6 @@ namespace InventoryQuest.Managers
 
         public void SelectPile(string containerGuid);
 
-        public event EventHandler<Container> OnPileSelected;
+        public event EventHandler<IContainer> OnPileSelected;
     }
 }

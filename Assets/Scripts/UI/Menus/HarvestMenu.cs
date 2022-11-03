@@ -36,7 +36,7 @@ namespace InventoryQuest.UI.Menus
             _harvestManager.OnPileSelected += OnHarvestPileSelected;
         }
 
-        void OnHarvestPileSelected(object sender, Container e)
+        void OnHarvestPileSelected(object sender, IContainer e)
         {
             if (e is null) return;
             harvestContainerDisplay.MyContainer = e;

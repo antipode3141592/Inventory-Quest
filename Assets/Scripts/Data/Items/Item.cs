@@ -13,16 +13,18 @@ namespace Data.Items
             GuId = Guid.NewGuid().ToString();
             Id = itemStats.Id;
             Stats = itemStats;
-            Shape = ShapeFactory.GetShape(itemStats.ShapeType, itemStats.DefaultFacing);
+            Shape = itemStats.Shape;
             Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
             Quantity = 1;
-            Components = new();
+            Components = new Dictionary<Type, IItemComponent>();
         }
 
         public string GuId { get; }
         public string Id { get; }
 
-        public Shape Shape { get; }
+        public IShape Shape { get; }
+
+        public Facing CurrentFacing { get; protected set;}
 
         public Sprite Sprite { get; set; }
 
@@ -33,8 +35,16 @@ namespace Data.Items
 
         public int Quantity {get; }
 
-        public List<IItemComponent> Components { get; }
+        public IDictionary<Type, IItemComponent> Components { get; }
 
         public IItemStats Stats { get; }
+
+        public void Rotate(int direction)
+        {
+            int v = (int)CurrentFacing + direction;
+
+            CurrentFacing = v % Shape.Points.Count < 0 ? 
+                (Facing)(Shape.Points.Count - 1) : (Facing)(v % Shape.Points.Count);
+        }
     }
 }

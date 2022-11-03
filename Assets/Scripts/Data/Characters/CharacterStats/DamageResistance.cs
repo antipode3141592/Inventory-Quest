@@ -3,19 +3,21 @@ using Data.Health;
 
 namespace Data.Characters
 {
+    //  flat reduction
+    //      damage received = incoming damage - relevant resistance type - armor if damage is "normal"
     [Serializable]
     public class DamageResistance
     {
         public DamageType DamageType;
         
-        public float InitialValue;
+        public int InitialValue;
 
-        public DamageResistance(DamageType damageType, float initialValue)
+        public DamageResistance(DamageType damageType, int initialValue)
         {
             DamageType = damageType;
             InitialValue = initialValue;
         }
 
-        public float CurrentValue { get; }
+        public int CurrentValue { get; }
     }
 }

@@ -59,7 +59,7 @@ namespace InventoryQuest.UI.Menus
             {
                 LootIcon icon = Instantiate<LootIcon>(_lootIconPrefab, transform);
                 icon.PileDisplay = this;
-                icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Stats.SpritePath);
+                icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath);
                 icon.IsSelected = false;
                 pileIcons.Add(icon);
 

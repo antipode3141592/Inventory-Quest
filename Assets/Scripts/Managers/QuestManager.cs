@@ -30,7 +30,7 @@ namespace InventoryQuest.Managers
 
         public void AddItemToPartyInventory(string itemId)
         {
-            var item = ItemFactory.GetItem(_itemDataSource.GetItemStats(itemId));
+            var item = ItemFactory.GetItem(_itemDataSource.GetById(itemId));
             if (item is null) return;
             foreach(var character in _partyManager.CurrentParty.Characters)
                 if (ItemPlacementHelpers.TryAutoPlaceToContainer(character.Value.Backpack, item))

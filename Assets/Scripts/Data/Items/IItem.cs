@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Data.Shapes;
 using System.Collections.Generic;
+using System;
 
 namespace Data.Items
 
@@ -15,10 +16,14 @@ namespace Data.Items
 
         public Sprite Sprite { get; set; }
 
-        public Shape Shape { get; }
+        public IShape Shape { get; }
+
+        public Facing CurrentFacing { get; }
 
         public int Quantity { get; }
 
-        public List<IItemComponent> Components { get; }
+        public IDictionary<Type, IItemComponent> Components { get; }
+
+        public void Rotate(int direction);
     }
 }

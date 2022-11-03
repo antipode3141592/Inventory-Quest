@@ -74,8 +74,8 @@ namespace InventoryQuest.UI
         {
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             Data.HighlightState squareState;
-            IEquipable equipable = _gameManager.HoldingItem as IEquipable;
-            if (equipable is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipable)) { 
+            var equipableItem = _gameManager.HoldingItem;
+            if (equipableItem is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipableItem)) { 
                 squareState = Data.HighlightState.Highlight;
                 
             } 
@@ -108,7 +108,7 @@ namespace InventoryQuest.UI
                     }
                     break;
                 case GameStates.ItemHolding:
-                    if (_character.EquipmentSlots[SlotId].TryEquip(out var previousItem, _gameManager.HoldingItem as IEquipable))
+                    if (_character.EquipmentSlots[SlotId].TryEquip(out var previousItem, _gameManager.HoldingItem))
                     {
                         _gameManager.HoldingItem = previousItem as IItem;
                         if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Encounter);

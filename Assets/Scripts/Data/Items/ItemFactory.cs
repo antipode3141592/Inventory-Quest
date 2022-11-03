@@ -2,34 +2,32 @@
 {
     public class ItemFactory
     {
-        public static IItem GetItem(IItemStats stats)
+        public static IItem GetItem(IItemStats itemStats)
         {
-            EquipableItemStats equipableStats = stats as EquipableItemStats;
-            if (equipableStats != null)
+            IItem item = new Item(itemStats: itemStats);
+
+            foreach (var component in itemStats.Components)
             {
-                return new EquipableItem(equipableStats);
+                IEquipableStats equipableStats = component as IEquipableStats;
+                if (equipableStats is not null)
+                {
+                    item.Components.Add(typeof(IEquipable), new Equipable(equipableStats, item));
+                    continue;
+                }
+                IContainerStats containerStats = component as IContainerStats;
+                if (containerStats is not null)
+                {
+                    item.Components.Add(typeof(IContainer), new Container(containerStats, item));
+                    continue;
+                }
+                IStackableStats stackableItemStats = component as IStackableStats;
+                if (stackableItemStats is not null)
+                {
+                    item.Components.Add(typeof(IStackable), new Stackable(stackableItemStats, item));
+                    continue;
+                }
             }
-            ContainerStats containerStats = stats as ContainerStats;
-            if(containerStats != null)
-            {
-                return new Container(containerStats);
-            }
-            EquipableContainerStats equipableContainerStats = stats as EquipableContainerStats;
-            if (equipableContainerStats != null)
-            {
-                return new EquipableContainer(equipableContainerStats);
-            }
-            StackableItemStats stackableItemStats = stats as StackableItemStats;
-            if (stackableItemStats != null)
-            {
-                return new StackableItem(stackableItemStats);
-            }
-            ItemStats itemStats = stats as ItemStats;
-            if (itemStats != null)
-            {
-                return new Item(itemStats: itemStats);
-            }
-            return null;
+            return item;
             
         }
     }
