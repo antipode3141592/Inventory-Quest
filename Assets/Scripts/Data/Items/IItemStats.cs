@@ -15,6 +15,6 @@ namespace Data.Items
         public string SpritePath { get; }
         public bool IsQuestItem { get; }
 
-        public IEnumerable<IItemComponentStats> Components { get; }
+        public IList<IItemComponentStats> Components { get; }
     }
 }

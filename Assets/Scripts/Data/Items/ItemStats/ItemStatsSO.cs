@@ -18,7 +18,7 @@ namespace Data.Items
         [SerializeField] float goldValue;
         [SerializeField] string spritePath;
         [SerializeField] bool isQuestItem;
-        [OdinSerialize] IEnumerable<IItemComponentStats> components;
+        [OdinSerialize] IList<IItemComponentStats> components;
 
         public string Id => id;
         public string Description => description;
@@ -29,6 +29,6 @@ namespace Data.Items
         public float GoldValue => goldValue;
         public string SpritePath => spritePath;
         public bool IsQuestItem => isQuestItem;
-        public IEnumerable<IItemComponentStats> Components => components;
+        public IList<IItemComponentStats> Components => components;
     }
 }

@@ -3,6 +3,7 @@ using Data.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Data.Characters
 {
@@ -164,11 +165,12 @@ namespace Data.Characters
 
             void AddEquipmentSlot(EquipmentSlotType slotType)
             {
+                
                 int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
                 string id = slotType.ToString().ToLower();
                 if (matchCount > 0)
                     id += $"_{matchCount}";
-
+                Debug.Log($"adding a slot of type: {slotType}, with id: {id}");
                 var slot = new EquipmentSlot(slotType, id);
                 EquipmentSlots.Add(key: slot.Id, value: slot);
                 slot.OnEquip += OnEquipHandler;

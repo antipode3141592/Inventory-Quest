@@ -11,17 +11,21 @@ namespace Data.Items
     {
         public Container(IContainerStats stats, IItem parentItem)
         {
+            Item = parentItem;
             GuId = Guid.NewGuid().ToString();
             Contents = new Dictionary<string, Content>();
-            Item = parentItem;
+            //initialize grid
+            Grid = new Dictionary<Coor, GridSquare>();
+            foreach(var point in stats.Grid)
+            {
+                Grid.Add(point, new GridSquare());
+            }
         }
 
         public IItem Item { get; }
         public IDictionary<Coor, GridSquare> Grid { get; protected set; }
         public IDictionary<string, Content> Contents { get; protected set; }
         public string GuId { get; protected set; }
-
-        public List<IItemComponent> Components { get; }
 
         public bool IsEmpty => ContainerIsEmpty();
 
@@ -198,7 +202,7 @@ namespace Data.Items
                     ListPool<Coor>.Release(content.GridSpaces);
                     OnItemTaken?.Invoke(this, item.Id);
                     if (Debug.isDebugBuild)
-                        Debug.Log($"TryTake item with guid: {item.GuId}");
+                        Debug.Log($"TryTake item with guid: {item.GuId} and item id: {item.Id}"); 
                     return true;
                 }
             }

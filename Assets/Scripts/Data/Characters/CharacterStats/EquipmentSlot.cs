@@ -23,7 +23,8 @@ namespace Data.Characters
         public bool TryEquip(out IItem previousItem, IItem item)
         {
             previousItem = null;
-            if (item is null) return false;
+            if (item is null)
+                return false;
             IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
             if (equipable is null || equipable.SlotType != SlotType) return false;
 

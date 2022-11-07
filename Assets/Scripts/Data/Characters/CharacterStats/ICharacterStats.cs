@@ -16,5 +16,7 @@ namespace Data.Characters
         public IDictionary<StatTypes, int> InitialStats { get; }
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
+
+
     }
 }

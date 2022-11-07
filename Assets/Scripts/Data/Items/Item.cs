@@ -21,24 +21,15 @@ namespace Data.Items
 
         public string GuId { get; }
         public string Id { get; }
-
         public IShape Shape { get; }
-
         public Facing CurrentFacing { get; protected set;}
-
         public Sprite Sprite { get; set; }
-
         public Rarity Rarity { get; }
-
         public float Weight => Stats.Weight;
         public float Value => Stats.GoldValue;
-
         public int Quantity {get; }
-
         public IDictionary<Type, IItemComponent> Components { get; }
-
         public IItemStats Stats { get; }
-
         public void Rotate(int direction)
         {
             int v = (int)CurrentFacing + direction;
