@@ -1,45 +1,52 @@
 ﻿using Data.Characters;
 using Data.Encounters;
 using Data.Items;
+using InventoryQuest.Testing.Stubs;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace InventoryQuest.Testing
 {
     public class TestSkillCheckEncounter
     {
+        readonly string itemId = "";
+
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
         IEncounterDataSource encounterDataSource;
         IEncounter currentEncounter;
         Party party;
-        PlayableCharacter partyMember;
+        ICharacter partyMember;
         ICharacterStats playerStats;
-        EquipableContainerStats backpackStats;
-        IEquipable equipableItem;
-        IEquipable backpack;
+        IItemStats backpackStats;
+        IItem equipableItem;
+        IItem backpack;
 
         const string encounterId = "test_of_might";
 
         [SetUp]
         public void SetUp()
         {
-            EquipableItemStats EquipableStats;
+            IItemStats EquipableStats;
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
             encounterDataSource = new EncounterDataSourceTest();
 
             currentEncounter = EncounterFactory.GetEncounter(encounterDataSource.GetById(encounterId));
 
-            playerStats = characterDataSource.GetById("Player");
-            backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
-            backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
-            EquipableStats = (EquipableItemStats)itemDataSource.GetItemStats("basic_sword_15");
-            partyMember = (PlayableCharacter)CharacterFactory.GetCharacter(
-                baseStats: playerStats, 
-                startingEquipment: new IEquipable[]{ backpack });
-            party = new Party(new PlayableCharacter[] { partyMember });
-            equipableItem = (IEquipable)ItemFactory.GetItem(EquipableStats);
+            playerStats = characterDataSource.GetById("player");
+            backpackStats = itemDataSource.GetById("adventure_backpack");
+            backpack = ItemFactory.GetItem(backpackStats);
+            EquipableStats = itemDataSource.GetById("basic_sword_15");
+            partyMember = CharacterFactory.GetCharacter(
+                baseStats: playerStats,
+                startingEquipment: new IItem[] { backpack });
+            party = new Party(new ICharacter[] { partyMember });
+            equipableItem = ItemFactory.GetItem(EquipableStats);
 
         }
 
@@ -62,18 +69,19 @@ namespace InventoryQuest.Testing
         [Test]
         public void TestOfMightSuccessSingle()
         {
-            partyMember.EquipmentSlots.Values.First(x => x.SlotType == equipableItem.SlotType).TryEquip(out var previousItem, equipableItem);
+            var equipmentSlotType = (equipableItem.Components[typeof(IEquipable)] as IEquipable).SlotType;
+            partyMember.EquipmentSlots.Values.First(x => x.SlotType == equipmentSlotType).TryEquip(out var previousItem, equipableItem);
             Assert.IsTrue(currentEncounter.Resolve(party));
         }
-        
+
         [Test]
         public void TestOfMightSuccessParty()
         {
-            party.AddCharacter((PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats)}));
-            party.AddCharacter((PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter((PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter((PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter((PlayableCharacter)CharacterFactory.GetCharacter(playerStats, new IEquipable[] { (IEquipable)ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
             Assert.IsTrue(currentEncounter.Resolve(party));
         }
 
@@ -86,9 +94,8 @@ namespace InventoryQuest.Testing
         [Test]
         public void RandomEncounterCreateSuccess()
         {
-            IEncounter encounter = (IEncounter)EncounterFactory.GetEncounter(encounterDataSource.GetRandom());
+            IEncounter encounter = EncounterFactory.GetEncounter(encounterDataSource.GetRandom());
             Assert.IsTrue(encounter is IEncounter);
         }
-
     }
 }

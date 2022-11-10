@@ -83,8 +83,8 @@ namespace InventoryQuest.Testing
         [Test]
         public void BackpackComponentCountCorrect()
         {
-
-            Assert.IsTrue(backpack.Components.Count == backpackStats.Components.Count);
+            Debug.Log($"item {backpack.Id} has {backpack.Components.Count} components");
+            Assert.IsTrue(backpack.Components.Count == backpackStats.Components.Count, message:$"item {backpack.Id} has {backpack.Components.Count} components");
         }
 
         [Test]
@@ -92,18 +92,17 @@ namespace InventoryQuest.Testing
         {
             var slotType = (backpack.Components[typeof(IEquipable)] as IEquipable).SlotType;
             IEquipableStats equipableStats = null;
-            EquipmentSlotType itemStatSlotType = EquipmentSlotType.Ring;
             foreach (var component in backpackStats.Components)
             {
                 var _equipableStats = component as IEquipableStats;
                 if (_equipableStats is not null)
                 {
-                    itemStatSlotType = _equipableStats.SlotType;
                     equipableStats = _equipableStats;
                 }
             }
             if (equipableStats is null)
                 Assert.Fail($"equipable stats not found");
+            Debug.Log($"item {backpack.Id} has slot type {(backpack.Components[typeof(IEquipable)] as IEquipable).SlotType}");
             Assert.IsTrue((backpack.Components[typeof(IEquipable)] as IEquipable).SlotType == equipableStats.SlotType);
         }
 
@@ -129,7 +128,7 @@ namespace InventoryQuest.Testing
                 Assert.Fail($"item {simpleItemStats.Id} could not be taken from container {smallBox.Id}");
                 return;
             }
-            Assert.IsTrue(item.Id == simpleItem.Id, $"item: {item.Id} placed and taken correctly");
+            Assert.IsTrue(item.Id == simpleItem.Id, message:$"item: {item.Id} placed and taken correctly");
             
         }
 

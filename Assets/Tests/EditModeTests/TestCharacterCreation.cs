@@ -2,6 +2,9 @@
 using Data.Characters;
 using NUnit.Framework;
 using System.Collections.Generic;
+using InventoryQuest.Testing.Stubs;
+using Data;
+using UnityEngine;
 
 namespace InventoryQuest.Testing
 {
@@ -9,20 +12,21 @@ namespace InventoryQuest.Testing
     {
         IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
-        PlayableCharacter Player;
+        ICharacter Player;
         ICharacterStats playerStats;
-        EquipableContainerStats backpackStats;
-        IEquipable backpack;
+        IItemStats backpackStats;
+        IItem backpack;
+        
 
         [SetUp]
         public void SetUp()
         {
             itemDataSource = new ItemDataSourceTest();
             characterDataSource = new CharacterDataSourceTest();
-            backpackStats = (EquipableContainerStats)itemDataSource.GetItemStats("adventure backpack");
-            backpack = (IEquipable)ItemFactory.GetItem(backpackStats);
-            playerStats = characterDataSource.GetById("Player");
-            Player = (PlayableCharacter)CharacterFactory.GetCharacter(baseStats:playerStats, startingEquipment: new IEquipable[] { backpack });
+            backpackStats = itemDataSource.GetById("adventure_backpack");
+            backpack = ItemFactory.GetItem(backpackStats);
+            playerStats = characterDataSource.GetById("player");
+            Player = CharacterFactory.GetCharacter(baseStats:playerStats, startingEquipment: new IItem[] { backpack });
 
         }
 
@@ -34,26 +38,20 @@ namespace InventoryQuest.Testing
         }
 
         [Test]
-        public void PlayerCreationBackpackSize()
-        {
-            Assert.AreEqual(expected: backpackStats.ContainerSize, actual: Player.Backpack.Dimensions);
-        }
-
-        [Test]
         public void PlayerEquipmentSlotsCorrect()
         {
-            Assert.AreEqual(expected: playerStats.EquipmentSlotsTypes.Count, actual: Player.EquipmentSlots.Count);
+            Assert.AreEqual(expected: playerStats.EquipmentSlotsTypes.Count, actual: Player.EquipmentSlots.Count, message: $"{playerStats.EquipmentSlotsTypes.Count} : {Player.EquipmentSlots.Count}");
         }
 
         [Test]
         public void PlayerStartingStatsSetCorrectly()
         {
             if (Player.StatDictionary.Count == 0) 
-                Assert.Fail();
+                Assert.Fail("No Stats!");
             foreach (var stat in Player.StatDictionary)
             {
-                if (stat.Value.CurrentValue != Player.StatDictionary[stat.Key].CurrentValue)
-                    Assert.Fail();
+                if (playerStats.InitialStats.ContainsKey(stat.Key) && stat.Value.CurrentValue != playerStats.InitialStats[stat.Key])
+                    Assert.Fail($"{stat.Key} not set correctly =>{stat.Value.CurrentValue} :{playerStats.InitialStats[stat.Key]}");
             }
             Assert.Pass();
         }
@@ -65,6 +63,33 @@ namespace InventoryQuest.Testing
             int initiatlStrength = Player.StatDictionary[StatTypes.Strength].CurrentValue;
             PlayableCharacterLeveler.AddRanksToCharacterStat(Player, new Dictionary<StatTypes, int>() { { StatTypes.Strength, ranks } });
             Assert.AreEqual(ranks + initiatlStrength, Player.StatDictionary[StatTypes.Strength].CurrentValue);
+        }
+
+        [Test]
+        public void StartingEquipmentEquipSuccess()
+        {
+            if (Player.Backpack is null)
+                Assert.Fail($"Backpack reference is Null!");
+            Assert.IsTrue(Player.Backpack.Item.Id == backpackStats.Id);
+        }
+
+        [Test]
+        public void StartingInventorySuccess()
+        {
+            IItemStats itemStats = itemDataSource.GetById("apple_fuji");
+            List<IItem> items = new();
+            int itemCount = 3;
+            for (int i = 0; i < itemCount; i++)
+                items.Add(ItemFactory.GetItem(itemStats));
+
+            Player = CharacterFactory.GetCharacter(
+                baseStats: playerStats,
+                startingEquipment: new IItem[] { backpack },
+                startingInventory: items
+            );
+
+            Assert.IsTrue(Player.Backpack.Contents.Count == itemCount);
+
         }
     }
 }

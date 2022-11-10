@@ -34,7 +34,35 @@ namespace Data.Characters
 
         public ICharacterStats Stats { get; }
 
-        public IContainer Backpack => (IContainer)EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == EquipmentSlotType.Backpack).EquippedItem;
+        public IContainer Backpack
+        {
+            get
+            {
+                if (!EquipmentSlots.ContainsKey("backpack")) 
+                {
+                    Debug.LogWarning($"character {DisplayName} does not have a backpack slot!");
+                    return null; 
+                }
+                IItem equippedItem = EquipmentSlots["backpack"].EquippedItem;
+                if (equippedItem is null)
+                {
+                    Debug.LogWarning($"backpack equipment slot does not have an equipped item");
+                    return null;
+                }
+                if (!equippedItem.Components.ContainsKey(typeof(IContainer)))
+                {
+                    Debug.LogWarning($"backpack equipped item {equippedItem.Id} does not contain a IContainer key");
+                    return null;
+                }
+                IContainer container = (IContainer)equippedItem.Components[typeof(IContainer)];
+                if (container is null)
+                {
+                    Debug.LogWarning($"equipped item {equippedItem.Id} does not have a container component");
+                    return null;
+                }
+                return container;
+            }
+        }
         public float CurrentEncumbrance => EquipmentSlots
             .Where(x => x.Value.EquippedItem is not null)
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
@@ -147,7 +175,11 @@ namespace Data.Characters
                         if (slot.Value.IsValidPlacement(item))
                         {
                             if (slot.Value.TryEquip(out _, item))
+                            {
+                                Debug.Log($"tryequip success on item {item.Id}");
                                 break;
+                            }
+                            Debug.LogWarning($"tryequip fail on item {item.Id}");
                         }
                     }
             }
@@ -158,7 +190,7 @@ namespace Data.Characters
 
             // add any initial Inventory to backpack
             if (initialInventory is null) return;
-            foreach (IItem item in initialInventory)
+            foreach (var item in initialInventory)
             {
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container: Backpack, item: item); //no special failure path for now
             }
@@ -170,7 +202,6 @@ namespace Data.Characters
                 string id = slotType.ToString().ToLower();
                 if (matchCount > 0)
                     id += $"_{matchCount}";
-                Debug.Log($"adding a slot of type: {slotType}, with id: {id}");
                 var slot = new EquipmentSlot(slotType, id);
                 EquipmentSlots.Add(key: slot.Id, value: slot);
                 slot.OnEquip += OnEquipHandler;
@@ -181,7 +212,6 @@ namespace Data.Characters
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            //Debug.Log($"OnEquipHandler: {sender} with {e.Modifiers.Count} modifiers");
             foreach (StatModifier mod in e.Modifiers)
             {
                 ApplyModifier(mod);

@@ -6,6 +6,7 @@
         {
             IItem item = new Item(itemStats: itemStats);
 
+            if (itemStats.Components is null) return item;
             foreach (var component in itemStats.Components)
             {
                 IEquipableStats equipableStats = component as IEquipableStats;

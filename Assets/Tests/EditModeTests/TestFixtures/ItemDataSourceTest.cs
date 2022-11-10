@@ -62,7 +62,7 @@ namespace InventoryQuest.Testing.Stubs
                     rarity: Rarity.common,
                     components: new List<IItemComponentStats>()
                     {
-                        new EquipableStats(EquipmentSlotType.OneHandedWeapon,
+                        new EquipableStats(EquipmentSlotType.Backpack,
                             new List<StatModifier>()),
                         new ContainerStats(GenerateSimpleGrid(4,6))
                     }
