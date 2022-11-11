@@ -14,6 +14,7 @@ namespace Data.Items
             Id = itemStats.Id;
             Stats = itemStats;
             Shape = itemStats.Shape;
+            CurrentFacing = itemStats.DefaultFacing;
             Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
             Quantity = 1;
             Components = new Dictionary<Type, IItemComponent>();
@@ -25,7 +26,7 @@ namespace Data.Items
         public Facing CurrentFacing { get; protected set;}
         public Sprite Sprite { get; set; }
         public Rarity Rarity { get; }
-        public float Weight => Stats.Weight;
+        public float Weight => CalculateWeight();
         public float Value => Stats.GoldValue;
         public int Quantity {get; }
         public IDictionary<Type, IItemComponent> Components { get; }
@@ -36,6 +37,13 @@ namespace Data.Items
 
             CurrentFacing = v % Shape.Points.Count < 0 ? 
                 (Facing)(Shape.Points.Count - 1) : (Facing)(v % Shape.Points.Count);
+        }
+
+        protected float CalculateWeight()
+        {
+            if (!Components.ContainsKey(typeof(IContainer)))
+                return Stats.Weight;
+            return (Components[typeof(IContainer)] as IContainer).Weight;
         }
     }
 }

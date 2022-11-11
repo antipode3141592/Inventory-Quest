@@ -61,9 +61,16 @@ namespace Data.Shapes
         public bool IsRotationallySymmetric => isRotationallySymmetric;
         public bool IsChiral => isChiral;
         public int MinoCount => minoCount;
-        public IDictionary<Facing, HashSet<Coor>> Points => points;
+        public IDictionary<Facing, HashSet<Coor>> Points 
+        {
+            get {
+                if (points is null)
+                    Initialize();
+                return points;
+            }
+        }
 
-        protected void Start()
+        protected void Initialize()
         {
             points = new Dictionary<Facing, HashSet<Coor>>();
             foreach(var face in facings)

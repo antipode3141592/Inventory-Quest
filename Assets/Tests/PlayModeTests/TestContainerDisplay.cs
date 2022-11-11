@@ -1,28 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using Data;
+using Data.Characters;
+using Data.Items;
 using NUnit.Framework;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Zenject;
 
 namespace InventoryQuest.Testing
 {
-    public class TestContainerDisplay
+    public class TestContainerDisplay : SceneTestFixture
     {
-        [SetUp]
-        public void SetUp()
-        {
-
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-
-        }
 
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
         [UnityTest]
         public IEnumerator TestContainerDisplayWithEnumeratorPasses()
         {

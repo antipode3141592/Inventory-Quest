@@ -51,6 +51,12 @@ namespace Data.Items
 
         public bool IsValidPlacement(IItem item, Coor target)
         {
+            if (item.Shape is null)
+            {
+                Debug.Log($"no shape found for item {item.Id}");
+                return false;
+            }
+            Debug.Log($"current facing {item.CurrentFacing} for item {item.Id}");
             var currentItemPoints = item.Shape.Points[item.CurrentFacing];
             foreach (var point in currentItemPoints)
             {

@@ -107,6 +107,27 @@ namespace InventoryQuest.Testing
         }
 
         [Test]
+        public void BackpackCapacityIsCorrect()
+        {
+            var container = backpack.Components[typeof(IContainer)] as IContainer;
+            IContainerStats containerStats = null;
+            foreach (var compontentStats in backpackStats.Components)
+            {
+                var _containerStats = compontentStats as IContainerStats;
+                if (_containerStats is not null)
+                {
+                    containerStats = _containerStats;
+                    break;
+                }
+            }
+            if (containerStats is null)
+                Assert.Fail($"containerStats not found on item {backpack.Id}");
+            if (container is null)
+                Assert.Fail($"container not found on item {backpack.Id}");
+            Assert.IsTrue(container.Grid.Count == containerStats.Grid.Count);
+        }
+
+        [Test]
         public void PlaceItemInContainerSuccess()
         {
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
