@@ -8,8 +8,9 @@ namespace Data.Items
         public float InitialWeight { get; }
         public float Weight { get; }
         public bool IsEmpty { get; }
-
         public bool IsFull { get; }
+        public float ContainedWeight { get; }
+        public float ContainedWorth { get; }
 
         public IDictionary<string, Content> Contents { get; }
         public IDictionary<Coor, GridSquare> Grid { get; }

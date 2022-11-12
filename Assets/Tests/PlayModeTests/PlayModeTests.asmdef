@@ -7,7 +7,8 @@
         "Data",
         "Zenject",
         "InventoryQuest",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "InventoryQuest.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,14 +7,14 @@ using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
-    public class HarvestListDisplay: MonoBehaviour, IItemPileDisplay, IOnMenuShow
+    public class HarvestListDisplay: MonoBehaviour, IContainersDisplay, IOnMenuShow
     {
         IHarvestManager _harvestManager;
 
-        readonly List<LootIcon> pileIcons = new();
+        readonly List<ContainerIcon> pileIcons = new();
 
         [SerializeField]
-        LootIcon _lootIconPrefab;
+        ContainerIcon _lootIconPrefab;
 
         [Inject]
         public void Init(IHarvestManager harvestManager)
@@ -30,15 +30,15 @@ namespace InventoryQuest.UI.Menus
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
         {
-            DestroyPiles();
+            DestroyContainers();
         }
 
         void OnHarvestStartedHandler(object sender, EventArgs e)
         {
-            SetPiles();
+            SetContainers();
         }
 
-        public void PileSelected(string containerGuid)
+        public void ContainerSelected(string containerGuid)
         {
             foreach (var icon in pileIcons)
             {
@@ -52,14 +52,13 @@ namespace InventoryQuest.UI.Menus
             }
         }
 
-        public void SetPiles()
+        public void SetContainers()
         {
             if (_harvestManager.Piles.Count == 0) return;
             foreach (var pile in _harvestManager.Piles.Values)
             {
-                LootIcon icon = Instantiate<LootIcon>(_lootIconPrefab, transform);
-                icon.PileDisplay = this;
-                icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath);
+                ContainerIcon icon = Instantiate<ContainerIcon>(_lootIconPrefab, transform);
+                icon.SetContainerIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath, containersDisplay: this);
                 icon.IsSelected = false;
                 pileIcons.Add(icon);
 
@@ -67,7 +66,7 @@ namespace InventoryQuest.UI.Menus
 
         }
 
-        public void DestroyPiles()
+        public void DestroyContainers()
         {
             for (int i = 0; i < pileIcons.Count; i++)
             {

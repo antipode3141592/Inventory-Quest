@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class LootIcon : MonoBehaviour, IPointerClickHandler
+    public class ContainerIcon : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField]
-        Image background;
-        [SerializeField]
-        Image icon;
-        [SerializeField]
-        public string ContainerGuid { get; private set; }
+        [SerializeField] Image background;
+        [SerializeField] Image icon;
+        public string ContainerGuid { get; protected set; }
 
-        public IItemPileDisplay PileDisplay;
+        IContainersDisplay _containersDisplay;
 
         bool isSelected;
         public bool IsSelected
@@ -27,11 +24,11 @@ namespace InventoryQuest.UI
             }
         }
 
-        public void SetupLootIcon(string guid, string imagePath)
+        public void SetContainerIcon(string guid, string imagePath, IContainersDisplay containersDisplay)
         {
             SetImage(imagePath);
             ContainerGuid = guid;
-
+            _containersDisplay = containersDisplay;
         }
 
         void SetImage(string path)
@@ -41,8 +38,7 @@ namespace InventoryQuest.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log($"LootPile {ContainerGuid} Selected", gameObject);
-            PileDisplay.PileSelected(ContainerGuid);
+            _containersDisplay.ContainerSelected(ContainerGuid);
         }
     }
 }

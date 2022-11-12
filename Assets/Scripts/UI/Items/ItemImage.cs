@@ -7,11 +7,15 @@ namespace InventoryQuest.UI
     public class ItemImage : MonoBehaviour
     {
         public Image Image;
+        
+
+        protected string itemGuId;
 
         [SerializeField] Image quantityImage;
         [SerializeField] TextMeshProUGUI quantityText;
         [SerializeField] Color quantityVisible;
 
+        public string ItemGuId => itemGuId;
 
         void Awake()
         {
@@ -19,10 +23,10 @@ namespace InventoryQuest.UI
             quantityText.text = "";
         }
 
-        public void SetItem(Sprite sprite, int quantity = 1)
+        public void SetItem(string itemGuId, Sprite sprite, int quantity = 1)
         {
             Image.sprite = sprite;
-
+            this.itemGuId = itemGuId;
             Image.color = Color.white;
             Image.SetNativeSize();
 

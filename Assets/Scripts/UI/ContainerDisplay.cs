@@ -27,6 +27,9 @@ namespace InventoryQuest.UI
 
         [SerializeField] ContactFilter2D _contactFilter;
 
+        public ContainerGridSquareDisplay[,] Squares => squares;
+        public List<ItemImage> ItemImages => itemImages;
+
         IContainer myContainer;
         public IContainer MyContainer 
         {
@@ -139,7 +142,7 @@ namespace InventoryQuest.UI
                 Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
                 int quantity = item.Quantity;
-                itemImage.SetItem(sprite, quantity);
+                itemImage.SetItem(item.GuId, sprite, quantity);
                 ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
                 itemImages.Add(itemImage);
             }
@@ -153,6 +156,18 @@ namespace InventoryQuest.UI
                 Destroy(itemImages[i].gameObject);
             }
             itemImages.Clear();
+        }
+
+        public int GetContainerGridCount()
+        {
+            int runningTotal = 0;
+            foreach(var square in squares)
+            {
+                if (!square.gameObject.activeInHierarchy)
+                    continue;
+                runningTotal++;
+            }
+            return runningTotal;
         }
     }
 }

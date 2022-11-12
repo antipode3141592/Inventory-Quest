@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 56652009891142439}
   - component: {fileID: 56652009891142437}
   - component: {fileID: 56652009891142436}
-  - component: {fileID: 4358320427810425559}
+  - component: {fileID: 1272447982622229708}
   m_Layer: 5
-  m_Name: LootIcon
+  m_Name: ContainerIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4358320427810425559
+--- !u!114 &1272447982622229708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,12 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 56652009891142438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35efa2601c2956c4f8521be37c928bfe, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ebfaa6af8dda2f44922b217de055e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 56652009891142436}
   icon: {fileID: 5648791722330671149}
-  LootListDisplay: {fileID: 0}
 --- !u!1 &3852262919187689752
 GameObject:
   m_ObjectHideFlags: 0

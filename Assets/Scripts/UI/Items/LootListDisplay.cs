@@ -7,15 +7,15 @@ using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
-    public class LootListDisplay : MonoBehaviour, IOnMenuShow, IItemPileDisplay
+    public class LootListDisplay : MonoBehaviour, IOnMenuShow, IContainersDisplay
     {
         IRewardManager _rewardManager;
         IHarvestManager _harvestManager;
 
-        readonly List<LootIcon> lootIcons = new();
+        readonly List<ContainerIcon> lootIcons = new();
 
         [SerializeField]
-        LootIcon _lootIconPrefab;
+        ContainerIcon _lootIconPrefab;
 
         [Inject]
         public void Init(IRewardManager rewardManager, IHarvestManager harvestManager)
@@ -35,25 +35,25 @@ namespace InventoryQuest.UI.Menus
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
         {
-            DestroyPiles();
+            DestroyContainers();
         }
 
         void OnHarvestStartedHandler(object sender, EventArgs e)
         {
-            SetPiles();
+            SetContainers();
         }
 
         void OnRewardsClearedHandler(object sender, EventArgs e)
         {
-            DestroyPiles();
+            DestroyContainers();
         }
 
         void OnRewardsProcessCompleteHandler(object sender, EventArgs e)
         {
-            SetPiles();
+            SetContainers();
         }
 
-        public void PileSelected(string containerGuid)
+        public void ContainerSelected(string containerGuid)
         {
             foreach (var icon in lootIcons)
             {
@@ -67,14 +67,13 @@ namespace InventoryQuest.UI.Menus
             }
         }
 
-        public void SetPiles()
+        public void SetContainers()
         {
             if (_rewardManager.Piles.Count == 0) return;
             foreach (var pile in _rewardManager.Piles.Values)
             {
-                LootIcon icon = Instantiate<LootIcon>(_lootIconPrefab, transform);
-                icon.PileDisplay = this;
-                icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath);
+                ContainerIcon icon = Instantiate<ContainerIcon>(_lootIconPrefab, transform);
+                icon.SetContainerIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath, containersDisplay: this);
                 icon.IsSelected = false;
                 lootIcons.Add(icon);
 
@@ -82,7 +81,7 @@ namespace InventoryQuest.UI.Menus
 
         }
 
-        public void DestroyPiles()
+        public void DestroyContainers()
         {
             for (int i = 0; i < lootIcons.Count; i++)
             {
