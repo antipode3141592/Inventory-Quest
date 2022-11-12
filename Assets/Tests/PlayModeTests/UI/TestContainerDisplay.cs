@@ -26,10 +26,12 @@ namespace InventoryQuest.Testing
         IItemStats smallBoxStats;
 
         IItem MyItem;
+        IItem EquipableItem;
         List<IItem> BasicItems;
         List<IItem> StackableItems;
 
         IItemStats BasicItemStats;
+        IItemStats EquipableItemStats;
         IItemStats StackableItemStats;
 
         void CommonInstall()
@@ -45,12 +47,14 @@ namespace InventoryQuest.Testing
 
             BasicItemStats = itemDataSource.GetById("apple_fuji");
             StackableItemStats = itemDataSource.GetById("ingot_common");
-            backpackStats = itemDataSource.GetById("adventure backpack");
+            EquipableItemStats = itemDataSource.GetById("basic_sword_15");
+            backpackStats = itemDataSource.GetById("adventure_backpack");
             smallBoxStats = itemDataSource.GetById("small_box");
 
             backpack = ItemFactory.GetItem(itemStats: backpackStats);
             smallBox = ItemFactory.GetItem(itemStats: smallBoxStats);
             MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
+            EquipableItem = ItemFactory.GetItem(itemStats: EquipableItemStats);
         }
 
         [UnityTest]
@@ -64,7 +68,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = smallBox.Components[typeof(IContainer)] as IContainer;
+            containerDisplay.MyContainer = container;
 
             yield return null; //next frame
             Debug.Log($"containerDisplay grid count: {containerDisplay.GetContainerGridCount()}");
@@ -83,12 +87,32 @@ namespace InventoryQuest.Testing
 
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = smallBox.Components[typeof(IContainer)] as IContainer;
+            containerDisplay.MyContainer = container;
 
             if (container.TryPlace(MyItem, new(0, 0)))
             {
                 yield return null;
                 Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == MyItem.GuId) is not null);
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator BackpackDisplaysContainedItem()
+        {
+            CommonInstall();
+
+            yield return LoadScene(sceneName);
+
+            CommonPostSceneLoadInstall();
+
+            IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
+            if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
+            containerDisplay.MyContainer = container;
+
+            if (container.TryPlace(EquipableItem, new(0, 0)))
+            {
+                yield return null;
+                Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == EquipableItem.GuId) is not null);
             }
         }
     }

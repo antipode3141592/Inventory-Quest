@@ -41,7 +41,7 @@ namespace InventoryQuest.Testing
 
             BasicItemStats = itemDataSource.GetById("apple_fuji");
             StackableItemStats = itemDataSource.GetById("ingot_common");
-            backpackStats = itemDataSource.GetById("adventure backpack");
+            backpackStats = itemDataSource.GetById("adventure_backpack");
             smallBoxStats = itemDataSource.GetById("small_box");
 
             backpack = ItemFactory.GetItem(itemStats: backpackStats);
