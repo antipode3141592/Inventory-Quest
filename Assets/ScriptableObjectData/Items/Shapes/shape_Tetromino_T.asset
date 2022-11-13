@@ -45,6 +45,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: defaultFacing
+      Entry: 6
+      Data: 
     - Name: facings
       Entry: 7
       Data: 1|System.Collections.Generic.Dictionary`2[[Data.Shapes.Facing, Data],[System.Boolean[,],
@@ -124,15 +127,6 @@ MonoBehaviour:
       Data: 3|2
     - Name: 
       Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
       Data: true
     - Name: 
       Entry: 5
@@ -140,6 +134,15 @@ MonoBehaviour:
     - Name: 
       Entry: 5
       Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 13
       Data: 
@@ -208,9 +211,6 @@ MonoBehaviour:
       Data: 3|2
     - Name: 
       Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
       Data: false
     - Name: 
       Entry: 5
@@ -224,6 +224,9 @@ MonoBehaviour:
     - Name: 
       Entry: 5
       Data: false
+    - Name: 
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 13
       Data: 

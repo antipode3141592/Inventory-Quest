@@ -22,25 +22,31 @@ namespace InventoryQuest.UI
 
 
         bool _isOccupied;
-        public bool IsOccupied { 
-            get { return _isOccupied; } 
-            set { 
+        public bool IsOccupied
+        {
+            get { return _isOccupied; }
+            set
+            {
                 backgroundSprite.color = value ? colorSettings.GridOccupiedColor : colorSettings.GridUnoccupiedColor;
                 _isOccupied = value;
-            } 
+            }
         }
 
         public float Width => 32f;
 
         HighlightState _highlightState;
-        public HighlightState CurrentState {
+        [SerializeField] Coor coordinates;
+
+        public HighlightState CurrentState
+        {
             get { return _highlightState; }
-            set {
+            set
+            {
                 SetHighlightColor(value);
                 _highlightState = value;
-            } 
+            }
         }
-        public Coor Coordinates { get; set; }
+        public Coor Coordinates { get => coordinates; set => coordinates = value; }
 
         void Awake()
         {

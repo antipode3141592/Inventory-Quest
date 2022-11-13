@@ -47,7 +47,7 @@ namespace InventoryQuest.Testing
 
             BasicItemStats = itemDataSource.GetById("apple_fuji");
             StackableItemStats = itemDataSource.GetById("ingot_common");
-            EquipableItemStats = itemDataSource.GetById("basic_sword_15");
+            EquipableItemStats = itemDataSource.GetById("basic_crossbow");
             backpackStats = itemDataSource.GetById("adventure_backpack");
             smallBoxStats = itemDataSource.GetById("small_box");
 
@@ -108,6 +108,28 @@ namespace InventoryQuest.Testing
             IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
             containerDisplay.MyContainer = container;
+
+            if (container.TryPlace(EquipableItem, new(0, 0)))
+            {
+                yield return null;
+                Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == EquipableItem.GuId) is not null);
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator BackpackDisplaysRotatedContainedItem()
+        {
+            CommonInstall();
+
+            yield return LoadScene(sceneName);
+
+            CommonPostSceneLoadInstall();
+
+            IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
+            if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
+            containerDisplay.MyContainer = container;
+
+            EquipableItem.Rotate(1);
 
             if (container.TryPlace(EquipableItem, new(0, 0)))
             {

@@ -81,12 +81,12 @@ namespace Data.Shapes
                     for (int c = 0; c < face.Value.GetLength(1); c++)
                     {
                         if (face.Value[r, c])
-                            set.Add(new Coor(r, c));
+                            set.Add(new Coor(c, r));
                     }
                 }
                 points.Add(face.Key, set);
             }
-            Debug.Log($"There are {points.Count} point collections with {points[Facing.Right].Count} points each");
+
         }
     }
 }
