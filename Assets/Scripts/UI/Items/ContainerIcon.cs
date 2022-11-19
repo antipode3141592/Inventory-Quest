@@ -24,16 +24,16 @@ namespace InventoryQuest.UI
             }
         }
 
-        public void SetContainerIcon(string guid, string imagePath, IContainersDisplay containersDisplay)
+        public void SetContainerIcon(string guid, Sprite image, IContainersDisplay containersDisplay)
         {
-            SetImage(imagePath);
+            SetImage(image);
             ContainerGuid = guid;
             _containersDisplay = containersDisplay;
         }
 
-        void SetImage(string path)
+        void SetImage(Sprite sprite)
         {
-            icon.sprite = Resources.Load<Sprite>(path);
+            icon.sprite = sprite;
         }
 
         public void OnPointerClick(PointerEventData eventData)

@@ -73,7 +73,7 @@ namespace InventoryQuest.UI.Menus
             foreach (var pile in _rewardManager.Piles.Values)
             {
                 ContainerIcon icon = Instantiate<ContainerIcon>(_lootIconPrefab, transform);
-                icon.SetContainerIcon(guid: pile.GuId, imagePath: pile.Item.Stats.SpritePath, containersDisplay: this);
+                icon.SetContainerIcon(guid: pile.GuId, image: pile.Item.Stats.PrimarySprite, containersDisplay: this);
                 icon.IsSelected = false;
                 lootIcons.Add(icon);
 

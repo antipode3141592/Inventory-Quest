@@ -60,11 +60,11 @@ namespace InventoryQuest.UI
             ItemRarityText.text = item.Stats.Rarity.ToString();
             ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
-            var equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            var equipable = item.Components.ContainsKey(typeof(IEquipable)) ? item.Components[typeof(IEquipable)] as IEquipable : null;
             if (equipable is not null) 
                 for(int i = 0; i < ItemModifiersTexts.Count; i++)
                 {
-                    if (equipable.Modifiers.Count > i)
+                    if (equipable.Modifiers is not null && equipable.Modifiers.Count > i)
                     { 
                         ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
                     }

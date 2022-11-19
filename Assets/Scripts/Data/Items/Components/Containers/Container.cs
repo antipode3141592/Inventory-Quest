@@ -56,13 +56,12 @@ namespace Data.Items
                 Debug.Log($"no shape found for item {item.Id}");
                 return false;
             }
-            Debug.Log($"current facing {item.CurrentFacing} for item {item.Id}");
+            Debug.Log($"current facing {item.CurrentFacing} for item {item.Id} with shape {item.Shape.Id} and {item.Shape.Points.Count} grid points");
             var currentItemPoints = item.Shape.Points[item.CurrentFacing];
             foreach (var point in currentItemPoints)
             {
                 Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
-                if (!Grid.ContainsKey(testPoint))
-                    if (Grid[testPoint].IsOccupied)
+                if (Grid.ContainsKey(testPoint) && Grid[testPoint].IsOccupied)
                         return false;
             }
             return true;
@@ -181,6 +180,12 @@ namespace Data.Items
                     tempPointList.Add(testPoint);
                     Grid[testPoint].IsOccupied = true;
                     Grid[testPoint].storedItemId = item.GuId;
+                }
+                if (Debug.isDebugBuild)
+                {
+                    Debug.Log($"item {item.Id} placed into:");
+                    foreach (var point in tempPointList)
+                        Debug.Log($"... [{point}]");
                 }
                 Contents.Add(item.GuId, new Content(item, tempPointList, target));
                 OnItemPlaced?.Invoke(this, item.Id);

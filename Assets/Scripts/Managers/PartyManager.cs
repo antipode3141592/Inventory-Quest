@@ -28,7 +28,7 @@ namespace InventoryQuest.Managers
             AddCharacterWithEquipmentToParty("Player", 
                 startingEquipment: new List<string>
                 {
-                    "adventure backpack",
+                    "adventure_backpack",
                     "sandal_1",
                     "shirt_1",
                     "pants_1"
@@ -37,10 +37,7 @@ namespace InventoryQuest.Managers
                 {
                     "apple_fuji",
                     "apple_fuji",
-                    "apple_fuji",
-                    "ore_bloom_common",
-                    "ore_bloom_common",
-                    "ore_bloom_common"
+                    "apple_fuji"
                 }
             );
 

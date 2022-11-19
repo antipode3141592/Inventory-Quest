@@ -28,8 +28,6 @@ namespace InventoryQuest
                 .To<PathDataSourceSO>().FromComponentInHierarchy().AsSingle();
             Container.Bind<IGameStateDataSource>()
                 .To<GameStateDataSource>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IShapeDataSource>()
-                .To<ShapeDataSource>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

@@ -137,5 +137,38 @@ namespace InventoryQuest.Testing
                 Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == EquipableItem.GuId) is not null);
             }
         }
+
+        [UnityTest]
+        public IEnumerator PlaceMultipleItemsIntoBackpack()
+        {
+            CommonInstall();
+
+            yield return LoadScene(sceneName);
+
+            CommonPostSceneLoadInstall();
+
+            IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
+            if (container is null) Assert.Fail(message: $"item {backpack.Id} does not have an IContainer component");
+            containerDisplay.MyContainer = container;
+
+
+            int itemsToCreate = container.Grid.Count;
+            for (int i = 0; i < itemsToCreate; i++)
+            {
+                ItemPlacementHelpers.TryAutoPlaceToContainer(container: container, item: ItemFactory.GetItem(BasicItemStats));
+                yield return null;
+            }
+
+            int runningTotal = 0;
+            foreach (var content in container.Contents)
+            {
+                if (content.Value.Item.Id == BasicItemStats.Id)
+                {
+                    runningTotal += content.Value.Item.Quantity;
+                }
+            }
+            Debug.Log($"{runningTotal} {BasicItemStats.Id} items in {backpack.Id}");
+            Assert.IsTrue(runningTotal == itemsToCreate);
+        }
     }
 }

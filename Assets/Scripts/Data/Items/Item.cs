@@ -15,7 +15,7 @@ namespace Data.Items
             Stats = itemStats;
             Shape = itemStats.Shape;
             CurrentFacing = itemStats.DefaultFacing;
-            Sprite = Resources.Load<Sprite>(itemStats.SpritePath);
+            Sprite = itemStats.PrimarySprite;
             Quantity = 1;
             Components = new Dictionary<Type, IItemComponent>();
         }

@@ -1,5 +1,6 @@
 ﻿using Data.Shapes;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Items
 {
@@ -12,7 +13,7 @@ namespace Data.Items
         public Rarity Rarity { get; }
         public float Weight { get; }
         public float GoldValue { get; }
-        public string SpritePath { get; }
+        public Sprite PrimarySprite { get; }
         public bool IsQuestItem { get; }
 
         public IList<IItemComponentStats> Components { get; }

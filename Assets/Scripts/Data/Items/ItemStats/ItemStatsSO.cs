@@ -16,7 +16,7 @@ namespace Data.Items
         [SerializeField] Rarity rarity;
         [SerializeField] float weight;
         [SerializeField] float goldValue;
-        [SerializeField] string spritePath;
+        [SerializeField, PreviewField] Sprite primarySprite;
         [SerializeField] bool isQuestItem;
         [OdinSerialize] IList<IItemComponentStats> components;
 
@@ -27,7 +27,7 @@ namespace Data.Items
         public Rarity Rarity => rarity;
         public float Weight => weight;
         public float GoldValue => goldValue;
-        public string SpritePath => spritePath;
+        public Sprite PrimarySprite => primarySprite;
         public bool IsQuestItem => isQuestItem;
         public IList<IItemComponentStats> Components => components;
     }

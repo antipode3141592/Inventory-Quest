@@ -3,6 +3,7 @@ using Data.Items;
 using Data.Shapes;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace InventoryQuest.Testing.Stubs
@@ -21,7 +22,7 @@ namespace InventoryQuest.Testing.Stubs
                     goldValue: .5f,
                     description: "The objectively best apple.",
                     rarity: Rarity.common,
-                    spritePath: "Items/Apple_Fuji",
+                    sprite: Resources.Load<Sprite>("Items/Apple_Fuji"),
                     defaultFacing: Facing.Right,
                     shape: new Monomino(),
                     isQuestItem: false,
@@ -34,7 +35,7 @@ namespace InventoryQuest.Testing.Stubs
                     goldValue: 10000f,
                     description: "a basic sword",
                     rarity: Rarity.epic,
-                    spritePath: "Items/basic_sword_1",
+                    sprite: Resources.Load<Sprite>("Items/basic_sword_1"),
                     shape: new Monomino(),
                     defaultFacing: Facing.Down,
                     isQuestItem: false,
@@ -55,7 +56,7 @@ namespace InventoryQuest.Testing.Stubs
                     weight: 2f,
                     goldValue: 5f,
                     description: "a basic adventurer's backpack",
-                    spritePath: "",
+                    sprite: null,
                     isQuestItem: false,
                     shape: new Monomino(),
                     defaultFacing: Facing.Right,
@@ -74,7 +75,7 @@ namespace InventoryQuest.Testing.Stubs
                     weight: 2f,
                     goldValue: 5f,
                     description: "It's bigger on the inside.",
-                    spritePath: "Items/loot_pile_large",
+                    sprite: Resources.Load<Sprite>("Items/loot_pile_large"),
                     isQuestItem: true,
                     shape: new Monomino(),
                     defaultFacing: Facing.Right,

@@ -212,19 +212,24 @@ namespace Data.Characters
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            foreach (StatModifier mod in e.Modifiers)
+            if (e.Modifiers is not null)
             {
-                ApplyModifier(mod);
+                foreach (StatModifier mod in e.Modifiers)
+                {
+                    ApplyModifier(mod);
+                }
             }
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
         {
-            //Debug.Log($"OnUnEquipHandler: {sender}");
-            foreach (var mod in e.Modifiers)
+            if (e.Modifiers is not null)
             {
-                RemoveModifier(mod);
+                foreach (var mod in e.Modifiers)
+                {
+                    RemoveModifier(mod);
+                }
             }
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
