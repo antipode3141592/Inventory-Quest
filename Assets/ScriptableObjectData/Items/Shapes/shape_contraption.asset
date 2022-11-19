@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c716dbbd43ed9e64d913d4f432172aac, type: 3}
-  m_Name: shape_Tetromino_T
+  m_Name: shape_contraption
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,38 +23,95 @@ MonoBehaviour:
     SerializationNodes:
     - Name: id
       Entry: 1
-      Data: tetromino_t
+      Data: shape_contraption
     - Name: isRotationallySymmetric
       Entry: 5
       Data: false
     - Name: isChiral
       Entry: 5
-      Data: false
+      Data: true
     - Name: minoCount
       Entry: 3
-      Data: 4
+      Data: 9
     - Name: size
       Entry: 7
       Data: 0|Data.Coor, Data
     - Name: row
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: column
       Entry: 3
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
     - Name: defaultFacing
-      Entry: 6
+      Entry: 7
+      Data: 1|System.Boolean[,], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 15
+    - Name: ranks
+      Entry: 1
+      Data: 5|3
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: facings
       Entry: 7
-      Data: 1|System.Collections.Generic.Dictionary`2[[Data.Shapes.Facing, Data],[System.Boolean[,],
+      Data: 2|System.Collections.Generic.Dictionary`2[[Data.Shapes.Facing, Data],[System.Boolean[,],
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 2|System.Collections.Generic.EnumEqualityComparer`1[[Data.Shapes.Facing,
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.Shapes.Facing,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -75,38 +132,8 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: $v
-      Entry: 7
-      Data: 3|System.Boolean[,], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 6
-    - Name: ranks
-      Entry: 1
-      Data: 2|3
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -121,13 +148,22 @@ MonoBehaviour:
       Data: 4|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 15
     - Name: ranks
       Entry: 1
-      Data: 3|2
+      Data: 3|5
     - Name: 
       Entry: 5
       Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 5
       Data: false
@@ -143,6 +179,24 @@ MonoBehaviour:
     - Name: 
       Entry: 5
       Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 13
       Data: 
@@ -163,10 +217,37 @@ MonoBehaviour:
       Data: 5|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 15
     - Name: ranks
       Entry: 1
-      Data: 2|3
+      Data: 5|3
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 5
       Data: false
@@ -205,10 +286,28 @@ MonoBehaviour:
       Data: 6|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 15
     - Name: ranks
       Entry: 1
-      Data: 3|2
+      Data: 3|5
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 5
       Data: false
@@ -218,6 +317,15 @@ MonoBehaviour:
     - Name: 
       Entry: 5
       Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 5
       Data: true

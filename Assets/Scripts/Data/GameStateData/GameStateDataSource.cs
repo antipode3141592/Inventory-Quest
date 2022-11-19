@@ -57,7 +57,9 @@ namespace Data
         {
             CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
             CurrentLocation.InitializeLocation(_characterDataSource, _locationDataSource);
-            
+
+            if (Debug.isDebugBuild)
+                Debug.Log($"SetCurrentLocation = {CurrentLocation.Stats.DisplayName} and path = {CurrentLocation.Stats.ScenePath}");
             OnCurrentLocationSet?.Invoke(this, $"{CurrentLocation.Stats.ScenePath}");
         }
 

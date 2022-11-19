@@ -5,13 +5,29 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Settings/Scenes/2D URP Scene Template.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Game Scene.unity
     guid: d5f9979bd41b85548a44867e44a52cf7
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Test_Items.unity
+    guid: 6a8aef4002fc5254fb5483affc3b78b7
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Test_Characters.unity
+    guid: ef7afa52d43f3b44fb220cedc95d3843
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Test_ContainerDisplay.unity
+    guid: ab8ee26309f05864589354daaa139497
+  - enabled: 1
+    path: Assets/Scenes/Locations/location_Destinationville.unity
+    guid: 59bb2813af2478e448b9c0afa3f68f0f
+  - enabled: 1
+    path: Assets/Scenes/Locations/location_logging_stand.unity
+    guid: 17d40cef782449940ab13be7d36c02a7
+  - enabled: 1
+    path: Assets/Scenes/Locations/location_Startington.unity
+    guid: eb0a90943afaa18488c219f3c8fbdb5d
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 6d3ffdb9679f09849a5bafe56e4bd261, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 986c44ba0bd8d2a4fa9b36fd06a7ddfa, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: a68ff0e4ed0705943914813a181b06c9, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: a9afc75cb6febd8469a5ea6cebd611ea, type: 2}

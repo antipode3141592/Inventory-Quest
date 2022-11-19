@@ -53,10 +53,12 @@ namespace Data.Items
         {
             if (item.Shape is null)
             {
-                Debug.Log($"no shape found for item {item.Id}");
+                if (Debug.isDebugBuild)
+                    Debug.Log($"no shape found for item {item.Id}");
                 return false;
             }
-            Debug.Log($"current facing {item.CurrentFacing} for item {item.Id} with shape {item.Shape.Id} and {item.Shape.Points.Count} grid points");
+            if (Debug.isDebugBuild)
+                Debug.Log($"current facing {item.CurrentFacing} for item {item.Id} with shape {item.Shape.Id} and {item.Shape.Points[item.CurrentFacing].Count} grid points");
             var currentItemPoints = item.Shape.Points[item.CurrentFacing];
             foreach (var point in currentItemPoints)
             {

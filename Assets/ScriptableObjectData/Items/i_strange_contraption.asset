@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
-  m_Name: i_apple_fuji
+  m_Name: i_strange_contraption
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+    - {fileID: 11400000, guid: f01bff7c588b04547a49e22368d33aa8, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -38,11 +38,11 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: apple_fuji
-  description: A delicious fuji apple.
+  id: strange_contraption
+  description: A contraption of insrutable purpose.
   defaultFacing: 0
   rarity: 0
-  weight: 0.1
-  goldValue: 0.1
-  primarySprite: {fileID: 21300000, guid: f7779d6574135b74f90b09cef31512e6, type: 3}
-  isQuestItem: 0
+  weight: 80
+  goldValue: 5000
+  primarySprite: {fileID: 21300000, guid: d057b8ba8ddc6874ba3cb15ca16fedd6, type: 3}
+  isQuestItem: 1

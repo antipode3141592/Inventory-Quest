@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 133a414ef9d381f4b8b6e4947ad5a4ce, type: 3}
-  m_Name: Path_StartToLogging
+  m_Name: Path_start_to_logging
   m_EditorClassIdentifier: 
   id: start_to_logging
   _name: 

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
-  m_Name: i_apple_fuji
+  m_Name: i_pants_1
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -31,18 +31,30 @@ MonoBehaviour:
         Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Items.EquipableStats, Data
+    - Name: _slotType
+      Entry: 3
+      Data: 6
+    - Name: _modifiers
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  id: apple_fuji
-  description: A delicious fuji apple.
+  id: pants_1
+  description: Simple but durable pants, ready for field or trail.
   defaultFacing: 0
   rarity: 0
-  weight: 0.1
-  goldValue: 0.1
-  primarySprite: {fileID: 21300000, guid: f7779d6574135b74f90b09cef31512e6, type: 3}
+  weight: 0.2
+  goldValue: 0.3
+  primarySprite: {fileID: 21300000, guid: 64baf02dd8ba7e046bc6a0c7378441aa, type: 3}
   isQuestItem: 0

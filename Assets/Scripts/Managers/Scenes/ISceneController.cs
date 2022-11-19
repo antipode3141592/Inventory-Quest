@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryQuest.Managers
 {
-    public interface ISceneManager
+    public interface ISceneController
     {
 
     }

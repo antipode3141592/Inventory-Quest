@@ -44,5 +44,5 @@ MonoBehaviour:
   rarity: 0
   weight: 5
   goldValue: 1
-  spritePath: Items/uncommon_ingot
+  primarySprite: {fileID: 21300000, guid: b0fe9fc669f5f554e94315471755549c, type: 3}
   isQuestItem: 0
