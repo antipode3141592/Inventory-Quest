@@ -61,11 +61,11 @@ namespace InventoryQuest.UI
             ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
             var equipable = item.Components.ContainsKey(typeof(IEquipable)) ? item.Components[typeof(IEquipable)] as IEquipable : null;
-            if (equipable is not null) 
-                for(int i = 0; i < ItemModifiersTexts.Count; i++)
+            if (equipable is not null)
+                for (int i = 0; i < ItemModifiersTexts.Count; i++)
                 {
                     if (equipable.Modifiers is not null && equipable.Modifiers.Count > i)
-                    { 
+                    {
                         ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
                     }
                     else
@@ -74,7 +74,12 @@ namespace InventoryQuest.UI
 
                     }
                 }
+            else
+                for (int i = 0; i < ItemModifiersTexts.Count; i++)
+                    ItemModifiersTexts[i].text = "";
+
             QuantityText.text = item is not IStackable ? "" : $"Qty: {item.Quantity}";
+
         }
     }
 }
