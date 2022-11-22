@@ -2,6 +2,7 @@
 using Sirenix.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Data.Items
@@ -9,7 +10,24 @@ namespace Data.Items
     public class ItemDataSourceSO : SerializedMonoBehaviour, IItemDataSource
     {
         [OdinSerialize] IItemStats _defaultItem;
-        [OdinSerialize] Dictionary<string, IItemStats> _itemStats;
+        [OdinSerialize] List<IItemStats> _items;
+
+        Dictionary<string, IItemStats> _itemStats;
+
+        void Awake()
+        {
+            if (Debug.isDebugBuild)
+                Debug.Log($"Initializing ItemDataSourceSO dictionary...");
+            _itemStats = new();
+            foreach(var item in _items)
+            {
+                _itemStats.Add(item.Id, item);
+                if (Debug.isDebugBuild)
+                    Debug.Log($"...adding {item.Id}");
+            }
+            if (Debug.isDebugBuild)
+                Debug.Log($"Initialization of ItemDataSourceSO complete.");
+        }
 
         public IItemStats GetById(string id)
         {

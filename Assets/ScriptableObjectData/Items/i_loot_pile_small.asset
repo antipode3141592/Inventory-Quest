@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
-  m_Name: i_small_box
+  m_Name: i_loot_pile_small
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -40,10 +40,40 @@ MonoBehaviour:
       Data: 2|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 16
     - Name: ranks
       Entry: 1
-      Data: 2|3
+      Data: 4|4
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 5
       Data: true
@@ -77,11 +107,11 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: small_box
-  description: It's bigger on the inside
+  id: loot_pile_small
+  description: Loot Pile, Small
   defaultFacing: 0
-  rarity: 1
-  weight: 2
-  goldValue: 5
-  primarySprite: {fileID: 21300000, guid: 957fa1198e9124a44a2213f3d62a7318, type: 3}
-  isQuestItem: 0
+  rarity: 0
+  weight: 1
+  goldValue: 0
+  primarySprite: {fileID: 21300000, guid: 90f4e1e0a6deb534480f292c1ae52d6a, type: 3}
+  isQuestItem: 1

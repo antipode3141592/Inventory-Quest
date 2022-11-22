@@ -54,16 +54,16 @@ namespace Data.Items
             if (item.Shape is null)
             {
                 if (Debug.isDebugBuild)
-                    Debug.Log($"no shape found for item {item.Id}");
+                    Debug.LogWarning($"no shape found for item {item.Id}");
                 return false;
             }
-            if (Debug.isDebugBuild)
-                Debug.Log($"current facing {item.CurrentFacing} for item {item.Id} with shape {item.Shape.Id} and {item.Shape.Points[item.CurrentFacing].Count} grid points");
             var currentItemPoints = item.Shape.Points[item.CurrentFacing];
             foreach (var point in currentItemPoints)
             {
                 Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
-                if (Grid.ContainsKey(testPoint) && Grid[testPoint].IsOccupied)
+                if (!Grid.ContainsKey(testPoint)) 
+                    return false;
+                if (Grid[testPoint].IsOccupied)
                         return false;
             }
             return true;

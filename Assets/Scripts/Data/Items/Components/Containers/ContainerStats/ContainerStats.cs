@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Data.Items
 {
-    [Serializable]
     public class ContainerStats : IContainerStats
     {
-        [SerializeField] bool[,] _initialGrid;
+        [SerializeField, TableMatrix(Transpose = true)] bool[,] _initialGrid;
 
         ICollection<Coor> _grid;
 

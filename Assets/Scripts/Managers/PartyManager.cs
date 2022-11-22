@@ -23,9 +23,9 @@ namespace InventoryQuest.Managers
             _characterDataSource = characterDataSource;
         }
 
-        void Awake()
+        void Start()
         {
-            AddCharacterWithEquipmentToParty("Player", 
+            AddCharacterWithEquipmentToParty("player", 
                 startingEquipment: new List<string>
                 {
                     "adventure_backpack",

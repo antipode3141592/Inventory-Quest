@@ -83,8 +83,9 @@ namespace InventoryQuest.Managers
             ItemRewardStats itemReward = rewardStats as ItemRewardStats;
             if (itemReward is not null)
             {
-                var lootPile = (IItem)ItemFactory.GetItem(_dataSource.GetById("loot_pile_small"));
-                var lootContainer = (IContainer)lootPile.Components[typeof(IContainer)];
+                var lootPile = ItemFactory.GetItem(_dataSource.GetById("loot_pile_small"));
+                var lootContainer = lootPile.Components[typeof(IContainer)] as IContainer;
+                if (lootContainer is null) return;
                 Piles.Add(lootPile.GuId, lootContainer);
                 ItemPlacementHelpers.TryAutoPlaceToContainer(lootContainer, ItemFactory.GetItem(_dataSource.GetById(itemReward.ItemId)));
                 PlaceRandomLootInContainer(lootContainer, "common_loot");
@@ -92,9 +93,11 @@ namespace InventoryQuest.Managers
             RandomItemRewardStats randomItemReward = rewardStats as RandomItemRewardStats;
             if (randomItemReward is not null)
             {
-                var lootPile = (IContainer)ItemFactory.GetItem(_dataSource.GetById(randomItemReward.LootContainerId));
-                Piles.Add(lootPile.GuId, lootPile);
-                PlaceRandomLootInContainer(lootPile, randomItemReward.LootTableId);
+                var lootPile = ItemFactory.GetItem(_dataSource.GetById(randomItemReward.LootContainerId));
+                var lootContainer = lootPile.Components[typeof(IContainer)] as IContainer;
+                if (lootContainer is null) return;
+                Piles.Add(lootPile.GuId, lootContainer);
+                PlaceRandomLootInContainer(lootContainer, randomItemReward.LootTableId);
             }
             CharacterRewardStats characterReward = rewardStats as CharacterRewardStats;
             if (characterReward is not null)

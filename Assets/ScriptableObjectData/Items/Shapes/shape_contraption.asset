@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: true
     - Name: minoCount
       Entry: 3
-      Data: 9
+      Data: 8
     - Name: size
       Entry: 7
       Data: 0|Data.Coor, Data
@@ -50,10 +50,10 @@ MonoBehaviour:
       Data: 1|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 12
     - Name: ranks
       Entry: 1
-      Data: 5|3
+      Data: 4|3
     - Name: 
       Entry: 5
       Data: true
@@ -81,15 +81,6 @@ MonoBehaviour:
     - Name: 
       Entry: 5
       Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: false
     - Name: 
       Entry: 5
       Data: true
@@ -148,10 +139,10 @@ MonoBehaviour:
       Data: 4|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 12
     - Name: ranks
       Entry: 1
-      Data: 3|5
+      Data: 3|4
     - Name: 
       Entry: 5
       Data: true
@@ -166,9 +157,6 @@ MonoBehaviour:
       Data: false
     - Name: 
       Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
       Data: true
     - Name: 
       Entry: 5
@@ -181,16 +169,10 @@ MonoBehaviour:
       Data: false
     - Name: 
       Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
       Data: true
     - Name: 
       Entry: 5
       Data: false
-    - Name: 
-      Entry: 5
-      Data: true
     - Name: 
       Entry: 5
       Data: true
@@ -217,19 +199,10 @@ MonoBehaviour:
       Data: 5|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 12
     - Name: ranks
       Entry: 1
-      Data: 5|3
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: 4|3
     - Name: 
       Entry: 5
       Data: false
@@ -286,16 +259,19 @@ MonoBehaviour:
       Data: 6|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 12
     - Name: ranks
       Entry: 1
-      Data: 3|5
+      Data: 3|4
     - Name: 
       Entry: 5
       Data: true
     - Name: 
       Entry: 5
       Data: true
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 5
       Data: true
@@ -307,22 +283,10 @@ MonoBehaviour:
       Data: true
     - Name: 
       Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 5
       Data: true
     - Name: 
       Entry: 5
       Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: false
     - Name: 
       Entry: 5
       Data: false

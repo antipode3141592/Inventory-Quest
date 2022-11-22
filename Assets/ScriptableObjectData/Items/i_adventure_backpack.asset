@@ -64,7 +64,25 @@ MonoBehaviour:
       Data: 24
     - Name: ranks
       Entry: 1
-      Data: 6|4
+      Data: 4|6
+    - Name: 
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 5
       Data: true
@@ -103,7 +121,7 @@ MonoBehaviour:
       Data: true
     - Name: 
       Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 5
       Data: true
@@ -118,25 +136,7 @@ MonoBehaviour:
       Data: true
     - Name: 
       Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 13
       Data: 
