@@ -86,7 +86,7 @@ namespace InventoryQuest.Managers
                 var lootPile = ItemFactory.GetItem(_dataSource.GetById("loot_pile_small"));
                 var lootContainer = lootPile.Components[typeof(IContainer)] as IContainer;
                 if (lootContainer is null) return;
-                Piles.Add(lootPile.GuId, lootContainer);
+                Piles.Add(lootContainer.GuId, lootContainer);
                 ItemPlacementHelpers.TryAutoPlaceToContainer(lootContainer, ItemFactory.GetItem(_dataSource.GetById(itemReward.ItemId)));
                 PlaceRandomLootInContainer(lootContainer, "common_loot");
             }

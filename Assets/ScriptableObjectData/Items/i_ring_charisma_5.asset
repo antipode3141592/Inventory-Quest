@@ -37,7 +37,7 @@ MonoBehaviour:
       Data: 1|Data.Items.EquipableStats, Data
     - Name: _slotType
       Entry: 3
-      Data: 5
+      Data: 11
     - Name: _modifiers
       Entry: 6
       Data: 

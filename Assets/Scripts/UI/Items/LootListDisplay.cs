@@ -55,6 +55,8 @@ namespace InventoryQuest.UI.Menus
 
         public void ContainerSelected(string containerGuid)
         {
+            if (Debug.isDebugBuild)
+                Debug.Log($"ContainerSelected({containerGuid})...");
             foreach (var icon in lootIcons)
             {
                 if (icon.ContainerGuid == containerGuid)

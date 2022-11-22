@@ -77,7 +77,12 @@ namespace InventoryQuest.UI
 
         public void SetupGrid()
         {
-            if (MyContainer is null) return;
+            if (MyContainer is null)
+            {
+                if (Debug.isDebugBuild)
+                    Debug.LogWarning($"MyContainer is null for this ContainerDisplay", this);
+                return; 
+            }
             foreach(var point in MyContainer.Grid) 
             { 
                 squares[point.Key.row, point.Key.column].SetContainer(MyContainer);

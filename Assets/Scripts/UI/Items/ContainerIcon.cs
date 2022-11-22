@@ -38,6 +38,8 @@ namespace InventoryQuest.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (Debug.isDebugBuild)
+                Debug.Log($"OnPointerClick received for icon {gameObject.name}");
             _containersDisplay.ContainerSelected(ContainerGuid);
         }
     }
