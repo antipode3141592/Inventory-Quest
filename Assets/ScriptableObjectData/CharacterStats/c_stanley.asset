@@ -25,11 +25,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: initialStats
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Data.Characters.StatTypes,
-        Data],[System.Int32, mscorlib]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[Data.StatTypes, Data],[System.Int32,
+        mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.Characters.StatTypes,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.StatTypes,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -87,11 +87,11 @@ MonoBehaviour:
       Data: 
     - Name: resistances
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[Data.DamageType, Data],[Data.Characters.DamageResistance,
+      Data: 2|System.Collections.Generic.Dictionary`2[[Data.Health.DamageType, Data],[Data.Characters.DamageResistance,
         Data]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.DamageType,
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.Health.DamageType,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -132,5 +132,5 @@ MonoBehaviour:
       Data: 
   id: stanley
   _name: Stanley
-  portraitPath: Portraits/Enemy 05-1
+  portrait: {fileID: -523132473, guid: 9f34329aa4c9b82499acc4ab32020689, type: 3}
   species: {fileID: 11400000, guid: c31ee4ceb06eeab418ce7b725e60709a, type: 2}

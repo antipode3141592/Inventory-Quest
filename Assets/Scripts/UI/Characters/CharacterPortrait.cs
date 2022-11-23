@@ -29,10 +29,9 @@ namespace InventoryQuest.UI
             }
         }
 
-        //ex path: Portraits/Enemy 01-1  (exclude leading slash and filetype)
-        void SetImage(string path)
+        void SetImage(Sprite sprite)
         {
-            portrait.sprite = Resources.Load<Sprite>(path);
+            portrait.sprite = sprite;
         }
 
         void SetName(string name)
@@ -40,9 +39,9 @@ namespace InventoryQuest.UI
             nameText.text = name;
         }
 
-        public void SetupPortrait(string guid, string displayName, string imagePath)
+        public void SetupPortrait(string guid, string displayName, Sprite image)
         {
-            SetImage(imagePath);
+            SetImage(image);
             SetName(displayName);
             CharacterGuid = guid;
         }

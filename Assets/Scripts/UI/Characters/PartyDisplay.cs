@@ -43,10 +43,10 @@ namespace InventoryQuest.UI
                 if (_partyManager.CurrentParty.PartyDisplayOrder.Count > PartyDisplayList.Count)
                 {
                     CharacterPortrait portrait = Instantiate(CharacterPortraitPrefab, transform).GetComponent<CharacterPortrait>();
-                    PartyDisplayList.Add(portrait);
+                    PartyDisplayList.Insert(i, portrait);
                 }
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.PartyDisplayOrder[i]];
-                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.DisplayName, imagePath: character.Stats.PortraitPath);
+                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.DisplayName, image: character.Stats.Portrait);
                 PartyDisplayList[i].PartyDisplay = this;
                 if (_partyManager.CurrentParty.SelectedPartyMemberGuId == character.GuId)
                 {

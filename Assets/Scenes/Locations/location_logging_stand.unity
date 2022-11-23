@@ -510,7 +510,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7786459, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -545,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_image
       value: 
-      objectReference: {fileID: -523132473, guid: a2cf1a64d37469143b0eb1ce1bc4196c, type: 3}
+      objectReference: {fileID: -523132473, guid: 92f42334408885b469ba4e72305c1a15, type: 3}
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_id.m_text
       value: logging_manager
@@ -565,7 +565,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161169, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -523132473, guid: a2cf1a64d37469143b0eb1ce1bc4196c, type: 3}
+      objectReference: {fileID: -523132473, guid: 92f42334408885b469ba4e72305c1a15, type: 3}
     - target: {fileID: 7561862266982161171, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Name
       value: LocationCharacter

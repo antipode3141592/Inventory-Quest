@@ -30,19 +30,8 @@ namespace InventoryQuest.UI
         public ContainerGridSquareDisplay[,] Squares => squares;
         public List<ItemImage> ItemImages => itemImages;
 
-        IContainer myContainer;
-        public IContainer MyContainer 
-        {
-            get { return myContainer; } 
-            set 
-            {
-                DestroyGrid();
-                RemoveAllItemSprites();
-                myContainer = value;
-                SetupGrid();
-                SetItemSprites();
-            }
-        }
+        IContainer _container;
+        public IContainer Container => _container;
 
         void Awake()
         {
@@ -67,7 +56,7 @@ namespace InventoryQuest.UI
                 {
                     ContainerGridSquareDisplay square = Instantiate(original: gridSquarePrefab, parent: _panelTransform);
                     square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
-                    square.SetContainer(MyContainer);
+                    square.SetContainer(Container);
                     square.Coordinates = new Coor(r, c);
                     squares[r, c] = square;
                     squares[r, c].gameObject.SetActive(false);
@@ -75,31 +64,40 @@ namespace InventoryQuest.UI
             }
         }
 
-        public void SetupGrid()
+        public void SetContainer(IContainer container)
         {
-            if (MyContainer is null)
+            DestroyGrid();
+            RemoveAllItemSprites();
+            _container = container;
+            SetupGrid();
+            SetItemSprites();
+        }
+
+        void SetupGrid()
+        {
+            if (Container is null)
             {
                 if (Debug.isDebugBuild)
                     Debug.LogWarning($"MyContainer is null for this ContainerDisplay", this);
                 return; 
             }
-            foreach(var point in MyContainer.Grid) 
+            foreach(var point in Container.Grid) 
             { 
-                squares[point.Key.row, point.Key.column].SetContainer(MyContainer);
+                squares[point.Key.row, point.Key.column].SetContainer(Container);
                 squares[point.Key.row, point.Key.column].gameObject.SetActive(true);
                 squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
 
-            MyContainer.OnItemPlaced += OnItemChangeHandler;
-            MyContainer.OnItemTaken += OnItemChangeHandler;
-            MyContainer.OnMatchingItems += MatchedItems;
+            Container.OnItemPlaced += OnItemChangeHandler;
+            Container.OnItemTaken += OnItemChangeHandler;
+            Container.OnMatchingItems += MatchedItems;
         }
 
         void MatchedItems(object sender, HashSet<string> e)
         {
             foreach (var itemGuid in e)
             {
-                foreach (var coor in MyContainer.Contents[itemGuid].GridSpaces)
+                foreach (var coor in Container.Contents[itemGuid].GridSpaces)
                     squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
             }
         }
@@ -113,9 +111,9 @@ namespace InventoryQuest.UI
                 square.gameObject.SetActive(false);
             }
 
-            if (MyContainer is null) return;
-            MyContainer.OnItemPlaced -= OnItemChangeHandler;
-            MyContainer.OnItemTaken -= OnItemChangeHandler;
+            if (Container is null) return;
+            Container.OnItemPlaced -= OnItemChangeHandler;
+            Container.OnItemTaken -= OnItemChangeHandler;
         }
 
         public void OnItemChangeHandler(object sender, string e)
@@ -130,7 +128,7 @@ namespace InventoryQuest.UI
 
         public void UpdateGridState()
         {
-            foreach (var point in MyContainer.Grid)
+            foreach (var point in Container.Grid)
             {
                 squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
@@ -138,8 +136,8 @@ namespace InventoryQuest.UI
 
         public void SetItemSprites()
         {
-            if (MyContainer is null) return;
-            foreach(var content in MyContainer.Contents)
+            if (Container is null) return;
+            foreach(var content in Container.Contents)
             {
                 IItem item = content.Value.Item;
                 Facing facing = item.CurrentFacing;

@@ -32,7 +32,8 @@ namespace Data.Items
                         {
                             for (int c = 0; c < _initialGrid.GetLength(1); c++)
                             {
-                                _grid.Add(new Coor(r, c));
+                                if (_initialGrid[r,c])
+                                    _grid.Add(new Coor(r, c));
                             }
                         }
                     }

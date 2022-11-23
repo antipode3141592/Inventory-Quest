@@ -232,7 +232,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_image
       value: 
-      objectReference: {fileID: -523132473, guid: 6501f1b890fffdf41878d9c336a25f08, type: 3}
+      objectReference: {fileID: -523132473, guid: 9f34329aa4c9b82499acc4ab32020689, type: 3}
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_id.m_text
       value: Stanley
@@ -248,7 +248,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161169, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -523132473, guid: 6501f1b890fffdf41878d9c336a25f08, type: 3}
+      objectReference: {fileID: -523132473, guid: 9f34329aa4c9b82499acc4ab32020689, type: 3}
     - target: {fileID: 7561862266982161171, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Name
       value: Stanley
@@ -402,7 +402,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7786459, y: 1}
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -525,7 +525,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_image
       value: 
-      objectReference: {fileID: -523132473, guid: c6c57376d1483ef43bea71b8e96d135a, type: 3}
+      objectReference: {fileID: -523132473, guid: bd52b39ebb43c6f4eb252cc6262396e7, type: 3}
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_id.m_text
       value: Overseer
@@ -541,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161169, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -523132473, guid: c6c57376d1483ef43bea71b8e96d135a, type: 3}
+      objectReference: {fileID: -523132473, guid: bd52b39ebb43c6f4eb252cc6262396e7, type: 3}
     - target: {fileID: 7561862266982161171, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Name
       value: Overseer

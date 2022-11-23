@@ -68,7 +68,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = container;
+            containerDisplay.SetContainer(container);
 
             yield return null; //next frame
             Debug.Log($"containerDisplay grid count: {containerDisplay.GetContainerGridCount()}");
@@ -87,7 +87,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = container;
+            containerDisplay.SetContainer(container);
 
             if (container.TryPlace(MyItem, new(0, 0)))
             {
@@ -107,7 +107,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = container;
+            containerDisplay.SetContainer(container);
 
             if (container.TryPlace(EquipableItem, new(0, 0)))
             {
@@ -127,7 +127,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = container;
+            containerDisplay.SetContainer(container);
 
             EquipableItem.Rotate(1);
 
@@ -149,7 +149,7 @@ namespace InventoryQuest.Testing
 
             IContainer container = backpack.Components[typeof(IContainer)] as IContainer;
             if (container is null) Assert.Fail(message: $"item {backpack.Id} does not have an IContainer component");
-            containerDisplay.MyContainer = container;
+            containerDisplay.SetContainer(container);
 
 
             int itemsToCreate = container.Grid.Count;

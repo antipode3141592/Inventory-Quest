@@ -3,6 +3,7 @@ using Data.Characters;
 using Data.Items;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace InventoryQuest.Testing.Stubs
 {
@@ -50,9 +51,9 @@ namespace InventoryQuest.Testing.Stubs
             {
                 "player" => DefaultPlayerStats(),
                 "minion" => DefaultMinionStats(),
-                "stanley" => DefaultMinionStats(_name: "Stanley", _id: "stanley", _portraitPath: "Portraits/Enemy 05-1"),
-                "messenger_dispatcher" => DefaultMinionStats(_name: "Dispatch", _id: "messenger_dispatcher", _portraitPath: "Portraits/Enemy 22"),
-                "scummy_overseer" => DefaultMinionStats(_name:"Overseer", _id: "scummy_overseer", _portraitPath: "Portraits/Enemy 04-1"),
+                "stanley" => DefaultMinionStats(_name: "Stanley", _id: "stanley", _portrait: Resources.Load<Sprite>("Portraits/Enemy 05-1")),
+                "messenger_dispatcher" => DefaultMinionStats(_name: "Dispatch", _id: "messenger_dispatcher", _portrait: Resources.Load<Sprite>("Portraits/Enemy 22")),
+                "scummy_overseer" => DefaultMinionStats(_name:"Overseer", _id: "scummy_overseer", _portrait: Resources.Load<Sprite>("Portraits/Enemy 04-1")),
                 _ => DefaultPlayerStats(),
             };
         }
@@ -65,7 +66,7 @@ namespace InventoryQuest.Testing.Stubs
             return new CharacterStats(
                 name: "[PLAYER NAME]",
                 id: "player",
-                portraitPath: "Portraits/Enemy 01-1",
+                portrait: Resources.Load<Sprite>("Portraits/Enemy 01-1"),
                 species: GetSpeciesBaseStats(speciesId),
                 initialStats: new(),
                 equipmentSlots: equipmentSlots);
@@ -80,13 +81,13 @@ namespace InventoryQuest.Testing.Stubs
             return new CharacterStats(
                 name: "Minion",
                 id: "minion",
-                portraitPath: "Portraits/Enemy 03-1", 
+                portrait: Resources.Load<Sprite>("Portraits/Enemy 03-1"), 
                 species: GetSpeciesBaseStats(speciesId),
                 initialStats: new(), 
                 equipmentSlots: equipmentSlots);
         }
 
-        public CharacterStats DefaultMinionStats(string _name, string _id, string _portraitPath)
+        public CharacterStats DefaultMinionStats(string _name, string _id, Sprite _portrait)
         {
             var equipmentSlots = GetDefaultEquipmentSlotTypes();
 
@@ -95,7 +96,7 @@ namespace InventoryQuest.Testing.Stubs
             return new CharacterStats(
                 name: _name,
                 id: _id,
-                portraitPath: _portraitPath,
+                portrait: _portrait,
                 species: GetSpeciesBaseStats(speciesId),
                 initialStats: new(),
                 equipmentSlots: equipmentSlots);

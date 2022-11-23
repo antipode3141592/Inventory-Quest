@@ -2,6 +2,7 @@
 using Data.Items;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Characters
 {
@@ -11,7 +12,7 @@ namespace Data.Characters
     {
         public string Id { get; }
         public string Name { get; }
-        public string PortraitPath { get; }
+        public Sprite Portrait { get; }
         public string SpeciesId { get; }
         public ISpeciesBaseStats SpeciesBaseStats { get; }
 
@@ -25,7 +26,7 @@ namespace Data.Characters
         public CharacterStats(
             string name,
             string id,
-            string portraitPath,
+            Sprite portrait,
             ISpeciesBaseStats species,
             Dictionary<StatTypes, int> initialStats,
             Dictionary<DamageType, DamageResistance> resistances = null,
@@ -36,7 +37,7 @@ namespace Data.Characters
             Name = name;
             SpeciesBaseStats = species;
             SpeciesId = species.Id;
-            PortraitPath = portraitPath;
+            Portrait = portrait;
 
             Resistances = resistances is not null ? resistances : new();
             EquipmentSlotsTypes = equipmentSlots != null ? new List<EquipmentSlotType>(equipmentSlots) : new List<EquipmentSlotType>();

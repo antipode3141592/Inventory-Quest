@@ -49,17 +49,17 @@ namespace InventoryQuest.UI.Menus
         {
             var container = _partyManager.CurrentParty.Characters[e].Backpack;
             if (container is null) return;
-            characterContainerDisplay.MyContainer = container;
+            characterContainerDisplay.SetContainer(container);
         }
 
         void OnLootPileSelectedHandler(object sender, IContainer e)
         {
-            lootContainerDisplay.MyContainer = e;
+            lootContainerDisplay.SetContainer(e);
         }
 
         void OnRewardsClearedHandler(object sender, EventArgs e)
         {
-            lootContainerDisplay.MyContainer = null;
+            lootContainerDisplay.SetContainer(null);
         }
 
         void Continue(object sender, EventArgs e)

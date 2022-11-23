@@ -11,7 +11,7 @@ namespace Data.Characters
     {
         [SerializeField]  string id;
         [SerializeField]  string _name;
-        [SerializeField]  string portraitPath;
+        [SerializeField, PreviewField]  Sprite portrait;
         [SerializeField]  SpeciesBaseStatsSO species;
 
         [SerializeField]  Dictionary<StatTypes, int> initialStats = new();
@@ -20,7 +20,7 @@ namespace Data.Characters
 
         public string Id => id;
         public string Name => _name;
-        public string PortraitPath => portraitPath;
+        public Sprite Portrait => portrait;
         public string SpeciesId => species.Id;
         public ISpeciesBaseStats SpeciesBaseStats => species;
 

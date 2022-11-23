@@ -45,7 +45,7 @@ namespace InventoryQuest.UI
             SetFill(fillRatio);
         }
 
-        void Update()
+        void LateUpdate()
         {
             if (!selected) return;
 

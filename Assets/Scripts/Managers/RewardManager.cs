@@ -39,7 +39,7 @@ namespace InventoryQuest.Managers
             _lootTableDataSource = lootTableDataSource;
         }
 
-        void Awake()
+        void Start()
         {
             _lootTable = new LootTable(_lootTableDataSource);
             Lua.RegisterFunction("RewardExperience", this, SymbolExtensions.GetMethodInfo(() => RewardExperience(0)));
@@ -96,7 +96,7 @@ namespace InventoryQuest.Managers
                 var lootPile = ItemFactory.GetItem(_dataSource.GetById(randomItemReward.LootContainerId));
                 var lootContainer = lootPile.Components[typeof(IContainer)] as IContainer;
                 if (lootContainer is null) return;
-                Piles.Add(lootPile.GuId, lootContainer);
+                Piles.Add(lootContainer.GuId, lootContainer);
                 PlaceRandomLootInContainer(lootContainer, randomItemReward.LootTableId);
             }
             CharacterRewardStats characterReward = rewardStats as CharacterRewardStats;

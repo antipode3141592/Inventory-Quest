@@ -68,6 +68,7 @@ namespace Data.Characters
 
         public bool IsValidPlacement(IItem item)
         {
+            if (!item.Components.ContainsKey(typeof(IEquipable))) return false;
             var equipable = (IEquipable)item.Components[typeof(IEquipable)];
             if (equipable is null) return false;
 

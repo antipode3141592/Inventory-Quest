@@ -126,7 +126,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -523132473, guid: 49cc2edd1d11366438054a11039dbc48, type: 3}
+  m_Sprite: {fileID: -2137452942, guid: d3494e758e090884dbf4e8d40997cefe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
-  m_image: {fileID: -523132473, guid: 49cc2edd1d11366438054a11039dbc48, type: 3}
+  m_image: {fileID: -2137452942, guid: d3494e758e090884dbf4e8d40997cefe, type: 3}
   m_textTable: {fileID: 0}
   m_noQuestsUIContents:
     m_icon: {fileID: 0}

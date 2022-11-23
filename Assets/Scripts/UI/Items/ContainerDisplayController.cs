@@ -44,22 +44,24 @@ namespace InventoryQuest.UI
 
         public void ConnectCharacterContainer(IContainer characterContainer)
         {
-            characterContainerDisplay.MyContainer = characterContainer;
+            if (Debug.isDebugBuild)
+                Debug.Log($"ConnectCharacterContainer called for container {characterContainer.GuId}");
+            characterContainerDisplay.SetContainer(characterContainer);
         }
 
         public void ConnectLootContainer(IContainer lootContainer)
         {
-            lootContainerDisplay.MyContainer = lootContainer;
+            lootContainerDisplay.SetContainer(lootContainer);
         }
 
         void DisconnectCharacterContainer()
         {
-            characterContainerDisplay.MyContainer = null;
+            characterContainerDisplay.SetContainer(null);
         }
 
         void DisconnectLootContainer()
         {
-            lootContainerDisplay.MyContainer = null;
+            lootContainerDisplay.SetContainer(null);
 
         }
         #endregion
@@ -67,8 +69,14 @@ namespace InventoryQuest.UI
 
         void OnPartyMemberSelectedHandler(object sender, string e)
         {
+            if (Debug.isDebugBuild)
+                Debug.Log($"OnPartyMemberSelectedHandler for character {e}");
             var container = _partyManager.CurrentParty.Characters[e].Backpack;
-            if (container is null) return;
+            if (container is not IContainer) {
+                if (Debug.isDebugBuild)
+                    Debug.LogWarning($"No backpack found for character guid {e}", this);
+                return; 
+            }
             ConnectCharacterContainer(container);
         }
     }
