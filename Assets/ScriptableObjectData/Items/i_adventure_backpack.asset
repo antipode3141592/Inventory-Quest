@@ -159,4 +159,4 @@ MonoBehaviour:
   weight: 1
   goldValue: 2
   primarySprite: {fileID: -2137452942, guid: 43018d0793f9b2c4c854deae9d0e8987, type: 3}
-  isQuestItem: 0
+  isQuestItem: 1

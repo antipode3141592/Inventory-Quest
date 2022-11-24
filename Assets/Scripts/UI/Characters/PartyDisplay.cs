@@ -10,7 +10,7 @@ namespace InventoryQuest.UI
     {
         [SerializeField] bool interactable;
 
-        [SerializeField] GameObject CharacterPortraitPrefab;
+        [SerializeField] CharacterPortrait CharacterPortraitPrefab;
 
         [SerializeField] List<CharacterStatsDisplay> _characterStatsDisplays;
 
@@ -36,17 +36,18 @@ namespace InventoryQuest.UI
             PartyMemberSelected(_partyManager.CurrentParty.SelectedPartyMemberGuId);
         }
 
-        public void SetPortraits()
+        void SetPortraits()
         {
             for(int i = 0; i < _partyManager.CurrentParty.PartyDisplayOrder.Count; i++)
             {
                 if (_partyManager.CurrentParty.PartyDisplayOrder.Count > PartyDisplayList.Count)
                 {
                     CharacterPortrait portrait = Instantiate(CharacterPortraitPrefab, transform).GetComponent<CharacterPortrait>();
-                    PartyDisplayList.Insert(i, portrait);
+                    if (portrait is null) return;
+                    PartyDisplayList.Add(portrait);
                 }
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.PartyDisplayOrder[i]];
-                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.DisplayName, image: character.Stats.Portrait);
+                PartyDisplayList[i].SetupPortrait(guid: character.GuId, displayName: character.DisplayName, sprite: character.Stats.Portrait, character: character);
                 PartyDisplayList[i].PartyDisplay = this;
                 if (_partyManager.CurrentParty.SelectedPartyMemberGuId == character.GuId)
                 {
@@ -61,6 +62,11 @@ namespace InventoryQuest.UI
                 }
             }
         }
+
+        void DestroyPortraits()
+        {
+
+        } 
         
         public void PartyMemberSelected(string characterGuid)
         {

@@ -13,20 +13,72 @@ MonoBehaviour:
   m_Name: i_basic_sword_15
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 0b0105000000730068006100700065000000000001010a00000063006f006d0070006f006e0065006e00740073002f000000000153000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100740061002e004900740065006d0073002e0049004900740065006d0043006f006d0070006f006e0065006e007400530074006100740073002c00200044006100740061005d005d002c0020006d00730063006f0072006c006900620000000000060100000000000000022f01000000011f00000044006100740061002e004900740065006d0073002e0045007100750069007000610062006c006500530074006100740073002c0020004400610074006100010000001d01090000005f0073006c006f0074005400790070006500080000000000000001010a0000005f006d006f0064006900660069006500720073002f020000000146000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100740061002e0053007400610074004d006f006400690066006900650072002c00200044006100740061005d005d002c0020006d00730063006f0072006c006900620002000000060100000000000000022f03000000011700000044006100740061002e0053007400610074004d006f006400690066006900650072002c0020004400610074006100030000001d01080000005300740061007400540079007000650008000000000000001d010c0000004f00700065007200610074006f0072005400790070006500000000000000000017010f000000410064006a007500730074006d0065006e007400560061006c00750065000f000000050705050705
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: f6a816c7a0b3f4a489c994409d2dd8db, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: shape
+      Entry: 10
+      Data: 0
+    - Name: components
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Items.EquipableStats, Data
+    - Name: _slotType
+      Entry: 3
+      Data: 8
+    - Name: _modifiers
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|Data.StatModifier, Data
+    - Name: StatType
+      Entry: 3
+      Data: 8
+    - Name: OperatorType
+      Entry: 3
+      Data: 0
+    - Name: AdjustmentValue
+      Entry: 3
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: basic_sword_15
   description: a basic, but powerful sword
   defaultFacing: 0
-  rarity: 2
+  rarity: 3
   weight: 3
   goldValue: 1000
   primarySprite: {fileID: 21300000, guid: cb887f1ddfa2b1940a6a5b9273391151, type: 3}
-  isQuestItem: 0
+  isQuestItem: 1

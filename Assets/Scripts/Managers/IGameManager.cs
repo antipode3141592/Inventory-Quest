@@ -10,12 +10,13 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
+        public event EventHandler OnSubmitDown;
+        public event EventHandler OnSubmitUp;
         public event EventHandler OnGameBegining;
 
         public GameStates CurrentState { get; }
         public IItem HoldingItem { get; set; }
         public void ChangeState(GameStates targetState);
-        public void CheckRotateAction();
         public void BeginGame();
     }
 }

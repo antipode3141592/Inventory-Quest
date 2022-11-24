@@ -14,7 +14,7 @@ namespace InventoryQuest.Managers
         Player player;
         int playerId = 0;
 
-        private IItem holdingItem;
+        IItem holdingItem;
         public IItem HoldingItem
         {
             get => holdingItem;
@@ -35,6 +35,8 @@ namespace InventoryQuest.Managers
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
         public event EventHandler OnGameBegining;
+        public event EventHandler OnSubmitDown;
+        public event EventHandler OnSubmitUp;
 
         [Inject]
         public void Init(IAdventureManager adventureManager)
@@ -62,6 +64,7 @@ namespace InventoryQuest.Managers
         void Update()
         {
             CheckRotateAction();
+            CheckSubmitAction();
         }
 
         void OnAdventureStartedHandler(object sender, EventArgs e)
@@ -75,7 +78,7 @@ namespace InventoryQuest.Managers
             currentState = targetState;
         }
 
-        public void CheckRotateAction()
+        void CheckRotateAction()
         {
             if (HoldingItem is null) return;
             bool rotateCW = player.GetButtonUp("RotatePieceCW");
@@ -97,11 +100,19 @@ namespace InventoryQuest.Managers
             }
         }
 
+        void CheckSubmitAction()
+        {
+            if (player.GetButtonDown("UISubmit"))
+                OnSubmitDown?.Invoke(this, EventArgs.Empty);
+            if (player.GetButtonUp("UISubmit"))
+                OnSubmitUp?.Invoke(this, EventArgs.Empty);
+        }
+
+
+
         public void BeginGame()
         {
             OnGameBegining?.Invoke(this, EventArgs.Empty);
         }
     }
-
-    public enum GameStates { Loading, Encounter, ItemHolding }
 }

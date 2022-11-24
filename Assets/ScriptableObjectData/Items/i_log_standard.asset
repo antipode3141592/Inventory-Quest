@@ -15,22 +15,19 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: e13aa4c673df77845aa57153b3b6300d, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 6
       Data: 
   id: log_standard
   description: Full log of local softwood, ready for milling.
-  defaultFacing: 0
+  shape: {fileID: 11400000, guid: e13aa4c673df77845aa57153b3b6300d, type: 2}
+  defaultFacing: 1
   rarity: 0
   weight: 400
   goldValue: 2

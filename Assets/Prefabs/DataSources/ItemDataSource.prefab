@@ -51,17 +51,23 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 18bf047efa22c0c41ab845f5db587d2f, type: 2}
     - {fileID: 11400000, guid: f62a336f3215004419f819cb1ca36faa, type: 2}
     - {fileID: 11400000, guid: 18c9490eadaf33247915e141940e86fa, type: 2}
+    - {fileID: 11400000, guid: 891798d5efa594a449063d55163b32f2, type: 2}
+    - {fileID: 11400000, guid: 61cdbb2f6c183de45b2b496d705fca1f, type: 2}
     - {fileID: 11400000, guid: 749662aee7bbf2b48b565215a1bf52de, type: 2}
     - {fileID: 11400000, guid: 71770ed78399d984da42df06be715ff5, type: 2}
+    - {fileID: 11400000, guid: e581c88818b97fa46b808e38e9702cb1, type: 2}
+    - {fileID: 11400000, guid: 909d5f62faf745f4a8c1c7ca8525c771, type: 2}
+    - {fileID: 11400000, guid: 77c9ad58d3418e043bdd9c3590d69da1, type: 2}
+    - {fileID: 11400000, guid: 449ab8e5805979a4e92455e781806ebb, type: 2}
     - {fileID: 11400000, guid: 03f71ae1729d3d7499025ce65f689870, type: 2}
+    - {fileID: 11400000, guid: d5ef8f049a289cb4c85ace6a2d9892d9, type: 2}
     - {fileID: 11400000, guid: ae0729e92f283e747ba648076d29b49f, type: 2}
+    - {fileID: 11400000, guid: 7c424243c07562140bfa6ebcf218ce33, type: 2}
     - {fileID: 11400000, guid: d231d266cc1afd14fa4a2bef94521f7b, type: 2}
     - {fileID: 11400000, guid: b80b73c7a37c2b14fa065d5196e8f881, type: 2}
     - {fileID: 11400000, guid: ce4b5e5c1f1d3974c9bb6ae56b05ef3a, type: 2}
     - {fileID: 11400000, guid: a1712d22d3861fa4e81005385022660c, type: 2}
-    - {fileID: 11400000, guid: 891798d5efa594a449063d55163b32f2, type: 2}
-    - {fileID: 11400000, guid: 61cdbb2f6c183de45b2b496d705fca1f, type: 2}
-    - {fileID: 11400000, guid: 7c424243c07562140bfa6ebcf218ce33, type: 2}
+    - {fileID: 11400000, guid: 95fb7ab74b4454245ae20bdc496793e0, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -75,7 +81,7 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 14
+      Data: 20
     - Name: 
       Entry: 10
       Data: 1
@@ -118,6 +124,24 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 10
+      Data: 19
     - Name: 
       Entry: 13
       Data: 

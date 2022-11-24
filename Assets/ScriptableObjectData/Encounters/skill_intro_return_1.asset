@@ -12,6 +12,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76031fda006fbbd40b419bc3ce8a80fa, type: 3}
   m_Name: skill_intro_return_1
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: rewards
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 2|Data.Penalties.DamagePenaltyStats, Data
+    - Name: damageType
+      Entry: 3
+      Data: 0
+    - Name: penaltyType
+      Entry: 3
+      Data: 0
+    - Name: damageAmount
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: intro_return_1
   _name: Intro Return - Encounter One
   description: Climb a tree to anchor a rope so the party may pass. (Strength or
@@ -19,8 +69,6 @@ MonoBehaviour:
   experience: 300
   successMessage: success!
   failureMessage: failure!
-  rewardIds: []
-  penaltyIds: []
   skillCheckRequirements:
   - Description: 
     StatTypes: 0000000001000000

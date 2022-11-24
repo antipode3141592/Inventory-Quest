@@ -7,5 +7,7 @@ namespace InventoryQuest.Managers
         Party CurrentParty { get; }
 
         public void AddCharacterToParty(string id);
+
+        public void AddCharacterToParty(ICharacter character);
     }
 }

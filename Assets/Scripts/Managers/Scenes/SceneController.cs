@@ -34,6 +34,7 @@ namespace InventoryQuest.Managers
             int index = SceneUtility.GetBuildIndexByScenePath(_currentSceneName);
             if (Debug.isDebugBuild)
                 Debug.Log($"...at build index{index}");
+            if (index == -1) return;
             var scene = SceneManager.GetSceneByBuildIndex(index);
             if (!scene.IsValid())
             {

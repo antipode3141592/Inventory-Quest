@@ -73,7 +73,7 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 5
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -91,8 +91,8 @@ MonoBehaviour:
   experience: 100
   successMessage: The spirit regards you for a moment before singing a few notes
     and disappearing.  You find a small cache of goods.
-  failureMessage: The spirit shrieks at you before disappearing.  Search the branches
-    yields nothing.
+  failureMessage: The spirit shrieks a painful wail and then disappears.  Searching
+    the bramble yields nothing.
   skillCheckRequirements:
   - Description: Placate Spirit
     StatTypes: 0a000000

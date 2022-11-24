@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  CharacterPortraitPrefab: {fileID: 7384396024342420614, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
+  CharacterPortraitPrefab: {fileID: 9113256971570305394, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
   _characterStatsDisplays:
   - {fileID: 7533496883829705705}
 --- !u!1 &7533496883575705087

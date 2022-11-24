@@ -635,7 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c190ba3da7d3a684d9e95a4a9625538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterPortraitPrefab: {fileID: 7384396024342420614, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
+  interactable: 0
+  CharacterPortraitPrefab: {fileID: 9113256971570305394, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
   _characterStatsDisplays:
   - {fileID: 1238187111780377667}
 --- !u!1 &2418677259462981846
@@ -3024,7 +3025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a0003a4d6425c45b0b3dccc2a3011c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootIconPrefab: {fileID: 4358320427810425559, guid: bda7e10f5f4a3aa43b508a6ff70f052f, type: 3}
+  _lootIconPrefab: {fileID: 1272447982622229708, guid: bda7e10f5f4a3aa43b508a6ff70f052f, type: 3}
 --- !u!1 &7571999677538629169
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using Data.Characters;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,12 +9,12 @@ namespace InventoryQuest.UI
 {
     public class CharacterPortrait : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField]
-        Image background;
-        [SerializeField]
-        Image portrait;
-        [SerializeField]
-        TextMeshProUGUI nameText;
+        [SerializeField] Image background;
+        [SerializeField] Image portrait;
+        [SerializeField] TextMeshProUGUI nameText;
+        [SerializeField] HealthBar healthBar;
+
+        ICharacter _character;
 
         public PartyDisplay PartyDisplay;
 
@@ -39,18 +41,43 @@ namespace InventoryQuest.UI
             nameText.text = name;
         }
 
-        public void SetupPortrait(string guid, string displayName, Sprite image)
+        public void SetupPortrait(string guid, string displayName, Sprite sprite, ICharacter character)
         {
-            SetImage(image);
+            SetImage(sprite);
             SetName(displayName);
             CharacterGuid = guid;
+            _character = character;
+            SubscribeToHealthUpdate();
+        }
+
+        void SubscribeToHealthUpdate()
+        {
+            _character.OnStatsUpdated += CharacterStatsUpdatedHandler;
+            SetHealthBar(1f);
+        }
+
+        void CharacterStatsUpdatedHandler(object sender, EventArgs e)
+        {
+            var character = sender as ICharacter;
+            SetHealthBar(character.CurrentHealth / character.MaximumHealth);
+        }
+
+        void UnsubscribeFromHealthUpdate()
+        {
+            _character.OnStatsUpdated -= CharacterStatsUpdatedHandler;
+        }
+
+
+
+        void SetHealthBar(float percentage)
+        {
+            healthBar.SetForegroundWidth(percentage);
         }
 
         public void SelectPartyMember()
         {
             Debug.Log($"SelectPartyMember() called on character {CharacterGuid}", gameObject);
             PartyDisplay.PartyMemberSelected(CharacterGuid);
-
         }
 
         public void ChangePartyMemberName(string name)

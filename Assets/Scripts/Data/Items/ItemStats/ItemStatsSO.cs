@@ -11,7 +11,7 @@ namespace Data.Items
     {
         [SerializeField] string id;
         [SerializeField] string description;
-        [SerializeField] IShape shape;
+        [SerializeField] ShapeSO shape;
         [SerializeField] Facing defaultFacing;
         [SerializeField] Rarity rarity;
         [SerializeField] float weight;

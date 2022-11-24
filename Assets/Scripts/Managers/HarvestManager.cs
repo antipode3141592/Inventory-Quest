@@ -90,12 +90,13 @@ namespace InventoryQuest.Managers
         public void PopulateHarvest(string containerId, string itemId, int quantity)
         {
             var harvestPile = ItemFactory.GetItem(_itemDataSource.GetById(containerId));
+            if (!harvestPile.Components.ContainsKey(typeof(IContainer))) return;
             var harvestContainer = (IContainer)harvestPile.Components[typeof(IContainer)];
             if (harvestContainer is null) return;
-            Piles.Add(harvestPile.GuId, harvestContainer);
+            Piles.Add(harvestContainer.GuId, harvestContainer);
             for (int i = 0; i < quantity; i++)
             {
-                ItemPlacementHelpers.TryAutoPlaceToContainer(harvestPile.Components[typeof(IContainer)] as IContainer, ItemFactory.GetItem(_itemDataSource.GetById(itemId)));
+                ItemPlacementHelpers.TryAutoPlaceToContainer(harvestContainer, ItemFactory.GetItem(_itemDataSource.GetById(itemId)));
             }
         }
 

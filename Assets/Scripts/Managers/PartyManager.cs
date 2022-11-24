@@ -75,6 +75,11 @@ namespace InventoryQuest.Managers
 
         }
 
+        public void AddCharacterToParty(ICharacter character)
+        {
+            _party.AddCharacter(character);
+        }
+
         void AddCharacterWithEquipmentToParty(string id, IList<string> startingEquipment = null, IList<string> startingInventory = null)
         {
             List<IItem> equipment = new();

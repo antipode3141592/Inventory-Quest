@@ -5,7 +5,6 @@ namespace InventoryQuest.Managers.States
 {
     public class LoadingHarvest : IState
     {
-        IRewardManager _rewardManager;
         IHarvestManager _harvestManager;
 
         public bool IsDone;
@@ -39,7 +38,7 @@ namespace InventoryQuest.Managers.States
             switch (harvestType)
             {
                 case HarvestTypes.Forest:
-                    _harvestManager.PopulateHarvest("logging_pile", "log_standard", 5);
+                    _harvestManager.PopulateHarvest("logging_pile", "log_standard", 10);
                     break;
                 case HarvestTypes.Mine:
                     break;

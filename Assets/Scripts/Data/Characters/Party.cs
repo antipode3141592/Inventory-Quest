@@ -52,12 +52,12 @@ namespace Data.Characters
             
         }
 
-        public ICharacter SelectCharacter(string characterId)
+        public ICharacter SelectCharacter(string characterGuId)
         {
-            if (!Characters.ContainsKey(characterId)) return null;
-            SelectedPartyMemberGuId = characterId;
-            OnPartyMemberSelected?.Invoke(this, characterId);
-            return Characters[characterId];
+            if (!Characters.ContainsKey(characterGuId)) return null;
+            SelectedPartyMemberGuId = characterGuId;
+            OnPartyMemberSelected?.Invoke(this, characterGuId);
+            return Characters[characterGuId];
         }
 
         public void SetDisplayOrder()

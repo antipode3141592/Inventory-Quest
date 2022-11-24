@@ -92,7 +92,7 @@ namespace InventoryQuest.Managers.States
                 }
                 _message = _gameStateDataSource.CurrentEncounter.Stats.FailureMessage;
                 messageDuration = CalculateLength(_message.Length);
-                DistributePenalties(_partyManager.CurrentParty.Characters);
+                _penaltyManager.ProcessPenalties();
                 OnEncounterResolveFailure?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }
             DialogueManager.ShowAlert(_message, messageDuration);
@@ -119,14 +119,6 @@ namespace InventoryQuest.Managers.States
             foreach (var character in Characters)
             {
                 character.Value.CurrentExperience += _gameStateDataSource.CurrentEncounter.Stats.Experience;
-            }
-        }
-
-        void DistributePenalties(IDictionary<string, ICharacter> Characters)
-        {
-            foreach (var character in Characters)
-            {
-
             }
         }
     }
