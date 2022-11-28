@@ -27,7 +27,7 @@ MonoBehaviour:
   id: log_standard_cookie
   description: A full horizontal slice of a common softwood log.
   shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
-  defaultFacing: 1
+  defaultFacing: 0
   rarity: 0
   weight: 0
   goldValue: 0

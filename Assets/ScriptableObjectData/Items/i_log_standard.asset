@@ -27,7 +27,7 @@ MonoBehaviour:
   id: log_standard
   description: Full log of local softwood, ready for milling.
   shape: {fileID: 11400000, guid: e13aa4c673df77845aa57153b3b6300d, type: 2}
-  defaultFacing: 1
+  defaultFacing: 0
   rarity: 0
   weight: 400
   goldValue: 2

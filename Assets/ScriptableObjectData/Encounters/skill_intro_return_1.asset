@@ -52,6 +52,67 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: skillCheckRequirements
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Data.Encounters.SkillCheckRequirement,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Data.Encounters.SkillCheckRequirement, Data
+    - Name: Description
+      Entry: 1
+      Data: Climb around the obstacle (Strength or Vitality + Climb)
+    - Name: StatTypes
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SkillTypes
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 13
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TargetValue
+      Entry: 3
+      Data: 14
+    - Name: PartyTargetValue
+      Entry: 3
       Data: 0
     - Name: 
       Entry: 8
@@ -64,14 +125,7 @@ MonoBehaviour:
       Data: 
   id: intro_return_1
   _name: Intro Return - Encounter One
-  description: Climb a tree to anchor a rope so the party may pass. (Strength or
-    Vitality + Climb)
+  description: A tree has fallen in the road, blocking your passage.
   experience: 300
-  successMessage: success!
-  failureMessage: failure!
-  skillCheckRequirements:
-  - Description: 
-    StatTypes: 0000000001000000
-    SkillTypes: 0d000000
-    TargetValue: 15
-    PartyTargetValue: 0
+  successMessage: You easily scramble over the fell tree.
+  failureMessage: You get through the barrier with minor scrapes.

@@ -24,7 +24,7 @@ MonoBehaviour:
   id: Destinationville
   _name: Destinationville
   displayName: Destinationville
-  thumbnailSpritePath: Locations/town_icon_2
+  thumbnailSprite: {fileID: 21300000, guid: f0ec91856cc70e94d95b8998471f97ef, type: 3}
   scenePath: Assets/Scenes/Locations/location_Destinationville.unity
   characterIds:
   - stanley

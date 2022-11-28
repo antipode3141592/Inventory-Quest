@@ -1229,7 +1229,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 3783028482874587468}
+    m_SelectOnDown: {fileID: 3871493799781156889}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3783028482874587468}
+      - m_Target: {fileID: 3871493799781156889}
         m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
         m_MethodName: Select
         m_Mode: 1
@@ -1426,6 +1426,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 6504387167638117007, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 8947868910813443719}
     - target: {fileID: 6592833276385438682, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
@@ -1447,9 +1451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453a667716591584788607e06967ba9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3783028482874587468 stripped
+--- !u!114 &3871493799781156889 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6592833276385438682, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6504387167638117007, guid: d30e5708eece87a46b8847bb3094d2ff, type: 3}
   m_PrefabInstance: {fileID: 8070018096128627350}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

@@ -8,7 +8,8 @@
         "Zenject",
         "InventoryQuest",
         "Zenject-TestFramework",
-        "InventoryQuest.UI"
+        "InventoryQuest.UI",
+        "Zenject-Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

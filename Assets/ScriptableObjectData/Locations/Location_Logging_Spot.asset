@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Location_Logging_Spot
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
+    SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -24,7 +24,7 @@ MonoBehaviour:
   id: logging_spot
   _name: Logging Spot
   displayName: Designated Logging Area
-  thumbnailSpritePath: Items/logging
+  thumbnailSprite: {fileID: 21300000, guid: b272070a4ae2677459e83e6a148fb535, type: 3}
   scenePath: Assets/Scenes/Locations/location_logging_stand.unity
   characterIds:
   - logging_manager

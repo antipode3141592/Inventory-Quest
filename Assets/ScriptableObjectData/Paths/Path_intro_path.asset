@@ -12,11 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133a414ef9d381f4b8b6e4947ad5a4ce, type: 3}
   m_Name: Path_intro_path
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 962d8c6dcbf64e34fb0bcb62977c3f12, type: 2}
+    - {fileID: 11400000, guid: 0b3b4e2f46647ab4fb3ed910c958f2f7, type: 2}
+    - {fileID: 11400000, guid: ebd0966aa3a84424e99579c64f1e94a9, type: 2}
+    - {fileID: 11400000, guid: 1041f34f35f417c45a86e293b1bc5d02, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: encounterStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IEncounterStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: intro_path
   _name: A Stroll to Destinationville
   startLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
   endLocationStats: {fileID: 11400000, guid: 19fe18c9602b0864da582ddff71c67aa, type: 2}
-  encounterIds:
-  - intro_1
-  - intro_2
-  - intro_3

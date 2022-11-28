@@ -83,19 +83,70 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: skillCheckRequirements
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Encounters.SkillCheckRequirement,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 6|Data.Encounters.SkillCheckRequirement, Data
+    - Name: Description
+      Entry: 1
+      Data: Placate the spirit (Spirit Affinity + Persuade)
+    - Name: StatTypes
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 10
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SkillTypes
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 15
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TargetValue
+      Entry: 3
+      Data: 20
+    - Name: PartyTargetValue
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: intro_2
   _name: A Quiet Copse of Cedars
   description: A glimmer catches your eye in fallen branches just off the path and
-    a forest spirit appears as you approach.  Attempt to placate the spirit (Spirit
-    Affinity + Persuade).
+    a forest spirit appears as you approach.
   experience: 100
   successMessage: The spirit regards you for a moment before singing a few notes
     and disappearing.  You find a small cache of goods.
   failureMessage: The spirit shrieks a painful wail and then disappears.  Searching
     the bramble yields nothing.
-  skillCheckRequirements:
-  - Description: Placate Spirit
-    StatTypes: 0a000000
-    SkillTypes: 0f000000
-    TargetValue: 15
-    PartyTargetValue: 0

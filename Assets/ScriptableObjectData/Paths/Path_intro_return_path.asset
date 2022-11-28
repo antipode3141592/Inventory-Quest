@@ -12,11 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133a414ef9d381f4b8b6e4947ad5a4ce, type: 3}
   m_Name: Path_intro_return_path
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 962d8c6dcbf64e34fb0bcb62977c3f12, type: 2}
+    - {fileID: 11400000, guid: 56c913089d55aee44978c543e4e4eede, type: 2}
+    - {fileID: 11400000, guid: b27f48b2af052fb40b368682c442a8d9, type: 2}
+    - {fileID: 11400000, guid: 5a8ea668fdf73a342b1b19640e11c33d, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: encounterStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IEncounterStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: intro_return_path
   _name: The Return to Startington
   startLocationStats: {fileID: 11400000, guid: 19fe18c9602b0864da582ddff71c67aa, type: 2}
   endLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
-  encounterIds:
-  - intro_return_1
-  - intro_return_2
-  - intro_return_3
