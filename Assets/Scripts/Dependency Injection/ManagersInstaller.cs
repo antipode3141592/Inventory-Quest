@@ -29,6 +29,8 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IHarvestManager>().To<HarvestManager>()
                 .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IInputManager>().To<InputManager>()
+                .FromComponentInHierarchy().AsSingle();
         }
     }
 }

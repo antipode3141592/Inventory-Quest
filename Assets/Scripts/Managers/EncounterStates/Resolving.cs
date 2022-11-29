@@ -14,19 +14,16 @@ namespace InventoryQuest.Managers.States
         IPenaltyManager _penaltyManager;
         IPartyManager _partyManager;
         IGameStateDataSource _gameStateDataSource;
+        IDeltaTimeTracker _deltaTimeTracker;
 
-        public Resolving(IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyManager partyManager, IGameStateDataSource gameStateDataSource)
-        {
-            _rewardManager = rewardManager;
-            _penaltyManager = penaltyManager;
-            _partyManager = partyManager;
-            _gameStateDataSource = gameStateDataSource;
-        }
+        //timing
+
+        bool enableTimer = false;
+        float timer = 0f;
+        float maxTime = 0f;
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
-
-        public event EventHandler<float> OnEncounterResolveStart;
 
         public event EventHandler<string> OnEncounterResolveSuccess;
         public event EventHandler<string> OnEncounterResolveFailure;
@@ -35,12 +32,23 @@ namespace InventoryQuest.Managers.States
         public bool EndState { get; private set; } = false;
 
         public bool IsDone { get; private set; } = false;
-        
+
+        public Resolving(IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyManager partyManager, IGameStateDataSource gameStateDataSource, IDeltaTimeTracker deltaTimeTracker)
+        {
+            _rewardManager = rewardManager;
+            _penaltyManager = penaltyManager;
+            _partyManager = partyManager;
+            _gameStateDataSource = gameStateDataSource;
+            _deltaTimeTracker = deltaTimeTracker;
+        }
+
 
         public void OnEnter()
         {
             EndState = false;
             IsDone = false;
+            enableTimer = false;
+            timer = 0f;
             BeginResolution();
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
@@ -52,7 +60,7 @@ namespace InventoryQuest.Managers.States
 
         public void Tick()
         {
-
+            RunTimer();
         }
 
         void BeginResolution()
@@ -96,8 +104,8 @@ namespace InventoryQuest.Managers.States
                 OnEncounterResolveFailure?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }
             DialogueManager.ShowAlert(_message, messageDuration);
-
-            OnEncounterResolveStart?.Invoke(this, messageDuration);
+            maxTime = messageDuration;
+            enableTimer = true;
 
             float CalculateLength(int messageLength) 
             {
@@ -110,9 +118,17 @@ namespace InventoryQuest.Managers.States
         {
             OnEncounterResolved?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             IsDone = true;
+            enableTimer = false;
+            timer = 0f;
         }
 
-
+        void RunTimer()
+        {
+            if (enableTimer)
+                timer += _deltaTimeTracker.DeltaTime;
+            if (timer > maxTime  && EndState)
+                CompleteResolution();
+        }
 
         void AwardExperience(IDictionary<string, ICharacter> Characters)
         {

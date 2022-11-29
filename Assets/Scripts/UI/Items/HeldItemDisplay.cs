@@ -11,7 +11,7 @@ namespace InventoryQuest.UI
 {
     public class HeldItemDisplay : MonoBehaviour
     {
-        IGameManager _gameManager;
+        IInputManager _inputManager;
 
         [SerializeField] Image backgroundImage;
         [SerializeField] Image itemImage;
@@ -24,19 +24,15 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI QuantityText;
 
         [Inject]
-        public void Init(IGameManager gameManager)
+        public void Init(IInputManager inputManager)
         {
-            _gameManager = gameManager;
-        }
-
-        void Awake()
-        {
-            _gameManager.OnItemHeld += OnItemHeldHandler;
-            _gameManager.OnItemPlaced += OnItemPlacedHandler;
+            _inputManager = inputManager;
         }
 
         void Start()
         {
+            _inputManager.OnItemHeld += OnItemHeldHandler;
+            _inputManager.OnItemPlaced += OnItemPlacedHandler;
             backgroundImage.gameObject.SetActive(false);
         }
 
@@ -49,7 +45,7 @@ namespace InventoryQuest.UI
         {
             backgroundImage.gameObject.SetActive(true);
             //populate display
-            DisplayItemDetails(_gameManager.HoldingItem);
+            DisplayItemDetails(_inputManager.HoldingItem);
         }
 
         void DisplayItemDetails(IItem item)

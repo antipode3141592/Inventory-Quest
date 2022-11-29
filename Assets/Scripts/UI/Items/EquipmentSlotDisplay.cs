@@ -12,6 +12,7 @@ namespace InventoryQuest.UI
     public class EquipmentSlotDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         IGameManager _gameManager;
+        IInputManager _inputManager;
         ICharacter _character;
 
         [SerializeField] string _slotId;
@@ -25,9 +26,10 @@ namespace InventoryQuest.UI
         public string SlotId => _slotId;
 
         [Inject]
-        public void Init(IGameManager gameManager)
+        public void Init(IGameManager gameManager, IInputManager inputManager)
         {
             _gameManager = gameManager;
+            _inputManager = inputManager;
         }
 
         private void Awake()
@@ -74,7 +76,7 @@ namespace InventoryQuest.UI
         {
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             Data.HighlightState squareState;
-            var equipableItem = _gameManager.HoldingItem;
+            var equipableItem = _inputManager.HoldingItem;
             if (equipableItem is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipableItem)) { 
                 squareState = Data.HighlightState.Highlight;
                 
@@ -100,7 +102,7 @@ namespace InventoryQuest.UI
                     if (_character.EquipmentSlots[SlotId].TryUnequip(out var currentEquipment))
                     {
                         if (currentEquipment is null) return;
-                        _gameManager.HoldingItem = currentEquipment as IItem;
+                        _inputManager.HoldingItem = currentEquipment as IItem;
                         _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.white;
                         equippedItemSprite.color = Color.white;
@@ -108,10 +110,10 @@ namespace InventoryQuest.UI
                     }
                     break;
                 case GameStates.ItemHolding:
-                    if (_character.EquipmentSlots[SlotId].TryEquip(out var previousItem, _gameManager.HoldingItem))
+                    if (_character.EquipmentSlots[SlotId].TryEquip(out var previousItem, _inputManager.HoldingItem))
                     {
-                        _gameManager.HoldingItem = previousItem as IItem;
-                        if (_gameManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Encounter);
+                        _inputManager.HoldingItem = previousItem as IItem;
+                        if (_inputManager.HoldingItem is null) _gameManager.ChangeState(GameStates.Encounter);
                         else _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.grey;
                         equippedItemSprite.color = Color.white;

@@ -58,7 +58,7 @@ namespace InventoryQuest.Managers.States
             _rewardManager.DestroyRewards();
             //check for end of path
             _gameStateDataSource.CurrentIndex++;
-            if (_gameStateDataSource.CurrentIndex < _gameStateDataSource.CurrentPath.Length)
+            if (_gameStateDataSource.CurrentIndex < _gameStateDataSource.CurrentPathStats.EncounterStats.Count)
                 EncounterAvailable = true;
         }
     }

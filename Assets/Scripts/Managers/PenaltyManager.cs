@@ -1,4 +1,5 @@
-﻿using Data.Penalties;
+﻿using Data.Characters;
+using Data.Penalties;
 using InventoryQuest.Health;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,7 @@ namespace InventoryQuest.Managers
         {
             if (penalties.Count == 0) return false;
             while(penalties.Count > 0) {
-                var penalty = penalties.Dequeue();
-                ProcessPenalty(penalty);
+                ProcessPenalty(penalties.Dequeue());
             }
             return true;
         }
@@ -45,6 +45,7 @@ namespace InventoryQuest.Managers
         {
             DamagePenaltyStats damageStats = penalty as DamagePenaltyStats;
             if (damageStats is not null)
+                Debug.Log($"Processing DamagePenalty with {damageStats.DamageAmount} pts of {damageStats.DamageType} type damage");
                 foreach (var character in _partyManager.CurrentParty.Characters)
                 {
                     _healthManager.DealDamage(character.Value, damageStats.DamageAmount, damageStats.DamageType);

@@ -3,52 +3,63 @@ using InventoryQuest.Managers;
 using Zenject;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Data.Encounters;
+using System.Collections;
 
 namespace InventoryQuest.UI.Menus
 {
     public class TravelingMenu : Menu
     {
         IPartyManager _partyManager;
-        IAdventureManager _adventureManager;
         IEncounterManager _encounterManager;
         IGameStateDataSource _gameStateDataSource;
 
         [SerializeField] PartyDisplay partyDisplay;
-
         [SerializeField] TextMeshProUGUI encounterText;
-        [SerializeField] List<PressAndHoldButton> choiceButtons;
-        [SerializeField] GameObject encounterDisplayGroup;
+
+        [SerializeField] EncounterChoiceButton choiceButtonPrefab;
+        [SerializeField] List<EncounterChoiceButton> choiceButtons = new();
+        [SerializeField] RectTransform choicesGroup;
+        [SerializeField] List<GameObject> encounterDisplayGroupItems;
+
+        [SerializeField] Button InventoryButton;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IAdventureManager adventureManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
+        public void Init(IPartyManager partyManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
             _partyManager = partyManager;
-            _adventureManager = adventureManager;
             _encounterManager = encounterManager;
             _gameStateDataSource = gameStateDataSource;
         }
 
-
         protected override void Awake()
         {
             base.Awake();
-            choiceButtons[0].gameObject.SetActive(false);
-            //choiceButtons[0].OnPointerHoldSuccess += Retreat;
-            choiceButtons[1].OnPointerHoldSuccess += Inventory;
-            choiceButtons[2].OnPointerHoldSuccess += Resolve;
+            InventoryButton.onClick.AddListener(Inventory);
+            choiceButtons[0].Button.onClick.AddListener(Resolve);
+            foreach (var item in encounterDisplayGroupItems)
+                item.SetActive(false);
         }
 
-        void Resolve(object sender, EventArgs e)
+        void ToggleGroup(bool show)
         {
-            encounterDisplayGroup.SetActive(false);
+            foreach (var item in encounterDisplayGroupItems)
+                item.SetActive(show);
+        }
+
+        void Resolve()
+        {
+            Debug.Log($"TravelingMenu.Resolve() called");
+            ToggleGroup(show:false);
             _encounterManager.Loading.IsLoaded = true;
         }
 
-        void Inventory(object sender, EventArgs e)
+        void Inventory()
         {
+            Debug.Log($"TravelingMenu.Inventory() called");
             _encounterManager.Loading.ManageInventory = true;
         }
 
@@ -62,37 +73,11 @@ namespace InventoryQuest.UI.Menus
             base.Show();
             _partyManager.CurrentParty.OnPartyMemberSelected += PartyMemberSelected;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
-            
-            encounterDisplayGroup.SetActive(false);
+            _encounterManager.Loading.StateExited += OnEncounterLoadingExitHandler;
+            ToggleGroup(show: false);
         }
 
-        void OnEncounterLoadedHandler(object sender, string e)
-        {
-            SetEncounterDisplay(e);
-        }
-
-        void SetEncounterDisplay(string encounterId)
-        {
-            encounterDisplayGroup.SetActive(true);
-            
-            var encounter = _gameStateDataSource.CurrentEncounter;       
-            encounterText.text = encounter.Description;
-
-            IRestEncounterStats encounterCheck = encounter.Stats as IRestEncounterStats;
-            if (encounterCheck is not null)
-            {
-
-            }
-
-            ISkillCheckEncounterStats skillCheck = encounter.Stats as ISkillCheckEncounterStats;
-            if (skillCheck is not null)
-            {
-                string choiceText = skillCheck.SkillCheckRequirements[0].Description;
-                //choiceButtons[2].UpdateButtonText(choiceText);
-            }
-
-            choiceButtons[1].Select();
-        }
+        
 
         public override void Hide()
         {
@@ -102,7 +87,46 @@ namespace InventoryQuest.UI.Menus
 
         void PartyMemberSelected(object sender, string e)
         {
-            
+
         }
+
+        void OnEncounterLoadedHandler(object sender, string e)
+        {
+            var encounter = _gameStateDataSource.CurrentEncounter;
+
+            StartCoroutine(SettingEncounterDisplay(encounter));
+        }
+
+        void OnEncounterLoadingExitHandler(object sender, EventArgs e)
+        {
+            ToggleGroup(show: false);
+        }
+
+        IEnumerator SettingEncounterDisplay(IEncounter encounter)
+        {
+            //empty and rest encounters auto resolve
+            // and encounter display groups stay hidden
+            IRestEncounterStats restEncounterStats = encounter.Stats as IRestEncounterStats;
+            IEmptyEncounterStats emptyEncounterStats = encounter.Stats as IEmptyEncounterStats;
+            if (emptyEncounterStats is not null || restEncounterStats is not null)
+            {
+                Debug.Log($"empty or rest encounter, autoresolving...");
+                Resolve();
+                yield break;
+            }
+
+            //skill checks show encounter text during Loading and Resolving states.  
+            ISkillCheckEncounterStats skillCheck = encounter.Stats as ISkillCheckEncounterStats;
+            if (skillCheck is not null)
+            {
+                Debug.Log($"skill check encounter, show encounter text and update choice button text");
+                ToggleGroup(show: true);
+                yield return null;
+                encounterText.text = encounter.Description;
+                choiceButtons[0].ChangeButtonText(skillCheck.SkillCheckRequirements[0].Description);
+            }
+        }
+
+        
     }
-}
+};

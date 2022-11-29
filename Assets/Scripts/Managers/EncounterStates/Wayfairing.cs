@@ -1,20 +1,29 @@
-﻿using FiniteStateMachine;
+﻿using Data;
+using FiniteStateMachine;
 using InventoryQuest.Traveling;
 using System;
-using UnityEngine;
 
 namespace InventoryQuest.Managers.States
 {
     public class Wayfairing : IState
     {
+        TravelSettings _travelSettings;
         IPartyController _partyController;
+        IDeltaTimeTracker _deltaTimeTracker;
 
-        public Wayfairing(IPartyController partyController)
+        public bool IsDone = false;
+
+        bool enableTimer = false;
+        float timer = 0f;
+
+        public event EventHandler<float> TimerPercentComplete;
+
+        public Wayfairing(IPartyController partyController, IDeltaTimeTracker deltaTimeTracker, TravelSettings travelSettings)
         {
             _partyController = partyController;
+            _deltaTimeTracker = deltaTimeTracker;
+            _travelSettings = travelSettings;
         }
-
-        public float TotalDistanceMoved => _partyController.DistanceMoved;
 
         //party autoscrolls for one unit
 
@@ -23,7 +32,9 @@ namespace InventoryQuest.Managers.States
 
         public void OnEnter()
         {
-            Debug.Log($"Entering Wayfairing State...");
+            IsDone = false;
+            enableTimer = true;
+            timer = 0f;
             _partyController.MoveAll();
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
@@ -36,9 +47,11 @@ namespace InventoryQuest.Managers.States
 
         public void Tick()
         {
-            //move party to the right
-            // store total distance
-            
+            if (!enableTimer) return;
+            timer += _deltaTimeTracker.DeltaTime;
+            TimerPercentComplete?.Invoke(this, timer / _travelSettings.WayfairingEncounterTime);
+            if (timer < _travelSettings.WayfairingEncounterTime) return;
+            IsDone = true;
         }
     }
 }

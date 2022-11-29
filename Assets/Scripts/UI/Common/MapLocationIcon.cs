@@ -37,7 +37,7 @@ namespace InventoryQuest.UI
             var locationStats = _locationDataSource.GetById(_locationId);
             if (locationStats is null)
                 return;
-            _icon.sprite = Resources.Load<Sprite>(locationStats.ThumbnailSpritePath);
+            _icon.sprite = locationStats.ThumbnailSprite;
             _locationNameText.text = locationStats.DisplayName;
         }
 

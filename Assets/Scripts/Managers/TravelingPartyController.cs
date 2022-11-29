@@ -19,8 +19,6 @@ namespace InventoryQuest.Traveling
 
         public float DistanceMoved { get; protected set; } = 0;
 
-        public event EventHandler<float> TravelPercentageUpdate;
-
         [Inject]
         public void Init(IPartyManager partyManager)
         {
@@ -47,10 +45,8 @@ namespace InventoryQuest.Traveling
 
         public void IdleAll()
         {
-            if (isIdle) return;
             isIdle = true;
             isMoving = false;
-
             foreach (var character in partyMembers.FindAll(x => x.isActiveAndEnabled))
                 character.Idle();
         }
@@ -76,10 +72,9 @@ namespace InventoryQuest.Traveling
         {
             while (isMoving)
             {
-                float travelDistance = Time.deltaTime * travelSettings.PartyTravelingSpeed;
+                float travelDistance = Time.deltaTime * travelSettings.PartyWalkingSpeed;
                 transform.position = new(travelDistance + transform.position.x, transform.position.y, transform.position.z);
                 DistanceMoved += travelDistance;
-                TravelPercentageUpdate?.Invoke(this, DistanceMoved / travelSettings.DefaultDistanceBetweenEncounters);
                 yield return null;
             }
 

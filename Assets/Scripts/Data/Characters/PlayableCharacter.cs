@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Data.Characters
 {
     //characters 
-    public class PlayableCharacter : ICharacter
+    public class PlayableCharacter : ICharacter, IDamagable
     {
         int weaponProficiencyIndex = 0;
 
@@ -24,7 +24,7 @@ namespace Data.Characters
         public float MaximumEncumbrance => StatDictionary[StatTypes.Strength].CurrentValue * 15;
         public int CurrentExperience { get; set; }
         public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
-        public int CurrentLevel { get; set; }
+        public int CurrentLevel { get; set; } = 1;
 
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
@@ -38,10 +38,10 @@ namespace Data.Characters
         {
             get
             {
-                if (!EquipmentSlots.ContainsKey("backpack")) 
+                if (!EquipmentSlots.ContainsKey("backpack"))
                 {
                     Debug.LogWarning($"character {DisplayName} does not have a backpack slot!");
-                    return null; 
+                    return null;
                 }
                 IItem equippedItem = EquipmentSlots["backpack"].EquippedItem;
                 if (equippedItem is null)
@@ -74,6 +74,8 @@ namespace Data.Characters
         public event EventHandler<string> OnItemAddedToBackpack;
         public event EventHandler OnDying;
         public event EventHandler OnDead;
+        public event EventHandler<int> DamageTaken;
+        public event EventHandler<int> DamageHealed;
 
         public PlayableCharacter(ICharacterStats characterStats, IList<IItem> initialEquipment, IList<IItem> initialInventory = null)
         {
@@ -149,10 +151,17 @@ namespace Data.Characters
             StatDictionary.Add(persuade.Id, persuade);
             StatDictionary.Add(intimidate.Id, intimidate);
 
+            CurrentHealth = MaximumHealth;
+            CurrentMagicPool = MaximumMagicPool;
+
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
                 AddEquipmentSlot(slotType);
             }
+
+            Resistances = new Dictionary<DamageType, DamageResistance>();
+
+
 
             foreach (var prof in characterStats.WeaponProficiencies)
             {
@@ -197,7 +206,7 @@ namespace Data.Characters
 
             void AddEquipmentSlot(EquipmentSlotType slotType)
             {
-                
+
                 int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
                 string id = slotType.ToString().ToLower();
                 if (matchCount > 0)
@@ -273,7 +282,7 @@ namespace Data.Characters
 
         public void ChangeToNextWeapon()
         {
-            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++%WeaponProficiencies.Count];
+            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++ % WeaponProficiencies.Count];
 
         }
 
@@ -291,13 +300,24 @@ namespace Data.Characters
 
         public void DealDamage(int damageAmount, DamageType damageType)
         {
+            Debug.Log($"DealDamage on {DisplayName}");
             if (IsDead || IsDying) return;
-            CurrentHealth -= damageAmount - Resistances[damageType].CurrentValue;
+            int adjustedAmount = damageAmount - StatDictionary[StatTypes.Defense].CurrentValue - (Resistances.ContainsKey(damageType) ? Resistances[damageType].CurrentValue : 0);
+            if (adjustedAmount <= 0) return;
+            CurrentHealth -= adjustedAmount;
+            
+            DamageTaken?.Invoke(this, adjustedAmount);
         }
 
         public void HealDamage(int healAmount)
         {
-
+            Debug.Log($"HealDamage on {DisplayName}");
+            if (IsDead || IsDying) return;
+            if (CurrentHealth >= MaximumHealth) return;
+            int adjustedAmount = Math.Clamp(healAmount, 0, MaximumHealth - CurrentHealth);
+            if (adjustedAmount <= 0) return;
+            CurrentHealth += adjustedAmount;
+            DamageHealed?.Invoke(this, adjustedAmount);
         }
     }
 }

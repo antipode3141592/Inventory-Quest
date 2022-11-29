@@ -12,6 +12,6 @@ namespace Data.Encounters
 
         public string EndLocationId { get; }
 
-        public List<string> EncounterIds { get; }
+        public List<IEncounterStats> EncounterStats { get; }
     }
 }

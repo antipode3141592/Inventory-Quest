@@ -52,22 +52,30 @@ namespace InventoryQuest.UI
 
         void SubscribeToHealthUpdate()
         {
-            _character.OnStatsUpdated += CharacterStatsUpdatedHandler;
-            SetHealthBar(1f);
-        }
-
-        void CharacterStatsUpdatedHandler(object sender, EventArgs e)
-        {
-            var character = sender as ICharacter;
-            SetHealthBar(character.CurrentHealth / character.MaximumHealth);
+            _character.DamageTaken += CharacterDamaged;
+            _character.DamageHealed += CharacterHealed;
         }
 
         void UnsubscribeFromHealthUpdate()
         {
-            _character.OnStatsUpdated -= CharacterStatsUpdatedHandler;
+            _character.DamageTaken -= CharacterDamaged;
+            _character.DamageHealed -= CharacterHealed;
         }
 
+        void CharacterDamaged(object sender, int e)
+        {
+            UpdateHealthBar(_character);
+        }
 
+        void CharacterHealed(object sender, int e)
+        {
+            UpdateHealthBar(_character);
+        }
+        
+        void UpdateHealthBar(ICharacter character)
+        {
+            SetHealthBar((float)character.CurrentHealth / (float)character.MaximumHealth);
+        }
 
         void SetHealthBar(float percentage)
         {

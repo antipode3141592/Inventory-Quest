@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Data.Characters
 {
-    public interface ICharacter
+    public interface ICharacter: IDamagable
     {
         public string GuId { get; }
         public string DisplayName { get; set; }

@@ -183,15 +183,11 @@ namespace Data.Items
                     Grid[testPoint].IsOccupied = true;
                     Grid[testPoint].storedItemId = item.GuId;
                 }
-                if (Debug.isDebugBuild)
-                {
-                    Debug.Log($"item {item.Id} placed into:");
-                    foreach (var point in tempPointList)
-                        Debug.Log($"... [{point}]");
-                }
+                
                 Contents.Add(item.GuId, new Content(item, tempPointList, target));
                 OnItemPlaced?.Invoke(this, item.Id);
-                
+                if (Debug.isDebugBuild)
+                    Debug.Log($"item {item.Id} placed into container {Item.Id}");
                 AfterItemPlaced(item);
                 return true;
             }

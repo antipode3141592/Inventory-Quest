@@ -1,20 +1,19 @@
 ﻿using Data.Characters;
 using Data.Health;
-using System;
 using UnityEngine;
 
 namespace InventoryQuest.Health
 {
     public class HealthManager : MonoBehaviour, IHealthManager
     {
-        public void DealDamage(ICharacter charcter, int damageAmount, DamageType damageType)
+        public void DealDamage(IDamagable damagable, int damageAmount, DamageType damageType)
         {
-            throw new NotImplementedException();
+            damagable.DealDamage(damageAmount, damageType);
         }
 
-        public void HealDamage(ICharacter character, int healAmount, DamageType damageType)
+        public void HealDamage(IDamagable damagable, int healAmount)
         {
-            throw new NotImplementedException();
+            damagable.HealDamage(healAmount);
         }
     }
 }

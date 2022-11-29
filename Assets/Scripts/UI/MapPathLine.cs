@@ -22,7 +22,7 @@ namespace InventoryQuest.UI
         {
             BackgroundImage.color = Color.white;
             DestroyEncounterMarkers();
-            foreach (var encounter in pathStats.EncounterIds)
+            foreach (var encounter in pathStats.EncounterStats)
             {
                 var icon = Instantiate(encounterIcon, transform);
                 encounterBackgroundIcons.Add(icon);

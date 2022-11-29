@@ -41,8 +41,7 @@ namespace InventoryQuest.UI.Menus
         {
             var stats = _gameStateDataSource.CurrentLocation.Stats;
             locationName.text = stats.DisplayName;
-            Sprite locationIcon = Resources.Load<Sprite>(stats.ThumbnailSpritePath);
-            locationThumbnailIcon.sprite = locationIcon;
+            locationThumbnailIcon.sprite = stats.ThumbnailSprite;
         }
     }
 }

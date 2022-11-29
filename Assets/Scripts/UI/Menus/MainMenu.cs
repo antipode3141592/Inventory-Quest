@@ -11,7 +11,6 @@ namespace InventoryQuest.UI.Menus
 {
     public class MainMenu : Menu
     {
-        IAdventureManager _adventureManager;
         IPartyManager _partyManager;
         IGameManager _gameManager;
 
@@ -22,9 +21,8 @@ namespace InventoryQuest.UI.Menus
 
         [Inject]
 
-        public void Init(IAdventureManager adventureManager, IPartyManager partyManager, IGameManager gameManager)
+        public void Init(IPartyManager partyManager, IGameManager gameManager)
         {
-            _adventureManager = adventureManager;
             _partyManager = partyManager;
             _gameManager = gameManager;
         }

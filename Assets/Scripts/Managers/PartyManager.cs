@@ -41,20 +41,6 @@ namespace InventoryQuest.Managers
                 }
             );
 
-            AddCharacterWithEquipmentToParty("minion",
-                startingEquipment: new List<string>
-                {
-                    "adventure_backpack",
-                    "sandal_1",
-                    "shirt_1",
-                    "pants_1"
-                },
-                startingInventory: new List<string>
-                {
-                    "apple_fuji"
-                }
-            );
-
             Lua.RegisterFunction("AddCharacterToParty", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToParty(string.Empty)));
         }
 

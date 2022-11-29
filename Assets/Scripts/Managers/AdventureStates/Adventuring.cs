@@ -56,7 +56,7 @@ namespace InventoryQuest.Managers.States
         public void StartAdventure()
         {
             _gameStateDataSource.SetCurrentPath();
-            if (_gameStateDataSource.CurrentPath == null) return;
+            if (_gameStateDataSource.CurrentPathStats == null) return;
             _encounterManager.Idle.Continue();
         }
     }

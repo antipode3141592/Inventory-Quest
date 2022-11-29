@@ -1,6 +1,7 @@
 ﻿using FiniteStateMachine;
 using InventoryQuest.Traveling;
 using System;
+using UnityEngine;
 
 namespace InventoryQuest.Managers.States
 {
@@ -21,12 +22,13 @@ namespace InventoryQuest.Managers.States
         public void OnEnter()
         {
             EndState = false;
-            //_partyController.IdleAll();
+            _partyController.IdleAll();
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnExit()
         {
+            EndState = false;
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -37,6 +39,7 @@ namespace InventoryQuest.Managers.States
 
         public void Continue()
         {
+            Debug.Log($"ManagingInventory received Continue()");
             EndState = true;
         }
     }

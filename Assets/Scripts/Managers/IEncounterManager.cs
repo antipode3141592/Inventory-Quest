@@ -1,6 +1,4 @@
-﻿using Data.Encounters;
-using System;
-using InventoryQuest.Managers.States;
+﻿using InventoryQuest.Managers.States;
 
 namespace InventoryQuest.Managers
 {

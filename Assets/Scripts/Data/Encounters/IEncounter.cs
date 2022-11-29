@@ -17,20 +17,11 @@ namespace Data.Encounters
 
         public IEncounterStats Stats { get; }
 
-        //public IList<IChoice> Choices { get; }
-
         public IList<IRewardStats> Rewards { get; }
 
         public IList<IPenaltyStats> Penalties { get; }
         public bool Resolve(Party party);
 
-
-    }
-
-    public interface IChoice
-    {
-        string Name { get; }
-        string Description { get; }
 
     }
 }

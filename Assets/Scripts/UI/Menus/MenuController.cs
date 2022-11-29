@@ -38,7 +38,7 @@ namespace InventoryQuest.UI.Menus
 
         void Awake()
         {
-            foreach(var menu in _menuList)
+            foreach (var menu in _menuList)
             {
                 _menus.Add(menu.GetType(), menu);
             }
@@ -48,7 +48,10 @@ namespace InventoryQuest.UI.Menus
                 foreach (var menu in _menus)
                     Debug.Log($"{menu.Key.Name}");
             }
+        }
 
+        IEnumerator Start()
+        {
             _gameManager.OnGameBegining += OnGameBegin;
 
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
@@ -62,6 +65,9 @@ namespace InventoryQuest.UI.Menus
 
             _harvestManager.Harvesting.StateEntered += OnHarvestingStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
+            yield return new WaitForSeconds(1f);
+            _loadingScreen.Fade();
+            OpenMenu(_mainMenuKey);
         }
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
@@ -76,7 +82,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnCleaningUpShowInventory(object sender, EventArgs e)
         {
-            OpenMenu(typeof(AdventureMenu));
+            OpenMenu(typeof(InventoryMenu));
         }
 
         void OnResolvingStart(object sender, EventArgs e)
@@ -91,19 +97,12 @@ namespace InventoryQuest.UI.Menus
 
         void OnManagingInventoryStart(object sender, EventArgs e)
         {
-            OpenMenu(typeof(AdventureMenu));
+            OpenMenu(typeof(InventoryMenu));
         }
 
         void OnWayfairingStart(object sender, EventArgs e)
         {
             OpenMenu(typeof(TravelingMenu));
-        }
-
-        IEnumerator Start()
-        {
-            yield return new WaitForSeconds(1f);
-            _loadingScreen.Fade();
-            OpenMenu(_mainMenuKey);
         }
 
         void OnPathfindingStartedHandler(object sender, EventArgs e)

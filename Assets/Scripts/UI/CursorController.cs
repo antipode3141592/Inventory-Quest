@@ -13,22 +13,22 @@ namespace InventoryQuest.UI
         [SerializeField] bool hardwareCursorEnable;
         [SerializeField] Transform cursorParentTransform;
         [SerializeField] Canvas canvas;
-        IGameManager _gameManager;
+        IInputManager _inputManager;
         Cursor _cursor;
 
         [Inject]
-        public void Init(IGameManager gameManager)
+        public void Init(IInputManager inputManager)
         {
-            _gameManager = gameManager;
+            _inputManager = inputManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             _cursor = Instantiate<Cursor>(cursorPrefab, cursorParentTransform);
-            _gameManager.OnItemHeld += OnItemHeldHandler;
-            _gameManager.OnItemPlaced += OnItemPlacedHandler;
-            _gameManager.OnRotateCW += OnItemRotateCW;
-            _gameManager.OnRotateCCW += OnItemRotateCCW;
+            _inputManager.OnItemHeld += OnItemHeldHandler;
+            _inputManager.OnItemPlaced += OnItemPlacedHandler;
+            _inputManager.OnRotateCW += OnItemRotateCW;
+            _inputManager.OnRotateCCW += OnItemRotateCCW;
             UnityEngine.Cursor.visible = hardwareCursorEnable;
             HideItemSprite();
         }
@@ -60,7 +60,7 @@ namespace InventoryQuest.UI
 
         public void ShowItemSprite()
         {
-            var item = _gameManager.HoldingItem;
+            var item = _inputManager.HoldingItem;
             _cursor.itemIcon.sprite = item.Sprite;
             //set scale
             _cursor.itemIcon.SetNativeSize();

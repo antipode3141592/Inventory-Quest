@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Locations
 {
     public class LocationStats : ILocationStats
     {
-        public LocationStats(string id, string name, List<string> characterIds = null, List<string> locationIds = null, string thumbnailSpritePath = null, bool isKnown = false, string scenePath = "")
+        public LocationStats(string id, string name, List<string> characterIds = null, List<string> locationIds = null, Sprite thumbnailSprite = null, bool isKnown = false, string scenePath = "")
         {
             Id = id;
             Name = name;
             CharacterIds = characterIds;
             LocationIds = locationIds;
             DisplayName = name;
-            ThumbnailSpritePath = thumbnailSpritePath;
+            ThumbnailSprite = thumbnailSprite;
             IsKnown = isKnown;
             ScenePath = scenePath;
          }
@@ -26,7 +27,7 @@ namespace Data.Locations
 
         public List<string> LocationIds { get; }
 
-        public string ThumbnailSpritePath { get; }
+        public Sprite ThumbnailSprite { get; }
 
         public bool IsKnown { get; }
 

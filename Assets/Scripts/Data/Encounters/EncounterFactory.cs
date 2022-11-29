@@ -12,6 +12,8 @@
             if (skillCheckStats is not null) return new SkillCheckEncounter(skillCheckStats);
             var restStats = encounterStats as IRestEncounterStats;
             if (restStats is not null) return new RestEncounter(restStats);
+            var emptyStats = encounterStats as IEmptyEncounterStats;
+            if (emptyStats is not null) return new EmptyEncounter(emptyStats);
             return null;
         }
 

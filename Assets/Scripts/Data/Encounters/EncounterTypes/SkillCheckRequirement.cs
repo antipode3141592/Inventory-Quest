@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Data.Encounters
 {
-    [Serializable]
     public class SkillCheckRequirement
     {
         [SerializeField, TextArea(1,5)] public string Description;

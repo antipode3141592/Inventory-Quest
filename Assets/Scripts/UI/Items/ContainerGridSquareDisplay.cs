@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
+using Zenject;
 using HighlightState = Data.HighlightState;
 
 namespace InventoryQuest.UI
@@ -13,6 +13,7 @@ namespace InventoryQuest.UI
     public class ContainerGridSquareDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         IGameManager _gameManager;
+        IInputManager _inputManager;
         IContainer _container;
 
         [SerializeField] Image backgroundSprite;
@@ -48,9 +49,10 @@ namespace InventoryQuest.UI
         }
         public Coor Coordinates { get => coordinates; set => coordinates = value; }
 
-        void Awake()
+        void Awake() 
         {
             _gameManager = FindObjectOfType<GameManager>();
+            _inputManager = FindObjectOfType<InputManager>();
         }
 
         public void SetHighlightColor(HighlightState state, float timer = 0f)
@@ -97,7 +99,7 @@ namespace InventoryQuest.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
-            var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
+            var squareState = _container.IsValidPlacement(_inputManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
             SetHighlightColor(squareState);
         }
 
@@ -113,14 +115,14 @@ namespace InventoryQuest.UI
                 case GameStates.Encounter:
                     if (_container.TryTake(out var item, Coordinates))
                     {
-                        _gameManager.HoldingItem = item;
+                        _inputManager.HoldingItem = item;
                         _gameManager.ChangeState(GameStates.ItemHolding);
                     }
                     break;
                 case GameStates.ItemHolding:
-                    if (_container.TryPlace(_gameManager.HoldingItem, Coordinates))
+                    if (_container.TryPlace(_inputManager.HoldingItem, Coordinates))
                     {
-                        _gameManager.HoldingItem = null;
+                        _inputManager.HoldingItem = null;
                         _gameManager.ChangeState(GameStates.Encounter);
                     }
                     break;

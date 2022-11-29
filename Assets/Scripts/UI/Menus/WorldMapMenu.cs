@@ -108,7 +108,7 @@ namespace InventoryQuest.UI.Menus
                         startLocationId: currentId,
                         endLocationId: destinationId);
                     if (stats == null) return;
-                    _pathOverviewText.text = $"Projected Length: {stats.EncounterIds.Count} Encounters";
+                    _pathOverviewText.text = $"Projected Length: {stats.EncounterStats.Count} Encounters";
                     path.DisplayPath(stats);
                 }
                 else

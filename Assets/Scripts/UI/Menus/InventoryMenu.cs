@@ -7,7 +7,7 @@ using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
-    public class AdventureMenu : Menu
+    public class InventoryMenu : Menu
     {
         IPartyManager _partyManager;
         IRewardManager _rewardManager;

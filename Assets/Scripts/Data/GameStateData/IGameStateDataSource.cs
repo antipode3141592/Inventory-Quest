@@ -7,7 +7,7 @@ namespace Data
 {
     public interface IGameStateDataSource
     {
-        public IPath CurrentPath { get; }
+        public IPathStats CurrentPathStats { get; }
         public ILocation DestinationLocation { get; }
         public ILocation CurrentLocation { get; }
 
@@ -17,6 +17,7 @@ namespace Data
 
         public int CurrentIndex { get; set; }
 
+        public event EventHandler<string> OnCurrentEncounterSet;
         public event EventHandler<string> OnCurrentLocationSet;
         public event EventHandler<string> OnDestinationLocationSet;
         public event EventHandler<string> OnCurrentPathSet;

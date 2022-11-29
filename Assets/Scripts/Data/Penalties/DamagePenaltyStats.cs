@@ -9,10 +9,10 @@ namespace Data.Penalties
         [SerializeField] PenaltyType penaltyType;
         [SerializeField] int damageAmount;
 
-        public DamageType DamageType { get; }
+        public DamageType DamageType => damageType;
 
-        public int DamageAmount { get; }
+        public int DamageAmount => damageAmount;
 
-        public PenaltyType PenaltyType { get; }
+        public PenaltyType PenaltyType => penaltyType;
     }
 }

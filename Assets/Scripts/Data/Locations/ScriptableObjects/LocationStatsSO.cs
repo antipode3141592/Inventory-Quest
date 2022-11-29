@@ -10,7 +10,7 @@ namespace Data.Locations
         [SerializeField] string id;
         [SerializeField] string _name;
         [SerializeField] string displayName;
-        [SerializeField] string thumbnailSpritePath;
+        [SerializeField, PreviewField] Sprite thumbnailSprite;
         [FilePath(Extensions = ".unity"), SerializeField] string scenePath;
         [SerializeField] List<string> characterIds;
         [SerializeField] List<string> locationIds;
@@ -19,7 +19,7 @@ namespace Data.Locations
         public string Id => id;
         public string Name => _name;
         public string DisplayName => displayName;
-        public string ThumbnailSpritePath => thumbnailSpritePath;
+        public Sprite ThumbnailSprite => thumbnailSprite;
         public string ScenePath => scenePath;
         public List<string> CharacterIds => characterIds;
         public List<string> LocationIds => locationIds;

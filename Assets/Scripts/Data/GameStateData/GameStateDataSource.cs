@@ -15,20 +15,18 @@ namespace Data
         ICharacterDataSource _characterDataSource;
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
-        IEncounterDataSource _encounterDataSource;
 
         [SerializeField] ILocationStats startingLocation;
 
         [Inject]
-        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, IEncounterDataSource encounterDataSource, ICharacterDataSource characterDataSource)
+        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
-            _encounterDataSource = encounterDataSource;
             _characterDataSource = characterDataSource;
         }
 
-        public IPath CurrentPath { get; protected set; }
+        public IPathStats CurrentPathStats { get; protected set; }
         public ILocation DestinationLocation { get; protected set; }
         public ILocation CurrentLocation { get; protected set; }
         public IEncounter CurrentEncounter { get; protected set; }
@@ -37,6 +35,7 @@ namespace Data
 
         public int CurrentIndex { get; set; }
 
+        public event EventHandler<string> OnCurrentEncounterSet;
         public event EventHandler<string> OnCurrentLocationSet;
         public event EventHandler<string> OnDestinationLocationSet;
         public event EventHandler<string> OnCurrentPathSet;
@@ -80,24 +79,18 @@ namespace Data
                 startLocationId: CurrentLocation.Stats.Id,
                 endLocationId: DestinationLocation.Stats.Id);
             if (stats == null) return;
-            CurrentPath = PathFactory.GetPath(stats);
+            CurrentPathStats = stats;
             CurrentIndex = 0;
             OnCurrentPathSet?.Invoke(this, stats.Id);
         }
 
-        void LoadEncounter(string id)
-        {
-            if (id == string.Empty)
-                CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetRandom());
-            CurrentEncounter = EncounterFactory.GetEncounter(_encounterDataSource.GetById(id));
-        }
-
         public void SetCurrentEncounter()
         {
-            if (CurrentIndex >= CurrentPath.Length) return;
-            string encounterId = CurrentPath.EncounterIds[CurrentIndex];
-            LoadEncounter(encounterId);
-
+            if (CurrentIndex >= CurrentPathStats.EncounterStats.Count) return;
+            var encounterStats = CurrentPathStats.EncounterStats[CurrentIndex];
+            Debug.Log($"encountStats id: {encounterStats.Id}");
+            CurrentEncounter = EncounterFactory.GetEncounter(encounterStats);
+            OnCurrentEncounterSet?.Invoke(this, CurrentEncounter.Id);
         }
         
         public void RevealLocation(string locationId)
