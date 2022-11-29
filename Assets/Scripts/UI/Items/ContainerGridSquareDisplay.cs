@@ -54,10 +54,10 @@ namespace InventoryQuest.UI
         public event EventHandler<Coor> GridSquarePointerExited;
         public event EventHandler<PointerEventData> GridSquarePointerClicked;
 
-        void Awake() 
+        public void Init (IGameManager gameManager, IInputManager inputManager)
         {
-            _gameManager = FindObjectOfType<GameManager>();
-            _inputManager = FindObjectOfType<InputManager>();
+            _gameManager = gameManager;
+            _inputManager = inputManager;
         }
 
         public void SetHighlightColor(HighlightState state, float timer = 0f)

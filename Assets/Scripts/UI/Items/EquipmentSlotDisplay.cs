@@ -93,7 +93,6 @@ namespace InventoryQuest.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log($"OnPointerClick() for {gameObject.name}");
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Encounter:

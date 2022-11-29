@@ -4,17 +4,19 @@ using Data.Shapes;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Zenject;
+using InventoryQuest.Managers;
 
 namespace InventoryQuest.UI
 {
     public class ContainerDisplay : MonoBehaviour
     {
-        [SerializeField] Transform _panelTransform;
-        
-        [SerializeField] Transform _itemPanelTransform;
-        
-        [SerializeField] ItemImage itemImagePrefab;
+        IGameManager _gameManager;
+        IInputManager _inputManager;
 
+        [SerializeField] Transform _panelTransform;
+        [SerializeField] Transform _itemPanelTransform;
+        [SerializeField] ItemImage itemImagePrefab;
         [SerializeField] ContainerGridSquareDisplay gridSquarePrefab; //square prefab
 
         ContainerGridSquareDisplay[,] squares;
@@ -32,6 +34,13 @@ namespace InventoryQuest.UI
 
         IContainer _container;
         public IContainer Container => _container;
+
+        [Inject]
+        public void Init(IGameManager gameManager, IInputManager inputManager)
+        {
+            _gameManager = gameManager;
+            _inputManager = inputManager;
+        }
 
         void Awake()
         {
@@ -55,6 +64,7 @@ namespace InventoryQuest.UI
                 for(int c = 0; c < columnMax; c++)
                 {
                     ContainerGridSquareDisplay square = Instantiate(original: gridSquarePrefab, parent: _panelTransform);
+                    square.Init(gameManager: _gameManager, inputManager: _inputManager);
                     square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
                     square.SetContainer(Container);
                     square.Coordinates = new Coor(r, c);

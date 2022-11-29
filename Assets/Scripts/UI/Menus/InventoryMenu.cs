@@ -11,7 +11,6 @@ namespace InventoryQuest.UI.Menus
     {
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
-        IEncounterManager _encounterManager;
         IInputManager _inputManager;
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
@@ -19,11 +18,10 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IEncounterManager encounterManager, IInputManager inputManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IInputManager inputManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
-            _encounterManager = encounterManager;
             _inputManager = inputManager;
         }
 

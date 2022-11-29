@@ -13,7 +13,7 @@ namespace Data.Characters
 
         public event EventHandler<string> OnPartyMemberSelected;
         public event EventHandler OnPartyMemberStatsUpdated;
-        public event  EventHandler OnPartyCompositionChanged;
+        public event EventHandler OnPartyCompositionChanged;
         public event EventHandler<string> OnItemAddedToPartyInventory;
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)

@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
-using InventoryQuest;
-using InventoryQuest.Managers;
-using TMPro;
+﻿using InventoryQuest.Managers;
 using PixelCrushers.DialogueSystem;
+using System;
+using TMPro;
+using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
@@ -47,11 +45,8 @@ namespace InventoryQuest.UI.Menus
 
         void OnContinueButtonHeld(object sender, EventArgs e)
         {
-
             Continue();
         }
-
-
 
         public void Continue()
         {

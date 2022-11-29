@@ -5054,11 +5054,11 @@ PrefabInstance:
     - target: {fileID: 2814343330228229456, guid: ea0e5d003d5c1774fa44f671450c794e, type: 3}
       propertyPath: lootContainerDisplay
       value: 
-      objectReference: {fileID: 1170919483}
+      objectReference: {fileID: 1389849510}
     - target: {fileID: 2814343330228229456, guid: ea0e5d003d5c1774fa44f671450c794e, type: 3}
       propertyPath: characterContainerDisplay
       value: 
-      objectReference: {fileID: 1389849510}
+      objectReference: {fileID: 1170919483}
     - target: {fileID: 2814343330228229457, guid: ea0e5d003d5c1774fa44f671450c794e, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -5105,7 +5105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2814343330228229459, guid: ea0e5d003d5c1774fa44f671450c794e, type: 3}
       propertyPath: m_Name
-      value: ContainerDisplayManager
+      value: ContainerDisplayController
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea0e5d003d5c1774fa44f671450c794e, type: 3}
