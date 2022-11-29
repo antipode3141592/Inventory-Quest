@@ -19,5 +19,9 @@ namespace InventoryQuest.Managers
         public event EventHandler OnSubmitDown;
         public event EventHandler OnSubmitHold;
         public event EventHandler OnSubmitUp;
+
+        public event EventHandler CloseInventoryCommand;
+
+        public void CloseInventory();
     }
 }

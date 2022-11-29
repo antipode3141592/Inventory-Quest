@@ -12,17 +12,19 @@ namespace InventoryQuest.UI.Menus
         IPartyManager _partyManager;
         IRewardManager _rewardManager;
         IEncounterManager _encounterManager;
+        IInputManager _inputManager;
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
         [SerializeField] ContainerDisplay lootContainerDisplay;
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IEncounterManager encounterManager)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IEncounterManager encounterManager, IInputManager inputManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
             _encounterManager = encounterManager;
+            _inputManager = inputManager;
         }
 
         void Start()
@@ -32,7 +34,6 @@ namespace InventoryQuest.UI.Menus
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
         }
-
 
         public override void Show()
         {
@@ -64,10 +65,7 @@ namespace InventoryQuest.UI.Menus
 
         void Continue(object sender, EventArgs e)
         {
-            if (_encounterManager.CurrentStateName == typeof(ManagingInventory).Name)
-                _encounterManager.ManagingInventory.Continue();
-            if (_encounterManager.CurrentStateName == typeof(CleaningUp).Name)
-                _encounterManager.CleaningUp.Continue();
+            _inputManager.CloseInventory();
         }
     }
 }

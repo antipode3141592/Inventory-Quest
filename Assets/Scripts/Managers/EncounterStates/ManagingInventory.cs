@@ -1,17 +1,18 @@
 ﻿using FiniteStateMachine;
 using InventoryQuest.Traveling;
 using System;
-using UnityEngine;
 
 namespace InventoryQuest.Managers.States
 {
     public class ManagingInventory : IState
     {
         IPartyController _partyController;
+        IInputManager _inputManager;
 
-        public ManagingInventory(IPartyController partyController)
+        public ManagingInventory(IPartyController partyController, IInputManager inputManager)
         {
             _partyController = partyController;
+            _inputManager = inputManager;
         }
 
         public event EventHandler StateEntered;
@@ -23,11 +24,13 @@ namespace InventoryQuest.Managers.States
         {
             EndState = false;
             _partyController.IdleAll();
+            _inputManager.CloseInventoryCommand += CloseInventoryHandler;
             StateEntered?.Invoke(this, EventArgs.Empty);
-        }
+        }    
 
         public void OnExit()
         {
+            _inputManager.CloseInventoryCommand -= CloseInventoryHandler;
             EndState = false;
             StateExited?.Invoke(this, EventArgs.Empty);
         }
@@ -37,9 +40,8 @@ namespace InventoryQuest.Managers.States
 
         }
 
-        public void Continue()
+        void CloseInventoryHandler(object sender, EventArgs e)
         {
-            Debug.Log($"ManagingInventory received Continue()");
             EndState = true;
         }
     }

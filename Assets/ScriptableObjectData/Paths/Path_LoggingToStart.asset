@@ -15,15 +15,30 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 962d8c6dcbf64e34fb0bcb62977c3f12, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: encounterStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IEncounterStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: logging_to_start
   _name: 
   startLocationStats: {fileID: 11400000, guid: c7b5923c6bd26c145abcfdc1e728c444, type: 2}
   endLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
-  encounterStats:
-  - {fileID: 11400000, guid: 962d8c6dcbf64e34fb0bcb62977c3f12, type: 2}

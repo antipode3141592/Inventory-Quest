@@ -44,8 +44,6 @@ namespace InventoryQuest.UI
 
         public void ConnectCharacterContainer(IContainer characterContainer)
         {
-            if (Debug.isDebugBuild)
-                Debug.Log($"ConnectCharacterContainer called for container {characterContainer.GuId}");
             characterContainerDisplay.SetContainer(characterContainer);
         }
 
@@ -69,14 +67,9 @@ namespace InventoryQuest.UI
 
         void OnPartyMemberSelectedHandler(object sender, string e)
         {
-            if (Debug.isDebugBuild)
-                Debug.Log($"OnPartyMemberSelectedHandler for character {e}");
             var container = _partyManager.CurrentParty.Characters[e].Backpack;
-            if (container is not IContainer) {
-                if (Debug.isDebugBuild)
-                    Debug.LogWarning($"No backpack found for character guid {e}", this);
-                return; 
-            }
+            if (container is not IContainer)
+                return;
             ConnectCharacterContainer(container);
         }
     }

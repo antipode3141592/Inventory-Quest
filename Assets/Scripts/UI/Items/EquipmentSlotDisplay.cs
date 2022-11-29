@@ -66,10 +66,8 @@ namespace InventoryQuest.UI
             else
             {
                 backgroundSprite.color = Color.grey;
-                equippedItemSprite.sprite = (_character.EquipmentSlots[SlotId].EquippedItem as IItem).Sprite;
+                equippedItemSprite.sprite = _character.EquipmentSlots[SlotId].EquippedItem.Sprite;
             }
-
-
         }
 
         public void OnPointerEnter(PointerEventData eventData)

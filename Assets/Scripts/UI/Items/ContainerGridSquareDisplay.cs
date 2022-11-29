@@ -1,6 +1,7 @@
 using Data;
 using Data.Items;
 using InventoryQuest.Managers;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,6 +49,10 @@ namespace InventoryQuest.UI
             }
         }
         public Coor Coordinates { get => coordinates; set => coordinates = value; }
+
+        public event EventHandler<Coor> GridSquarePointerEntered;
+        public event EventHandler<Coor> GridSquarePointerExited;
+        public event EventHandler<PointerEventData> GridSquarePointerClicked;
 
         void Awake() 
         {
@@ -98,6 +103,8 @@ namespace InventoryQuest.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            GridSquarePointerEntered?.Invoke(this, Coordinates);
+
             if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             var squareState = _container.IsValidPlacement(_inputManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
             SetHighlightColor(squareState);
@@ -105,11 +112,15 @@ namespace InventoryQuest.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            GridSquarePointerExited?.Invoke(this, Coordinates);
             SetHighlightColor(HighlightState.Normal);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            GridSquarePointerClicked?.Invoke(this, eventData);
+            if (eventData.button == PointerEventData.InputButton.Left)
+
             switch (_gameManager.CurrentState)
             {
                 case GameStates.Encounter:

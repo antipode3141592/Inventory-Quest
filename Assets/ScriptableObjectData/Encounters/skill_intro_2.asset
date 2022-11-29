@@ -73,7 +73,7 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 3
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -128,7 +128,7 @@ MonoBehaviour:
       Data: 
     - Name: TargetValue
       Entry: 3
-      Data: 20
+      Data: 40
     - Name: PartyTargetValue
       Entry: 3
       Data: 0

@@ -8,11 +8,13 @@ namespace InventoryQuest.Managers.States
     {
         IRewardManager _rewardManager;
         IGameStateDataSource _gameStateDataSource;
+        IInputManager _inputManager;
 
-        public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource)
+        public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
         {
             _rewardManager = rewardManager;
             _gameStateDataSource = gameStateDataSource;
+            _inputManager = inputManager;
         }
 
         public event EventHandler StateEntered;
@@ -29,9 +31,11 @@ namespace InventoryQuest.Managers.States
             EndState = false;
             EncounterAvailable = false;
             StateEntered?.Invoke(this, EventArgs.Empty);
+            _inputManager.CloseInventoryCommand += CloseInventoryHandler;
             if (_rewardManager.ProcessRewards())
             {
                 RequestShowInventory?.Invoke(this, EventArgs.Empty);
+               
             } 
             else
             {
@@ -41,7 +45,7 @@ namespace InventoryQuest.Managers.States
 
         public void OnExit()
         {
-            
+            _inputManager.CloseInventoryCommand -= CloseInventoryHandler;
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -60,6 +64,11 @@ namespace InventoryQuest.Managers.States
             _gameStateDataSource.CurrentIndex++;
             if (_gameStateDataSource.CurrentIndex < _gameStateDataSource.CurrentPathStats.EncounterStats.Count)
                 EncounterAvailable = true;
+        }
+
+        void CloseInventoryHandler(object sender, EventArgs e)
+        {
+            Continue();
         }
     }
 }

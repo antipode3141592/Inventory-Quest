@@ -19,6 +19,7 @@ namespace InventoryQuest.Managers
         IPenaltyManager _penaltyManager;
         IPartyController _partyController;
         IGameStateDataSource _gameStateDataSource;
+        IInputManager _inputManager;
         
         // time tracking
         float _deltaTime;
@@ -44,13 +45,14 @@ namespace InventoryQuest.Managers
         public string CurrentStateName => _stateMachine.CurrentStateName;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource)
+        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
         {
             _partyManager = partyManager;
             _rewardManager = rewardManager;
             _penaltyManager = penaltyManager;
             _partyController = partyController;
             _gameStateDataSource = gameStateDataSource;
+            _inputManager = inputManager;
         }
 
         void Awake()
@@ -60,9 +62,9 @@ namespace InventoryQuest.Managers
             _idle = new Idle();
             _wayfairing = new Wayfairing(partyController: _partyController, deltaTimeTracker: this, travelSettings: travelSettings);
             _loading = new Loading(gameStateDataSource: _gameStateDataSource);
-            _managingInventory = new ManagingInventory(partyController: _partyController);
+            _managingInventory = new ManagingInventory(partyController: _partyController, inputManager: _inputManager) ;
             _resolving = new Resolving(rewardManager: _rewardManager, penaltyManager: _penaltyManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource, deltaTimeTracker: this);
-            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource);
+            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, inputManager: _inputManager);
 
             At(_idle, _wayfairing, BeginWayfairing());
             At(_wayfairing, _loading, WayfairingComplete());
