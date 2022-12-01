@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Data.Items;
+using Data.Shapes;
 using Rewired;
 using System;
-using Data.Shapes;
-using Data.Items;
+using UnityEngine;
 
 namespace InventoryQuest.Managers
 {
     public class InputManager : MonoBehaviour, IInputManager
     {
         Player player;
-        int playerId = 0;
+        readonly int playerId = 0;
 
         IItem holdingItem;
         public IItem HoldingItem
@@ -39,11 +37,6 @@ namespace InventoryQuest.Managers
         void Awake()
         {
             player = ReInput.players.GetPlayer(playerId);
-        }
-
-        void Start()
-        {
-            
         }
 
         void Update()

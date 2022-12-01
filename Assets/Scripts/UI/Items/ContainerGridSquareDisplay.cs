@@ -22,7 +22,6 @@ namespace InventoryQuest.UI
         [SerializeField] Image matchingHighlightSprite;
         [SerializeField] ColorSettings colorSettings;
 
-
         bool _isOccupied;
         public bool IsOccupied
         {

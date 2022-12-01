@@ -9,8 +9,8 @@ namespace Data.Items
 {
     public class ItemDataSourceSO : SerializedMonoBehaviour, IItemDataSource
     {
-        [OdinSerialize] IItemStats _defaultItem;
-        [OdinSerialize] List<IItemStats> _items;
+        [OdinSerialize] readonly IItemStats _defaultItem;
+        [OdinSerialize] readonly List<IItemStats> _items;
 
         Dictionary<string, IItemStats> _itemStats;
 

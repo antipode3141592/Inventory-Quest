@@ -132,16 +132,12 @@ namespace InventoryQuest.UI
             RemoveAllItemSprites();
             SetItemSprites();
         }
-
         #endregion
-
 
         public void UpdateGridState()
         {
             foreach (var point in Container.Grid)
-            {
                 squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
-            }
         }
 
         public void SetItemSprites()

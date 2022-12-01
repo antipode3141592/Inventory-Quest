@@ -6,9 +6,9 @@ namespace InventoryQuest.Managers.States
 {
     public class CleaningUp : IState
     {
-        IRewardManager _rewardManager;
-        IGameStateDataSource _gameStateDataSource;
-        IInputManager _inputManager;
+        readonly IRewardManager _rewardManager;
+        readonly IGameStateDataSource _gameStateDataSource;
+        readonly IInputManager _inputManager;
 
         public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
         {

@@ -22,9 +22,9 @@ namespace InventoryQuest.UI.Menus
 
         [SerializeField] LoadingScreen _loadingScreen;
 
-        Dictionary<Type, Menu> _menus = new();
+        readonly Dictionary<Type, Menu> _menus = new();
 
-        Type _mainMenuKey = typeof(MainMenu);
+        readonly Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
         public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager)

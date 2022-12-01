@@ -5,7 +5,7 @@ namespace Data.Encounters
 {
     public class PathDataSourceTest : IPathDataSource
     {
-        Dictionary<string, IPathStats> pathStats = new Dictionary<string, IPathStats>()
+        readonly Dictionary<string, IPathStats> pathStats = new()
         {
             {
                 "intro_path", new PathStats(

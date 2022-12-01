@@ -6,8 +6,8 @@ namespace InventoryQuest.Managers.States
 {
     public class ManagingInventory : IState
     {
-        IPartyController _partyController;
-        IInputManager _inputManager;
+        readonly IPartyController _partyController;
+        readonly IInputManager _inputManager;
 
         public ManagingInventory(IPartyController partyController, IInputManager inputManager)
         {

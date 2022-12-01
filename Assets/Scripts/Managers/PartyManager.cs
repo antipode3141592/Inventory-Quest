@@ -12,7 +12,7 @@ namespace InventoryQuest.Managers
         ICharacterDataSource _characterDataSource;
         IItemDataSource _itemDataSource;
 
-        Party _party = new();
+        readonly Party _party = new();
 
         public Party CurrentParty => _party;
 

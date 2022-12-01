@@ -1,4 +1,3 @@
-using Data;
 using Data.Items;
 using InventoryQuest.Managers;
 using System;

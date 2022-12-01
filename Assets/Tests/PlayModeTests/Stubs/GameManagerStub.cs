@@ -35,6 +35,7 @@ namespace InventoryQuest.Testing
         public event EventHandler<RotationEventArgs> OnRotateCCW;
         public event EventHandler OnGameBegining;
         public event EventHandler OnSubmitDown;
+        public event EventHandler OnSubmitHold;
         public event EventHandler OnSubmitUp;
 
         void Awake()

@@ -35,7 +35,6 @@ namespace Data.Characters
             SelectedPartyMemberGuId = PartyDisplayOrder[0];
         }
 
-
         public void AddCharacter(ICharacter character)
         {
             if (character is null) return;

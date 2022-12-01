@@ -94,9 +94,10 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
-            float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
-            (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(0, 0));
-            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: (backpack as Container).Weight);
+            var backpackContainer = backpack.Components[typeof(IContainer)] as IContainer;
+            float initialWeight = backpackContainer.InitialWeight;
+            backpackContainer.TryPlace(MyItem, new Coor(0, 1));
+            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: backpackContainer.Weight);
         }
 
         [UnityTest]
@@ -114,7 +115,7 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (BasicItemStats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(0, 0 + i));
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(0, 1 + i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -143,8 +144,8 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
-            (backpack.Components[typeof(IContainer)] as IContainer).Grid[new Coor(0,0)].IsOccupied = true;
-            Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(0, 0)));
+            (backpack.Components[typeof(IContainer)] as IContainer).Grid[new Coor(0,1)].IsOccupied = true;
+            Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(0, 1)));
         }
 
         [UnityTest]
@@ -168,9 +169,11 @@ namespace InventoryQuest.Testing
 
             CommonPostSceneLoadInstall();
 
+            var coordinate = new Coor(r: 0, c: 1);
+
             MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
-            (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(r: 0, c: 0));
-            Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, new Coor(r:0, c:0)));
+            (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, coordinate);
+            Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, coordinate));
             Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).IsEmpty);
         }
 
@@ -189,7 +192,7 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (BasicItems[0].Stats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(r: 0, c: i));
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(r: 1, c: i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -206,7 +209,7 @@ namespace InventoryQuest.Testing
             int qty = 3;
             CreateStandardItems(BasicItemStats, qty);
             float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
-            for (int i = 0; i < 3; i++)
+            for (int i = 1; i < qty; i++)
             {
                 (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(r: i, c: 0));
                 (backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, new Coor(r: i, c: 0));

@@ -22,7 +22,6 @@ namespace InventoryQuest.UI
         [SerializeField] Image equippedItemSprite;
         [SerializeField] TextMeshProUGUI slotTypeText;
 
-
         public string SlotId => _slotId;
 
         [Inject]
@@ -32,7 +31,7 @@ namespace InventoryQuest.UI
             _inputManager = inputManager;
         }
 
-        private void Awake()
+        void Awake()
         {
             slotTypeText.text = SlotId.ToString();
         }
