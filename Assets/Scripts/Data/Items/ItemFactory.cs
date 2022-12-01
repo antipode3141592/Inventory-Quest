@@ -5,7 +5,12 @@
         public static IItem GetItem(IItemStats itemStats)
         {
             IItem item = new Item(itemStats: itemStats);
+            return AddComponents(itemStats, item);
 
+        }
+
+        public static IItem AddComponents(IItemStats itemStats, IItem item)
+        {
             if (itemStats.Components is null) return item;
             foreach (var component in itemStats.Components)
             {
@@ -29,7 +34,6 @@
                 }
             }
             return item;
-            
         }
     }
 }

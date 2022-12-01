@@ -16,7 +16,7 @@ namespace InventoryQuest.UI.Components
         [SerializeField] Transform markerDisplayParentTransform;
 
         [SerializeField] AdventureEncounterMarker encounterMarkerPrefab;
-        List<AdventureEncounterMarker> adventureEncounterMarkers = new();
+        readonly List<AdventureEncounterMarker> adventureEncounterMarkers = new();
 
         [SerializeField] LocationIcon startingLocationIcon;
         [SerializeField] LocationIcon endingLocationIcon;

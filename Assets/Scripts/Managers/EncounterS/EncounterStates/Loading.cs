@@ -8,7 +8,7 @@ namespace InventoryQuest.Managers.States
 {
     public class Loading : IState
     {
-        IGameStateDataSource _gameStateDataSource;
+        readonly IGameStateDataSource _gameStateDataSource;
 
         public Loading(IGameStateDataSource gameStateDataSource)
         {

@@ -5,7 +5,7 @@ namespace InventoryQuest.Managers.States
 {
     public class LoadingHarvest : IState
     {
-        IHarvestManager _harvestManager;
+        readonly IHarvestManager _harvestManager;
 
         public bool IsDone;
 

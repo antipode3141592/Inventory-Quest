@@ -42,8 +42,8 @@ namespace InventoryQuest.Managers
         {
             _stateMachine = new StateMachine();
             _idle = new Idle();
-            _pathfinding = new Pathfinding(_encounterManager, _encounterDataSource, _gameStateDataSource);
-            _adventuring = new Adventuring(_encounterManager, _encounterDataSource, _gameStateDataSource);
+            _pathfinding = new Pathfinding();
+            _adventuring = new Adventuring(_encounterManager, _gameStateDataSource);
 
             At(Idle, Pathfinding, BeginPathfinding());
             At(Pathfinding, Adventuring, BeginAdventure());

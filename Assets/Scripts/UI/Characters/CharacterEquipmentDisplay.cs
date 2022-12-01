@@ -17,8 +17,8 @@ namespace InventoryQuest.UI
         IPartyManager _partyManager;
         ICharacter _character;
 
-        Dictionary<string, EquipmentSlotDisplay> _equipmentSlots = new();
-        Dictionary<string, WeaponGroup> _weaponGroups = new();
+        readonly Dictionary<string, EquipmentSlotDisplay> _equipmentSlots = new();
+        readonly Dictionary<string, WeaponGroup> _weaponGroups = new();
 
         [Inject]
         public void Init(IPartyManager partyManager)
@@ -38,7 +38,7 @@ namespace InventoryQuest.UI
             {
                 _weaponGroups.Add(group.WeaponProficiencyName, group);
             }
-            weaponProficiencySwitch.buttonPressed += SwitchWeaponProficiency;
+            weaponProficiencySwitch.ButtonPressed += SwitchWeaponProficiency;
         }
 
         void Start()

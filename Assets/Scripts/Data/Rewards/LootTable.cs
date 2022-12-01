@@ -26,7 +26,7 @@ namespace Data.Rewards
 
     public class LootTableDataSourceTest : ILootTableDataSource
     {
-        Dictionary<string, IList<RarityRange>> lootTables = new Dictionary<string, IList<RarityRange>>()
+        Dictionary<string, IList<RarityRange>> lootTables = new()
         {
             {
                 "common_loot", new RarityRange[]

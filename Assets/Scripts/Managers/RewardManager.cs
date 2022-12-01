@@ -20,11 +20,11 @@ namespace InventoryQuest.Managers
 
         public IDictionary<string, IContainer> Piles { get; } = new Dictionary<string, IContainer>();
 
-        List<IItem> deleteItems = new List<IItem>();
+        readonly List<IItem> deleteItems = new();
 
         public string SelectedPileId;
 
-        Queue<IRewardStats> rewardQueue = new();
+        readonly Queue<IRewardStats> rewardQueue = new();
 
         public event EventHandler OnRewardsProcessStart;
         public event EventHandler OnRewardsProcessComplete;

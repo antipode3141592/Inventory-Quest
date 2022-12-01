@@ -9,9 +9,9 @@ namespace InventoryQuest.UI
 {
     public class Cursor : MonoBehaviour
     {
-        [SerializeField] public Image cursorIcon;
+        public Image cursorIcon;
         
-        [SerializeField] public Image itemIcon;
+        public Image itemIcon;
 
         public RectTransform RectTransform => transform as RectTransform;
     }

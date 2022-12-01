@@ -14,7 +14,7 @@ namespace InventoryQuest.Managers
         IPartyManager _partyManager;
         IHealthManager _healthManager;
 
-        Queue<IPenaltyStats> penalties = new();
+        readonly Queue<IPenaltyStats> penalties = new();
 
         public event EventHandler OnPenaltyProcessStart;
         public event EventHandler OnPenaltyProcessComplete;

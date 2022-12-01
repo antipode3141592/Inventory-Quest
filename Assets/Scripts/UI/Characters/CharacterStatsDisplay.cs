@@ -13,7 +13,7 @@ namespace InventoryQuest.UI
 {
     public class CharacterStatsDisplay : SerializedMonoBehaviour
     {
-        [OdinSerialize] Dictionary<StatTypes, StatTextDisplay> statTexts;
+        [OdinSerialize] readonly Dictionary<StatTypes, StatTextDisplay> statTexts;
         [SerializeField] CharacterCurrentMaxStatDisplay healthText;
         [SerializeField] CharacterCurrentMaxStatDisplay magicText;
         [SerializeField] CharacterCurrentMaxStatDisplay encumberanceText; 

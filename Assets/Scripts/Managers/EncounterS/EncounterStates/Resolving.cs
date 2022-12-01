@@ -10,11 +10,11 @@ namespace InventoryQuest.Managers.States
 {
     public class Resolving : IState
     {
-        IRewardManager _rewardManager;
-        IPenaltyManager _penaltyManager;
-        IPartyManager _partyManager;
-        IGameStateDataSource _gameStateDataSource;
-        IDeltaTimeTracker _deltaTimeTracker;
+        readonly IRewardManager _rewardManager;
+        readonly IPenaltyManager _penaltyManager;
+        readonly IPartyManager _partyManager;
+        readonly IGameStateDataSource _gameStateDataSource;
+        readonly IDeltaTimeTracker _deltaTimeTracker;
 
         //timing
 
@@ -67,7 +67,7 @@ namespace InventoryQuest.Managers.States
         {
             if (EndState) return;
             EndState = true;
-            float messageDuration = 0f;
+            float messageDuration;
             string _message;
 
             if (_gameStateDataSource.CurrentEncounter.Resolve(_partyManager.CurrentParty))
@@ -107,7 +107,7 @@ namespace InventoryQuest.Managers.States
             maxTime = messageDuration;
             enableTimer = true;
 
-            float CalculateLength(int messageLength) 
+            static float CalculateLength(int messageLength) 
             {
                 float calc = (float)messageLength / 27f;
                 return calc > 2f ? calc : 2f ; 

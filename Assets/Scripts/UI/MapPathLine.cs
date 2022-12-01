@@ -13,7 +13,7 @@ namespace InventoryQuest.UI
         [SerializeField] string locationAId;
         [SerializeField] string locationBId;
 
-        List<Image> encounterBackgroundIcons = new();
+        readonly List<Image> encounterBackgroundIcons = new();
 
         public string LocationAId => locationAId;
         public string LocationBId => locationBId;
@@ -22,8 +22,9 @@ namespace InventoryQuest.UI
         {
             BackgroundImage.color = Color.white;
             DestroyEncounterMarkers();
-            foreach (var encounter in pathStats.EncounterStats)
+            for (int i = 0; i < pathStats.EncounterStats.Count; i++)
             {
+                IEncounterStats encounter = pathStats.EncounterStats[i];
                 var icon = Instantiate(encounterIcon, transform);
                 encounterBackgroundIcons.Add(icon);
             }

@@ -7,9 +7,9 @@ namespace InventoryQuest.Managers.States
 {
     public class Wayfairing : IState
     {
-        TravelSettings _travelSettings;
-        IPartyController _partyController;
-        IDeltaTimeTracker _deltaTimeTracker;
+        readonly TravelSettings _travelSettings;
+        readonly IPartyController _partyController;
+        readonly IDeltaTimeTracker _deltaTimeTracker;
 
         public bool IsDone = false;
 

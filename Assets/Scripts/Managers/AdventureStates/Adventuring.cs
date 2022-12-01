@@ -7,10 +7,8 @@ namespace InventoryQuest.Managers.States
 {
     public class Adventuring : IState
     {
-        IEncounterManager _encounterManager;
-        IEncounterDataSource _encounterDataSource;
-        IPathDataSource _pathDataSource;
-        IGameStateDataSource _gameStateDataSource;
+        readonly IEncounterManager _encounterManager;
+        readonly IGameStateDataSource _gameStateDataSource;
 
 
         
@@ -19,10 +17,9 @@ namespace InventoryQuest.Managers.States
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
 
-        public Adventuring(IEncounterManager encounterManager, IEncounterDataSource encounterDataSource, IGameStateDataSource gameStateDataSource)
+        public Adventuring(IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
             _encounterManager = encounterManager;
-            _encounterDataSource = encounterDataSource;
             _gameStateDataSource = gameStateDataSource;
         }
 

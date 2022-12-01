@@ -1,6 +1,7 @@
 ﻿using Data.Items;
 using FiniteStateMachine;
 using InventoryQuest.Managers.States;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,10 @@ using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class HarvestManager: MonoBehaviour, IHarvestManager
+    public class HarvestManager: SerializedMonoBehaviour, IHarvestManager
     {
+        [SerializeField] IItemStats woodHarvestSawStats;
+
         IItemDataSource _itemDataSource;
 
         HarvestTypes currentHarvestType;
@@ -33,7 +36,7 @@ namespace InventoryQuest.Managers
         public HarvestTypes CurrentHarvestType => currentHarvestType;
 
         public IDictionary<string, IContainer> Piles { get; } = new Dictionary<string, IContainer>();
-        List<IItem> deleteItems = new List<IItem>();
+        readonly List<IItem> deleteItems = new();
 
         public event EventHandler OnHarvestCleared;
         public event EventHandler<IContainer> OnPileSelected;
@@ -68,7 +71,6 @@ namespace InventoryQuest.Managers
             Func<bool> HarvestComplete() => () => _harvesting.IsDone;
             Func<bool> HarvestResolved() => () => _resolvingHarvest.IsDone;
             Func<bool> CleanUpComplete() => () => _cleaningUpHarvest.IsDone;
-
         }
 
         void Start()
@@ -89,11 +91,34 @@ namespace InventoryQuest.Managers
 
         public void PopulateHarvest(string containerId, string itemId, int quantity)
         {
+            switch (currentHarvestType)
+            {
+                case HarvestTypes.Forest:
+                    PopulateWoodHarvest(containerId, itemId, quantity);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void PopulateWoodHarvest(string containerId, string itemId, int quantity)
+        {
+            //add woodsaw
+            var woodHarvestSaw = ItemFactory.AddComponents(woodHarvestSawStats, new WoodHarvestSaw(woodHarvestSawStats)) as WoodHarvestSaw;
+            var woodHarvestSawContainer = woodHarvestSaw.Components[typeof(IContainer)] as IContainer;
+            woodHarvestSaw
+                .SubscribeToContainerEvents()
+                .SetCutItem(_itemDataSource.GetById("log_standard_half"));
+            Piles.Add(woodHarvestSawContainer.GuId, woodHarvestSawContainer);
+
+            //add empty wood log pile(s)
             var harvestPile = ItemFactory.GetItem(_itemDataSource.GetById(containerId));
             if (!harvestPile.Components.ContainsKey(typeof(IContainer))) return;
-            var harvestContainer = (IContainer)harvestPile.Components[typeof(IContainer)];
+            IContainer harvestContainer = harvestPile.Components[typeof(IContainer)] as IContainer;
             if (harvestContainer is null) return;
             Piles.Add(harvestContainer.GuId, harvestContainer);
+
+            //add logs to log pile
             for (int i = 0; i < quantity; i++)
             {
                 ItemPlacementHelpers.TryAutoPlaceToContainer(harvestContainer, ItemFactory.GetItem(_itemDataSource.GetById(itemId)));

@@ -7,20 +7,14 @@ namespace InventoryQuest.Managers.States
 {
     public class Pathfinding : IState
     {
-        IEncounterManager _encounterManager;
-        IEncounterDataSource _encounterDataSource;
-        IGameStateDataSource _gameStateDataSource;
-
         public bool BeginAdventure = false;
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
 
-        public Pathfinding(IEncounterManager encounterManager, IEncounterDataSource encounterDataSource, IGameStateDataSource gameStateDataSource)
+        public Pathfinding()
         {
-            _encounterManager = encounterManager;
-            _encounterDataSource = encounterDataSource;
-            _gameStateDataSource = gameStateDataSource;
+
         }
 
         public void OnEnter()
@@ -41,7 +35,6 @@ namespace InventoryQuest.Managers.States
 
         public void ChoosePath()
         {
-            
             BeginAdventure = true;
         }
     }

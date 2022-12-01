@@ -12,8 +12,6 @@ namespace InventoryQuest.Managers
         IPartyManager _partyManager;
         IItemDataSource _itemDataSource;
 
-        Party _party => _partyManager.CurrentParty;
-
         [Inject]
         public void Init(IPartyManager partyManager, IItemDataSource itemDataSource)
         {
@@ -92,7 +90,6 @@ namespace InventoryQuest.Managers
                             if (runningTotal >= minToRemove)
                                 return;
                         }
-
                     }
                 }
             }
