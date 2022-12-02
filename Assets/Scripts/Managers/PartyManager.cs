@@ -41,6 +41,8 @@ namespace InventoryQuest.Managers
                 }
             );
 
+            AddCharacterToParty("wagon");
+
             Lua.RegisterFunction("AddCharacterToParty", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToParty(string.Empty)));
         }
 

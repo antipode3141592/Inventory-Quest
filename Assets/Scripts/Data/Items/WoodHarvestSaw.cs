@@ -1,5 +1,6 @@
 ﻿using Data.Shapes;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,17 +65,54 @@ namespace Data.Items
             return this;
         }
 
-        void OnItemPlacedHandler(object sender, string itemId)
+        Dictionary<int, IItemStats> cutItemStats;
+
+        public WoodHarvestSaw SetCutItemDictionary(IList<IItemStats> cutItemList)
         {
-            if (itemId != "log_standard") return;
+            Debug.Log($"setting cut item dictionary...");
+            if (cutItemStats is null) cutItemStats = new();
+            for(int i = 0; i < cutItemList.Count; i++)
+            {
+                int key = int.Parse(cutItemList[i].Id.Split('_')[^1]);
+                Debug.Log($"key: {key}, item id: {cutItemList[i]}");
+                cutItemStats.Add(key, cutItemList[i]);
+            }
+            return this;
+        }
 
-            CuttingContainer.TryTake(out _, new Coor(0, 0));
+        bool cutting = false;
 
-            var halfLog1 = ItemFactory.GetItem(cuttingStats);
-            var halfLog2 = ItemFactory.GetItem(cuttingStats);
+        void OnItemPlacedHandler(object sender, string itemGuId)
+        {
+            if (cutting) return;
+            cutting = true;
+            var content = CuttingContainer.Contents[itemGuId];
+            var anchor = content.AnchorPosition;
 
-            CuttingContainer.TryPlace(halfLog1, new Coor(0, 0));
-            CuttingContainer.TryPlace(halfLog2, wastePileAnchorPoint);
+            int keepSideLength = wastePileAnchorPoint.column - anchor.column;
+            HashSet<Coor> itemPoints = content.Item.Shape.Points[content.Item.CurrentFacing];
+            int wasteSideLength = itemPoints.Max(x => x.column) - keepSideLength + 1; //length inclusive of anchor
+
+            if (wasteSideLength <= 0)
+            {
+                cutting = false;
+                return;
+            }
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log($"item {content.Item.Id} at {anchor}: ");
+                Debug.Log($"    keep length {keepSideLength}, waste length {wasteSideLength}");
+            }
+
+            CuttingContainer.TryTake(out _, anchor);
+
+            var keepItem = ItemFactory.GetItem(cutItemStats[keepSideLength]);
+            var wasteItem = ItemFactory.GetItem(cutItemStats[wasteSideLength]);
+
+            CuttingContainer.TryPlace(keepItem, anchor);
+            CuttingContainer.TryPlace(wasteItem, wastePileAnchorPoint);
+
+            cutting = false;
         }
     }
 }

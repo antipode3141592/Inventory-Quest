@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c190ba3da7d3a684d9e95a4a9625538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 0
+  interactable: 1
   CharacterPortraitPrefab: {fileID: 9113256971570305394, guid: e46b57a58c9bfc544ae7e894d074891f, type: 3}
   _characterStatsDisplays:
   - {fileID: 1238187111780377667}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c716dbbd43ed9e64d913d4f432172aac, type: 3}
-  m_Name: shape_log_half
+  m_Name: shape_log_length_8
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: id
       Entry: 1
-      Data: log_half
+      Data: log_length_8
     - Name: isRotationallySymmetric
       Entry: 5
       Data: false
@@ -32,16 +32,16 @@ MonoBehaviour:
       Data: false
     - Name: minoCount
       Entry: 3
-      Data: 20
+      Data: 16
     - Name: size
       Entry: 7
       Data: 0|Data.Coor, Data
     - Name: row
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: column
       Entry: 3
-      Data: 1
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -50,22 +50,10 @@ MonoBehaviour:
       Data: 1|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 20
+      Data: 16
     - Name: ranks
       Entry: 1
-      Data: 10|2
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: 8|2
     - Name: 
       Entry: 5
       Data: true
@@ -163,22 +151,10 @@ MonoBehaviour:
       Data: 4|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 20
+      Data: 16
     - Name: ranks
       Entry: 1
-      Data: 2|10
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: 2|8
     - Name: 
       Entry: 5
       Data: true
@@ -247,22 +223,10 @@ MonoBehaviour:
       Data: 5|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 20
+      Data: 16
     - Name: ranks
       Entry: 1
-      Data: 10|2
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: 8|2
     - Name: 
       Entry: 5
       Data: true
@@ -331,22 +295,10 @@ MonoBehaviour:
       Data: 6|System.Boolean[,], mscorlib
     - Name: 
       Entry: 12
-      Data: 20
+      Data: 16
     - Name: ranks
       Entry: 1
-      Data: 2|10
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 5
-      Data: true
+      Data: 2|8
     - Name: 
       Entry: 5
       Data: true

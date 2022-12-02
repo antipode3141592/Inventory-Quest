@@ -12,6 +12,7 @@ namespace InventoryQuest.Managers
     public class HarvestManager: SerializedMonoBehaviour, IHarvestManager
     {
         [SerializeField] IItemStats woodHarvestSawStats;
+        [SerializeField] List<IItemStats> woodHarvestCutItemStats;
 
         IItemDataSource _itemDataSource;
 
@@ -108,7 +109,7 @@ namespace InventoryQuest.Managers
             var woodHarvestSawContainer = woodHarvestSaw.Components[typeof(IContainer)] as IContainer;
             woodHarvestSaw
                 .SubscribeToContainerEvents()
-                .SetCutItem(_itemDataSource.GetById("log_standard_half"));
+                .SetCutItemDictionary(woodHarvestCutItemStats);
             Piles.Add(woodHarvestSawContainer.GuId, woodHarvestSawContainer);
 
             //add empty wood log pile(s)
