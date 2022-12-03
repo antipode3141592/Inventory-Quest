@@ -1,5 +1,4 @@
 ﻿using InventoryQuest.Managers;
-using InventoryQuest.UI.Menus;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +8,12 @@ namespace InventoryQuest.UI.Menus
 {
     public class HarvestListDisplay: MonoBehaviour, IContainersDisplay, IOnMenuShow
     {
+        [SerializeField] ContainerIcon _lootIconPrefab;
+        [SerializeField] WoodHarvestSawDisplay _woodHarvestSaw;
+
         IHarvestManager _harvestManager;
 
         readonly List<ContainerIcon> pileIcons = new();
-
-        [SerializeField]
-        ContainerIcon _lootIconPrefab;
 
         [Inject]
         public void Init(IHarvestManager harvestManager)
@@ -26,6 +25,7 @@ namespace InventoryQuest.UI.Menus
         {
             _harvestManager.Harvesting.StateEntered += OnHarvestStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
+
         }
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
@@ -46,6 +46,10 @@ namespace InventoryQuest.UI.Menus
                 {
                     icon.IsSelected = true;
                     _harvestManager.SelectPile(containerGuid);
+                    if (_harvestManager.Piles[containerGuid].Item.Id.Contains("saw"))
+                        _woodHarvestSaw.Show();
+                    else
+                        _woodHarvestSaw.Hide();
                 }
                 else
                     icon.IsSelected = false;
@@ -63,7 +67,6 @@ namespace InventoryQuest.UI.Menus
                 pileIcons.Add(icon);
 
             }
-
         }
 
         public void DestroyContainers()

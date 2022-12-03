@@ -20,24 +20,16 @@ namespace InventoryQuest.Testing
         IHarvestManager harvestManager;
         IPartyManager partyManager;
 
-        IContainer loggingPile;
-
         ICharacter wagon;
         ICharacterStats wagonStats;
 
-        IItem log;
-
-        List<IItem> logs;
-
-        IItemStats logStats;
-        IItemStats cookieStats;
         IItemStats wagonContainerStats;
 
         IItem wagonContainer;
 
         void CommonInstall()
         {
-            logs = new List<IItem>();
+
         }
 
         void CommonPostSceneLoadInstall()
@@ -76,15 +68,17 @@ namespace InventoryQuest.Testing
             while (!harvestingEntered)
                 yield return null;
 
-            harvestManager.SelectPile(harvestManager.Piles.Keys.ElementAt(0));
+            string harvestPileKey = harvestManager.Piles.First(x => x.Value.Item.Id == "logging_pile").Key;
+
+            harvestManager.SelectPile(harvestPileKey);
             yield return null;
             Debug.Log($"harvest piles: {harvestManager.Piles.Count}");
 
             if (harvestManager.Piles.Count == 0) Assert.Fail($"incorrect pile count in harvest");
 
-            Debug.Log($"harvet pile contains {harvestManager.Piles[harvestManager.Piles.Keys.ElementAt(0)].Contents.Count} objects");
-            Assert.IsTrue(harvestManager.Piles[harvestManager.Piles.Keys.ElementAt(0)].Contents.Count == 10);
-            Assert.IsTrue(harvestManager.Piles[harvestManager.Piles.Keys.ElementAt(0)].IsFull);
+            Debug.Log($"harvet pile contains {harvestManager.Piles[harvestPileKey].Contents.Count} objects");
+            Assert.IsTrue(harvestManager.Piles[harvestPileKey].Contents.Count == 10);
+            Assert.IsTrue(harvestManager.Piles[harvestPileKey].IsFull);
 
             void Harvesting_StateEntered(object sender, System.EventArgs e)
             {

@@ -175,7 +175,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: Wood_Harvest_Sawtable
+  id: wood_harvest_sawtable
   description: 
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0

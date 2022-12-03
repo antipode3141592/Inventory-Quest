@@ -13,6 +13,7 @@ namespace InventoryQuest.Managers
     {
         [SerializeField] IItemStats woodHarvestSawStats;
         [SerializeField] List<IItemStats> woodHarvestCutItemStats;
+        [SerializeField] WoodHarvestSawDisplay _woodHarvestSaw;
 
         IItemDataSource _itemDataSource;
 
@@ -41,6 +42,7 @@ namespace InventoryQuest.Managers
 
         public event EventHandler OnHarvestCleared;
         public event EventHandler<IContainer> OnPileSelected;
+        public event EventHandler OnItemCut;
 
         [Inject]
         public void Init(IItemDataSource itemDataSource)
@@ -110,6 +112,9 @@ namespace InventoryQuest.Managers
             woodHarvestSaw
                 .SubscribeToContainerEvents()
                 .SetCutItemDictionary(woodHarvestCutItemStats);
+
+            woodHarvestSaw.Cutting += OnCutHandler;
+            
             Piles.Add(woodHarvestSawContainer.GuId, woodHarvestSawContainer);
 
             //add empty wood log pile(s)
@@ -124,6 +129,11 @@ namespace InventoryQuest.Managers
             {
                 ItemPlacementHelpers.TryAutoPlaceToContainer(harvestContainer, ItemFactory.GetItem(_itemDataSource.GetById(itemId)));
             }
+        }
+
+        void OnCutHandler(object sender, EventArgs e)
+        {
+            OnItemCut?.Invoke(this, EventArgs.Empty);
         }
 
         public void DestroyHarvest()

@@ -9,8 +9,6 @@ namespace Data.Items
     public class WoodHarvestSaw: IItem
     {
         readonly Coor wastePileAnchorPoint = new Coor(0, 10);
-        IItemStats cuttingStats;
-
 
         public string GuId { get; }
         public string Id { get; }
@@ -23,6 +21,8 @@ namespace Data.Items
         public int Quantity { get; }
         public IDictionary<Type, IItemComponent> Components { get; }
         public IItemStats Stats { get; }
+
+        public event EventHandler Cutting;
 
         public WoodHarvestSaw(IItemStats itemStats)
         {
@@ -59,12 +59,6 @@ namespace Data.Items
             return this;
         }
 
-        public WoodHarvestSaw SetCutItem(IItemStats cuttingStats)
-        {
-            this.cuttingStats = cuttingStats;
-            return this;
-        }
-
         Dictionary<int, IItemStats> cutItemStats;
 
         public WoodHarvestSaw SetCutItemDictionary(IList<IItemStats> cutItemList)
@@ -90,6 +84,11 @@ namespace Data.Items
             var anchor = content.AnchorPosition;
 
             int keepSideLength = wastePileAnchorPoint.column - anchor.column;
+            if (keepSideLength <= 0)
+            {
+                cutting = false;
+                return;
+            }
             HashSet<Coor> itemPoints = content.Item.Shape.Points[content.Item.CurrentFacing];
             int wasteSideLength = itemPoints.Max(x => x.column) - keepSideLength + 1; //length inclusive of anchor
 
@@ -105,6 +104,8 @@ namespace Data.Items
             }
 
             CuttingContainer.TryTake(out _, anchor);
+
+            Cutting?.Invoke(this, EventArgs.Empty);
 
             var keepItem = ItemFactory.GetItem(cutItemStats[keepSideLength]);
             var wasteItem = ItemFactory.GetItem(cutItemStats[wasteSideLength]);

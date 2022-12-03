@@ -39,6 +39,12 @@ namespace InventoryQuest.Managers
             player = ReInput.players.GetPlayer(playerId);
         }
 
+        void Start()
+        {
+            if (Debug.isDebugBuild)
+                Debug.Log($"InputManager started with rewired input {player.id}", this);
+        }
+
         void Update()
         {
             CheckRotateAction();

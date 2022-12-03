@@ -26,5 +26,6 @@ namespace InventoryQuest.Managers
         public void SelectPile(string containerGuid);
 
         public event EventHandler<IContainer> OnPileSelected;
+        public event EventHandler OnItemCut;
     }
 }

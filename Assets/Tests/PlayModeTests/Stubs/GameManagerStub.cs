@@ -40,46 +40,13 @@ namespace InventoryQuest.Testing
 
         void Awake()
         {
-            currentState = GameStates.Loading;
-        }
-
-        void Update()
-        {
-            CheckRotateAction();
+            currentState = GameStates.Encounter;
         }
 
         public void ChangeState(GameStates targetState)
         {
             if (currentState == targetState) return;
             currentState = targetState;
-        }
-
-        void CheckRotateAction()
-        {
-            if (HoldingItem is null) return;
-            bool rotateCW = rotatePieceCW;
-            bool rotateCCW = rotatePieceCCW;
-
-            if (rotateCW)
-            {
-                HoldingItem.Rotate(1);
-                OnRotateCW?.Invoke(this, new RotationEventArgs(HoldingItem.CurrentFacing));
-                ResetInputs();
-                return;
-            }
-
-            if (rotateCCW)
-            {
-                HoldingItem.Rotate(-1);
-                OnRotateCCW?.Invoke(this, new RotationEventArgs(HoldingItem.CurrentFacing));
-                return;
-            }
-
-            void ResetInputs()
-            {
-                rotatePieceCW = false;
-                rotatePieceCCW = false;
-            }
         }
 
         public void BeginGame()
