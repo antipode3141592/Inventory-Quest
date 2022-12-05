@@ -6,6 +6,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Zenject;
 using InventoryQuest.Managers;
+using UnityEngine.EventSystems;
+using Data.Items.Components;
 
 namespace InventoryQuest.UI
 {
@@ -13,6 +15,7 @@ namespace InventoryQuest.UI
     {
         IGameManager _gameManager;
         IInputManager _inputManager;
+        IPartyManager _partyManager;
 
         [SerializeField] Transform _panelTransform;
         [SerializeField] Transform _itemPanelTransform;
@@ -36,10 +39,11 @@ namespace InventoryQuest.UI
         public IContainer Container => _container;
 
         [Inject]
-        public void Init(IGameManager gameManager, IInputManager inputManager)
+        public void Init(IGameManager gameManager, IInputManager inputManager, IPartyManager partyManager)
         {
             _gameManager = gameManager;
             _inputManager = inputManager;
+            _partyManager = partyManager;
         }
 
         void Awake()
@@ -68,6 +72,7 @@ namespace InventoryQuest.UI
                     square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
                     square.SetContainer(Container);
                     square.Coordinates = new Coor(r, c);
+                    square.GridSquarePointerClicked += GridSquareClicked;
                     squares[r, c] = square;
                     squares[r, c].gameObject.SetActive(false);
                 }
@@ -177,6 +182,42 @@ namespace InventoryQuest.UI
                 runningTotal++;
             }
             return runningTotal;
+        }
+
+        void GridSquareClicked(object sender, PointerEventData e)
+        {
+            var clickedCoor = (sender as ContainerGridSquareDisplay).Coordinates;
+            if (e.button == PointerEventData.InputButton.Left)
+            {
+                switch (_gameManager.CurrentState)
+                {
+                    case GameStates.Encounter:
+                        if (_container.TryTake(out var item, clickedCoor))
+                        {
+                            _inputManager.HoldingItem = item;
+                            _gameManager.ChangeState(GameStates.ItemHolding);
+                        }
+                        break;
+                    case GameStates.ItemHolding:
+                        if (_container.TryPlace(_inputManager.HoldingItem, clickedCoor))
+                        {
+                            _inputManager.HoldingItem = null;
+                            _gameManager.ChangeState(GameStates.Encounter);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (e.button == PointerEventData.InputButton.Right)
+            {
+                var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
+                if (_container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
+                {
+                    (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable)
+                        .TryUse(_partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId]);
+                }
+            }
         }
     }
 }

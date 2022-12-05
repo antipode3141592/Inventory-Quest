@@ -1,4 +1,6 @@
-﻿namespace Data.Items
+﻿using Data.Items.Components;
+
+namespace Data.Items
 {
     public class ItemFactory
     {
@@ -31,6 +33,12 @@
                 {
                     item.Components.Add(typeof(IStackable), new Stackable(stackableItemStats, item));
                     continue;
+                }
+                IUsableStats usableStats = component as IUsableStats;
+                if (usableStats is not null)
+                {
+                    if (usableStats is EdibleStats edibleStats)
+                        item.Components.Add(typeof(IUsable), new Edible(edibleStats, item));
                 }
             }
             return item;

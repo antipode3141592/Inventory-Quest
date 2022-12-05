@@ -3,12 +3,12 @@
 {
     public class GridSquare
     {
-        public string storedItemId;
+        public string storedItemGuId;
         public bool IsOccupied;
 
-        public GridSquare(string storedItemId = null, bool isOccupied = false)
+        public GridSquare(string storedItemGuId = null, bool isOccupied = false)
         {
-            this.storedItemId = storedItemId;
+            this.storedItemGuId = storedItemGuId;
             IsOccupied = isOccupied;
         }
     }

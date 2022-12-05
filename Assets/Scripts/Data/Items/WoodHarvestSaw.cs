@@ -18,11 +18,12 @@ namespace Data.Items
         public Rarity Rarity { get; }
         public float Weight => CalculateWeight();
         public float Value => Stats.GoldValue;
-        public int Quantity { get; }
+        public int Quantity { get; set; }
         public IDictionary<Type, IItemComponent> Components { get; }
         public IItemStats Stats { get; }
 
         public event EventHandler Cutting;
+        public event EventHandler RequestDestruction;
 
         public WoodHarvestSaw(IItemStats itemStats)
         {

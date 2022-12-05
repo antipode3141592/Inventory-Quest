@@ -1,5 +1,6 @@
 using Data;
 using Data.Items;
+using Data.Items.Components;
 using InventoryQuest.Managers;
 using System;
 using System.Collections;
@@ -118,27 +119,8 @@ namespace InventoryQuest.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             GridSquarePointerClicked?.Invoke(this, eventData);
-            if (eventData.button == PointerEventData.InputButton.Left)
-
-            switch (_gameManager.CurrentState)
-            {
-                case GameStates.Encounter:
-                    if (_container.TryTake(out var item, Coordinates))
-                    {
-                        _inputManager.HoldingItem = item;
-                        _gameManager.ChangeState(GameStates.ItemHolding);
-                    }
-                    break;
-                case GameStates.ItemHolding:
-                    if (_container.TryPlace(_inputManager.HoldingItem, Coordinates))
-                    {
-                        _inputManager.HoldingItem = null;
-                        _gameManager.ChangeState(GameStates.Encounter);
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
+
+
     }
 }

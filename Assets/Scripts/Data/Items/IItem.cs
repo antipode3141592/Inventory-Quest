@@ -20,10 +20,12 @@ namespace Data.Items
 
         public Facing CurrentFacing { get; }
 
-        public int Quantity { get; }
+        public int Quantity { get; set; }
 
         public IDictionary<Type, IItemComponent> Components { get; }
 
         public void Rotate(int direction);
+
+        public event EventHandler RequestDestruction;
     }
 }

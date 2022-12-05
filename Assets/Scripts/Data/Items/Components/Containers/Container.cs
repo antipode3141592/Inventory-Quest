@@ -181,9 +181,9 @@ namespace Data.Items
                     Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
                     tempPointList.Add(testPoint);
                     Grid[testPoint].IsOccupied = true;
-                    Grid[testPoint].storedItemId = item.GuId;
+                    Grid[testPoint].storedItemGuId = item.GuId;
                 }
-                
+                item.RequestDestruction += RequestDestroyHandler;
                 Contents.Add(item.GuId, new Content(item, tempPointList, target));
                 OnItemPlaced?.Invoke(this, item.GuId);
                 if (Debug.isDebugBuild)
@@ -199,14 +199,15 @@ namespace Data.Items
             
             if (IsPointInGrid(target) && Grid[target].IsOccupied)
             {
-                if (Contents.TryGetValue(key: Grid[target].storedItemId, out Content content))
+                if (Contents.TryGetValue(key: Grid[target].storedItemGuId, out Content content))
                 {
                     item = content.Item;
-                    Contents.Remove(key: Grid[target].storedItemId);
+                    item.RequestDestruction -= RequestDestroyHandler;
+                    Contents.Remove(key: Grid[target].storedItemGuId);
                     foreach (Coor coor in content.GridSpaces)
                     {
                         Grid[coor].IsOccupied = false;
-                        Grid[coor].storedItemId = "";
+                        Grid[coor].storedItemGuId = "";
                     }
                     ListPool<Coor>.Release(content.GridSpaces);
                     OnItemTaken?.Invoke(this, item.Id);
@@ -235,6 +236,13 @@ namespace Data.Items
                 if (!square.Value.IsOccupied) return false;
             }
             return true;
+        }
+
+        public void RequestDestroyHandler(object sender, EventArgs e)
+        {
+            if (sender is not IItem item) return;
+            var anchor = Contents[item.GuId].AnchorPosition;
+            TryTake(out _, anchor);
         }
     }
 }

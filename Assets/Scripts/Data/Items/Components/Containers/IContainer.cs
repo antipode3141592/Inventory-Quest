@@ -28,7 +28,9 @@ namespace Data.Items
 
         public bool IsValidPlacement(IItem item, Coor target);
 
-        public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors);        
+        public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors);
+
+        public void RequestDestroyHandler(object sender, EventArgs e);
     }
 
 

@@ -8,6 +8,35 @@ namespace Data.Items
 {
     public class Item : IItem
     {
+        int quantity;
+
+        
+
+        
+
+        public string GuId { get; }
+        public string Id { get; }
+        public IShape Shape { get; }
+        public Facing CurrentFacing { get; protected set;}
+        public Sprite Sprite { get; set; }
+        public Rarity Rarity { get; }
+        public float Weight => CalculateWeight();
+        public float Value => Stats.GoldValue;
+        public int Quantity 
+        {
+            get => quantity;
+            set
+            {
+                quantity = value;
+                if (value == 0)
+                    RequestDestruction?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        public IDictionary<Type, IItemComponent> Components { get; }
+        public IItemStats Stats { get; }
+
+        public event EventHandler RequestDestruction;
+
         public Item(IItemStats itemStats)
         {
             GuId = Guid.NewGuid().ToString();
@@ -20,17 +49,6 @@ namespace Data.Items
             Components = new Dictionary<Type, IItemComponent>();
         }
 
-        public string GuId { get; }
-        public string Id { get; }
-        public IShape Shape { get; }
-        public Facing CurrentFacing { get; protected set;}
-        public Sprite Sprite { get; set; }
-        public Rarity Rarity { get; }
-        public float Weight => CalculateWeight();
-        public float Value => Stats.GoldValue;
-        public int Quantity {get; }
-        public IDictionary<Type, IItemComponent> Components { get; }
-        public IItemStats Stats { get; }
         public void Rotate(int direction)
         {
             int v = (int)CurrentFacing + direction;
