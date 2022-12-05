@@ -1,6 +1,4 @@
-﻿using Data;
-using Data.Encounters;
-using FiniteStateMachine;
+﻿using FiniteStateMachine;
 using System;
 
 namespace InventoryQuest.Managers.States

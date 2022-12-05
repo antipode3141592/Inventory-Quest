@@ -7,6 +7,7 @@ namespace Data.Locations
     [CreateAssetMenu(menuName = "InventoryQuest/LocationStats", fileName ="Location_")]
     public class LocationStatsSO : SerializedScriptableObject, ILocationStats
     {
+        
         [SerializeField] string id;
         [SerializeField] string _name;
         [SerializeField] string displayName;
@@ -15,6 +16,7 @@ namespace Data.Locations
         [SerializeField] List<string> characterIds;
         [SerializeField] List<string> locationIds;
         [SerializeField] bool isKnown;
+        [SerializeField] AudioClip audioClip;
 
         public string Id => id;
         public string Name => _name;
@@ -24,5 +26,7 @@ namespace Data.Locations
         public List<string> CharacterIds => characterIds;
         public List<string> LocationIds => locationIds;
         public bool IsKnown => isKnown;
+
+        public AudioClip AudioClip => audioClip;
     }
 }

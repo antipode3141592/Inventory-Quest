@@ -1,3 +1,4 @@
+using InventoryQuest.Audio;
 using InventoryQuest.Health;
 using InventoryQuest.Managers;
 using InventoryQuest.Traveling;
@@ -30,6 +31,8 @@ namespace InventoryQuest
             Container.Bind<IHarvestManager>().To<HarvestManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IInputManager>().To<InputManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IAudioManager>().To<AudioManager>()
                 .FromComponentInHierarchy().AsSingle();
         }
     }

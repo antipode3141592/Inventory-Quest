@@ -1,15 +1,17 @@
-﻿using Data.Items;
-using Data.Shapes;
-using Rewired;
+﻿using Data.Locations;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class GameManager : MonoBehaviour, IGameManager
+    public class GameManager : SerializedMonoBehaviour, IGameManager
     {
         IAdventureManager _adventureManager;
+        IGameStateDataSource _gameStateDataSource;
+
+        [SerializeField] ILocationStats startingLocation;
 
         GameStates currentState;
 
@@ -18,9 +20,10 @@ namespace InventoryQuest.Managers
         public event EventHandler OnGameBegining;
 
         [Inject]
-        public void Init(IAdventureManager adventureManager)
+        public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource)
         {
             _adventureManager = adventureManager;
+            _gameStateDataSource = gameStateDataSource;
         }
 
         void Awake()
@@ -49,6 +52,7 @@ namespace InventoryQuest.Managers
 
         public void BeginGame()
         {
+            _gameStateDataSource.SetCurrentLocation(startingLocation.Id);
             OnGameBegining?.Invoke(this, EventArgs.Empty);
         }
     }

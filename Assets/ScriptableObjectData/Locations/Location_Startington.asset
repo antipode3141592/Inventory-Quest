@@ -30,3 +30,4 @@ MonoBehaviour:
   - messenger_dispatcher
   locationIds: []
   isKnown: 1
+  audioClip: {fileID: 8300000, guid: 0643908ea2a90c341a1f488fb302af76, type: 3}
