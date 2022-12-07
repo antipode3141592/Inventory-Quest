@@ -37,11 +37,12 @@ namespace InventoryQuest.Managers
                 {
                     "apple_fuji",
                     "apple_fuji",
-                    "apple_fuji"
+                    "apple_fuji",
+                    "incense_common",
+                    "incense_common",
+                    "bread"
                 }
             );
-
-            AddCharacterToParty("wagon");
 
             Lua.RegisterFunction("AddCharacterToParty", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToParty(string.Empty)));
         }

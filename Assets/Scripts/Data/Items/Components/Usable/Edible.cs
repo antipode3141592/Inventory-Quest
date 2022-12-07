@@ -5,8 +5,10 @@ namespace Data.Items.Components
     class Edible : IUsable
     {
         EdibleStats _edibleStats;
-
+        
         public IItem Item { get; }
+
+        public bool IsConsumable => true;
 
         public Edible(EdibleStats edibleStats, IItem parentItem)
         {
@@ -17,7 +19,8 @@ namespace Data.Items.Components
         public bool TryUse(ICharacter useByCharacter)
         {
             useByCharacter.HealDamage(_edibleStats.RestorationStrength);
-            Item.Quantity--;
+            if (IsConsumable)
+                Item.Quantity--;
             return true;
         }
     }

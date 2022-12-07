@@ -18,7 +18,6 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
-
         public void Init(IPartyManager partyManager, IGameManager gameManager)
         {
             _partyManager = partyManager;

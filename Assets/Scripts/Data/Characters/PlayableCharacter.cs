@@ -221,26 +221,12 @@ namespace Data.Characters
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            if (e.Modifiers is not null)
-            {
-                foreach (StatModifier mod in e.Modifiers)
-                {
-                    ApplyModifier(mod);
-                }
-            }
-            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+            ApplyModifiers(e.Modifiers);
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
         {
-            if (e.Modifiers is not null)
-            {
-                foreach (var mod in e.Modifiers)
-                {
-                    RemoveModifier(mod);
-                }
-            }
-            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+            RemoveModifiers(e.Modifiers);
         }
 
         public void OnBackpackContentsChangedHandler(object sender, string e)
@@ -250,6 +236,15 @@ namespace Data.Characters
 
 
         //applying modifiers
+        public void ApplyModifiers(IList<StatModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (StatModifier mod in modifiers)
+                ApplyModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+        
+
         void ApplyModifier(StatModifier mod)
         {
             switch (mod.OperatorType)
@@ -263,6 +258,14 @@ namespace Data.Characters
                 default:
                     break;
             }
+        }
+
+        public void RemoveModifiers(IList<StatModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (StatModifier mod in modifiers)
+                RemoveModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         void RemoveModifier(StatModifier mod)

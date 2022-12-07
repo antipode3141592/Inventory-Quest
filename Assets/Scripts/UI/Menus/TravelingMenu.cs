@@ -1,13 +1,12 @@
-using Data;
+using Data.Encounters;
 using InventoryQuest.Managers;
-using Zenject;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System;
-using Data.Encounters;
-using System.Collections;
+using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
@@ -76,8 +75,6 @@ namespace InventoryQuest.UI.Menus
             _encounterManager.Loading.StateExited += OnEncounterLoadingExitHandler;
             ToggleGroup(show: false);
         }
-
-        
 
         public override void Hide()
         {

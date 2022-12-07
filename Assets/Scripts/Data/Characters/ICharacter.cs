@@ -48,5 +48,8 @@ namespace Data.Characters
         public void OnEquipHandler(object sender, ModifierEventArgs e);
         public void OnUnequipHandler(object sender, ModifierEventArgs e);
         public void ChangeToNextWeapon();
+
+        public void ApplyModifiers(IList<StatModifier> modifiers);
+        public void RemoveModifiers(IList<StatModifier> modifiers);
     }
 }

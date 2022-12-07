@@ -1,27 +1,24 @@
 using Data;
-using Data.Items;
-using Data.Items.Components;
-using InventoryQuest.Managers;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Zenject;
 using HighlightState = Data.HighlightState;
 
 namespace InventoryQuest.UI
 {
     public class ContainerGridSquareDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        IGameManager _gameManager;
-        IInputManager _inputManager;
-        IContainer _container;
-
         [SerializeField] Image backgroundSprite;
         [SerializeField] Image highlightSprite;
         [SerializeField] Image matchingHighlightSprite;
         [SerializeField] ColorSettings colorSettings;
+
+        Coor coordinates;
+        bool _isPointerHovering = false;
+
+        public bool IsPointerHovering => _isPointerHovering;
 
         bool _isOccupied;
         public bool IsOccupied
@@ -36,29 +33,11 @@ namespace InventoryQuest.UI
 
         public float Width => 32f;
 
-        HighlightState _highlightState;
-        [SerializeField] Coor coordinates;
-
-        public HighlightState CurrentState
-        {
-            get { return _highlightState; }
-            set
-            {
-                SetHighlightColor(value);
-                _highlightState = value;
-            }
-        }
         public Coor Coordinates { get => coordinates; set => coordinates = value; }
 
-        public event EventHandler<Coor> GridSquarePointerEntered;
-        public event EventHandler<Coor> GridSquarePointerExited;
+        public event EventHandler<PointerEventData> GridSquarePointerEntered;
+        public event EventHandler<PointerEventData> GridSquarePointerExited;
         public event EventHandler<PointerEventData> GridSquarePointerClicked;
-
-        public void Init (IGameManager gameManager, IInputManager inputManager)
-        {
-            _gameManager = gameManager;
-            _inputManager = inputManager;
-        }
 
         public void SetHighlightColor(HighlightState state, float timer = 0f)
         {
@@ -96,31 +75,21 @@ namespace InventoryQuest.UI
             image.color = Color.clear;
         }
 
-        public void SetContainer(IContainer container)
-        {
-            _container = container;
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
-            GridSquarePointerEntered?.Invoke(this, Coordinates);
-
-            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
-            var squareState = _container.IsValidPlacement(_inputManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
-            SetHighlightColor(squareState);
+            _isPointerHovering = true;
+            GridSquarePointerEntered?.Invoke(this, eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            GridSquarePointerExited?.Invoke(this, Coordinates);
-            SetHighlightColor(HighlightState.Normal);
+            _isPointerHovering = false;
+            GridSquarePointerExited?.Invoke(this, eventData);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             GridSquarePointerClicked?.Invoke(this, eventData);
         }
-
-
     }
 }

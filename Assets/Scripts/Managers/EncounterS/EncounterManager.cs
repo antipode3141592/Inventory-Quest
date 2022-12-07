@@ -3,6 +3,7 @@ using FiniteStateMachine;
 using InventoryQuest.Managers.States;
 using InventoryQuest.Traveling;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,8 @@ namespace InventoryQuest.Managers
     public class EncounterManager : MonoBehaviour, IEncounterManager, IDeltaTimeTracker
     {
         [SerializeField] TravelSettings travelSettings;
+
+        List<EncounterModifier> encounterModifiers = new();
 
         //managers
         IPartyManager _partyManager;
@@ -44,6 +47,8 @@ namespace InventoryQuest.Managers
 
         public string CurrentStateName => _stateMachine.CurrentStateName;
 
+        public List<EncounterModifier> EncounterModifiers => encounterModifiers;
+
         [Inject]
         public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
         {
@@ -64,7 +69,7 @@ namespace InventoryQuest.Managers
             _loading = new Loading(gameStateDataSource: _gameStateDataSource);
             _managingInventory = new ManagingInventory(partyController: _partyController, inputManager: _inputManager) ;
             _resolving = new Resolving(rewardManager: _rewardManager, penaltyManager: _penaltyManager, partyManager: _partyManager, gameStateDataSource: _gameStateDataSource, deltaTimeTracker: this);
-            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, inputManager: _inputManager);
+            _cleaningUp = new CleaningUp(rewardManager: _rewardManager, gameStateDataSource: _gameStateDataSource, inputManager: _inputManager, encounterManager: this);
 
             At(_idle, _wayfairing, BeginWayfairing());
             At(_wayfairing, _loading, WayfairingComplete());
@@ -97,6 +102,13 @@ namespace InventoryQuest.Managers
         {
             _deltaTime = Time.deltaTime;
             _stateMachine.Tick();
+        }
+
+        public void AddEncounterModifier(EncounterModifier encounterModifier)
+        {
+            if (encounterModifiers is null || encounterModifiers.Count == 0)
+                encounterModifiers = new();
+            encounterModifiers.Add(encounterModifier);
         }
     }
 }

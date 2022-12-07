@@ -1,13 +1,14 @@
 ﻿using Data;
 using Data.Items;
+using Data.Items.Components;
 using Data.Shapes;
+using InventoryQuest.Managers;
+using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
-using Zenject;
-using InventoryQuest.Managers;
 using UnityEngine.EventSystems;
-using Data.Items.Components;
+using Zenject;
 
 namespace InventoryQuest.UI
 {
@@ -51,6 +52,14 @@ namespace InventoryQuest.UI
             InitializeDisplay();
         }
 
+        void Start()
+        {
+            _inputManager.OnRotateCCW += ItemRotationHandler;
+            _inputManager.OnRotateCW += ItemRotationHandler;
+        }
+
+        
+
         #region Grid Creation and Destruction
         [Button]
         public void InitializeDisplay()
@@ -68,11 +77,11 @@ namespace InventoryQuest.UI
                 for(int c = 0; c < columnMax; c++)
                 {
                     ContainerGridSquareDisplay square = Instantiate(original: gridSquarePrefab, parent: _panelTransform);
-                    square.Init(gameManager: _gameManager, inputManager: _inputManager);
                     square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
-                    square.SetContainer(Container);
                     square.Coordinates = new Coor(r, c);
                     square.GridSquarePointerClicked += GridSquareClicked;
+                    square.GridSquarePointerEntered += GridSquareEntered;
+                    square.GridSquarePointerExited += GridSquareExited;
                     squares[r, c] = square;
                     squares[r, c].gameObject.SetActive(false);
                 }
@@ -98,9 +107,8 @@ namespace InventoryQuest.UI
             }
             foreach(var point in Container.Grid) 
             { 
-                squares[point.Key.row, point.Key.column].SetContainer(Container);
-                squares[point.Key.row, point.Key.column].gameObject.SetActive(true);
-                squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
+                Squares[point.Key.row, point.Key.column].gameObject.SetActive(true);
+                Squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
 
             Container.OnItemPlaced += OnItemChangeHandler;
@@ -113,16 +121,15 @@ namespace InventoryQuest.UI
             foreach (var itemGuid in e)
             {
                 foreach (var coor in Container.Contents[itemGuid].GridSpaces)
-                    squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
+                    Squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
             }
         }
 
         public void DestroyGrid()
         {
-            foreach (var square in squares)
+            foreach (var square in Squares)
             {
                 square.IsOccupied = false;
-                square.SetContainer(null);
                 square.gameObject.SetActive(false);
             }
 
@@ -142,7 +149,7 @@ namespace InventoryQuest.UI
         public void UpdateGridState()
         {
             foreach (var point in Container.Grid)
-                squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
+                Squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
         }
 
         public void SetItemSprites()
@@ -184,40 +191,88 @@ namespace InventoryQuest.UI
             return runningTotal;
         }
 
+        void GridSquareEntered(object sender, PointerEventData e)
+        {
+            HighlightGrid((sender as ContainerGridSquareDisplay).Coordinates);
+        }
+
+        void HighlightGrid(Coor anchorPoint)
+        {
+            List<Tuple<HighlightState, Coor>> tempPointList = UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Get();
+            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
+            _container.GetPointHighlights(ref tempPointList, _inputManager.HoldingItem, anchorPoint);
+            if (tempPointList.Count == 0) return;
+            for (int i = 0; i < tempPointList.Count; i++)
+                Squares[tempPointList[i].Item2.row, tempPointList[i].Item2.column].SetHighlightColor(tempPointList[i].Item1);
+            UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Release(tempPointList);
+        }
+
+        void GridSquareExited(object sender, PointerEventData e)
+        {
+            ResetGrid();
+        }
+
+        void ResetGrid()
+        {
+            foreach (var square in Squares)
+                square.SetHighlightColor(HighlightState.Normal);
+        }
+
         void GridSquareClicked(object sender, PointerEventData e)
         {
             var clickedCoor = (sender as ContainerGridSquareDisplay).Coordinates;
             if (e.button == PointerEventData.InputButton.Left)
             {
-                switch (_gameManager.CurrentState)
-                {
-                    case GameStates.Encounter:
-                        if (_container.TryTake(out var item, clickedCoor))
-                        {
-                            _inputManager.HoldingItem = item;
-                            _gameManager.ChangeState(GameStates.ItemHolding);
-                        }
-                        break;
-                    case GameStates.ItemHolding:
-                        if (_container.TryPlace(_inputManager.HoldingItem, clickedCoor))
-                        {
-                            _inputManager.HoldingItem = null;
-                            _gameManager.ChangeState(GameStates.Encounter);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                LeftClickRepsonse(clickedCoor);
             }
             else if (e.button == PointerEventData.InputButton.Right)
             {
-                var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
-                if (_container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
-                {
-                    (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable)
-                        .TryUse(_partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId]);
-                }
+                RightClickResponse(clickedCoor);
             }
+        }
+
+        void RightClickResponse(Coor clickedCoor)
+        {
+            var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
+            if (_container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
+            {
+                (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable)
+                    .TryUse(_partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId]);
+            }
+        }
+
+        void LeftClickRepsonse(Coor clickedCoor)
+        {
+            switch (_gameManager.CurrentState)
+            {
+                case GameStates.Encounter:
+                    if (_container.TryTake(out var item, clickedCoor))
+                    {
+                        _inputManager.HoldingItem = item;
+                        _gameManager.ChangeState(GameStates.ItemHolding);
+                    }
+                    break;
+                case GameStates.ItemHolding:
+                    if (_container.TryPlace(_inputManager.HoldingItem, clickedCoor))
+                    {
+                        _inputManager.HoldingItem = null;
+                        _gameManager.ChangeState(GameStates.Encounter);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void ItemRotationHandler(object sender, RotationEventArgs e)
+        {
+            ResetGrid();
+            foreach(var square in Squares)
+                if (square.IsPointerHovering)
+                {
+                    HighlightGrid(square.Coordinates);
+                    break;
+                }
         }
     }
 }

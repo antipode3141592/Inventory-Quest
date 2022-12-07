@@ -61,12 +61,36 @@ namespace Data.Items
             foreach (var point in currentItemPoints)
             {
                 Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
-                if (!Grid.ContainsKey(testPoint)) 
+                if (!Grid.ContainsKey(testPoint))
                     return false;
                 if (Grid[testPoint].IsOccupied)
-                        return false;
+                    return false;
             }
             return true;
+        }
+
+        public void GetPointHighlights(ref List<Tuple<HighlightState, Coor>> pointList, IItem item, Coor target)
+        {
+            if (item.Shape is null)
+            {
+                if (Debug.isDebugBuild)
+                    Debug.LogWarning($"no shape found for item {item.Id}");
+                return;
+            }
+            var currentItemPoints = item.Shape.Points[item.CurrentFacing];
+            foreach (var point in currentItemPoints)
+            {
+                Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
+                if (!Grid.ContainsKey(testPoint))
+                {
+                    pointList.Clear();
+                    return;
+                }
+                if (Grid[testPoint].IsOccupied)
+                    pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Incorrect, testPoint));
+                else
+                    pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Highlight, testPoint));
+            }
         }
 
         void AfterItemPlaced(IItem item)

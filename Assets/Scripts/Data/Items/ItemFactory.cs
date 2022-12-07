@@ -39,6 +39,8 @@ namespace Data.Items
                 {
                     if (usableStats is EdibleStats edibleStats)
                         item.Components.Add(typeof(IUsable), new Edible(edibleStats, item));
+                    if (usableStats is EncounterLengthEffectStats encounterLengthEffectStats)
+                        item.Components.Add(typeof(IUsable), new EncounterLengthEffect(encounterLengthEffectStats, item));
                 }
             }
             return item;

@@ -13,5 +13,6 @@ namespace Data.Items.Components
 
         public int RestorationStrength => restorationStrength;
 
+        public bool IsConsumable => true;
     }
 }

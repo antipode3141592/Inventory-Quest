@@ -1,5 +1,4 @@
-﻿using Data;
-using FiniteStateMachine;
+﻿using FiniteStateMachine;
 using System;
 
 namespace InventoryQuest.Managers.States
@@ -9,17 +8,18 @@ namespace InventoryQuest.Managers.States
         readonly IRewardManager _rewardManager;
         readonly IGameStateDataSource _gameStateDataSource;
         readonly IInputManager _inputManager;
+        readonly IEncounterManager _encounterManager;
 
-        public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
+        public CleaningUp(IRewardManager rewardManager, IGameStateDataSource gameStateDataSource, IInputManager inputManager, IEncounterManager encounterManager)
         {
             _rewardManager = rewardManager;
             _gameStateDataSource = gameStateDataSource;
             _inputManager = inputManager;
+            _encounterManager = encounterManager;
         }
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
-
         public event EventHandler RequestShowInventory;
 
         public bool EndState { get; private set; } = false;
@@ -46,6 +46,7 @@ namespace InventoryQuest.Managers.States
         public void OnExit()
         {
             _inputManager.CloseInventoryCommand -= CloseInventoryHandler;
+            EndEncounterEffects();
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -69,6 +70,15 @@ namespace InventoryQuest.Managers.States
         void CloseInventoryHandler(object sender, EventArgs e)
         {
             Continue();
+        }
+
+        void EndEncounterEffects()
+        {
+            for(int i = 0; i < _encounterManager.EncounterModifiers.Count; i++)
+            {
+                var modifier = _encounterManager.EncounterModifiers[i];
+                modifier.Character.RemoveModifiers(_encounterManager.EncounterModifiers[i].Modifiers);
+            }
         }
     }
 }

@@ -7,8 +7,6 @@ namespace InventoryQuest.Managers.States
     {
         readonly IEncounterManager _encounterManager;
         readonly IGameStateDataSource _gameStateDataSource;
-
-
         
         public bool EndAdventure = false;
 

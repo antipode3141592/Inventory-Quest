@@ -1,10 +1,13 @@
 ﻿using InventoryQuest.Managers.States;
+using System.Collections.Generic;
 
 namespace InventoryQuest.Managers
 {
     public interface IEncounterManager
     {
         public string CurrentStateName { get; }
+
+        public List<EncounterModifier> EncounterModifiers { get; }
 
         public Idle Idle { get; }
         public Wayfairing Wayfairing { get; }

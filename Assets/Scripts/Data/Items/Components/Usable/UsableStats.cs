@@ -7,6 +7,8 @@ namespace Data.Items.Components
     {
         public IItem Item => throw new NotImplementedException();
 
+        public bool IsConsumable => throw new NotImplementedException();
+
         public bool TryUse(ICharacter usedByCharacter)
         {
             throw new NotImplementedException();

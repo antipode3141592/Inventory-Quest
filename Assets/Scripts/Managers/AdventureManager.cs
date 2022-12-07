@@ -1,5 +1,4 @@
-﻿using Data;
-using Data.Encounters;
+﻿using Data.Encounters;
 using Data.Locations;
 using FiniteStateMachine;
 using InventoryQuest.Managers.States;
@@ -14,7 +13,6 @@ namespace InventoryQuest.Managers
     {
         IEncounterManager _encounterManager;
         IGameStateDataSource _gameStateDataSource;
-        IEncounterDataSource _encounterDataSource;
 
         StateMachine _stateMachine;
 
@@ -31,9 +29,8 @@ namespace InventoryQuest.Managers
         public ILocation CurrentLocation { get; protected set; }
 
         [Inject]
-        public void Init(IEncounterDataSource encounterDataSource, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
+        public void Init(IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
         {
-            _encounterDataSource = encounterDataSource;
             _encounterManager = encounterManager;
             _gameStateDataSource = gameStateDataSource;
         }
