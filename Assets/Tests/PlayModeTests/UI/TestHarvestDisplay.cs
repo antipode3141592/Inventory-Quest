@@ -15,17 +15,11 @@ namespace InventoryQuest.Testing
     {
         readonly string sceneName = "Test_HarvestDisplay";
 
-        IItemDataSource itemDataSource;
         ICharacterDataSource characterDataSource;
         IHarvestManager harvestManager;
         IPartyManager partyManager;
 
-        ICharacter wagon;
         ICharacterStats wagonStats;
-
-        IItemStats wagonContainerStats;
-
-        IItem wagonContainer;
 
         void CommonInstall()
         {
@@ -34,19 +28,14 @@ namespace InventoryQuest.Testing
 
         void CommonPostSceneLoadInstall()
         {
-            itemDataSource = SceneContainer.Resolve<IItemDataSource>();
             characterDataSource = SceneContainer.Resolve<ICharacterDataSource>();
 
             harvestManager = SceneContainer.Resolve<IHarvestManager>();
             partyManager = SceneContainer.Resolve<IPartyManager>();
 
             wagonStats = characterDataSource.GetById("wagon");
-            wagonContainerStats = itemDataSource.GetById("wagon_standard");
 
-            wagonContainer = ItemFactory.GetItem(itemStats: wagonContainerStats);
-            wagon = CharacterFactory.GetCharacter(baseStats: wagonStats, startingEquipment: new IItem[] { wagonContainer });
-
-            partyManager.AddCharacterToParty(wagon);
+            partyManager.AddCharacterToParty(wagonStats);
         }
 
         [UnityTest]

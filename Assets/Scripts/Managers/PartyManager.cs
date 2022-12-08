@@ -1,99 +1,68 @@
 ﻿using Data.Characters;
 using Data.Items;
 using PixelCrushers.DialogueSystem;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class PartyManager : MonoBehaviour, IPartyManager
+    public class PartyManager : SerializedMonoBehaviour, IPartyManager
     {
+        [SerializeField] List<ICharacterStats> InitialPartyMembers;
+
         ICharacterDataSource _characterDataSource;
-        IItemDataSource _itemDataSource;
 
         readonly Party _party = new();
 
         public Party CurrentParty => _party;
 
         [Inject]
-        public void Init(ICharacterDataSource characterDataSource, IItemDataSource itemDataSource)
+        public void Init(ICharacterDataSource characterDataSource)
         {
-            _itemDataSource = itemDataSource;
             _characterDataSource = characterDataSource;
         }
 
         void Start()
         {
-            AddCharacterWithEquipmentToParty("player", 
-                startingEquipment: new List<string>
-                {
-                    "adventure_backpack",
-                    "sandal_1",
-                    "shirt_1",
-                    "pants_1"
-                },
-                startingInventory: new List<string>
-                {
-                    "apple_fuji",
-                    "apple_fuji",
-                    "apple_fuji",
-                    "incense_common",
-                    "incense_common",
-                    "bread"
-                }
-            );
+            for (int i = 0; i < InitialPartyMembers.Count; i++)
+                AddCharacterToParty(InitialPartyMembers[i]);
 
-            Lua.RegisterFunction("AddCharacterToParty", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToParty(string.Empty)));
+            Lua.RegisterFunction("AddCharacterToPartyById", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToPartyById(string.Empty)));
         }
 
-        public void AddCharacterToParty(string id)
+        public void AddCharacterToPartyById(string id)
         {
-            List<string> equipment = new();
-            List<string> inventory = new();
-            if (id == "wagon")
-            {
-                equipment.Add("wagon_standard");
-                AddCharacterWithEquipmentToParty(id,
-                    startingEquipment: equipment,
-                    startingInventory: inventory);
-                return;
-            }
-            AddCharacterWithEquipmentToParty(id);
-
-
+            var characterStats = _characterDataSource.GetById(id);
+            AddCharacterToParty(characterStats);
         }
 
-        public void AddCharacterToParty(ICharacter character)
+        public void AddCharacterToParty(ICharacterStats characterStats)
         {
-            _party.AddCharacter(character);
+            List<IItem> equipment = UnityEngine.Pool.ListPool<IItem>.Get();
+            List<IItem> inventory = UnityEngine.Pool.ListPool<IItem>.Get();
+
+            AddCharacterWithEquipmentToParty(characterStats, equipment, inventory);
+
+            UnityEngine.Pool.ListPool<IItem>.Release(equipment);
+            UnityEngine.Pool.ListPool<IItem>.Release(inventory);
         }
 
-        void AddCharacterWithEquipmentToParty(string id, IList<string> startingEquipment = null, IList<string> startingInventory = null)
+        void AddCharacterWithEquipmentToParty(ICharacterStats characterStats, List<IItem> startingEquipment, List<IItem> startingInventory)
         {
-            List<IItem> equipment = new();
-            List<IItem> items = new();
-
-            
-
-            if (startingEquipment is not null)
+            foreach(var _equipment in characterStats.StartingEquipment)
             {
-                foreach(var _equipment in startingEquipment)
-                {
-                    equipment.Add(ItemFactory.GetItem(_itemDataSource.GetById(_equipment)));
-                }
+                startingEquipment.Add(ItemFactory.GetItem(_equipment));
             }
-            if (startingInventory is not null)
+            foreach(var _item in characterStats.StartingInventory)
             {
-                foreach(var _item in startingInventory)
-                {
-                    items.Add(ItemFactory.GetItem(_itemDataSource.GetById(_item)));
-                }
+                startingInventory.Add(ItemFactory.GetItem(_item));
             }
-
-            var _character = (PlayableCharacter)CharacterFactory.GetCharacter(baseStats: _characterDataSource.GetById(id),
-                startingEquipment: equipment,
-                startingInventory: items
+            var _character = (PlayableCharacter)CharacterFactory.GetCharacter(
+                baseStats: characterStats,
+                startingEquipment: startingEquipment,
+                startingInventory: startingInventory
             );
             _party.AddCharacter(_character);
         }

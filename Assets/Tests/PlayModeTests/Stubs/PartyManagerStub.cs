@@ -15,14 +15,14 @@ namespace InventoryQuest.Testing
             currentParty = new Party();
         }
 
-        public void AddCharacterToParty(string id)
+        public void AddCharacterToPartyById(string id)
         {
             
         }
 
-        public void AddCharacterToParty(ICharacter character)
+        public void AddCharacterToParty(ICharacterStats characterStats)
         {
-            currentParty.AddCharacter(character);
+            currentParty.AddCharacter(CharacterFactory.GetCharacter(characterStats));
         }
     }
 }

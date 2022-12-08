@@ -23,6 +23,10 @@ namespace Data.Characters
 
         public IList<IWeaponProficiency> WeaponProficiencies { get; }
 
+        public List<IItemStats> StartingEquipment { get; }
+
+        public List<IItemStats> StartingInventory { get; }
+
         public CharacterStats(
             string name,
             string id,

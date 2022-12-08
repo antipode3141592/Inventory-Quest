@@ -29,7 +29,10 @@ namespace InventoryQuest.Managers
         void Awake()
         {
             currentState = GameStates.Loading;
+        }
 
+        void Start()
+        { 
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }

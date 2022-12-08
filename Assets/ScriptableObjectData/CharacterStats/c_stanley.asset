@@ -18,6 +18,13 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 8f109abf93b8b854089f920863045e1c, type: 2}
     - {fileID: 11400000, guid: e994927958015f449b656f2d6fc9177b, type: 2}
+    - {fileID: 11400000, guid: f62a336f3215004419f819cb1ca36faa, type: 2}
+    - {fileID: 11400000, guid: b80b73c7a37c2b14fa065d5196e8f881, type: 2}
+    - {fileID: 11400000, guid: d231d266cc1afd14fa4a2bef94521f7b, type: 2}
+    - {fileID: 11400000, guid: ae0729e92f283e747ba648076d29b49f, type: 2}
+    - {fileID: 11400000, guid: 18c9490eadaf33247915e141940e86fa, type: 2}
+    - {fileID: 11400000, guid: 7900e740e2803824a80b4c6117750cc0, type: 2}
+    - {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -124,6 +131,54 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: startingEquipment
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: startingInventory
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 13
       Data: 

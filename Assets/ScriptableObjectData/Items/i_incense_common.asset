@@ -73,6 +73,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: isConsumable
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 

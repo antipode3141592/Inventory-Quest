@@ -6,8 +6,8 @@ namespace InventoryQuest.Managers
     {
         Party CurrentParty { get; }
 
-        public void AddCharacterToParty(string id);
+        public void AddCharacterToPartyById(string id);
 
-        public void AddCharacterToParty(ICharacter character);
+        public void AddCharacterToParty(ICharacterStats characterStats);
     }
 }

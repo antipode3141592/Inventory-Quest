@@ -102,7 +102,7 @@ namespace InventoryQuest.Managers
             CharacterRewardStats characterReward = rewardStats as CharacterRewardStats;
             if (characterReward is not null)
             {
-                _partyManager.AddCharacterToParty(characterReward.CharacterId);
+                _partyManager.AddCharacterToPartyById(characterReward.CharacterId);
             }
         }
 

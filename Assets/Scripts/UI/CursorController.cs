@@ -2,7 +2,6 @@ using Data.Shapes;
 using InventoryQuest.Managers;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace InventoryQuest.UI
@@ -60,18 +59,10 @@ namespace InventoryQuest.UI
 
         public void ShowItemSprite()
         {
-            var item = _inputManager.HoldingItem;
-            _cursor.itemIcon.sprite = item.Sprite;
-            //set scale
+            _cursor.itemIcon.sprite = _inputManager.HoldingItem.Sprite;
             _cursor.itemIcon.SetNativeSize();
-            //var itemPPU = item.Sprite.pixelsPerUnit;
-            //float scaleFactor = itemPPU / canvas.referencePixelsPerUnit;
-            //Debug.Log($"scaleFactor : {scaleFactor}");
-            //_cursor.itemIcon.rectTransform.sizeDelta = new(canvas.referencePixelsPerUnit, canvas.referencePixelsPerUnit);
-
-
-            _cursor.itemIcon.color = Color.white;
-            ImageUtilities.RotateSprite(item.CurrentFacing, _cursor.itemIcon);
+            _cursor.itemIcon.color = new Color(1f, 1f, 1f, 0.8f);
+            ImageUtilities.RotateSprite(_inputManager.HoldingItem.CurrentFacing, _cursor.itemIcon);
         }
 
         public void HideItemSprite()
