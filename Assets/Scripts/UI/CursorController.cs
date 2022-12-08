@@ -8,11 +8,13 @@ namespace InventoryQuest.UI
 {
     public class CursorController : MonoBehaviour
     {
+        IInputManager _inputManager;
+
         [SerializeField] Cursor cursorPrefab;
         [SerializeField] bool hardwareCursorEnable;
         [SerializeField] Transform cursorParentTransform;
         [SerializeField] Canvas canvas;
-        IInputManager _inputManager;
+        
         Cursor _cursor;
 
         [Inject]
@@ -23,13 +25,17 @@ namespace InventoryQuest.UI
 
         void Awake()
         {
-            _cursor = Instantiate<Cursor>(cursorPrefab, cursorParentTransform);
+            _cursor = Instantiate(cursorPrefab, cursorParentTransform);
+            UnityEngine.Cursor.visible = hardwareCursorEnable;
+            HideItemSprite();
+        }
+
+        void Start()
+        {
             _inputManager.OnItemHeld += OnItemHeldHandler;
             _inputManager.OnItemPlaced += OnItemPlacedHandler;
             _inputManager.OnRotateCW += OnItemRotateCW;
             _inputManager.OnRotateCCW += OnItemRotateCCW;
-            UnityEngine.Cursor.visible = hardwareCursorEnable;
-            HideItemSprite();
         }
 
         void Update()
@@ -61,7 +67,7 @@ namespace InventoryQuest.UI
         {
             _cursor.itemIcon.sprite = _inputManager.HoldingItem.Sprite;
             _cursor.itemIcon.SetNativeSize();
-            _cursor.itemIcon.color = new Color(1f, 1f, 1f, 0.8f);
+            _cursor.itemIcon.color = new Color(1f, 1f, 1f, 0.75f);
             ImageUtilities.RotateSprite(_inputManager.HoldingItem.CurrentFacing, _cursor.itemIcon);
         }
 

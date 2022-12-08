@@ -15,5 +15,7 @@ namespace InventoryQuest.Managers
         public ManagingInventory ManagingInventory { get; }
         public Resolving Resolving { get; }
         public CleaningUp CleaningUp { get; }
+
+        public void AddEncounterModifier(EncounterModifier encounterModifier);
     }
 }

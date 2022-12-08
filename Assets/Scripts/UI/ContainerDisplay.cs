@@ -17,6 +17,7 @@ namespace InventoryQuest.UI
         IGameManager _gameManager;
         IInputManager _inputManager;
         IPartyManager _partyManager;
+        IEncounterManager _encounterManager;
 
         [SerializeField] Transform _panelTransform;
         [SerializeField] Transform _itemPanelTransform;
@@ -40,11 +41,12 @@ namespace InventoryQuest.UI
         public IContainer Container => _container;
 
         [Inject]
-        public void Init(IGameManager gameManager, IInputManager inputManager, IPartyManager partyManager)
+        public void Init(IGameManager gameManager, IInputManager inputManager, IPartyManager partyManager, IEncounterManager encounterManager)
         {
             _gameManager = gameManager;
             _inputManager = inputManager;
             _partyManager = partyManager;
+            _encounterManager = encounterManager;
         }
 
         void Awake()
@@ -236,8 +238,11 @@ namespace InventoryQuest.UI
             var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
             if (_container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
             {
-                (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable)
-                    .TryUse(_partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId]);
+                var _usable = (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
+                var _character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
+                _usable.TryUse(_character);
+                if (_usable is EncounterLengthEffect encounterEffect)
+                    _encounterManager.AddEncounterModifier(new EncounterModifier(_character, encounterEffect.EncounterLengthEffectStats.Modifiers));
             }
         }
 
