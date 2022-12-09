@@ -29,5 +29,5 @@ MonoBehaviour:
   characterIds:
   - logging_manager
   locationIds: []
-  isKnown: 0
+  isKnown: 1
   audioClip: {fileID: 0}

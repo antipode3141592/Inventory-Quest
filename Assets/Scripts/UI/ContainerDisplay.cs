@@ -236,7 +236,7 @@ namespace InventoryQuest.UI
         void RightClickResponse(Coor clickedCoor)
         {
             var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
-            if (_container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
+            if (_container.Contents.ContainsKey(itemGuid) && _container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
             {
                 var _usable = (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
                 var _character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];

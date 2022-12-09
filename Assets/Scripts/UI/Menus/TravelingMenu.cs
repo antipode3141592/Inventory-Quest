@@ -121,6 +121,7 @@ namespace InventoryQuest.UI.Menus
                 yield return null;
                 encounterText.text = encounter.Description;
                 choiceButtons[0].ChangeButtonText(skillCheck.SkillCheckRequirements[0].Description);
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             }
         }
 

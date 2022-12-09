@@ -60,11 +60,13 @@ namespace InventoryQuest.UI
             if (_character.EquipmentSlots[SlotId].EquippedItem is null)
             {
                 backgroundSprite.color = Color.white;
+                equippedItemSprite.color = Color.clear;
                 equippedItemSprite.sprite = null;
             }
             else
             {
                 backgroundSprite.color = Color.grey;
+                equippedItemSprite.color = Color.white;
                 equippedItemSprite.sprite = _character.EquipmentSlots[SlotId].EquippedItem.Sprite;
             }
         }
@@ -101,7 +103,7 @@ namespace InventoryQuest.UI
                         _inputManager.HoldingItem = currentEquipment as IItem;
                         _gameManager.ChangeState(GameStates.ItemHolding);
                         backgroundSprite.color = Color.white;
-                        equippedItemSprite.color = Color.white;
+                        equippedItemSprite.color = Color.clear;
                         equippedItemSprite.sprite = null;
                     }
                     break;
