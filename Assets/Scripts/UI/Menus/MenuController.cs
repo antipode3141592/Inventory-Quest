@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-
 namespace InventoryQuest.UI.Menus
 {
     public class MenuController : MonoBehaviour
@@ -14,6 +13,8 @@ namespace InventoryQuest.UI.Menus
         IEncounterManager _encounterManager;
         IHarvestManager _harvestManager;
         IGameManager _gameManager;
+        ISceneController _sceneController;
+        IInputManager _inputManager;
 
         [SerializeField] List<Menu> _menuList;
 
@@ -27,13 +28,14 @@ namespace InventoryQuest.UI.Menus
         readonly Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager, ISceneController sceneController, IInputManager inputManager)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;
             _harvestManager = harvestManager;
             _gameManager = gameManager;
-
+            _sceneController = sceneController;
+            _inputManager = inputManager;
         }
 
         void Awake()
@@ -55,9 +57,7 @@ namespace InventoryQuest.UI.Menus
             _gameManager.OnGameBegining += OnGameBegin;
 
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
-            _encounterManager.ManagingInventory.StateEntered += OnManagingInventoryStart;
             _encounterManager.Resolving.StateEntered += OnResolvingStart;
-            _encounterManager.CleaningUp.RequestShowInventory += OnCleaningUpShowInventory;
 
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
@@ -65,9 +65,35 @@ namespace InventoryQuest.UI.Menus
 
             _harvestManager.Harvesting.StateEntered += OnHarvestingStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
+
+            _sceneController.RequestShowLoading += ShowLoadingScreen;
+            _sceneController.RequestHideLoading += HideLoadingScreen;
+
+            _inputManager.OpenInventoryCommand += OpenInventoryScreen;
+            _inputManager.CloseInventoryCommand += CloseInventoryScreen;
             yield return new WaitForSeconds(1f);
-            _loadingScreen.Fade();
+            _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
+        }
+
+        private void CloseInventoryScreen(object sender, EventArgs e)
+        {
+            OpenPreviousMenu();
+        }
+
+        private void OpenInventoryScreen(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(InventoryMenu));
+        }
+
+        void HideLoadingScreen(object sender, EventArgs e)
+        {
+            _loadingScreen.FadeOff();
+        }
+
+        void ShowLoadingScreen(object sender, EventArgs e)
+        {
+            _loadingScreen.FadeOn();
         }
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
@@ -80,11 +106,6 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(HarvestMenu));
         }
 
-        void OnCleaningUpShowInventory(object sender, EventArgs e)
-        {
-            OpenMenu(typeof(InventoryMenu));
-        }
-
         void OnResolvingStart(object sender, EventArgs e)
         {
             OpenMenu(typeof(TravelingMenu));
@@ -95,10 +116,7 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(LocationMenu));
         }
 
-        void OnManagingInventoryStart(object sender, EventArgs e)
-        {
-            OpenMenu(typeof(InventoryMenu));
-        }
+        
 
         void OnWayfairingStart(object sender, EventArgs e)
         {
@@ -119,6 +137,8 @@ namespace InventoryQuest.UI.Menus
         {
             OpenMenu(typeof(LocationMenu));
         }
+
+        
 
         void OpenMenu(Type menuType)
         {

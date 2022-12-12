@@ -175,6 +175,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: wood_harvest_sawtable
   description: 
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}

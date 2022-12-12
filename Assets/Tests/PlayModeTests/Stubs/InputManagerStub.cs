@@ -18,10 +18,16 @@ namespace InventoryQuest.Testing
         public event EventHandler OnSubmitHold;
         public event EventHandler OnSubmitUp;
         public event EventHandler CloseInventoryCommand;
+        public event EventHandler OpenInventoryCommand;
 
         public void CloseInventory()
         {
             CloseInventoryCommand?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OpenInventory()
+        {
+            OpenInventoryCommand?.Invoke(this, EventArgs.Empty);
         }
     }
 }

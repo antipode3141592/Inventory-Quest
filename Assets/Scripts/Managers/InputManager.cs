@@ -32,6 +32,7 @@ namespace InventoryQuest.Managers
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
 
+        public event EventHandler OpenInventoryCommand;
         public event EventHandler CloseInventoryCommand;
 
         void Awake()
@@ -79,6 +80,11 @@ namespace InventoryQuest.Managers
                 OnSubmitHold?.Invoke(this, EventArgs.Empty);
             if (player.GetButtonUp("UISubmit"))
                 OnSubmitUp?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OpenInventory()
+        {
+            OpenInventoryCommand?.Invoke(this, EventArgs.Empty);
         }
 
         public void CloseInventory()

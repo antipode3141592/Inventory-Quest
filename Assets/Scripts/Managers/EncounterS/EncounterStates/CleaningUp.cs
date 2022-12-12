@@ -20,7 +20,6 @@ namespace InventoryQuest.Managers.States
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
-        public event EventHandler RequestShowInventory;
 
         public bool EndState { get; private set; } = false;
 
@@ -34,8 +33,7 @@ namespace InventoryQuest.Managers.States
             _inputManager.CloseInventoryCommand += CloseInventoryHandler;
             if (_rewardManager.ProcessRewards())
             {
-                RequestShowInventory?.Invoke(this, EventArgs.Empty);
-               
+                _inputManager.OpenInventory();
             } 
             else
             {

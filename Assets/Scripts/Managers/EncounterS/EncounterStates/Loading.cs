@@ -22,12 +22,9 @@ namespace InventoryQuest.Managers.States
 
         public bool IsLoaded { get; set; } = false;
 
-        public bool ManageInventory { get; set; } = false;
-
         public void OnEnter()
         {
             IsLoaded = false;
-            ManageInventory = false;
             _gameStateDataSource.OnCurrentEncounterSet += OnEncounterSetHandler;
             _gameStateDataSource.SetCurrentEncounter();
             StateEntered?.Invoke(this, EventArgs.Empty);   

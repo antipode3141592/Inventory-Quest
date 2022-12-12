@@ -30,7 +30,6 @@ namespace InventoryQuest.Managers.States
         public event EventHandler<string> OnEncounterResolved;
 
         public bool EndState { get; private set; } = false;
-
         public bool IsDone { get; private set; } = false;
 
         public Resolving(IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyManager partyManager, IGameStateDataSource gameStateDataSource, IDeltaTimeTracker deltaTimeTracker)
@@ -41,7 +40,6 @@ namespace InventoryQuest.Managers.States
             _gameStateDataSource = gameStateDataSource;
             _deltaTimeTracker = deltaTimeTracker;
         }
-
 
         public void OnEnter()
         {
@@ -68,20 +66,25 @@ namespace InventoryQuest.Managers.States
             if (EndState) return;
             EndState = true;
             float messageDuration;
-            string _message;
+            string _message = "";
+            
 
             if (_gameStateDataSource.CurrentEncounter.Resolve(_partyManager.CurrentParty))
             {
-                Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} is a success!");
-                if (_gameStateDataSource.CurrentEncounter.Rewards is not null)
+                if (_gameStateDataSource.CurrentEncounter.ChosenChoice is not null)
                 {
-                    foreach (var reward in _gameStateDataSource.CurrentEncounter.Rewards)
+                    Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} is a success!");
+                    if (_gameStateDataSource.CurrentEncounter.ChosenChoice.Rewards is not null)
                     {
-                        Debug.Log($"Enqueuing {reward}");
-                        _rewardManager.EnqueueReward(reward);
+                        foreach (var reward in _gameStateDataSource.CurrentEncounter.ChosenChoice.Rewards)
+                        {
+                            Debug.Log($"Enqueuing {reward}");
+                            _rewardManager.EnqueueReward(reward);
+                        }
                     }
+                    _message = _gameStateDataSource.CurrentEncounter.ChosenChoice.SuccessMessage;
                 }
-                _message = _gameStateDataSource.CurrentEncounter.Stats.SuccessMessage;
+                
                 messageDuration = CalculateLength(_message.Length);
 
                 AwardExperience(_partyManager.CurrentParty.Characters);
@@ -90,15 +93,15 @@ namespace InventoryQuest.Managers.States
             else
             {
                 Debug.Log($"The Encounter {_gameStateDataSource.CurrentEncounter.Name} was a failure!");
-                if (_gameStateDataSource.CurrentEncounter.Penalties is not null)
+                if (_gameStateDataSource.CurrentEncounter.ChosenChoice.Penalties is not null)
                 {
-                    foreach (var penalty in _gameStateDataSource.CurrentEncounter.Penalties)
+                    foreach (var penalty in _gameStateDataSource.CurrentEncounter.ChosenChoice.Penalties)
                     {
                         Debug.Log($"Enqueing {penalty}");
                         _penaltyManager.EnqueuePenalty(penalty);
                     }
                 }
-                _message = _gameStateDataSource.CurrentEncounter.Stats.FailureMessage;
+                _message = _gameStateDataSource.CurrentEncounter.ChosenChoice.FailureMessage;
                 messageDuration = CalculateLength(_message.Length);
                 _penaltyManager.ProcessPenalties();
                 OnEncounterResolveFailure?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
@@ -134,7 +137,7 @@ namespace InventoryQuest.Managers.States
         {
             foreach (var character in Characters)
             {
-                character.Value.CurrentExperience += _gameStateDataSource.CurrentEncounter.Stats.Experience;
+                character.Value.CurrentExperience += _gameStateDataSource.CurrentEncounter.ChosenChoice.Experience;
             }
         }
     }

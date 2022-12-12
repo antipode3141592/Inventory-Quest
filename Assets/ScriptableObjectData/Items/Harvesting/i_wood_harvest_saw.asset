@@ -24,6 +24,9 @@ MonoBehaviour:
     - Name: components
       Entry: 6
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: wood_harvest_saw
   description: 
   shape: {fileID: 11400000, guid: e25ef434493e9a94b9dec142ab465008, type: 2}

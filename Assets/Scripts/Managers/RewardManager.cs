@@ -11,6 +11,8 @@ namespace InventoryQuest.Managers
 {
     public class RewardManager : MonoBehaviour, IRewardManager
     {
+        [SerializeField] List<Tag> tagsExcludedFromLoot;
+
         IPartyManager _partyManager;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;

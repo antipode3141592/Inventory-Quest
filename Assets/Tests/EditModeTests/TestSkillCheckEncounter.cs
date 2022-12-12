@@ -3,11 +3,7 @@ using Data.Encounters;
 using Data.Items;
 using InventoryQuest.Testing.Stubs;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryQuest.Testing
 {
@@ -74,16 +70,16 @@ namespace InventoryQuest.Testing
             Assert.IsTrue(currentEncounter.Resolve(party));
         }
 
-        [Test]
-        public void TestOfMightSuccessParty()
-        {
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
-            party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
-            Assert.IsTrue(currentEncounter.Resolve(party));
-        }
+        //[Test]
+        //public void TestOfMightSuccessParty()
+        //{
+        //    party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+        //    party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+        //    party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+        //    party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+        //    party.AddCharacter(CharacterFactory.GetCharacter(playerStats, new IItem[] { ItemFactory.GetItem(backpackStats) }));
+        //    Assert.IsTrue(currentEncounter.Resolve(party));
+        //}
 
         [Test]
         public void TestOfMightFail()

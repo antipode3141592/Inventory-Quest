@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
+  m_Name: e_test_1
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 18bf047efa22c0c41ab845f5db587d2f, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: choices
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IChoice, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Encounters.GiveItems, Data
+    - Name: description
+      Entry: 1
+      Data: Feed it
+    - Name: requiredItem
+      Entry: 10
+      Data: 0
+    - Name: targetQty
+      Entry: 3
+      Data: 1
+    - Name: experience
+      Entry: 3
+      Data: 100
+    - Name: successMessage
+      Entry: 1
+      Data: Happy monster leaves you alone!
+    - Name: failureMessage
+      Entry: 1
+      Data: Hungry monster attacks you, knocking you to the ground!
+    - Name: rewards
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Data.Penalties.DamagePenaltyStats, Data
+    - Name: damageType
+      Entry: 3
+      Data: 0
+    - Name: penaltyType
+      Entry: 3
+      Data: 0
+    - Name: damageAmount
+      Entry: 3
+      Data: 25
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Data.Encounters.SkillTest, Data
+    - Name: description
+      Entry: 1
+      Data: Approach diplomatically
+    - Name: targetValue
+      Entry: 3
+      Data: 16
+    - Name: partyTargetValue
+      Entry: 3
+      Data: 0
+    - Name: StatTypes
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SkillTypes
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 15
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: experience
+      Entry: 3
+      Data: 200
+    - Name: successMessage
+      Entry: 1
+      Data: Monster regards you as a friend and lets you pass unharmed.
+    - Name: failureMessage
+      Entry: 1
+      Data: Not understanding, the monster attacks you, knocking you to the ground!
+    - Name: rewards
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 9|Data.Rewards.ItemRewardStats, Data
+    - Name: _itemId
+      Entry: 1
+      Data: ring_charisma_5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 11|Data.Penalties.DamagePenaltyStats, Data
+    - Name: damageType
+      Entry: 3
+      Data: 0
+    - Name: penaltyType
+      Entry: 3
+      Data: 0
+    - Name: damageAmount
+      Entry: 3
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: test_1
+  _name: 
+  description: A monster appears!

@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace Data.Items
 
         public IItemStats GetItemByRarity(Rarity rarity)
         {
+            
             var itemsOfRarity = _itemStats.Select(y => y).Where(x => x.Value.Rarity == rarity && x.Value.IsQuestItem == false);
             int randomIndex = Random.Range(0, itemsOfRarity.Count());
             return itemsOfRarity.ElementAt(randomIndex).Value;

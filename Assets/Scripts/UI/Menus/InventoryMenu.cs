@@ -1,8 +1,8 @@
 ﻿using Data.Items;
 using InventoryQuest.Managers;
-using InventoryQuest.Managers.States;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace InventoryQuest.UI.Menus
@@ -15,7 +15,7 @@ namespace InventoryQuest.UI.Menus
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
         [SerializeField] ContainerDisplay lootContainerDisplay;
-        [SerializeField] PressAndHoldButton continueButton;
+        [SerializeField] Button closeInventoryButton;
 
         [Inject]
         public void Init(IPartyManager partyManager, IRewardManager rewardManager, IInputManager inputManager)
@@ -27,7 +27,8 @@ namespace InventoryQuest.UI.Menus
 
         void Start()
         {
-            continueButton.OnPointerHoldSuccess += Continue;
+            closeInventoryButton.onClick.AddListener(CloseInventory);
+
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
@@ -61,7 +62,7 @@ namespace InventoryQuest.UI.Menus
             lootContainerDisplay.SetContainer(null);
         }
 
-        void Continue(object sender, EventArgs e)
+        public void CloseInventory()
         {
             _inputManager.CloseInventory();
         }

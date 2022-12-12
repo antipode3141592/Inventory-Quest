@@ -15,7 +15,7 @@ namespace Data.Items
         public float GoldValue { get; }
         public Sprite PrimarySprite { get; }
         public bool IsQuestItem { get; }
-
         public IList<IItemComponentStats> Components { get; }
+        public IEnumerable<Tag> Tags { get; }
     }
 }

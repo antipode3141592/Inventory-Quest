@@ -1,7 +1,9 @@
 ﻿using Data;
 using Data.Characters;
+using Data.Encounters;
 using Data.Items;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -35,64 +37,18 @@ namespace InventoryQuest.Managers
                     return;
         }
 
+
+
         public double CountItemInPartyInventory(string itemId)
         {
-            double runningTotal = 0;
-            foreach (var character in _partyManager.CurrentParty.Characters)
-            {
-                foreach (var content in character.Value.Backpack.Contents)
-                {
-                    if (content.Value.Item.Id == itemId)
-                    {
-                        runningTotal += content.Value.Item.Quantity;
-                    }
-                }
-                foreach (var slot in character.Value.EquipmentSlots)
-                {
-                    var equippedItem = slot.Value.EquippedItem as IItem;
-                    if (slot.Value.EquippedItem is not null)
-                    {
-                        if (equippedItem.Id == itemId)
-                        {
-                            runningTotal += equippedItem.Quantity;
-                        }
-
-                    }
-                }
-            }
-            return runningTotal;
+            return EncounterResolutionHelpers.CountItemInCharacterInventories((IEnumerable<ICharacter>)_partyManager.CurrentParty, itemId);
         }
+
+        
 
         public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
         {
-            double runningTotal = 0;
-            foreach (var character in _partyManager.CurrentParty.Characters)
-            {
-                foreach (var content in character.Value.Backpack.Contents)
-                {
-                    if (content.Value.Item.Id == itemId)
-                    {
-                        runningTotal += content.Value.Item.Quantity;
-                        character.Value.Backpack.TryTake(out _, content.Value.GridSpaces[0]);
-                        if (runningTotal >= minToRemove)
-                            return;
-                    }
-                }
-                foreach (var slot in character.Value.EquipmentSlots)
-                {
-                    var equippedItem = slot.Value.EquippedItem as IItem;
-                    if (slot.Value.EquippedItem is not null)
-                    {
-                        if (equippedItem.Id == itemId)
-                        {
-                            runningTotal += equippedItem.Quantity;
-                            slot.Value.TryUnequip(out _);
-                            if (runningTotal >= minToRemove)
-                                return;
-                        }
-                    }
-                }
-            }
+            _partyManager.CurrentParty.RemoveItemFromPartyInventory(itemId, minToRemove);
         }
     }
 }

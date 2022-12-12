@@ -19,6 +19,7 @@ namespace Data.Items
         [SerializeField, PreviewField] Sprite primarySprite;
         [SerializeField] bool isQuestItem;
         [OdinSerialize] IList<IItemComponentStats> components;
+        [OdinSerialize] HashSet<Tag> tags;
 
         public string Id => id;
         public string Description => description;
@@ -30,5 +31,6 @@ namespace Data.Items
         public Sprite PrimarySprite => primarySprite;
         public bool IsQuestItem => isQuestItem;
         public IList<IItemComponentStats> Components => components;
+        public IEnumerable<Tag> Tags => tags;
     }
 }

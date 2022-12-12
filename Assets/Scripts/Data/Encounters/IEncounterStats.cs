@@ -1,27 +1,12 @@
-﻿using Data.Penalties;
-using Data.Rewards;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace Data.Encounters
 {
-
     public interface IEncounterStats
     {
         public string Id { get; }
-
         public string Name { get; }
-
         public string Description { get; }
-
-        public int Experience { get; }
-
-        public string SuccessMessage { get; }
-
-        public string FailureMessage { get; }
-
-        public List<IRewardStats> Rewards { get; }
-
-        public List<IPenaltyStats> Penalties { get; }
+        public List<IChoice> Choices { get; }
     }
 }

@@ -12,6 +12,9 @@ namespace InventoryQuest.Managers
         IGameStateDataSource _gameStateDataSource;
         IAdventureManager _adventureManager;
 
+        public event EventHandler RequestShowLoading;
+        public event EventHandler RequestHideLoading;
+
         string _currentSceneName;
 
         [Inject]
@@ -65,6 +68,7 @@ namespace InventoryQuest.Managers
 
         IEnumerator AwaitLoad(string sceneName)
         {
+            RequestShowLoading?.Invoke(this, EventArgs.Empty);
             if (Debug.isDebugBuild)
                 Debug.Log($"Beginning Scene Load: {sceneName}...");
             var awaitLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -74,6 +78,7 @@ namespace InventoryQuest.Managers
                 yield return null;
             if (Debug.isDebugBuild)
                 Debug.Log($"Scene Loaded: {sceneName}");
+            RequestHideLoading?.Invoke(this, EventArgs.Empty);
             
         }
     }

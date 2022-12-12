@@ -34,6 +34,8 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IAudioManager>().To<AudioManager>()
                 .FromComponentInHierarchy().AsSingle();
+            Container.Bind<ISceneController>().To<SceneController>()
+                .FromComponentInHierarchy().AsSingle();
         }
     }
 }

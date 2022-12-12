@@ -12,9 +12,9 @@ namespace InventoryQuest.UI.Menus
 {
     public class TravelingMenu : Menu
     {
-        IPartyManager _partyManager;
         IEncounterManager _encounterManager;
         IGameStateDataSource _gameStateDataSource;
+        IInputManager _inputManager;
 
         [SerializeField] PartyDisplay partyDisplay;
         [SerializeField] TextMeshProUGUI encounterText;
@@ -27,20 +27,26 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] Button InventoryButton;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource)
+        public void Init(IEncounterManager encounterManager, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
         {
-            _partyManager = partyManager;
             _encounterManager = encounterManager;
             _gameStateDataSource = gameStateDataSource;
+            _inputManager = inputManager;
         }
 
         protected override void Awake()
         {
             base.Awake();
             InventoryButton.onClick.AddListener(Inventory);
-            choiceButtons[0].Button.onClick.AddListener(Resolve);
+            
             foreach (var item in encounterDisplayGroupItems)
                 item.SetActive(false);
+        }
+
+        void Start()
+        {
+            choiceButtons[0].ChoiceMade += OnChoiceMade;
+            ToggleGroup(show: false);
         }
 
         void ToggleGroup(bool show)
@@ -59,7 +65,7 @@ namespace InventoryQuest.UI.Menus
         void Inventory()
         {
             Debug.Log($"TravelingMenu.Inventory() called");
-            _encounterManager.Loading.ManageInventory = true;
+            _inputManager.OpenInventory();
         }
 
         void Retreat(object sender, EventArgs e)
@@ -70,28 +76,18 @@ namespace InventoryQuest.UI.Menus
         public override void Show()
         {
             base.Show();
-            _partyManager.CurrentParty.OnPartyMemberSelected += PartyMemberSelected;
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.Loading.StateExited += OnEncounterLoadingExitHandler;
-            ToggleGroup(show: false);
         }
 
         public override void Hide()
         {
             base.Hide();
-            _partyManager.CurrentParty.OnPartyMemberSelected -= PartyMemberSelected;
-        }
-
-        void PartyMemberSelected(object sender, string e)
-        {
-
         }
 
         void OnEncounterLoadedHandler(object sender, string e)
         {
-            var encounter = _gameStateDataSource.CurrentEncounter;
-
-            StartCoroutine(SettingEncounterDisplay(encounter));
+            StartCoroutine(SettingEncounterDisplay(_gameStateDataSource.CurrentEncounter));
         }
 
         void OnEncounterLoadingExitHandler(object sender, EventArgs e)
@@ -112,19 +108,47 @@ namespace InventoryQuest.UI.Menus
                 yield break;
             }
 
-            //skill checks show encounter text during Loading and Resolving states.  
-            ISkillCheckEncounterStats skillCheck = encounter.Stats as ISkillCheckEncounterStats;
-            if (skillCheck is not null)
+            ToggleGroup(show: true);
+            yield return null;
+            encounterText.text = encounter.Stats.Description;
+            for (int i = choiceButtons.Count; i < encounter.Stats.Choices.Count; i++)
             {
-                Debug.Log($"skill check encounter, show encounter text and update choice button text");
-                ToggleGroup(show: true);
-                yield return null;
-                encounterText.text = encounter.Description;
-                choiceButtons[0].ChangeButtonText(skillCheck.SkillCheckRequirements[0].Description);
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+                choiceButtons.Add(Instantiate(choiceButtonPrefab, choicesGroup));
+                choiceButtons[i].ChoiceMade += OnChoiceMade;
             }
+            for (int i = 0; i < encounter.Stats.Choices.Count ; i++)
+            {
+                string rulesText = "";
+
+                if (!choiceButtons[i].gameObject.activeInHierarchy)
+                    choiceButtons[i].gameObject.SetActive(true);
+                if (encounter.Stats.Choices[i] is SkillTest skillcheckreq)
+                {
+                    rulesText = skillcheckreq.ToString();
+                        
+                }
+                else if (encounter.Stats.Choices[i] is GiveItems itemreq)
+                {
+                    rulesText = itemreq.ToString();
+                }
+
+                choiceButtons[i]
+                    .ChangeButtonText(
+                        descriptiveText: encounter.Stats.Choices[i].Description,
+                        rulesText: rulesText)
+                    .SetIndex(i);
+            }
+            for(int i = 0; i < choiceButtons.Count - encounter.Stats.Choices.Count; i++)
+            {
+                choiceButtons[^i].gameObject.SetActive(false);
+            }
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         }
 
-        
+        void OnChoiceMade(object sender, int index)
+        {
+            _gameStateDataSource.CurrentEncounter.SetRequirement(_gameStateDataSource.CurrentEncounter.Stats.Choices[index]);
+            Resolve();
+        }
     }
 };

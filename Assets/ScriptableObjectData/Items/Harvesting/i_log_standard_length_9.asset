@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 4158d240e1edfad44ac49e1435aa4ef6, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -23,6 +24,21 @@ MonoBehaviour:
     SerializationNodes:
     - Name: components
       Entry: 6
+      Data: 
+    - Name: tags
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Tag, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
   id: log_standard_length_9
   description: A half-length log of common softwood.
@@ -32,4 +48,4 @@ MonoBehaviour:
   weight: 200
   goldValue: 0.9
   primarySprite: {fileID: 21300000, guid: fb6186a4dc28d1e4c96b760d7724d591, type: 3}
-  isQuestItem: 0
+  isQuestItem: 1

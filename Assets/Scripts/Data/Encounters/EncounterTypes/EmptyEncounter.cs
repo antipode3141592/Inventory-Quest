@@ -4,7 +4,7 @@ namespace Data.Encounters
 {
     public class EmptyEncounter : Encounter
     {
-        public EmptyEncounter(IEncounterStats encounterStats) : base(encounterStats)
+        public EmptyEncounter(IEmptyEncounterStats encounterStats) : base(encounterStats)
         {
         }
 
