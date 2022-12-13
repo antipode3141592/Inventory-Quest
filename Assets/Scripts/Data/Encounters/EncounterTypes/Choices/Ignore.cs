@@ -1,19 +1,18 @@
 ﻿using Data.Characters;
 using Data.Penalties;
 using Data.Rewards;
-using System;
 using System.Collections.Generic;
 
 namespace Data.Encounters
 {
     public class Ignore : IChoice
     {
-        public string Description => throw new NotImplementedException();
+        public string Description => "Ignore";
         public int Experience { get; }
-        public string SuccessMessage => throw new NotImplementedException();
-        public string FailureMessage => throw new NotImplementedException();
-        public List<IRewardStats> Rewards => throw new NotImplementedException();
-        public List<IPenaltyStats> Penalties => throw new NotImplementedException();
+        public string SuccessMessage { get; }
+        public string FailureMessage { get; }
+        public List<IRewardStats> Rewards { get; } = new();
+        public List<IPenaltyStats> Penalties { get; } = new();
         public bool Resolve(Party party)
         {
             return true;

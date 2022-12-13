@@ -7,18 +7,20 @@ namespace Data.Encounters
 {
     public class EncounterDataSourceSO: SerializedMonoBehaviour, IEncounterDataSource
     {
-        [OdinSerialize] Dictionary<string, IEncounterStats> encounterDictionary;
+        [OdinSerialize] List<IEncounterStats> encounters;
 
         public IEncounterStats GetById(string id)
         {
-            if (!encounterDictionary.ContainsKey(id)) return null;
-            return encounterDictionary[id];
+            var encounterStats = encounters.Find(x => x.Id == id);
+            if (encounterStats is not null)
+                return encounterStats;
+            return null;
         }
 
         public IEncounterStats GetRandom()
         {
-            int i = UnityEngine.Random.Range(0, encounterDictionary.Count);
-            return encounterDictionary.ElementAt(i).Value;
+            int i = UnityEngine.Random.Range(0, encounters.Count);
+            return encounters.ElementAt(i);
         }
     }
 }

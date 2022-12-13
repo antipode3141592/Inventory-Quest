@@ -49,50 +49,32 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 962d8c6dcbf64e34fb0bcb62977c3f12, type: 2}
+    - {fileID: 11400000, guid: 63ebe41581bd7094aa992bcafe6a8f77, type: 2}
     - {fileID: 11400000, guid: 8eab7b7e0d4ef6a46bacbddf9d1faa5a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: encounterDictionary
+    - Name: encounters
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Data.Encounters.IEncounterStats,
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IEncounterStats,
         Data]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 4
     - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: empty
-    - Name: $v
       Entry: 10
       Data: 0
     - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: test_1
-    - Name: $v
       Entry: 10
       Data: 1
     - Name: 
-      Entry: 8
-      Data: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 13
       Data: 

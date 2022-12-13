@@ -138,9 +138,9 @@ namespace InventoryQuest.UI.Menus
                         rulesText: rulesText)
                     .SetIndex(i);
             }
-            for(int i = 0; i < choiceButtons.Count - encounter.Stats.Choices.Count; i++)
+            for(int i = encounter.Stats.Choices.Count; i < choiceButtons.Count; i++)
             {
-                choiceButtons[^i].gameObject.SetActive(false);
+                choiceButtons[i].gameObject.SetActive(false);
             }
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         }
