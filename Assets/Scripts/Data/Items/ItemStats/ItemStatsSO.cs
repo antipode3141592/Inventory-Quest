@@ -10,7 +10,7 @@ namespace Data.Items
     public class ItemStatsSO : SerializedScriptableObject, IItemStats
     {
         [SerializeField] string id;
-        [SerializeField] string description;
+        [SerializeField, TextArea(1,5)] string description;
         [SerializeField] ShapeSO shape;
         [SerializeField] Facing defaultFacing;
         [SerializeField] Rarity rarity;

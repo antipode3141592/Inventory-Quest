@@ -2,6 +2,7 @@
 using Data.Items;
 using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -30,6 +31,13 @@ namespace InventoryQuest.Managers
                 AddCharacterToParty(InitialPartyMembers[i]);
 
             Lua.RegisterFunction("AddCharacterToPartyById", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToPartyById(string.Empty)));
+
+            CurrentParty.OnPartyDeath += PartyDeathHandler;
+        }
+
+        void PartyDeathHandler(object sender, EventArgs e)
+        {
+            Debug.Log($"PartyDeathHandler on {gameObject.name}...", this);
         }
 
         public void AddCharacterToPartyById(string id)

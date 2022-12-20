@@ -3,17 +3,20 @@ using Data.Penalties;
 using Data.Rewards;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Encounters
 {
     public class RestChoice : IChoice
     {
-        public string Description => throw new NotImplementedException();
-        public int Experience { get; }
-        public string SuccessMessage => throw new NotImplementedException();
-        public string FailureMessage => throw new NotImplementedException();
-        public List<IRewardStats> Rewards => throw new NotImplementedException();
-        public List<IPenaltyStats> Penalties => throw new NotImplementedException();
+        [SerializeField] string description;
+
+        public string Description => description;
+        public string SuccessMessage => "";
+        public string FailureMessage => "";
+        public int Experience => 0;
+        public List<IRewardStats> Rewards { get; } = new();
+        public List<IPenaltyStats> Penalties { get; } = new();
 
         public bool Resolve(Party party)
         {

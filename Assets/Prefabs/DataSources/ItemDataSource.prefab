@@ -76,6 +76,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0d01ece3a29bd2c45ae32d8e5eda8463, type: 2}
     - {fileID: 11400000, guid: 41ba2b49638cb3d45bdc74ad16941437, type: 2}
     - {fileID: 11400000, guid: b718327c7fbc26149ad2c0dee21ed666, type: 2}
+    - {fileID: 11400000, guid: 0f9908f14dd87a240b05b867e797c633, type: 2}
+    - {fileID: 11400000, guid: 80bd2041e61dd344d836173677c40bc4, type: 2}
+    - {fileID: 11400000, guid: ca325ae06a0a8a043b5aa2424576a52d, type: 2}
+    - {fileID: 11400000, guid: 10a38b57fc3f258419bcec87a0901335, type: 2}
+    - {fileID: 11400000, guid: 21cc421046e121242ad828af554a52fe, type: 2}
+    - {fileID: 11400000, guid: 245b29d57f1b5204a827e4dcad82f3aa, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -89,7 +95,7 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 28
+      Data: 34
     - Name: 
       Entry: 10
       Data: 1
@@ -174,6 +180,24 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 27
+    - Name: 
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 10
+      Data: 33
     - Name: 
       Entry: 13
       Data: 

@@ -308,8 +308,12 @@ namespace Data.Characters
             int adjustedAmount = damageAmount - StatDictionary[StatTypes.Defense].CurrentValue - (Resistances.ContainsKey(damageType) ? Resistances[damageType].CurrentValue : 0);
             if (adjustedAmount <= 0) return;
             CurrentHealth -= adjustedAmount;
-            
+
+            Debug.Log($"{DisplayName} took {adjustedAmount} {damageType} damage after adjustments.  Current health: {CurrentHealth}");
+
             DamageTaken?.Invoke(this, adjustedAmount);
+
+            DeathCheck();
         }
 
         public void HealDamage(int healAmount)
@@ -321,6 +325,19 @@ namespace Data.Characters
             if (adjustedAmount <= 0) return;
             CurrentHealth += adjustedAmount;
             DamageHealed?.Invoke(this, adjustedAmount);
+        }
+
+        void DeathCheck()
+        {
+            if (IsDying || IsDead) return;
+
+            if (CurrentHealth > 0) return;
+
+            Debug.Log($"{DisplayName} is dying!");
+            IsDying = true;
+            IsDead = true;
+            OnDying?.Invoke(this, EventArgs.Empty);
+            OnDead?.Invoke(this, EventArgs.Empty);
         }
     }
 }

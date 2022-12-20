@@ -37,6 +37,7 @@ namespace InventoryQuest.UI.Menus
         public override void Show()
         {
             base.Show();
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         }
 
         public override void Hide()

@@ -1,7 +1,9 @@
+using Data;
+using Data.Characters;
 using Data.Items;
 using Data.Shapes;
 using System;
-
+using UnityEngine.EventSystems;
 
 namespace InventoryQuest.Managers
 {
@@ -22,5 +24,10 @@ namespace InventoryQuest.Managers
 
         public void OpenInventory();
         public void CloseInventory();
+        public void CheckRotateAction();
+        public void CheckSubmitAction();
+
+        public void ContainerDisplayClickHandler(IContainer container, PointerEventData pointerEventData, Coor clickedCoor);
+        public bool EquipmentSlotPointerClickHandler(PointerEventData eventData, ICharacter character, string slotId);
     }
 }

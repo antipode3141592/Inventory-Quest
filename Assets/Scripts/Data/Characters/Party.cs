@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Characters
 {
@@ -14,6 +15,8 @@ namespace Data.Characters
         public event EventHandler OnPartyMemberStatsUpdated;
         public event EventHandler OnPartyCompositionChanged;
         public event EventHandler<string> OnItemAddedToPartyInventory;
+
+        public event EventHandler OnPartyDeath;
 
         void OnStatsUpdatedHandler(object sender, EventArgs e)
         {
@@ -30,8 +33,25 @@ namespace Data.Characters
                 Characters.Add(character.GuId, character);
                 PartyDisplayOrder.Add(character.GuId);
                 character.OnStatsUpdated += OnStatsUpdatedHandler;
+                character.OnDead += OnCharacterDeath;
+                character.OnItemAddedToBackpack += OnItemAddedToCharacterBackpack;
             }
             SelectedPartyMemberGuId = PartyDisplayOrder[0];
+        }
+
+        void OnCharacterDeath(object sender, EventArgs e)
+        {
+            Debug.Log($"OnCharacterDeath in Party...");
+            if (PartyIsDead())
+                OnPartyDeath?.Invoke(this, EventArgs.Empty);
+        }
+
+        bool PartyIsDead()
+        {
+            foreach(var character in Characters.Values)
+                if (!character.IsDead)
+                    return false;
+            return true;
         }
 
         public void AddCharacter(ICharacter character)
@@ -41,6 +61,7 @@ namespace Data.Characters
             PartyDisplayOrder.Add(character.GuId);
             SelectedPartyMemberGuId = character.GuId;
             character.OnStatsUpdated += OnStatsUpdatedHandler;
+            character.OnDead += OnCharacterDeath;
             character.OnItemAddedToBackpack += OnItemAddedToCharacterBackpack;
             OnPartyCompositionChanged?.Invoke(this, EventArgs.Empty);
         }

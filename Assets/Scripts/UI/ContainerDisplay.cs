@@ -1,6 +1,5 @@
 ﻿using Data;
 using Data.Items;
-using Data.Items.Components;
 using Data.Shapes;
 using InventoryQuest.Managers;
 using Sirenix.OdinInspector;
@@ -14,10 +13,7 @@ namespace InventoryQuest.UI
 {
     public class ContainerDisplay : MonoBehaviour
     {
-        IGameManager _gameManager;
         IInputManager _inputManager;
-        IPartyManager _partyManager;
-        IEncounterManager _encounterManager;
 
         [SerializeField] Transform _panelTransform;
         [SerializeField] Transform _itemPanelTransform;
@@ -41,12 +37,9 @@ namespace InventoryQuest.UI
         public IContainer Container => _container;
 
         [Inject]
-        public void Init(IGameManager gameManager, IInputManager inputManager, IPartyManager partyManager, IEncounterManager encounterManager)
+        public void Init(IInputManager inputManager)
         {
-            _gameManager = gameManager;
             _inputManager = inputManager;
-            _partyManager = partyManager;
-            _encounterManager = encounterManager;
         }
 
         void Awake()
@@ -200,10 +193,10 @@ namespace InventoryQuest.UI
 
         void HighlightGrid(Coor anchorPoint)
         {
+            if (_inputManager.HoldingItem is null) return;
+
             List<Tuple<HighlightState, Coor>> tempPointList = UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Get();
-            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
             _container.GetPointHighlights(ref tempPointList, _inputManager.HoldingItem, anchorPoint);
-            if (tempPointList.Count == 0) return;
             for (int i = 0; i < tempPointList.Count; i++)
                 Squares[tempPointList[i].Item2.row, tempPointList[i].Item2.column].SetHighlightColor(tempPointList[i].Item1);
             UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Release(tempPointList);
@@ -223,50 +216,7 @@ namespace InventoryQuest.UI
         void GridSquareClicked(object sender, PointerEventData e)
         {
             var clickedCoor = (sender as ContainerGridSquareDisplay).Coordinates;
-            if (e.button == PointerEventData.InputButton.Left)
-            {
-                LeftClickRepsonse(clickedCoor);
-            }
-            else if (e.button == PointerEventData.InputButton.Right)
-            {
-                RightClickResponse(clickedCoor);
-            }
-        }
-
-        void RightClickResponse(Coor clickedCoor)
-        {
-            var itemGuid = _container.Grid[clickedCoor].storedItemGuId;
-            if (_container.Contents.ContainsKey(itemGuid) && _container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
-            {
-                var _usable = (_container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
-                var _character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
-                _usable.TryUse(_character);
-                if (_usable is EncounterLengthEffect encounterEffect)
-                    _encounterManager.AddEncounterModifier(new EncounterModifier(_character, encounterEffect.EncounterLengthEffectStats.Modifiers));
-            }
-        }
-
-        void LeftClickRepsonse(Coor clickedCoor)
-        {
-            switch (_gameManager.CurrentState)
-            {
-                case GameStates.Encounter:
-                    if (_container.TryTake(out var item, clickedCoor))
-                    {
-                        _inputManager.HoldingItem = item;
-                        _gameManager.ChangeState(GameStates.ItemHolding);
-                    }
-                    break;
-                case GameStates.ItemHolding:
-                    if (_container.TryPlace(_inputManager.HoldingItem, clickedCoor))
-                    {
-                        _inputManager.HoldingItem = null;
-                        _gameManager.ChangeState(GameStates.Encounter);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            _inputManager.ContainerDisplayClickHandler(_container, e, clickedCoor);
         }
 
         void ItemRotationHandler(object sender, RotationEventArgs e)

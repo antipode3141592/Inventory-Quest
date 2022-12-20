@@ -54,7 +54,8 @@ namespace InventoryQuest.UI.Menus
 
         IEnumerator Start()
         {
-            _gameManager.OnGameBegining += OnGameBegin;
+            _gameManager.OnGameBegining += OnGameBegining;
+            _gameManager.OnGameOver += OnGameOver;
 
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
             _encounterManager.Resolving.StateEntered += OnResolvingStart;
@@ -71,17 +72,25 @@ namespace InventoryQuest.UI.Menus
 
             _inputManager.OpenInventoryCommand += OpenInventoryScreen;
             _inputManager.CloseInventoryCommand += CloseInventoryScreen;
+
+            //_partyManager.CurrentParty.OnPartyDeath += PartyDeathHandler;
             yield return new WaitForSeconds(1f);
             _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
         }
 
-        private void CloseInventoryScreen(object sender, EventArgs e)
+        void OnGameOver(object sender, EventArgs e)
+        {
+            Debug.Log($"PartyDeathHandler:   opening DeathMenu");
+            OpenMenu(typeof(DeathMenu));
+        }
+        
+        void CloseInventoryScreen(object sender, EventArgs e)
         {
             OpenPreviousMenu();
         }
 
-        private void OpenInventoryScreen(object sender, EventArgs e)
+        void OpenInventoryScreen(object sender, EventArgs e)
         {
             OpenMenu(typeof(InventoryMenu));
         }
@@ -111,12 +120,10 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(TravelingMenu));
         }
 
-        void OnGameBegin(object sender, EventArgs e)
+        void OnGameBegining(object sender, EventArgs e)
         {
             OpenMenu(typeof(LocationMenu));
         }
-
-        
 
         void OnWayfairingStart(object sender, EventArgs e)
         {
@@ -138,8 +145,6 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(LocationMenu));
         }
 
-        
-
         void OpenMenu(Type menuType)
         {
             if (_currentMenuType is not null && menuType.Name == _currentMenuType.Name)
@@ -154,7 +159,6 @@ namespace InventoryQuest.UI.Menus
                     _previousMenuType = _currentMenuType;
                     _currentMenuType = menuType;
                 }
-
                 else
                     menu.Value.Hide();
             }
