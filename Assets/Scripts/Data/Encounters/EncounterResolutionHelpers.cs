@@ -6,7 +6,7 @@ namespace Data.Encounters
 {
     public static class EncounterResolutionHelpers
     {
-        public static double CountItemInCharacterInventories(IEnumerable<ICharacter> characters, string itemId)
+        public static double CountItemInCharacterInventories(ICollection<ICharacter> characters, string itemId)
         {
             double runningTotal = 0;
             foreach (var character in characters)

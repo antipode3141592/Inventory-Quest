@@ -1,9 +1,5 @@
-﻿using Data;
-using Data.Characters;
-using Data.Encounters;
-using Data.Items;
+﻿using Data.Items;
 using PixelCrushers.DialogueSystem;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -37,14 +33,10 @@ namespace InventoryQuest.Managers
                     return;
         }
 
-
-
         public double CountItemInPartyInventory(string itemId)
         {
-            return EncounterResolutionHelpers.CountItemInCharacterInventories((IEnumerable<ICharacter>)_partyManager.CurrentParty, itemId);
+            return _partyManager.CountItemInCharacterInventories(itemId);
         }
-
-        
 
         public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
         {

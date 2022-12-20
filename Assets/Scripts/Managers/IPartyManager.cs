@@ -9,5 +9,6 @@ namespace InventoryQuest.Managers
         public void AddCharacterToPartyById(string id);
 
         public void AddCharacterToParty(ICharacterStats characterStats);
+        public double CountItemInCharacterInventories(string itemId);
     }
 }

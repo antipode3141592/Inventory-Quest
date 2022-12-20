@@ -74,5 +74,33 @@ namespace InventoryQuest.Managers
             );
             _party.AddCharacter(_character);
         }
+
+        public double CountItemInCharacterInventories(string itemId)
+        {
+            double runningTotal = 0;
+            foreach (var character in CurrentParty.Characters.Values)
+            {
+                foreach (var content in character.Backpack.Contents)
+                {
+                    if (content.Value.Item.Id == itemId)
+                    {
+                        runningTotal += content.Value.Item.Quantity;
+                    }
+                }
+                foreach (var slot in character.EquipmentSlots)
+                {
+                    var equippedItem = slot.Value.EquippedItem as IItem;
+                    if (slot.Value.EquippedItem is not null)
+                    {
+                        if (equippedItem.Id == itemId)
+                        {
+                            runningTotal += equippedItem.Quantity;
+                        }
+
+                    }
+                }
+            }
+            return runningTotal;
+        }
     }
 }
