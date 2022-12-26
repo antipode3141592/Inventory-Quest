@@ -13,6 +13,9 @@ namespace Data.Items
         public Rarity Rarity { get; }
         public float Weight { get; }
         public float GoldValue { get; }
+        public float IndividualGoldValue { get; }
+        public bool IsStackable { get; }
+        public int MaxQuantity { get; }
         public Sprite PrimarySprite { get; }
         public bool IsQuestItem { get; }
         public IList<IItemComponentStats> Components { get; }

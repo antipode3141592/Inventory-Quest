@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -50,11 +46,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: shirt_1
   description: A rough-spun work shirt.
+  shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 0.1
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 0.1
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: aed31dc09d6cf9043b18c2e70126e838, type: 3}
   isQuestItem: 0

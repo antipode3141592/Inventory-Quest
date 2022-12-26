@@ -74,7 +74,7 @@ namespace InventoryQuest.UI
                 for (int i = 0; i < ItemModifiersTexts.Count; i++)
                     ItemModifiersTexts[i].text = "";
 
-            QuantityText.text = item is not IStackable ? "" : $"Qty: {item.Quantity}";
+            QuantityText.text = $"Qty: {item.Quantity}";
 
         }
     }

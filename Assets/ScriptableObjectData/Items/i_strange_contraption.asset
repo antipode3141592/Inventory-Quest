@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: f01bff7c588b04547a49e22368d33aa8, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -38,11 +34,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: strange_contraption
   description: A contraption of insrutable purpose.
+  shape: {fileID: 11400000, guid: f01bff7c588b04547a49e22368d33aa8, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 80
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 5000
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: d057b8ba8ddc6874ba3cb15ca16fedd6, type: 3}
   isQuestItem: 1

@@ -28,12 +28,6 @@ namespace Data.Items
                     item.Components.Add(typeof(IContainer), new Container(containerStats, item));
                     continue;
                 }
-                IStackableStats stackableItemStats = component as IStackableStats;
-                if (stackableItemStats is not null)
-                {
-                    item.Components.Add(typeof(IStackable), new Stackable(stackableItemStats, item));
-                    continue;
-                }
                 IUsableStats usableStats = component as IUsableStats;
                 if (usableStats is not null)
                 {

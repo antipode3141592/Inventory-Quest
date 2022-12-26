@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -152,11 +148,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: adventure_backpack
   description: A sturdy backpack, ready for adventure!
+  shape: {fileID: 11400000, guid: e25ef434493e9a94b9dec142ab465008, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 1
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 2
+  individualGoldValue: 0
   primarySprite: {fileID: -2137452942, guid: 43018d0793f9b2c4c854deae9d0e8987, type: 3}
   isQuestItem: 1

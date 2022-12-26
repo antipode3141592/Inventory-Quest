@@ -1,5 +1,4 @@
-﻿using Data.Shapes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -64,8 +63,23 @@ namespace Data.Items
                 if (!Grid.ContainsKey(testPoint))
                     return false;
                 if (Grid[testPoint].IsOccupied)
-                    return false;
+                {
+                    if (!StackHasSpace(item, testPoint))
+                        return false;
+                }       
             }
+            return true;
+        }
+
+        bool StackHasSpace(IItem item, Coor testPoint)
+        {
+            if (!item.Stats.IsStackable)
+                return false;
+            IItem _item = Contents[Grid[testPoint].storedItemGuId].Item;
+            if (!String.Equals(_item.Id, item.Id, StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (_item.Quantity >= _item.Stats.MaxQuantity)
+                return false;
             return true;
         }
 
@@ -87,7 +101,10 @@ namespace Data.Items
                     return;
                 }
                 if (Grid[testPoint].IsOccupied)
-                    pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Incorrect, testPoint));
+                    if (StackHasSpace(item, testPoint))
+                        pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Highlight, testPoint));
+                    else
+                        pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Incorrect, testPoint));
                 else
                     pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Highlight, testPoint));
             }
@@ -95,9 +112,6 @@ namespace Data.Items
 
         void AfterItemPlaced(IItem item)
         {
-            IStackable stackable = item as IStackable;
-            if (stackable is null)
-                return;
             //HashSet<string> _neighboors = HashSetPool<string>.Get(); // new();
             //if (MatchingNeighboors(item, _neighboors))
             //{
@@ -196,26 +210,58 @@ namespace Data.Items
 
         public bool TryPlace(IItem item, Coor target)
         {
-            if (IsValidPlacement(item, target))
+            if (!IsValidPlacement(item, target))
+                return false;
+
+            var currentItemPoints = item.Shape.Points[item.CurrentFacing];
+            // if it's stackable, increase quantity of item in target location by item quantity
+            if (item.Stats.IsStackable)
             {
-                List<Coor> tempPointList = ListPool<Coor>.Get();
-                var currentItemPoints = item.Shape.Points[item.CurrentFacing];
-                foreach (var point in currentItemPoints)
+
+                IItem _item = null;
+                //reduce item quantity by 
+                if (!Grid.ContainsKey(target))
+                    foreach (var point in currentItemPoints)
+                    {
+                        Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
+                        if (Grid.ContainsKey(testPoint) 
+                            && Grid[testPoint].IsOccupied
+                            && Contents[Grid[testPoint].storedItemGuId].Item.Id == item.Id)
+                        {
+                            _item = Contents[Grid[testPoint].storedItemGuId].Item;
+                            break;
+                        }
+                    }
+                if (Grid[target].IsOccupied)
+                    _item = Contents[Grid[target].storedItemGuId].Item;
+                if (_item is not null)
                 {
-                    Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
-                    tempPointList.Add(testPoint);
-                    Grid[testPoint].IsOccupied = true;
-                    Grid[testPoint].storedItemGuId = item.GuId;
+                    int qtyToAdd = Mathf.Clamp(item.Quantity, 0, _item.Stats.MaxQuantity - _item.Quantity);
+                    _item.Quantity += qtyToAdd;
+                    item.Quantity -= qtyToAdd;
+                    OnItemPlaced?.Invoke(this, item.GuId);
+                    return true;
                 }
-                item.RequestDestruction += RequestDestroyHandler;
-                Contents.Add(item.GuId, new Content(item, tempPointList, target));
-                OnItemPlaced?.Invoke(this, item.GuId);
-                if (Debug.isDebugBuild)
-                    Debug.Log($"item {item.Id} placed into container {Item.Id}");
-                AfterItemPlaced(item);
-                return true;
             }
-            return false;
+
+            List<Coor> tempPointList = ListPool<Coor>.Get();
+                
+            foreach (var point in currentItemPoints)
+            {
+                Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
+                tempPointList.Add(testPoint);
+                Grid[testPoint].IsOccupied = true;
+                Grid[testPoint].storedItemGuId = item.GuId;
+            }
+
+            item.RequestDestruction += RequestDestroyHandler;
+
+            Contents.Add(item.GuId, new Content(item, tempPointList, target));
+            OnItemPlaced?.Invoke(this, item.GuId);
+            if (Debug.isDebugBuild)
+                Debug.Log($"item {item.Id} placed into container {Item.Id}");
+            AfterItemPlaced(item);
+            return true;
         }
 
         public bool TryTake(out IItem item, Coor target)
@@ -265,6 +311,7 @@ namespace Data.Items
         public void RequestDestroyHandler(object sender, EventArgs e)
         {
             if (sender is not IItem item) return;
+            if (!Contents.ContainsKey(item.GuId)) return;
             var anchor = Contents[item.GuId].AnchorPosition;
             TryTake(out _, anchor);
         }

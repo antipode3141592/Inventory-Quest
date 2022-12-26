@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -74,11 +70,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: ring_charisma_5
   description: Ring of Charisma
+  shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
   rarity: 2
   weight: 0.1
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 50
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: ba5fcda74f02bae49b28ac0d4a0b3608, type: 3}
   isQuestItem: 0

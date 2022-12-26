@@ -10,10 +10,6 @@ namespace Data.Items
     {
         int quantity;
 
-        
-
-        
-
         public string GuId { get; }
         public string Id { get; }
         public IShape Shape { get; }
@@ -27,7 +23,8 @@ namespace Data.Items
             get => quantity;
             set
             {
-                quantity = value;
+                if (value < Stats.MaxQuantity)
+                    quantity = value;
                 if (value == 0)
                     RequestDestruction?.Invoke(this, EventArgs.Empty);
             }

@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 9ea1485d19a32094ab0cd3483ce21b33, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -74,11 +70,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: basic_crossbow
   description: A basic crossbow.
+  shape: {fileID: 11400000, guid: 9ea1485d19a32094ab0cd3483ce21b33, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 3
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 20
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: 4c910612ae8bc8e4ebb0c0d7a7cf4220, type: 3}
   isQuestItem: 0

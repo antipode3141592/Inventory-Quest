@@ -71,8 +71,6 @@ namespace Data.Characters
             if (!item.Components.ContainsKey(typeof(IEquipable))) return false;
             var equipable = (IEquipable)item.Components[typeof(IEquipable)];
             if (equipable is null) return false;
-
-            Debug.Log($"{equipable.Item.Id} is a valid placement");
             return equipable.SlotType == SlotType;
         }
     }

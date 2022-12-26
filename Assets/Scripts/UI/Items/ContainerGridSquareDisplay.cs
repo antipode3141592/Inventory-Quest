@@ -91,5 +91,16 @@ namespace InventoryQuest.UI
         {
             GridSquarePointerClicked?.Invoke(this, eventData);
         }
+
+        public void Show() 
+        {
+            backgroundSprite.color = colorSettings.GridUnoccupiedColor;
+        }
+
+        public void Hide() 
+        {
+            backgroundSprite.color = Color.clear;
+        }
+
     }
 }

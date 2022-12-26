@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
-  m_Name: e_test_3
+  m_Name: e_magic_barrier
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -27,16 +27,16 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 1|Data.Encounters.SkillTest, Data
     - Name: description
       Entry: 1
-      Data: Evade the bolts!
+      Data: Dispel
     - Name: targetValue
       Entry: 3
-      Data: 14
+      Data: 30
     - Name: partyTargetValue
       Entry: 3
       Data: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 9
+      Data: 11
     - Name: 
       Entry: 13
       Data: 
@@ -72,17 +72,41 @@ MonoBehaviour:
       Data: 200
     - Name: successMessage
       Entry: 1
-      Data: You deftly move aside and avoid injury.
+      Data: You disenchant the barrier and examine the goods.
     - Name: failureMessage
       Entry: 1
-      Data: A bundle of bolts tear through your defenses.
+      Data: The barrier repels you with an icy blast.
     - Name: rewards
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 5|Data.Rewards.RandomItemRewardStats, Data
+    - Name: _lootContainerId
+      Entry: 1
+      Data: loot_pile_small
+    - Name: _lootTableId
+      Entry: 1
+      Data: common_loot
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Data.Rewards.RandomItemRewardStats, Data
+    - Name: _lootContainerId
+      Entry: 1
+      Data: loot_pile_small
+    - Name: _lootTableId
+      Entry: 1
+      Data: common_loot
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -91,23 +115,23 @@ MonoBehaviour:
       Data: 
     - Name: penalties
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+      Data: 7|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 6|Data.Penalties.DamagePenaltyStats, Data
+      Data: 8|Data.Penalties.DamagePenaltyStats, Data
     - Name: damageType
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: penaltyType
       Entry: 3
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 26
+      Data: 24
     - Name: 
       Entry: 8
       Data: 
@@ -121,11 +145,17 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 9|Data.Encounters.Ignore, Data
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  id: test_3
+  id: e_magic_barrier
   _name: 
-  description: You've triggered a crossbow trap!
+  description: An enchanted dome of ice protects a chest

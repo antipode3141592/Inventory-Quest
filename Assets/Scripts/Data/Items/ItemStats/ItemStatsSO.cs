@@ -15,7 +15,10 @@ namespace Data.Items
         [SerializeField] Facing defaultFacing;
         [SerializeField] Rarity rarity;
         [SerializeField] float weight;
+        [SerializeField] bool isStackable = false;
+        [SerializeField] int maxQuantity = 1;
         [SerializeField] float goldValue;
+        [SerializeField] float individualGoldValue;
         [SerializeField, PreviewField] Sprite primarySprite;
         [SerializeField] bool isQuestItem;
         [OdinSerialize] IList<IItemComponentStats> components;
@@ -27,6 +30,9 @@ namespace Data.Items
         public Facing DefaultFacing => defaultFacing;
         public Rarity Rarity => rarity;
         public float Weight => weight;
+        public bool IsStackable => isStackable;
+        public int MaxQuantity => maxQuantity;
+        public float IndividualGoldValue => individualGoldValue;
         public float GoldValue => goldValue;
         public Sprite PrimarySprite => primarySprite;
         public bool IsQuestItem => isQuestItem;

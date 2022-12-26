@@ -1,4 +1,5 @@
 ﻿using Data.Items;
+using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Zenject;
@@ -22,6 +23,7 @@ namespace InventoryQuest.Managers
             Lua.RegisterFunction("AddItemToParty", this, SymbolExtensions.GetMethodInfo(() => AddItemToPartyInventory(string.Empty)));
             Lua.RegisterFunction("CountItemInParty", this, SymbolExtensions.GetMethodInfo(() => CountItemInPartyInventory(string.Empty)));
             Lua.RegisterFunction("RemoveItemFromParty", this, SymbolExtensions.GetMethodInfo(() => RemoveItemFromPartyInventory(string.Empty, 0)));
+            Lua.RegisterFunction("UpdateQuestCounter", this, SymbolExtensions.GetMethodInfo(() => UpdateQuestItemCounter(string.Empty, string.Empty)));
         }
 
         public void AddItemToPartyInventory(string itemId)
@@ -36,6 +38,11 @@ namespace InventoryQuest.Managers
         public double CountItemInPartyInventory(string itemId)
         {
             return _partyManager.CountItemInCharacterInventories(itemId);
+        }
+
+        public void UpdateQuestItemCounter(string itemId, string questCounter)
+        {
+            MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, (int)CountItemInPartyInventory(itemId));
         }
 
         public void RemoveItemFromPartyInventory(string itemId, double minToRemove)

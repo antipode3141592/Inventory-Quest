@@ -84,7 +84,7 @@ namespace Data.Characters
 
         }
 
-        public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
+        public void RemoveItemFromPartyInventory(string itemId, double amountToRemove)
         {
             double runningTotal = 0;
             foreach (var character in Characters)
@@ -93,9 +93,10 @@ namespace Data.Characters
                 {
                     if (content.Value.Item.Id == itemId)
                     {
-                        runningTotal += content.Value.Item.Quantity;
-                        character.Value.Backpack.TryTake(out _, content.Value.GridSpaces[0]);
-                        if (runningTotal >= minToRemove)
+                        int clampedAmount = Mathf.Clamp((int)amountToRemove, 0, content.Value.Item.Quantity);
+                        content.Value.Item.Quantity -= clampedAmount;
+                        runningTotal += clampedAmount;
+                        if (runningTotal >= amountToRemove)
                             return;
                     }
                 }
@@ -108,7 +109,7 @@ namespace Data.Characters
                         {
                             runningTotal += equippedItem.Quantity;
                             slot.Value.TryUnequip(out _);
-                            if (runningTotal >= minToRemove)
+                            if (runningTotal >= amountToRemove)
                                 return;
                         }
                     }

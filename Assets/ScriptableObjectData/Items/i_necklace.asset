@@ -79,6 +79,9 @@ MonoBehaviour:
   defaultFacing: 0
   rarity: 0
   weight: 0.01
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 0.5
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: e85914800f081964ca8bb5220167ed01, type: 3}
   isQuestItem: 0

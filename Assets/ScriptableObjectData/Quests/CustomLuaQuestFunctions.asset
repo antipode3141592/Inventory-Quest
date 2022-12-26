@@ -29,3 +29,6 @@ MonoBehaviour:
   - functionName: RevealLocation
     parameters: 02000000
     returnValue: 0
+  - functionName: UpdateQuestCounter
+    parameters: 0200000002000000
+    returnValue: 0

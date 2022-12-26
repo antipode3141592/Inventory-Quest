@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
-  m_Name: e_test_3
+  m_Name: e_
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -27,58 +28,31 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
-      Data: 1|Data.Encounters.SkillTest, Data
+      Data: 1|Data.Encounters.GiveItems, Data
     - Name: description
       Entry: 1
-      Data: Evade the bolts!
-    - Name: targetValue
-      Entry: 3
-      Data: 14
-    - Name: partyTargetValue
-      Entry: 3
+      Data: Give Food
+    - Name: requiredItem
+      Entry: 10
       Data: 0
-    - Name: StatTypes
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
-    - Name: 
-      Entry: 12
+    - Name: targetQty
+      Entry: 3
       Data: 1
-    - Name: 
-      Entry: 3
-      Data: 9
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: SkillTypes
-      Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: experience
       Entry: 3
-      Data: 200
+      Data: 0
     - Name: successMessage
-      Entry: 1
-      Data: You deftly move aside and avoid injury.
+      Entry: 6
+      Data: 
     - Name: failureMessage
-      Entry: 1
-      Data: A bundle of bolts tear through your defenses.
+      Entry: 6
+      Data: 
     - Name: rewards
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+      Data: 2|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
@@ -91,26 +65,61 @@ MonoBehaviour:
       Data: 
     - Name: penalties
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+      Data: 3|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 7
-      Data: 6|Data.Penalties.DamagePenaltyStats, Data
-    - Name: damageType
+      Data: 4|Data.Encounters.GiveItems, Data
+    - Name: description
+      Entry: 1
+      Data: Give Coin
+    - Name: requiredItem
+      Entry: 6
+      Data: 
+    - Name: targetQty
       Entry: 3
       Data: 0
-    - Name: penaltyType
+    - Name: experience
       Entry: 3
       Data: 0
-    - Name: damageAmount
-      Entry: 3
-      Data: 26
+    - Name: successMessage
+      Entry: 6
+      Data: 
+    - Name: failureMessage
+      Entry: 6
+      Data: 
+    - Name: rewards
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -126,6 +135,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: test_3
+  id: e_wandering_beggar
   _name: 
-  description: You've triggered a crossbow trap!
+  description: 

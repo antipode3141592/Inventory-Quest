@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -50,11 +46,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: sandal_1
   description: Somewhat durable sandals.
+  shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 0.2
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 0.1
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: 3cbfac64dc60bce44ba0a884a4b9d41f, type: 3}
   isQuestItem: 0

@@ -307,12 +307,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: wagon_standard
   description: A small wagon.
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 0
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 0
+  individualGoldValue: 0
   primarySprite: {fileID: 0}
   isQuestItem: 1

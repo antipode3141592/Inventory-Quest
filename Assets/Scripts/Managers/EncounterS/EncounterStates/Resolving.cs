@@ -85,7 +85,7 @@ namespace InventoryQuest.Managers.States
                     _message = _gameStateDataSource.CurrentEncounter.ChosenChoice.SuccessMessage;
                 }
                 
-                messageDuration = CalculateLength(_message.Length);
+                messageDuration = CalculateLength(_message);
 
                 AwardExperience(_partyManager.CurrentParty.Characters);
                 OnEncounterResolveSuccess?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
@@ -102,7 +102,7 @@ namespace InventoryQuest.Managers.States
                     }
                 }
                 _message = _gameStateDataSource.CurrentEncounter.ChosenChoice.FailureMessage;
-                messageDuration = CalculateLength(_message.Length);
+                messageDuration = CalculateLength(_message);
                 _penaltyManager.ProcessPenalties();
                 OnEncounterResolveFailure?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }
@@ -110,9 +110,10 @@ namespace InventoryQuest.Managers.States
             maxTime = messageDuration;
             enableTimer = true;
 
-            static float CalculateLength(int messageLength) 
+            static float CalculateLength(string message) 
             {
-                float calc = (float)messageLength / 27f;
+                if (String.IsNullOrEmpty(message)) return 2f;
+                float calc = (float)message.Length / 27f;
                 return calc > 2f ? calc : 2f ; 
             }
         }

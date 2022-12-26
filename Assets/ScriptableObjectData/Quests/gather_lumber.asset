@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8555518859270593549
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722a17429c6ad18448893e6cfdb4de76, type: 3}
+  m_Name: LuaQuestAction
+  m_EditorClassIdentifier: 
+  m_luaCode: 'ItemsRetrieved = CountItemInParty("log_standard_length_10");
+
+    SetQuestState("delivery_intro",
+    "unassigned");'
 --- !u!114 &-7764992378137652748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28,7 +44,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 641a501636ec3644993211c008d9a8a4, type: 3}
-  m_Name: IntroGather
+  m_Name: gather_lumber
   m_EditorClassIdentifier: 
   m_isInstance: 0
   m_originalAsset: {fileID: 0}
@@ -120,7 +136,7 @@ MonoBehaviour:
     m_randomizeInitialValue: 0
     m_minValue: 0
     m_maxValue: 999
-    m_updateMode: 0
+    m_updateMode: 1
     m_messageEventList: []
   m_nodeList:
   - m_id:
@@ -193,7 +209,8 @@ MonoBehaviour:
       - m_contentList: []
       - m_contentList: []
       - m_contentList: []
-    - m_actionList: []
+    - m_actionList:
+      - {fileID: -8555518859270593549}
       m_categorizedContentList:
       - m_contentList: []
       - m_contentList: []
@@ -261,7 +278,7 @@ MonoBehaviour:
     m_childIndexList: 03000000
     m_canvasRect:
       serializedVersion: 2
-      x: 200
+      x: 199
       y: 156
       width: 120
       height: 48
@@ -312,6 +329,7 @@ MonoBehaviour:
       y: 223.10712
       width: 120
       height: 35
+  m_textTable: {fileID: 0}
   m_goalEntityTypeName: 
   m_nextContentID: 0
 --- !u!114 &698236193337859907

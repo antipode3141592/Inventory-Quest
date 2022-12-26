@@ -31,10 +31,26 @@ namespace InventoryQuest.Managers
             get => holdingItem;
             set
             {
-                holdingItem = value;
-                if (value is null) OnItemPlaced?.Invoke(this, EventArgs.Empty);
-                else OnItemHeld?.Invoke(this, EventArgs.Empty);
+                if (value is null)
+                {
+                    holdingItem.RequestDestruction -= ItemDestructionHandler;
+                    holdingItem = value;
+                    OnItemPlaced?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    holdingItem = value;
+                    holdingItem.RequestDestruction += ItemDestructionHandler;
+                    OnItemHeld?.Invoke(this, EventArgs.Empty);
+                }
+                
             }
+        }
+
+        void ItemDestructionHandler(object sender, EventArgs e)
+        {
+            if (sender is not IItem item) return;
+            HoldingItem = null;
         }
 
         public event EventHandler OnItemHeld;

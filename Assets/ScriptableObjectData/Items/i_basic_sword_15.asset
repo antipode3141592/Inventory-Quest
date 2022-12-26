@@ -15,16 +15,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: f6a816c7a0b3f4a489c994409d2dd8db, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: shape
-      Entry: 10
-      Data: 0
     - Name: components
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
@@ -74,11 +70,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
   id: basic_sword_15
   description: a basic, but powerful sword
+  shape: {fileID: 11400000, guid: f6a816c7a0b3f4a489c994409d2dd8db, type: 2}
   defaultFacing: 0
   rarity: 3
   weight: 3
+  isStackable: 0
+  maxQuantity: 1
   goldValue: 1000
+  individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: cb887f1ddfa2b1940a6a5b9273391151, type: 3}
   isQuestItem: 1

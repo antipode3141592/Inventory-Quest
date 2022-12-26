@@ -53,8 +53,6 @@ namespace InventoryQuest.UI
             _inputManager.OnRotateCW += ItemRotationHandler;
         }
 
-        
-
         #region Grid Creation and Destruction
         [Button]
         public void InitializeDisplay()
@@ -78,7 +76,7 @@ namespace InventoryQuest.UI
                     square.GridSquarePointerEntered += GridSquareEntered;
                     square.GridSquarePointerExited += GridSquareExited;
                     squares[r, c] = square;
-                    squares[r, c].gameObject.SetActive(false);
+                    //squares[r, c].gameObject.SetActive(false);
                 }
             }
         }
@@ -101,8 +99,8 @@ namespace InventoryQuest.UI
                 return; 
             }
             foreach(var point in Container.Grid) 
-            { 
-                Squares[point.Key.row, point.Key.column].gameObject.SetActive(true);
+            {
+                Squares[point.Key.row, point.Key.column].Show();
                 Squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
 
@@ -125,7 +123,8 @@ namespace InventoryQuest.UI
             foreach (var square in Squares)
             {
                 square.IsOccupied = false;
-                square.gameObject.SetActive(false);
+                //square.gameObject.SetActive(false);
+                square.Hide();
             }
 
             if (Container is null) return;

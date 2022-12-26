@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
-  m_Name: e_test_3
+  m_Name: e_flash_flood
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -33,10 +33,10 @@ MonoBehaviour:
       Data: 1|Data.Encounters.SkillTest, Data
     - Name: description
       Entry: 1
-      Data: Evade the bolts!
+      Data: Ford
     - Name: targetValue
       Entry: 3
-      Data: 14
+      Data: 15
     - Name: partyTargetValue
       Entry: 3
       Data: 0
@@ -45,10 +45,13 @@ MonoBehaviour:
       Data: 2|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
     - Name: 
       Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
       Data: 1
     - Name: 
       Entry: 3
-      Data: 9
+      Data: 3
     - Name: 
       Entry: 13
       Data: 
@@ -60,7 +63,10 @@ MonoBehaviour:
       Data: 3|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 14
     - Name: 
       Entry: 13
       Data: 
@@ -72,10 +78,11 @@ MonoBehaviour:
       Data: 200
     - Name: successMessage
       Entry: 1
-      Data: You deftly move aside and avoid injury.
+      Data: The party safely traverses the washed out path.
     - Name: failureMessage
       Entry: 1
-      Data: A bundle of bolts tear through your defenses.
+      Data: The party suffers minor injuries from debris and fast currents, but get
+        across.
     - Name: rewards
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
@@ -107,7 +114,7 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 26
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -126,6 +133,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  id: test_3
+  id: e_flash_flood
   _name: 
-  description: You've triggered a crossbow trap!
+  description: A flash flood has washed out the path!
