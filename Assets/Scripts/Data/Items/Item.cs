@@ -23,8 +23,7 @@ namespace Data.Items
             get => quantity;
             set
             {
-                if (value < Stats.MaxQuantity)
-                    quantity = value;
+                quantity = value < Stats.MaxQuantity ? value : Stats.MaxQuantity;
                 if (value == 0)
                     RequestDestruction?.Invoke(this, EventArgs.Empty);
             }

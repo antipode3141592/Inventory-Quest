@@ -14,7 +14,7 @@ namespace InventoryQuest.Managers
     {
         [SerializeField] TravelSettings travelSettings;
 
-        List<EncounterModifier> encounterModifiers = new();
+        Queue<EncounterModifier> encounterModifiers = new();
 
         //managers
         IPartyManager _partyManager;
@@ -45,7 +45,7 @@ namespace InventoryQuest.Managers
 
         public string CurrentStateName => _stateMachine.CurrentStateName;
 
-        public List<EncounterModifier> EncounterModifiers => encounterModifiers;
+        public Queue<EncounterModifier> EncounterModifiers => encounterModifiers;
 
         [Inject]
         public void Init(IPartyManager partyManager, IRewardManager rewardManager, IPenaltyManager penaltyManager, IPartyController partyController, IGameStateDataSource gameStateDataSource, IInputManager inputManager)
@@ -99,9 +99,7 @@ namespace InventoryQuest.Managers
 
         public void AddEncounterModifier(EncounterModifier encounterModifier)
         {
-            if (encounterModifiers is null || encounterModifiers.Count == 0)
-                encounterModifiers = new();
-            encounterModifiers.Add(encounterModifier);
+            encounterModifiers.Enqueue(encounterModifier);
         }
     }
 }

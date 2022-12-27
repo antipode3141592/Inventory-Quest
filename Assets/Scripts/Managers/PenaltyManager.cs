@@ -1,9 +1,7 @@
-﻿using Data.Characters;
-using Data.Penalties;
+﻿using Data.Penalties;
 using InventoryQuest.Health;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 

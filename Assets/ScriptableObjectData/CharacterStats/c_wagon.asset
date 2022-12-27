@@ -104,7 +104,8 @@ MonoBehaviour:
       Data: 
     - Name: startingInventory
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+      Data: 6|System.Collections.Generic.List`1[[System.Tuple`2[[Data.Items.IItemStats,
+        Data],[System.Int32, mscorlib]], mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

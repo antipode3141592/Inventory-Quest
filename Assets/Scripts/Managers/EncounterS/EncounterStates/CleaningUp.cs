@@ -72,10 +72,10 @@ namespace InventoryQuest.Managers.States
 
         void EndEncounterEffects()
         {
-            for(int i = 0; i < _encounterManager.EncounterModifiers.Count; i++)
+            while (_encounterManager.EncounterModifiers.Count > 0)
             {
-                var modifier = _encounterManager.EncounterModifiers[i];
-                modifier.Character.RemoveModifiers(_encounterManager.EncounterModifiers[i].Modifiers);
+                var modifier = _encounterManager.EncounterModifiers.Dequeue();
+                modifier.Character.RemoveModifiers(modifier.Modifiers);
             }
         }
     }

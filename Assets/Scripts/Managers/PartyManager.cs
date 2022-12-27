@@ -59,13 +59,23 @@ namespace InventoryQuest.Managers
 
         void AddCharacterWithEquipmentToParty(ICharacterStats characterStats, List<IItem> startingEquipment, List<IItem> startingInventory)
         {
+            Debug.Log($"Adding Character {characterStats.Id} to party...");
             foreach(var _equipment in characterStats.StartingEquipment)
             {
+                Debug.Log($"Equipping {_equipment.Id}...");
                 startingEquipment.Add(ItemFactory.GetItem(_equipment));
             }
             foreach(var _item in characterStats.StartingInventory)
             {
-                startingInventory.Add(ItemFactory.GetItem(_item));
+                int stacksToMake = Mathf.CeilToInt((float)_item.Item2 / (float)_item.Item1.MaxQuantity);
+                Debug.Log($"Adding {_item.Item1.Id} x{_item.Item2} (x{stacksToMake} stacks) to backpack...");
+                for (int i = 0; i < stacksToMake; i++)
+                {
+                    var __item = ItemFactory.GetItem(_item.Item1);
+                    __item.Quantity =  i < stacksToMake - 1 ? __item.Stats.MaxQuantity : (_item.Item2 % __item.Stats.MaxQuantity);
+                    Debug.Log($"... stack {i}, quantity {__item.Quantity}");
+                    startingInventory.Add(__item);
+                }
             }
             var _character = (PlayableCharacter)CharacterFactory.GetCharacter(
                 baseStats: characterStats,

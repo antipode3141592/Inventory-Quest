@@ -1,6 +1,7 @@
 ﻿using Data.Health;
 using Data.Items;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Data.Characters
         [SerializeField]  List<IWeaponProficiency> weaponProficiencies = new();
 
         [SerializeField] List<IItemStats> startingEquipment;
-        [SerializeField] List<IItemStats> startingInventory;
+        [SerializeField] List<Tuple<IItemStats, int>> startingInventory;
 
         public string Id => id;
         public string Name => _name;
@@ -34,6 +35,6 @@ namespace Data.Characters
         public IList<IWeaponProficiency> WeaponProficiencies => weaponProficiencies;
 
         public List<IItemStats> StartingEquipment => startingEquipment;
-        public List<IItemStats> StartingInventory => startingInventory;
+        public List<Tuple<IItemStats,int>> StartingInventory => startingInventory;
     }
 }

@@ -16,7 +16,6 @@ namespace Data.Characters
         public string SpeciesId { get; }
         public ISpeciesBaseStats SpeciesBaseStats { get; }
 
-
         public IDictionary<StatTypes, int> InitialStats { get; }
         public IDictionary<DamageType, DamageResistance> Resistances { get; } = new Dictionary<DamageType, DamageResistance>();
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
@@ -25,7 +24,7 @@ namespace Data.Characters
 
         public List<IItemStats> StartingEquipment { get; }
 
-        public List<IItemStats> StartingInventory { get; }
+        public List<Tuple<IItemStats, int>> StartingInventory { get; }
 
         public CharacterStats(
             string name,
@@ -49,7 +48,5 @@ namespace Data.Characters
 
             InitialStats = initialStats;
         }
-
-
     }
 }

@@ -22,9 +22,9 @@ namespace Data.Items
             _itemStats = new();
             foreach(var item in _items)
             {
-                _itemStats.Add(item.Id, item);
                 if (Debug.isDebugBuild)
                     Debug.Log($"...adding {item.Id}");
+                _itemStats.Add(item.Id, item);
             }
             if (Debug.isDebugBuild)
                 Debug.Log($"Initialization of ItemDataSourceSO complete.");

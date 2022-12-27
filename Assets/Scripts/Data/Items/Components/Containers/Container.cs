@@ -259,7 +259,7 @@ namespace Data.Items
             Contents.Add(item.GuId, new Content(item, tempPointList, target));
             OnItemPlaced?.Invoke(this, item.GuId);
             if (Debug.isDebugBuild)
-                Debug.Log($"item {item.Id} placed into container {Item.Id}");
+                Debug.Log($"item {item.Id} x{item.Quantity} placed into container {Item.Id}");
             AfterItemPlaced(item);
             return true;
         }

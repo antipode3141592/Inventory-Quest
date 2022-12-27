@@ -2,6 +2,7 @@
 using Data.Health;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Data.Characters
 {
@@ -19,6 +20,6 @@ namespace Data.Characters
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
 
         public List<IItemStats> StartingEquipment { get; }
-        public List<IItemStats> StartingInventory { get; }
+        public List<Tuple<IItemStats,int>> StartingInventory { get; }
     }
 }
