@@ -24,6 +24,7 @@ namespace Data.Items
 
         public event EventHandler Cutting;
         public event EventHandler RequestDestruction;
+        public event EventHandler QuantityChanged;
 
         public WoodHarvestSaw(IItemStats itemStats)
         {

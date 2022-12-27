@@ -255,6 +255,7 @@ namespace Data.Items
             }
 
             item.RequestDestruction += RequestDestroyHandler;
+            item.QuantityChanged += QuanityChangedHandler;
 
             Contents.Add(item.GuId, new Content(item, tempPointList, target));
             OnItemPlaced?.Invoke(this, item.GuId);
@@ -273,6 +274,7 @@ namespace Data.Items
                 {
                     item = content.Item;
                     item.RequestDestruction -= RequestDestroyHandler;
+                    item.QuantityChanged -= QuanityChangedHandler;
                     Contents.Remove(key: Grid[target].storedItemGuId);
                     foreach (Coor coor in content.GridSpaces)
                     {
@@ -314,6 +316,11 @@ namespace Data.Items
             if (!Contents.ContainsKey(item.GuId)) return;
             var anchor = Contents[item.GuId].AnchorPosition;
             TryTake(out _, anchor);
+        }
+
+        public void QuanityChangedHandler(object sender, EventArgs e)
+        {
+            OnItemPlaced?.Invoke(this, string.Empty);
         }
     }
 }

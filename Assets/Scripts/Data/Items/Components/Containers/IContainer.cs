@@ -28,6 +28,7 @@ namespace Data.Items
         public void GetPointHighlights(ref List<Tuple<HighlightState, Coor>> pointList, IItem item, Coor target);
         public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors);
         public void RequestDestroyHandler(object sender, EventArgs e);
+        public void QuanityChangedHandler(object sender, EventArgs e);
     }
 
 

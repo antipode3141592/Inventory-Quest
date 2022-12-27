@@ -27,5 +27,6 @@ namespace Data.Items
         public void Rotate(int direction);
 
         public event EventHandler RequestDestruction;
+        public event EventHandler QuantityChanged;
     }
 }

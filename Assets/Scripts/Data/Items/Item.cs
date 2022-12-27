@@ -24,6 +24,7 @@ namespace Data.Items
             set
             {
                 quantity = value < Stats.MaxQuantity ? value : Stats.MaxQuantity;
+                QuantityChanged?.Invoke(this, EventArgs.Empty);
                 if (value == 0)
                     RequestDestruction?.Invoke(this, EventArgs.Empty);
             }
@@ -32,6 +33,7 @@ namespace Data.Items
         public IItemStats Stats { get; }
 
         public event EventHandler RequestDestruction;
+        public event EventHandler QuantityChanged;
 
         public Item(IItemStats itemStats)
         {
