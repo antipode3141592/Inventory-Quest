@@ -71,19 +71,24 @@ namespace InventoryQuest.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_inputManager.HoldingItem is null) return;
-            Data.HighlightState squareState;
-            var equipableItem = _inputManager.HoldingItem;
-            if (equipableItem is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipableItem))
-                squareState = Data.HighlightState.Highlight;
-            else
-                squareState = Data.HighlightState.Incorrect;
-            SetHighlightColor(squareState);
+            if (_inputManager.HoldingItem is not null)
+            {
+                Data.HighlightState squareState;
+                var equipableItem = _inputManager.HoldingItem;
+                if (equipableItem is not null && _character.EquipmentSlots[SlotId].IsValidPlacement(equipableItem))
+                    squareState = Data.HighlightState.Highlight;
+                else
+                    squareState = Data.HighlightState.Incorrect;
+                SetHighlightColor(squareState);
+            }
+            if (_character.EquipmentSlots[SlotId].EquippedItem is not null)
+                _inputManager.ShowItemDetails(_character.EquipmentSlots[SlotId].EquippedItem);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             SetHighlightColor(Data.HighlightState.Normal);
+            _inputManager.HideItemDetails();
         }
 
         public void OnPointerClick(PointerEventData eventData)

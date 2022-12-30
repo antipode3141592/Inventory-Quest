@@ -201,6 +201,19 @@ namespace InventoryQuest.Managers
                     HoldingItem = null;
             }
         }
+
+        public void ShowItemDetails(IItem item)
+        {
+            ShowItemDetailsCommand?.Invoke(this, item);
+        }
+
+        public event EventHandler<IItem> ShowItemDetailsCommand;
+        public event EventHandler HideItemDetailsCommand;
+
+        public void HideItemDetails()
+        {
+            HideItemDetailsCommand?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public class Normal : IState 

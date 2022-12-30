@@ -1,5 +1,6 @@
 ﻿using Data.Items;
 using InventoryQuest.Managers;
+using InventoryQuest.UI.Menus;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,7 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class HeldItemDisplay : MonoBehaviour
+    public class ItemDetailDisplay : MonoBehaviour, IOnMenuShow, IOnMenuHide
     {
         IInputManager _inputManager;
 
@@ -29,23 +30,14 @@ namespace InventoryQuest.UI
             _inputManager = inputManager;
         }
 
-        void Start()
-        {
-            _inputManager.OnItemHeld += OnItemHeldHandler;
-            _inputManager.OnItemPlaced += OnItemPlacedHandler;
-            backgroundImage.gameObject.SetActive(false);
-        }
-
         void OnItemPlacedHandler(object sender, EventArgs e)
         {
-            backgroundImage.gameObject.SetActive(false);
+            ClearItemDetails();
         }
 
-        void OnItemHeldHandler(object sender, EventArgs e)
+        void OnItemHeldHandler(object sender, IItem item)
         {
-            backgroundImage.gameObject.SetActive(true);
-            //populate display
-            DisplayItemDetails(_inputManager.HoldingItem);
+            DisplayItemDetails(item);
         }
 
         void DisplayItemDetails(IItem item)
@@ -76,6 +68,31 @@ namespace InventoryQuest.UI
 
             QuantityText.text = $"Qty: {item.Quantity}";
 
+        }
+
+        void ClearItemDetails()
+        {
+            itemImage.sprite = null;
+            ItemNameText.text = "";
+            ItemDescriptionText.text = "";
+            ItemRarityText.text = "";
+            ItemValueText.text = "";
+            ItemWeightText.text = "";
+            for (int i = 0; i < ItemModifiersTexts.Count; i++)
+                ItemModifiersTexts[i].text = "";
+            QuantityText.text = "";
+        }
+
+        public void OnShow()
+        {
+            _inputManager.ShowItemDetailsCommand += OnItemHeldHandler;
+            _inputManager.HideItemDetailsCommand += OnItemPlacedHandler;
+        }
+
+        public void OnHide()
+        {
+            _inputManager.ShowItemDetailsCommand -= OnItemHeldHandler;
+            _inputManager.HideItemDetailsCommand -= OnItemPlacedHandler;
         }
     }
 }

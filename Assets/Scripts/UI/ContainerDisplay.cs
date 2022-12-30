@@ -187,12 +187,14 @@ namespace InventoryQuest.UI
 
         void GridSquareEntered(object sender, PointerEventData e)
         {
-            HighlightGrid((sender as ContainerGridSquareDisplay).Coordinates);
+            var coor = (sender as ContainerGridSquareDisplay).Coordinates;
+            HighlightGrid(coor);
+            ViewDetailsTimerStart(coor);
         }
 
         void HighlightGrid(Coor anchorPoint)
         {
-            if (_inputManager.HoldingItem is null) return;
+            if (_inputManager.HoldingItem is null || _container is null) return;
 
             List<Tuple<HighlightState, Coor>> tempPointList = UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Get();
             _container.GetPointHighlights(ref tempPointList, _inputManager.HoldingItem, anchorPoint);
@@ -204,6 +206,7 @@ namespace InventoryQuest.UI
         void GridSquareExited(object sender, PointerEventData e)
         {
             ResetGrid();
+            ViewDetailsTimerReset();
         }
 
         void ResetGrid()
@@ -227,6 +230,20 @@ namespace InventoryQuest.UI
                     HighlightGrid(square.Coordinates);
                     break;
                 }
+        }
+
+        void ViewDetailsTimerStart(Coor coor)
+        {
+            if (_container is null) return;
+            if (!_container.Grid.ContainsKey(coor)) return;
+            if (!_container.Grid[coor].IsOccupied) return;
+            _inputManager.ShowItemDetails(_container.Contents[_container.Grid[coor].storedItemGuId].Item);
+        }
+
+
+        void ViewDetailsTimerReset()
+        {
+            _inputManager.HideItemDetails();
         }
     }
 }

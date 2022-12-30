@@ -653,8 +653,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 5
-    m_Right: 5
+    m_Left: 7
+    m_Right: 7
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -1672,8 +1672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 5
-    m_Right: 5
+    m_Left: 7
+    m_Right: 7
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -2463,7 +2463,7 @@ GameObject:
   - component: {fileID: 8685802852095962422}
   - component: {fileID: 1260938412166114341}
   m_Layer: 5
-  m_Name: HeldItemDisplay
+  m_Name: ItemDetailDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

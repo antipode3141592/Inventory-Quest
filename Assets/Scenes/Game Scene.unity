@@ -286,40 +286,16 @@ PrefabInstance:
       objectReference: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
     - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
       value: '"path":"_items","length":31'
       objectReference: {fileID: 0}
     - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"_items.[28]","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
-      value: '"path":"_items.[29]","value":$eref:1'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[3]
-      value: '"path":"_items.[30]","value":$eref:2'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7900e740e2803824a80b4c6117750cc0, type: 2}
-    - target: {fileID: 6882034974961621037, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 96dd9e188600da64db488c7a82b71ddd, type: 2}
     - target: {fileID: 6882034974961621038, guid: 4db8b5a53bf5bad4e926068a38701569, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -4743,8 +4719,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1787654973930346, guid: f87073d0706ca004d8e089af61994445, type: 3}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.continueButton
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.subtitleCharsPerSecond
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.requireContinueOnLastLine
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22325660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_SortingOrder
@@ -6451,11 +6435,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 91711538436012491, guid: 9b9ad05290b4c884d9c267757ff2f710, type: 3}
       propertyPath: _fadeOnDuration
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 91711538436012491, guid: 9b9ad05290b4c884d9c267757ff2f710, type: 3}
       propertyPath: _fadeOffDuration
-      value: 1.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 544407809448957079, guid: 9b9ad05290b4c884d9c267757ff2f710, type: 3}
       propertyPath: m_BlockingMask.m_Bits

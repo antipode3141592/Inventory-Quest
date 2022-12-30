@@ -49,8 +49,11 @@ namespace InventoryQuest.UI.Menus
 
         public void Continue()
         {
-            _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.PartyDisplayOrder[0]).DisplayName = characterName.text;
-            DialogueManager.ChangeActorName("Player", characterName.text);
+            if (characterName.text != string.Empty)
+            {
+                _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.PartyDisplayOrder[0]).DisplayName = characterName.text;
+                DialogueManager.ChangeActorName("Player", characterName.text);
+            }
             _gameManager.GameBegin();
         }
     }
