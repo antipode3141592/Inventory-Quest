@@ -1,3 +1,4 @@
+using Data.Items;
 using Data.Shapes;
 using InventoryQuest.Managers;
 using System;
@@ -43,9 +44,9 @@ namespace InventoryQuest.UI
             _cursor.RectTransform.position = Input.mousePosition;
         }
 
-        public void OnItemHeldHandler(object sender, EventArgs e)
+        public void OnItemHeldHandler(object sender, IItem item)
         {
-            ShowItemSprite();
+            ShowItemSprite(item);
         }
 
         public void OnItemPlacedHandler(object sender, EventArgs e)
@@ -63,12 +64,12 @@ namespace InventoryQuest.UI
             ImageUtilities.RotateSprite(e.TargetFacing, _cursor.itemIcon);
         }
 
-        public void ShowItemSprite()
+        public void ShowItemSprite(IItem item)
         {
-            _cursor.itemIcon.sprite = _inputManager.HoldingItem.Sprite;
+            _cursor.itemIcon.sprite = item.Sprite;
             _cursor.itemIcon.SetNativeSize();
             _cursor.itemIcon.color = new Color(1f, 1f, 1f, 0.75f);
-            ImageUtilities.RotateSprite(_inputManager.HoldingItem.CurrentFacing, _cursor.itemIcon);
+            ImageUtilities.RotateSprite(item.CurrentFacing, _cursor.itemIcon);
         }
 
         public void HideItemSprite()

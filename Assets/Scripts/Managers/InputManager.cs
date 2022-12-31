@@ -41,7 +41,7 @@ namespace InventoryQuest.Managers
                 {
                     holdingItem = value;
                     holdingItem.RequestDestruction += ItemDestructionHandler;
-                    OnItemHeld?.Invoke(this, EventArgs.Empty);
+                    OnItemHeld?.Invoke(this, holdingItem);
                 }
                 
             }
@@ -53,7 +53,7 @@ namespace InventoryQuest.Managers
             HoldingItem = null;
         }
 
-        public event EventHandler OnItemHeld;
+        public event EventHandler<IItem> OnItemHeld;
         public event EventHandler OnItemPlaced;
 
         public event EventHandler OnSubmitDown;
@@ -200,6 +200,11 @@ namespace InventoryQuest.Managers
                 if (container.TryPlace(HoldingItem, clickedCoor))
                     HoldingItem = null;
             }
+
+            if (HoldingItem is null)
+                HideHeldItemDetails();
+            else
+                ShowHeldItemDetails(HoldingItem);
         }
 
         public void ShowItemDetails(IItem item)
@@ -213,6 +218,19 @@ namespace InventoryQuest.Managers
         public void HideItemDetails()
         {
             HideItemDetailsCommand?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler<IItem> ShowHeldItemDetailsCommand;
+        public event EventHandler HideHeldItemDetailsCommand;
+
+        public void ShowHeldItemDetails(IItem item)
+        {
+            ShowHeldItemDetailsCommand?.Invoke(this, item);
+        }
+
+        public void HideHeldItemDetails()
+        {
+            HideHeldItemDetailsCommand?.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -10,10 +10,8 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class ItemDetailDisplay : MonoBehaviour, IOnMenuShow, IOnMenuHide
+    public class ItemDetailDisplay : MonoBehaviour
     {
-        IInputManager _inputManager;
-
         [SerializeField] Image backgroundImage;
         [SerializeField] Image itemImage;
         [SerializeField] TextMeshProUGUI ItemNameText;
@@ -24,18 +22,12 @@ namespace InventoryQuest.UI
         [SerializeField] List<TextMeshProUGUI> ItemModifiersTexts;
         [SerializeField] TextMeshProUGUI QuantityText;
 
-        [Inject]
-        public void Init(IInputManager inputManager)
-        {
-            _inputManager = inputManager;
-        }
-
-        void OnItemPlacedHandler(object sender, EventArgs e)
+        public void OnItemPlacedHandler(object sender, EventArgs e)
         {
             ClearItemDetails();
         }
 
-        void OnItemHeldHandler(object sender, IItem item)
+        public void OnItemHeldHandler(object sender, IItem item)
         {
             DisplayItemDetails(item);
         }
@@ -70,7 +62,7 @@ namespace InventoryQuest.UI
 
         }
 
-        void ClearItemDetails()
+        public void ClearItemDetails()
         {
             itemImage.sprite = null;
             ItemNameText.text = "";
@@ -81,18 +73,6 @@ namespace InventoryQuest.UI
             for (int i = 0; i < ItemModifiersTexts.Count; i++)
                 ItemModifiersTexts[i].text = "";
             QuantityText.text = "";
-        }
-
-        public void OnShow()
-        {
-            _inputManager.ShowItemDetailsCommand += OnItemHeldHandler;
-            _inputManager.HideItemDetailsCommand += OnItemPlacedHandler;
-        }
-
-        public void OnHide()
-        {
-            _inputManager.ShowItemDetailsCommand -= OnItemHeldHandler;
-            _inputManager.HideItemDetailsCommand -= OnItemPlacedHandler;
         }
     }
 }

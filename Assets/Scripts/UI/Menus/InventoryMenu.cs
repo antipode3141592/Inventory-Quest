@@ -17,6 +17,9 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] ContainerDisplay lootContainerDisplay;
         [SerializeField] Button closeInventoryButton;
 
+        [SerializeField] ItemDetailDisplay itemDetailDisplay;
+        [SerializeField] ItemDetailDisplay heldItemDetailDisplay;
+
         [Inject]
         public void Init(IPartyManager partyManager, IRewardManager rewardManager, IInputManager inputManager)
         {
@@ -38,12 +41,25 @@ namespace InventoryQuest.UI.Menus
         {
             base.Show();
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+
+            _inputManager.ShowItemDetailsCommand += itemDetailDisplay.OnItemHeldHandler;
+            _inputManager.HideItemDetailsCommand += itemDetailDisplay.OnItemPlacedHandler;
+            _inputManager.OnItemHeld += heldItemDetailDisplay.OnItemHeldHandler;
+            _inputManager.OnItemPlaced += heldItemDetailDisplay.OnItemPlacedHandler;
+
+            itemDetailDisplay.ClearItemDetails();
+            heldItemDetailDisplay.ClearItemDetails();
+
         }
 
         public override void Hide()
         {
             base.Hide();
 
+            _inputManager.ShowItemDetailsCommand -= itemDetailDisplay.OnItemHeldHandler;
+            _inputManager.HideItemDetailsCommand -= itemDetailDisplay.OnItemPlacedHandler;
+            _inputManager.ShowHeldItemDetailsCommand -= heldItemDetailDisplay.OnItemHeldHandler;
+            _inputManager.HideHeldItemDetailsCommand -= heldItemDetailDisplay.OnItemPlacedHandler;
         }
 
         void OnPartyMemberSelectedHandler(object sender, string e)

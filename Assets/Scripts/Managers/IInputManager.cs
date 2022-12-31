@@ -11,7 +11,7 @@ namespace InventoryQuest.Managers
     {
         public IItem HoldingItem { get; set; }
 
-        public event EventHandler OnItemHeld;
+        public event EventHandler<IItem> OnItemHeld;
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
@@ -24,6 +24,8 @@ namespace InventoryQuest.Managers
 
         public event EventHandler<IItem> ShowItemDetailsCommand;
         public event EventHandler HideItemDetailsCommand;
+        public event EventHandler<IItem> ShowHeldItemDetailsCommand;
+        public event EventHandler HideHeldItemDetailsCommand;
 
         public void OpenInventory();
         public void CloseInventory();
@@ -32,6 +34,9 @@ namespace InventoryQuest.Managers
 
         public void ShowItemDetails(IItem item);
         public void HideItemDetails();
+
+        public void ShowHeldItemDetails(IItem item);
+        public void HideHeldItemDetails();
 
         public void ContainerDisplayClickHandler(IContainer container, PointerEventData pointerEventData, Coor clickedCoor);
         public bool EquipmentSlotPointerClickHandler(PointerEventData eventData, ICharacter character, string slotId);
