@@ -6,7 +6,7 @@ namespace Data.Items
     public class EquipableStats : IEquipableStats
     {
         [SerializeField] EquipmentSlotType _slotType;
-        [SerializeField] List<StatModifier> _modifiers;
+        [SerializeField] List<StatModifier> _modifiers = new();
 
         public EquipableStats(EquipmentSlotType slotType, List<StatModifier> modifiers)
         {

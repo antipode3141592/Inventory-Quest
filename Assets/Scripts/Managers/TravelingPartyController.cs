@@ -34,13 +34,34 @@ namespace InventoryQuest.Traveling
         void Start()
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelected;
+            _partyManager.CurrentParty.OnPartyCompositionChanged += OnPartyCompositionChangedHandler;
+
+            SetPortraits();
+        }
+
+        void OnPartyCompositionChangedHandler(object sender, EventArgs e)
+        {
+            SetPortraits();
         }
 
         void OnPartyMemberSelected(object sender, string e)
         {
+            SetPortraits();
+        }
+
+        public void SetPortraits()
+        {
             int partyCount = _partyManager.CurrentParty.Characters.Count;
             for (int i = 0; i < partyMembers.Count; i++)
-                partyMembers[i].gameObject.SetActive(i < partyCount);
+            {
+                if (i < partyCount)
+                {
+                    partyMembers[i].gameObject.SetActive(true);
+                    
+                }
+                    
+                
+            }
         }
 
         public void IdleAll()

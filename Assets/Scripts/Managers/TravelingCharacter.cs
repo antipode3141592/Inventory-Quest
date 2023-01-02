@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Data.Characters;
+using System.Collections;
 using UnityEngine;
 
 namespace InventoryQuest.Traveling
@@ -9,7 +10,7 @@ namespace InventoryQuest.Traveling
         [SerializeField] protected Animator _animator;
         [SerializeField] protected Avatar _avatar;
 
-        
+        SpriteRenderer _spriteRenderer;
 
         int _idleHash;
         int _moveHash;
@@ -24,6 +25,8 @@ namespace InventoryQuest.Traveling
             _idleHash = Animator.StringToHash("Idle");
             _moveHash = Animator.StringToHash("Walking");
             _attackHash = Animator.StringToHash("Attack");
+
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         public void Move()
@@ -62,6 +65,11 @@ namespace InventoryQuest.Traveling
             yield return new WaitForSeconds(3f);
             //go back to Idle()
             Idle();
+        }
+
+        public void SetSprite(ICharacter character)
+        {
+            _spriteRenderer.sprite = character.Stats.Portrait;
         }
     }
 }

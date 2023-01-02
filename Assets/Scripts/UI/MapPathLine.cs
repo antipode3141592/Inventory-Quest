@@ -13,6 +13,8 @@ namespace InventoryQuest.UI
         [SerializeField] string locationAId;
         [SerializeField] string locationBId;
 
+        [SerializeField] Color inactivePathColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
         readonly List<Image> encounterBackgroundIcons = new();
 
         public string LocationAId => locationAId;
@@ -43,7 +45,7 @@ namespace InventoryQuest.UI
         public void HidePath()
         {
             DestroyEncounterMarkers();
-            BackgroundImage.color = Color.clear;
+            BackgroundImage.color = inactivePathColor;
         }
     }
 }

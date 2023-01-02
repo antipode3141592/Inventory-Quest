@@ -1,12 +1,10 @@
 ﻿using Data.Items;
-using InventoryQuest.Managers;
-using InventoryQuest.UI.Menus;
+using Data.Items.Components;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace InventoryQuest.UI
 {
@@ -21,6 +19,7 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI ItemWeightText;
         [SerializeField] List<TextMeshProUGUI> ItemModifiersTexts;
         [SerializeField] TextMeshProUGUI QuantityText;
+        [SerializeField] TextMeshProUGUI TypesText;
 
         public void OnItemPlacedHandler(object sender, EventArgs e)
         {
@@ -34,37 +33,55 @@ namespace InventoryQuest.UI
 
         void DisplayItemDetails(IItem item)
         {
-            itemImage.sprite = item.Sprite; 
+            itemImage.sprite = item.Sprite;
+            itemImage.color = Color.white;
             ItemNameText.text = item.Stats.Id;
             ItemDescriptionText.text = item.Stats.Description;
             ItemRarityText.text = item.Stats.Rarity.ToString();
             ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
-            var equipable = item.Components.ContainsKey(typeof(IEquipable)) ? item.Components[typeof(IEquipable)] as IEquipable : null;
-            if (equipable is not null)
-                for (int i = 0; i < ItemModifiersTexts.Count; i++)
-                {
-                    if (equipable.Modifiers is not null && equipable.Modifiers.Count > i)
-                    {
-                        ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
-                    }
-                    else
-                    {
-                        ItemModifiersTexts[i].text = "";
 
+            for (int i = 0; i < ItemModifiersTexts.Count; i++)
+                ItemModifiersTexts[i].text = "";
+
+            var equipable = item.Components.ContainsKey(typeof(IEquipable)) ? item.Components[typeof(IEquipable)] as IEquipable : null;
+            var usable = item.Components.ContainsKey(typeof(IUsable)) ? item.Components[typeof(IUsable)] as IUsable : null;
+            if (equipable is not null)
+                if (equipable.Modifiers is not null && equipable.Modifiers.Count > 0)
+                    for (int i = 0; i < equipable.Modifiers.Count; i++)
+                        ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
+            if (usable is not null)
+            {
+                if (usable is Edible edible)
+                {
+                    ItemModifiersTexts[0].text = edible.ToString();
+                }
+                else if (usable is EncounterLengthEffect encounterLengthEffect)
+                {
+                    for(int i = 0; i < encounterLengthEffect.EncounterLengthEffectStats.Modifiers.Count; i++)
+                    {
+                        ItemModifiersTexts[i].text = $"{encounterLengthEffect.EncounterLengthEffectStats.Modifiers[i]} when used";
                     }
                 }
-            else
-                for (int i = 0; i < ItemModifiersTexts.Count; i++)
-                    ItemModifiersTexts[i].text = "";
+            }
 
             QuantityText.text = $"Qty: {item.Quantity}";
+            List<string> typeList = new();
+            foreach (var component in item.Components)
+            {
+                if (component.Key == typeof(IUsable))
+                    typeList.Add("Consumable");
+                if (component.Key == typeof(IEquipable))
+                    typeList.Add("Equipment");
+            }
+            TypesText.text = string.Join(", ", typeList).TrimEnd(',', ' ');
 
         }
 
         public void ClearItemDetails()
         {
             itemImage.sprite = null;
+            itemImage.color = Color.clear;
             ItemNameText.text = "";
             ItemDescriptionText.text = "";
             ItemRarityText.text = "";
@@ -73,6 +90,7 @@ namespace InventoryQuest.UI
             for (int i = 0; i < ItemModifiersTexts.Count; i++)
                 ItemModifiersTexts[i].text = "";
             QuantityText.text = "";
+            TypesText.text = "";
         }
     }
 }

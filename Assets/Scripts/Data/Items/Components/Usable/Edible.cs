@@ -2,7 +2,7 @@
 
 namespace Data.Items.Components
 {
-    class Edible : IUsable
+    public class Edible : IUsable
     {
         EdibleStats _edibleStats;
         
@@ -22,6 +22,11 @@ namespace Data.Items.Components
             if (IsConsumable)
                 Item.Quantity--;
             return true;
+        }
+
+        public override string ToString()
+        {
+            return $"Restore {_edibleStats.RestorationStrength} health";
         }
     }
 }

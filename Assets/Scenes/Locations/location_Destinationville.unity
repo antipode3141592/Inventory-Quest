@@ -525,7 +525,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_image
       value: 
-      objectReference: {fileID: -523132473, guid: bd52b39ebb43c6f4eb252cc6262396e7, type: 3}
+      objectReference: {fileID: -523132473, guid: 250ca1b8b951b574c90ecb4110f7f5a9, type: 3}
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_id.m_text
       value: Overseer
@@ -541,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 7561862266982161169, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -523132473, guid: bd52b39ebb43c6f4eb252cc6262396e7, type: 3}
+      objectReference: {fileID: -523132473, guid: 250ca1b8b951b574c90ecb4110f7f5a9, type: 3}
     - target: {fileID: 7561862266982161171, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: m_Name
       value: Overseer

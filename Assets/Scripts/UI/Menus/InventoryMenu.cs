@@ -58,8 +58,8 @@ namespace InventoryQuest.UI.Menus
 
             _inputManager.ShowItemDetailsCommand -= itemDetailDisplay.OnItemHeldHandler;
             _inputManager.HideItemDetailsCommand -= itemDetailDisplay.OnItemPlacedHandler;
-            _inputManager.ShowHeldItemDetailsCommand -= heldItemDetailDisplay.OnItemHeldHandler;
-            _inputManager.HideHeldItemDetailsCommand -= heldItemDetailDisplay.OnItemPlacedHandler;
+            _inputManager.OnItemHeld -= heldItemDetailDisplay.OnItemHeldHandler;
+            _inputManager.OnItemPlaced -= heldItemDetailDisplay.OnItemPlacedHandler;
         }
 
         void OnPartyMemberSelectedHandler(object sender, string e)

@@ -106,7 +106,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: startingEquipment
+      Entry: 6
+      Data: 
+    - Name: startingInventory
+      Entry: 6
+      Data: 
   id: scummy_overseer
   _name: Overseer
-  portrait: {fileID: -523132473, guid: bd52b39ebb43c6f4eb252cc6262396e7, type: 3}
+  portrait: {fileID: -523132473, guid: 250ca1b8b951b574c90ecb4110f7f5a9, type: 3}
   species: {fileID: 11400000, guid: cff49419e1b722d409bbe56684d49db6, type: 2}

@@ -804,7 +804,7 @@ MonoBehaviour:
   _currentLocationText: {fileID: 8615766797759621189}
   _destinationLocationText: {fileID: 2131687629709288149}
   _pathOverviewText: {fileID: 8688234558315742948}
-  _pressAndHoldButton: {fileID: 3741329610294360543}
+  _continueButton: {fileID: 3741329610294360543}
 --- !u!1 &7135661358047834486
 GameObject:
   m_ObjectHideFlags: 0

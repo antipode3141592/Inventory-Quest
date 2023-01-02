@@ -25,5 +25,10 @@ namespace Data.Items.Components
                 Item.Quantity--;
             return true;
         }
+
+        public override string ToString()
+        {
+            return $"";
+        }
     }
 }

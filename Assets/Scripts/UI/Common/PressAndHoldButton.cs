@@ -27,6 +27,7 @@ namespace InventoryQuest.UI
         [SerializeField] Image fillForeground;
         [SerializeField] TextMeshProUGUI buttonText;
 
+
         public event EventHandler OnPointerHoldSuccess;
         public event EventHandler OnTimerStart;
         public event EventHandler OnTimerReset;

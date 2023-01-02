@@ -2,7 +2,7 @@
 
 namespace Data.Items.Components
 {
-    class EdibleStats : IUsableStats
+    public class EdibleStats : IUsableStats
     {
         [SerializeField] int restorationStrength;
 

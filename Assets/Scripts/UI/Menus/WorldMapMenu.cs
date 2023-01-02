@@ -24,7 +24,7 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] TextMeshProUGUI _currentLocationText;
         [SerializeField] TextMeshProUGUI _destinationLocationText;
         [SerializeField] TextMeshProUGUI _pathOverviewText;
-        [SerializeField] PressAndHoldButton _pressAndHoldButton;
+        [SerializeField] PressAndHoldButton _continueButton;
 
         [Inject]
         public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource, ILocationDataSource locationDataSource)
@@ -42,8 +42,10 @@ namespace InventoryQuest.UI.Menus
             {
                 location.OnLocationSelected += OnLocationSelectedHandler;
             }
-            _pressAndHoldButton.OnPointerHoldSuccess += OnPathSelected;
+            _continueButton.OnPointerHoldSuccess += OnPathSelected;
         }
+
+        
 
         private void OnPathSelected(object sender, EventArgs e)
         {
@@ -53,7 +55,7 @@ namespace InventoryQuest.UI.Menus
         public override void Show()
         {
             base.Show();
-            
+            _continueButton.gameObject.SetActive(false);
             _currentLocationText.text = $"Current: {_gameStateDataSource.CurrentLocation?.Stats.DisplayName}";
             _destinationLocationText.text = "Destination: ...";
             var currentLocationID = _gameStateDataSource.CurrentLocation.Stats.Id;
@@ -110,6 +112,7 @@ namespace InventoryQuest.UI.Menus
                     if (stats == null) return;
                     _pathOverviewText.text = $"Projected Length: {stats.EncounterStats.Count} Encounters";
                     path.DisplayPath(stats);
+                    _continueButton.gameObject.SetActive(true);
                 }
                 else
                 {

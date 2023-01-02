@@ -200,11 +200,6 @@ namespace InventoryQuest.Managers
                 if (container.TryPlace(HoldingItem, clickedCoor))
                     HoldingItem = null;
             }
-
-            if (HoldingItem is null)
-                HideHeldItemDetails();
-            else
-                ShowHeldItemDetails(HoldingItem);
         }
 
         public void ShowItemDetails(IItem item)
@@ -218,19 +213,6 @@ namespace InventoryQuest.Managers
         public void HideItemDetails()
         {
             HideItemDetailsCommand?.Invoke(this, EventArgs.Empty);
-        }
-
-        public event EventHandler<IItem> ShowHeldItemDetailsCommand;
-        public event EventHandler HideHeldItemDetailsCommand;
-
-        public void ShowHeldItemDetails(IItem item)
-        {
-            ShowHeldItemDetailsCommand?.Invoke(this, item);
-        }
-
-        public void HideHeldItemDetails()
-        {
-            HideHeldItemDetailsCommand?.Invoke(this, EventArgs.Empty);
         }
     }
 
