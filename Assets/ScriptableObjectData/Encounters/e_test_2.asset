@@ -46,11 +46,12 @@ MonoBehaviour:
       Data: 200
     - Name: successMessage
       Entry: 1
-      Data: The hangry giant accepts your offering and offers a cache of goods in
-        return.
+      Data: The hangry giant accepts the gift of food and offers a cache of goods
+        in return.
     - Name: failureMessage
       Entry: 1
-      Data: The giant shoves you forcefully aside, continuing his search for food.
+      Data: The giant shoves the party forcefully aside, continuing his search for
+        food.
     - Name: rewards
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
@@ -154,11 +155,12 @@ MonoBehaviour:
       Data: 300
     - Name: successMessage
       Entry: 1
-      Data: Cowed by your forceful display, the giant lumbers away, leaving behind
+      Data: Cowed by the forceful display, the giant lumbers away, leaving behind
         a small cache.
     - Name: failureMessage
       Entry: 1
-      Data: The giant shoves you forcefully aside, continuing his search for food.
+      Data: The giant shoves the party forcefully aside, continuing his search for
+        food.
     - Name: rewards
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
@@ -262,10 +264,11 @@ MonoBehaviour:
       Data: 150
     - Name: successMessage
       Entry: 1
-      Data: Smiling, the giant leaves you in peace.
+      Data: Smiling, the giant leaves the party in peace.
     - Name: failureMessage
       Entry: 1
-      Data: The giant shoves you forcefully aside, continuing his search for food.
+      Data: The giant shoves the party forcefully aside, continuing his search for
+        food.
     - Name: rewards
       Entry: 7
       Data: 16|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
@@ -324,4 +327,4 @@ MonoBehaviour:
       Data: 
   id: test_2
   _name: 
-  description: An angry giant
+  description: An angry looking giant bars the way.

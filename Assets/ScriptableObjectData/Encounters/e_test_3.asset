@@ -72,10 +72,10 @@ MonoBehaviour:
       Data: 200
     - Name: successMessage
       Entry: 1
-      Data: You deftly move aside and avoid injury.
+      Data: The bolts are no match for the party's experience and gear.
     - Name: failureMessage
       Entry: 1
-      Data: A bundle of bolts tear through your defenses.
+      Data: A bundle of bolts tear through the party's defenses.
     - Name: rewards
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
@@ -128,4 +128,4 @@ MonoBehaviour:
       Data: 
   id: test_3
   _name: 
-  description: You've triggered a crossbow trap!
+  description: The party has triggered a crossbow trap!

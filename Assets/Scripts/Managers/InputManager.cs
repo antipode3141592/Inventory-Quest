@@ -33,7 +33,8 @@ namespace InventoryQuest.Managers
             {
                 if (value is null)
                 {
-                    holdingItem.RequestDestruction -= ItemDestructionHandler;
+                    if (holdingItem is not null)
+                        holdingItem.RequestDestruction -= ItemDestructionHandler;
                     holdingItem = value;
                     OnItemPlaced?.Invoke(this, EventArgs.Empty);
                 }

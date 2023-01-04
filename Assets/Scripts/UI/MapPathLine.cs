@@ -14,26 +14,23 @@ namespace InventoryQuest.UI
         [SerializeField] string locationBId;
 
         [SerializeField] Color inactivePathColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        [SerializeField] Color activePathColor = new Color(1f, 1f, 1f, 1f);
+        [SerializeField] Color hiddenPathColor = new Color(1f, 1f, 1f, 0f);
 
         readonly List<Image> encounterBackgroundIcons = new();
 
         public string LocationAId => locationAId;
         public string LocationBId => locationBId;
 
-        public void DisplayPath(IPathStats pathStats)
+        public void ActivatePath(IPathStats pathStats)
         {
-            BackgroundImage.color = Color.white;
+            BackgroundImage.color = activePathColor;
             DestroyEncounterMarkers();
             for (int i = 0; i < pathStats.EncounterStats.Count; i++)
-            {
-                IEncounterStats encounter = pathStats.EncounterStats[i];
-                var icon = Instantiate(encounterIcon, transform);
-                encounterBackgroundIcons.Add(icon);
-            }
-
+                encounterBackgroundIcons.Add(Instantiate(encounterIcon, transform));
         }
 
-        private void DestroyEncounterMarkers()
+        void DestroyEncounterMarkers()
         {
             for (int i = 0; i < encounterBackgroundIcons.Count; i++)
             {
@@ -45,7 +42,15 @@ namespace InventoryQuest.UI
         public void HidePath()
         {
             DestroyEncounterMarkers();
+            BackgroundImage.color = hiddenPathColor;
+        }
+
+        public void DeactivatePath()
+        {
+            DestroyEncounterMarkers();
             BackgroundImage.color = inactivePathColor;
         }
+
+
     }
 }

@@ -111,7 +111,7 @@ namespace InventoryQuest.UI.Menus
                         endLocationId: destinationId);
                     if (stats == null) return;
                     _pathOverviewText.text = $"Projected Length: {stats.EncounterStats.Count} Encounters";
-                    path.DisplayPath(stats);
+                    path.ActivatePath(stats);
                     _continueButton.gameObject.SetActive(true);
                 }
                 else

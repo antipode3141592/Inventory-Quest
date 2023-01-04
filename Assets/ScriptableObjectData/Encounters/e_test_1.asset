@@ -46,17 +46,30 @@ MonoBehaviour:
       Data: 100
     - Name: successMessage
       Entry: 1
-      Data: Happy monster leaves you alone!
+      Data: Pleased by the offering, the giant offers a small bundle in thanks.
     - Name: failureMessage
       Entry: 1
-      Data: Hungry monster attacks you, knocking you to the ground!
+      Data: Enraged with the hollow offer, the monster howls in rage and charges
+        the party!
     - Name: rewards
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|Data.Rewards.RandomItemRewardStats, Data
+    - Name: _lootContainerId
+      Entry: 1
+      Data: loot_pile_small
+    - Name: _lootTableId
+      Entry: 1
+      Data: common_loot
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -65,14 +78,14 @@ MonoBehaviour:
       Data: 
     - Name: penalties
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+      Data: 4|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 4|Data.Penalties.DamagePenaltyStats, Data
+      Data: 5|Data.Penalties.DamagePenaltyStats, Data
     - Name: damageType
       Entry: 3
       Data: 0
@@ -96,7 +109,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|Data.Encounters.SkillTest, Data
+      Data: 6|Data.Encounters.SkillTest, Data
     - Name: description
       Entry: 1
       Data: Approach diplomatically
@@ -108,7 +121,7 @@ MonoBehaviour:
       Data: 0
     - Name: StatTypes
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+      Data: 7|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -123,7 +136,7 @@ MonoBehaviour:
       Data: 
     - Name: SkillTypes
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+      Data: 8|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -141,26 +154,17 @@ MonoBehaviour:
       Data: 200
     - Name: successMessage
       Entry: 1
-      Data: Monster regards you as a friend and lets you pass unharmed.
+      Data: The monster regards the party as friends and lets them pass unharmed.
     - Name: failureMessage
       Entry: 1
-      Data: Not understanding, the monster attacks you, knocking you to the ground!
+      Data: Not understanding, the monster attacks, knocking the party to the ground!
     - Name: rewards
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+      Data: 9|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 9|Data.Rewards.ItemRewardStats, Data
-    - Name: _itemId
-      Entry: 1
-      Data: ring_charisma_5
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -206,4 +210,4 @@ MonoBehaviour:
       Data: 
   id: test_1
   _name: 
-  description: A monster appears!
+  description: A monster is marching up and down the path, in search of food.

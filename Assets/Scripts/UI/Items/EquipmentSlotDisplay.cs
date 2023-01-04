@@ -94,17 +94,26 @@ namespace InventoryQuest.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             if (_inputManager.EquipmentSlotPointerClickHandler(eventData, _character, SlotId))
-            {
-                backgroundSprite.color = Color.white;
-                equippedItemSprite.color = Color.clear;
-                equippedItemSprite.sprite = null;
-            }
+                ClearSlot();
             else
-            {
-                backgroundSprite.color = Color.grey;
-                equippedItemSprite.color = Color.white;
-                equippedItemSprite.sprite = (_character.EquipmentSlots[SlotId].EquippedItem as IItem).Sprite;
-            }
+                if (_character.EquipmentSlots[SlotId].EquippedItem is not null)
+                    SetSlot();
+                else
+                    ClearSlot();
+        }
+
+        private void SetSlot()
+        {
+            backgroundSprite.color = Color.grey;
+            equippedItemSprite.color = Color.white;
+            equippedItemSprite.sprite = (_character.EquipmentSlots[SlotId].EquippedItem as IItem).Sprite;
+        }
+
+        private void ClearSlot()
+        {
+            backgroundSprite.color = Color.white;
+            equippedItemSprite.color = Color.clear;
+            equippedItemSprite.sprite = null;
         }
     }
 }
