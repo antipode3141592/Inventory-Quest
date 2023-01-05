@@ -43,7 +43,12 @@ namespace Data.Characters
         {
             Debug.Log($"OnCharacterDeath in Party...");
             if (PartyIsDead())
+            {
+                Debug.Log($"All party members dead!");
                 OnPartyDeath?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+            Debug.Log($"At least one party member is still alive!");
         }
 
         bool PartyIsDead()

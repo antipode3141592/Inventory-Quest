@@ -77,6 +77,7 @@ namespace InventoryQuest.Managers
 
         void OnPartyDeathHandler(object sender, EventArgs e)
         {
+            Debug.Log($"OnPartyDeathHandler()", this);
             isPartyDead = true;
         }
 

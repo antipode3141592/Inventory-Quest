@@ -11,7 +11,7 @@ namespace InventoryQuest.Health
             damagable.DealDamage(damageAmount, damageType);
         }
 
-        public void HealDamage(IDamagable damagable, int healAmount)
+        public void Heal(IDamagable damagable, int healAmount)
         {
             damagable.HealDamage(healAmount);
         }

@@ -94,7 +94,7 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 25
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -189,7 +189,7 @@ MonoBehaviour:
       Data: 0
     - Name: damageAmount
       Entry: 3
-      Data: 28
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

@@ -46,6 +46,7 @@ namespace InventoryQuest.Managers
                 Debug.Log($"Processing DamagePenalty with {damageStats.DamageAmount} pts of {damageStats.DamageType} type damage");
                 foreach (var character in _partyManager.CurrentParty.Characters)
                 {
+                    Debug.Log($"...{damageStats.DamageAmount} {damageStats.DamageType} damage to {character.Value.DisplayName}");
                     _healthManager.DealDamage(character.Value, damageStats.DamageAmount, damageStats.DamageType);
                 }
         }

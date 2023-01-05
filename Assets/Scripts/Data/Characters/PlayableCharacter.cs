@@ -305,7 +305,7 @@ namespace Data.Characters
         {
             Debug.Log($"DealDamage on {DisplayName}");
             if (IsDead || IsDying) return;
-            int adjustedAmount = damageAmount - StatDictionary[StatTypes.Defense].CurrentValue - (Resistances.ContainsKey(damageType) ? Resistances[damageType].CurrentValue : 0);
+            int adjustedAmount = damageAmount - (Resistances.ContainsKey(damageType) ? Resistances[damageType].CurrentValue : 0);
             if (adjustedAmount <= 0) return;
             CurrentHealth -= adjustedAmount;
 

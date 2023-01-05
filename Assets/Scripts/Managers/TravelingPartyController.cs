@@ -53,15 +53,7 @@ namespace InventoryQuest.Traveling
         {
             int partyCount = _partyManager.CurrentParty.Characters.Count;
             for (int i = 0; i < partyMembers.Count; i++)
-            {
-                if (i < partyCount)
-                {
-                    partyMembers[i].gameObject.SetActive(true);
-                    
-                }
-                    
-                
-            }
+                partyMembers[i].gameObject.SetActive(i < partyCount);
         }
 
         public void IdleAll()

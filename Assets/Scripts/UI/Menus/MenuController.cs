@@ -73,7 +73,6 @@ namespace InventoryQuest.UI.Menus
             _inputManager.OpenInventoryCommand += OpenInventoryScreen;
             _inputManager.CloseInventoryCommand += CloseInventoryScreen;
 
-            //_partyManager.CurrentParty.OnPartyDeath += PartyDeathHandler;
             yield return new WaitForSeconds(1f);
             _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
