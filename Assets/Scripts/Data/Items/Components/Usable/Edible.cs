@@ -16,7 +16,7 @@ namespace Data.Items.Components
             Item = parentItem;
         }
 
-        public bool TryUse(ICharacter useByCharacter)
+        public bool TryUse(ref ICharacter useByCharacter)
         {
             useByCharacter.HealDamage(_edibleStats.RestorationStrength);
             if (IsConsumable)

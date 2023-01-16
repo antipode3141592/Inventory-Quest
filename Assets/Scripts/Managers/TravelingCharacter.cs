@@ -71,5 +71,15 @@ namespace InventoryQuest.Traveling
         {
             _spriteRenderer.sprite = character.Stats.Portrait;
         }
+
+        public void Show()
+        {
+            _spriteRenderer.color = Color.white;
+        }
+
+        public void Hide()
+        {
+            _spriteRenderer.color = Color.clear;
+        }
     }
 }

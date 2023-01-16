@@ -5,6 +5,6 @@ namespace Data.Penalties
 {
     public interface IPenalty
     { 
-        public void ApplyTo(ICharacter character);
+        public void ApplyTo(ref ICharacter character);
     }
 }

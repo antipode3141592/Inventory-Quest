@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Data.Characters
@@ -69,6 +70,26 @@ namespace Data.Characters
             character.OnDead += OnCharacterDeath;
             character.OnItemAddedToBackpack += OnItemAddedToCharacterBackpack;
             OnPartyCompositionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RemoveCharacter(string characterGuId)
+        {
+            Debug.Log($"RemoveCharacter(Guid: {characterGuId})...");
+            var character = Characters.ContainsKey(characterGuId) ? Characters[characterGuId] : null;
+            if (character is null) return;
+            //unsubscribe
+            character.OnStatsUpdated -= OnStatsUpdatedHandler;
+            character.OnDead -= OnCharacterDeath;
+            character.OnItemAddedToBackpack -= OnItemAddedToCharacterBackpack;
+            //remove all carried items and all equipment
+            while (character.Backpack.Contents.Count > 0)
+                character.Backpack.TryTake(out _, character.Backpack.Contents.First().Value.GridSpaces[0]);
+            foreach (var equipment in character.EquipmentSlots)
+                equipment.Value.TryUnequip(out _);
+            //remove character from party list
+            Characters.Remove(characterGuId);
+            if (PartyDisplayOrder.Contains(characterGuId))
+                PartyDisplayOrder.Remove(characterGuId);
         }
 
         void OnItemAddedToCharacterBackpack(object sender, string e)

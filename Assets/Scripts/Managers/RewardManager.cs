@@ -14,6 +14,7 @@ namespace InventoryQuest.Managers
         [SerializeField] List<Tag> tagsExcludedFromLoot;
 
         IPartyManager _partyManager;
+        IGameManager _gameManager;
         IItemDataSource _dataSource;
         ILootTableDataSource _lootTableDataSource;
         LootTable _lootTable;
@@ -34,17 +35,25 @@ namespace InventoryQuest.Managers
         public event EventHandler<IContainer> OnPileSelected;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IItemDataSource dataSource,  ILootTableDataSource lootTableDataSource)
+        public void Init(IPartyManager partyManager, IItemDataSource dataSource,  ILootTableDataSource lootTableDataSource, IGameManager gameManager)
         {
             _partyManager = partyManager;
             _dataSource = dataSource;
             _lootTableDataSource = lootTableDataSource;
+            _gameManager = gameManager;
         }
 
         void Start()
         {
             _lootTable = new LootTable(_lootTableDataSource);
             Lua.RegisterFunction("RewardExperience", this, SymbolExtensions.GetMethodInfo(() => RewardExperience(0)));
+
+            _gameManager.OnGameBegining += OnGameBeginingHandler;
+        }
+
+        void OnGameBeginingHandler(object sender, EventArgs e)
+        {
+            DestroyRewards();
         }
 
         public void RewardExperience(double experience)
@@ -77,8 +86,6 @@ namespace InventoryQuest.Managers
             OnRewardsProcessComplete?.Invoke(this, EventArgs.Empty);
             return rewardsProcessed > 0;
         }
-
-
 
         void ProcessReward(IRewardStats rewardStats)
         {

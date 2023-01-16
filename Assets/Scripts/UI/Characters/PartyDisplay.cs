@@ -9,15 +9,11 @@ namespace InventoryQuest.UI
     public class PartyDisplay: MonoBehaviour, IOnMenuShow
     {
         [SerializeField] bool interactable;
-
         [SerializeField] CharacterPortrait CharacterPortraitPrefab;
-
         [SerializeField] List<CharacterStatsDisplay> _characterStatsDisplays;
 
         List<CharacterPortrait> PartyDisplayList;
-
         IPartyManager _partyManager;
-        
                 
         [Inject]
         public void Init(IPartyManager partyManager)

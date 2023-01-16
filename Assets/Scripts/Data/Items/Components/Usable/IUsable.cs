@@ -6,6 +6,6 @@ namespace Data.Items.Components
     {
         public bool IsConsumable { get; }
 
-        public bool TryUse(ICharacter usedByCharacter);
+        public bool TryUse(ref ICharacter usedByCharacter);
     }
 }

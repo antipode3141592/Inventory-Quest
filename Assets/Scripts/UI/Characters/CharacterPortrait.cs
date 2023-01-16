@@ -54,6 +54,7 @@ namespace InventoryQuest.UI
         {
             _character.DamageTaken += CharacterDamaged;
             _character.DamageHealed += CharacterHealed;
+            UpdateHealthBar(_character);
         }
 
         void UnsubscribeFromHealthUpdate()

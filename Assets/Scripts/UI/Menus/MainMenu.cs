@@ -49,12 +49,13 @@ namespace InventoryQuest.UI.Menus
 
         public void Continue()
         {
+            _gameManager.GameBegin();
             if (characterName.text != string.Empty)
             {
                 _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.PartyDisplayOrder[0]).DisplayName = characterName.text;
                 DialogueManager.ChangeActorName("Player", characterName.text);
             }
-            _gameManager.GameBegin();
+            
         }
     }
 }

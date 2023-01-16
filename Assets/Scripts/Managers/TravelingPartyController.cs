@@ -1,4 +1,5 @@
 using InventoryQuest.Managers;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,11 +8,12 @@ using Zenject;
 
 namespace InventoryQuest.Traveling
 {
-    public class TravelingPartyController : MonoBehaviour, IPartyController
+    public class TravelingPartyController : SerializedMonoBehaviour, IPartyController
     {
         IPartyManager _partyManager;
+        IEncounterManager _encounterManager;
 
-        [SerializeField] List<TravelingCharacter> partyMembers;
+        [SerializeField] Dictionary<string, TravelingCharacter> partyMembers;
         [SerializeField] TravelSettings travelSettings;
 
         bool isMoving = false;
@@ -20,9 +22,10 @@ namespace InventoryQuest.Traveling
         public float DistanceMoved { get; protected set; } = 0;
 
         [Inject]
-        public void Init(IPartyManager partyManager)
+        public void Init(IPartyManager partyManager, IEncounterManager encounterManager)
         {
             _partyManager = partyManager;
+            _encounterManager = encounterManager;
         }
 
         void Awake()
@@ -35,7 +38,12 @@ namespace InventoryQuest.Traveling
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelected;
             _partyManager.CurrentParty.OnPartyCompositionChanged += OnPartyCompositionChangedHandler;
+            _encounterManager.Wayfairing.StateEntered += OnWayfairingHandler;
+            SetPortraits();
+        }
 
+        void OnWayfairingHandler(object sender, EventArgs e)
+        {
             SetPortraits();
         }
 
@@ -51,17 +59,28 @@ namespace InventoryQuest.Traveling
 
         public void SetPortraits()
         {
-            int partyCount = _partyManager.CurrentParty.Characters.Count;
-            for (int i = 0; i < partyMembers.Count; i++)
-                partyMembers[i].gameObject.SetActive(i < partyCount);
+            ClearPortraits();
+            foreach(var character in _partyManager.CurrentParty.Characters)
+                foreach (var partyMember in partyMembers)
+                    if (partyMember.Key.Equals(character.Value.Stats.Id, StringComparison.CurrentCultureIgnoreCase))
+                        partyMember.Value.Show();
+        }
+
+        void ClearPortraits()
+        {
+            foreach (var partyMember in partyMembers)
+                partyMember.Value.Hide();
         }
 
         public void IdleAll()
         {
             isIdle = true;
             isMoving = false;
-            foreach (var character in partyMembers.FindAll(x => x.isActiveAndEnabled))
-                character.Idle();
+            foreach (var character in partyMembers)
+            {
+                if (character.Value.isActiveAndEnabled)
+                    character.Value.Idle();
+            }
         }
 
         public void MoveAll()
@@ -70,9 +89,11 @@ namespace InventoryQuest.Traveling
             DistanceMoved = 0f;
             isMoving = true;
             isIdle = false;
-            foreach(var character in partyMembers.FindAll(x => x.isActiveAndEnabled))
-                character.Move();
-
+            foreach (var character in partyMembers)
+            {
+                if(character.Value.isActiveAndEnabled)
+                    character.Value.Move();
+            }
             StartCoroutine(Movement());
         }
 

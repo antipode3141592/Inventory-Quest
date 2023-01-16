@@ -181,7 +181,7 @@ namespace InventoryQuest.Managers
             {
                 var _usable = (container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
-                _usable.TryUse(character);
+                _usable.TryUse(ref character);
                 if (_usable is EncounterLengthEffect encounterEffect)
                     _encounterManager.AddEncounterModifier(new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers));
             }

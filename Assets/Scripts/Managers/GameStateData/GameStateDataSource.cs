@@ -2,6 +2,7 @@
 using Data.Encounters;
 using Data.Locations;
 using InventoryQuest.Audio;
+using InventoryQuest.Managers;
 using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
 using System;
@@ -18,7 +19,18 @@ namespace InventoryQuest
         IPathDataSource _pathDataSource;
         IAudioManager _audioManager;
 
-        
+        public IPathStats CurrentPathStats { get; protected set; }
+        public ILocation DestinationLocation { get; protected set; }
+        public ILocation CurrentLocation { get; protected set; }
+        public IEncounter CurrentEncounter { get; protected set; }
+        public ICollection<string> KnownLocations { get; } = new HashSet<string>();
+
+        public int CurrentIndex { get; set; }
+
+        public event EventHandler<string> OnCurrentEncounterSet;
+        public event EventHandler<string> OnCurrentLocationSet;
+        public event EventHandler<string> OnDestinationLocationSet;
+        public event EventHandler<string> OnCurrentPathSet;
 
         [Inject]
         public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource, IAudioManager audioManager)
@@ -28,20 +40,6 @@ namespace InventoryQuest
             _characterDataSource = characterDataSource;
             _audioManager = audioManager;
         }
-
-        public IPathStats CurrentPathStats { get; protected set; }
-        public ILocation DestinationLocation { get; protected set; }
-        public ILocation CurrentLocation { get; protected set; }
-        public IEncounter CurrentEncounter { get; protected set; }
-
-        public ICollection<string> KnownLocations { get; } = new HashSet<string>();
-
-        public int CurrentIndex { get; set; }
-
-        public event EventHandler<string> OnCurrentEncounterSet;
-        public event EventHandler<string> OnCurrentLocationSet;
-        public event EventHandler<string> OnDestinationLocationSet;
-        public event EventHandler<string> OnCurrentPathSet;
 
         void Start()
         {
@@ -79,12 +77,18 @@ namespace InventoryQuest
 
         public void SetCurrentPath()
         {
+            Debug.Log($"SetCurrentPath()", this);
             var stats = _pathDataSource.GetPathForStartAndEndLocations(
                 startLocationId: CurrentLocation.Stats.Id,
                 endLocationId: DestinationLocation.Stats.Id);
-            if (stats == null) return;
+            if (stats == null)
+            {
+                Debug.LogWarning($"path stats are blank!", this);
+                return; 
+            }
             CurrentPathStats = stats;
             CurrentIndex = 0;
+            Debug.Log($"Path {CurrentPathStats.Id} set!", this);
             OnCurrentPathSet?.Invoke(this, stats.Id);
         }
 
@@ -92,7 +96,7 @@ namespace InventoryQuest
         {
             if (CurrentIndex >= CurrentPathStats.EncounterStats.Count) return;
             var encounterStats = CurrentPathStats.EncounterStats[CurrentIndex];
-            Debug.Log($"encountStats id: {encounterStats.Id}");
+            Debug.Log($"encountStats id: {encounterStats.Id}", this);
             CurrentEncounter = EncounterFactory.GetEncounter(encounterStats);
             OnCurrentEncounterSet?.Invoke(this, CurrentEncounter.Id);
         }

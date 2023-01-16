@@ -9,7 +9,7 @@ namespace Data.Items.Components
 
         public bool IsConsumable => throw new NotImplementedException();
 
-        public bool TryUse(ICharacter usedByCharacter)
+        public bool TryUse(ref ICharacter usedByCharacter)
         {
             throw new NotImplementedException();
         }

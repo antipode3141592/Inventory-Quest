@@ -1,5 +1,6 @@
 ﻿using FiniteStateMachine;
 using System;
+using UnityEngine;
 
 namespace InventoryQuest.Managers.States
 {
@@ -36,8 +37,7 @@ namespace InventoryQuest.Managers.States
         public void OnExit()
         {
             _encounterManager.Idle.StateEntered -= EncounterIdle;
-            _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Stats.Id);
-            _gameStateDataSource.SetDestinationLocation("");
+            
             StateExited?.Invoke(this, EventArgs.Empty);
         }
 
@@ -48,6 +48,7 @@ namespace InventoryQuest.Managers.States
 
         public void StartAdventure()
         {
+            Debug.Log($"StartAdventure()...");
             _gameStateDataSource.SetCurrentPath();
             if (_gameStateDataSource.CurrentPathStats == null) return;
             _encounterManager.Idle.Continue();

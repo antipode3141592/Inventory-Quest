@@ -3,7 +3,9 @@ using Data.Items;
 using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -14,30 +16,52 @@ namespace InventoryQuest.Managers
         [SerializeField] List<ICharacterStats> InitialPartyMembers;
 
         ICharacterDataSource _characterDataSource;
+        IGameManager _gameManager;
 
         readonly Party _party = new();
 
         public Party CurrentParty => _party;
 
+        public bool IsPartyDead { get; set; }
+
         [Inject]
-        public void Init(ICharacterDataSource characterDataSource)
+        public void Init(ICharacterDataSource characterDataSource, IGameManager gameManager)
         {
             _characterDataSource = characterDataSource;
+            _gameManager = gameManager;
         }
 
         void Start()
         {
-            for (int i = 0; i < InitialPartyMembers.Count; i++)
-                AddCharacterToParty(InitialPartyMembers[i]);
-
             Lua.RegisterFunction("AddCharacterToPartyById", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToPartyById(string.Empty)));
 
             CurrentParty.OnPartyDeath += PartyDeathHandler;
+            _gameManager.OnGameBegining += OnGameBeginningHandler;
+        }
+
+        void OnGameBeginningHandler(object sender, EventArgs e)
+        {
+            InitializeParty();
+        }
+
+        void InitializeParty()
+        {
+            for (int i = 0; i < InitialPartyMembers.Count; i++)
+                AddCharacterToParty(InitialPartyMembers[i]);
+        }
+
+        IEnumerator DestroyParty()
+        {
+            yield return null;
+            IsPartyDead = true;
+            while (CurrentParty.Characters.Count > 0)
+                CurrentParty.RemoveCharacter(CurrentParty.Characters.First().Key);
         }
 
         void PartyDeathHandler(object sender, EventArgs e)
         {
             Debug.Log($"PartyDeathHandler on {gameObject.name}...", this);
+            StartCoroutine(DestroyParty());
         }
 
         public void AddCharacterToPartyById(string id)
@@ -93,21 +117,14 @@ namespace InventoryQuest.Managers
                 foreach (var content in character.Backpack.Contents)
                 {
                     if (content.Value.Item.Id == itemId)
-                    {
                         runningTotal += content.Value.Item.Quantity;
-                    }
                 }
                 foreach (var slot in character.EquipmentSlots)
                 {
                     var equippedItem = slot.Value.EquippedItem as IItem;
                     if (slot.Value.EquippedItem is not null)
-                    {
                         if (equippedItem.Id == itemId)
-                        {
                             runningTotal += equippedItem.Quantity;
-                        }
-
-                    }
                 }
             }
             return runningTotal;

@@ -18,7 +18,7 @@ namespace Data.Items.Components
             Item = parentItem;
         }
 
-        public bool TryUse(ICharacter usedByCharacter)
+        public bool TryUse(ref ICharacter usedByCharacter)
         {
             usedByCharacter.ApplyModifiers(encounterLengthEffectStats.Modifiers);
             if (IsConsumable)

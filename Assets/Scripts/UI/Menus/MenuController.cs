@@ -56,6 +56,7 @@ namespace InventoryQuest.UI.Menus
         {
             _gameManager.OnGameBegining += OnGameBegining;
             _gameManager.OnGameOver += OnGameOver;
+            _gameManager.OnGameRestart += OnGameRestart;
 
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
             _encounterManager.Resolving.StateEntered += OnResolvingStart;
@@ -76,6 +77,11 @@ namespace InventoryQuest.UI.Menus
             yield return new WaitForSeconds(1f);
             _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
+        }
+
+        void OnGameRestart(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(MainMenu));
         }
 
         void OnGameOver(object sender, EventArgs e)
@@ -150,6 +156,8 @@ namespace InventoryQuest.UI.Menus
                 return;
             if (Debug.isDebugBuild)
                 Debug.Log($"OpenMenu({menuType.Name}) called");
+            if (_currentMenuType == typeof(DeathMenu) && menuType != typeof(MainMenu))
+                return;
             foreach (var menu in _menus)
             {
                 if (menuType.Name == menu.Key.Name)

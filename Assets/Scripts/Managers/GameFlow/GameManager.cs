@@ -1,5 +1,7 @@
 ﻿using Data.Locations;
 using FiniteStateMachine;
+using PixelCrushers.DialogueSystem;
+using PixelCrushers.QuestMachine;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -15,8 +17,6 @@ namespace InventoryQuest.Managers
 
         [SerializeField] ILocationStats startingLocation;
 
-        GameStates currentState;
-
         StateMachine _stateMachine;
 
         Initializing initializing;
@@ -26,12 +26,14 @@ namespace InventoryQuest.Managers
         GameOver gameOver;
         Victory victory;
 
-        public GameStates CurrentState { get { return currentState; } }
+        bool returnToMainMenu = false;
+        bool gaming = false;
 
         public event EventHandler OnGameBegining;
         public event EventHandler OnGameOver;
         public event EventHandler OnGamePause;
         public event EventHandler OnGameWin;
+        public event EventHandler OnGameRestart;
 
         [Inject]
         public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource, IPartyManager partyManager)
@@ -43,42 +45,38 @@ namespace InventoryQuest.Managers
 
         void Awake()
         {
-            currentState = GameStates.Loading;
-
             _stateMachine = new StateMachine();
 
             initializing = new Initializing();
             inMainMenu = new InMainMenu();
             inGame = new InGame();
             paused = new Paused();
-            gameOver = new GameOver();
-            victory = new Victory();
+            gameOver = new GameOver(this);
+            victory = new Victory(this);
 
             At(initializing, inMainMenu, AreManagersLoaded());
+            At(inMainMenu, inGame, IsGaming());
+            AtAny(inMainMenu, GoToMainMenu());
             AtAny(gameOver, IsPartyDead());
 
             void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
             void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
 
-
             Func<bool> AreManagersLoaded() => () => initializing.ManagersLoaded;
-            Func<bool> IsPartyDead() => () => isPartyDead;
+            Func<bool> IsGaming() => () => gaming;
+            Func<bool> GoToMainMenu() => () => returnToMainMenu;
+            Func<bool> IsPartyDead() => () => _partyManager.IsPartyDead;
         }
 
         void Start()
-        { 
-            _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
+        {
+            _stateMachine.SetState(initializing);
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
-
-            _partyManager.CurrentParty.OnPartyDeath += OnPartyDeathHandler;
         }
 
-        bool isPartyDead = false;
-
-        void OnPartyDeathHandler(object sender, EventArgs e)
+        void Update()
         {
-            Debug.Log($"OnPartyDeathHandler()", this);
-            isPartyDead = true;
+            _stateMachine.Tick();
         }
 
         void OnAdventureCompletedHandler(object sender, EventArgs e)
@@ -86,26 +84,21 @@ namespace InventoryQuest.Managers
             _adventureManager.Idle.Continue();
         }
 
-        void OnAdventureStartedHandler(object sender, EventArgs e)
-        {
-            ChangeState(GameStates.Encounter);
-        }
-
-        public void ChangeState(GameStates targetState)
-        {
-            if (currentState == targetState) return;
-            currentState = targetState;
-        }
-
         public void GameBegin()
         {
             _gameStateDataSource.SetCurrentLocation(startingLocation.Id);
+            _partyManager.IsPartyDead = false;
+            returnToMainMenu = false;
+            gaming = true;
             OnGameBegining?.Invoke(this, EventArgs.Empty);
         }
 
         public void GameOver()
         {
+            gaming = false;
+            Debug.Log($"-------------------------------------");
             Debug.Log($"GameOver(), man!  GameOver()!", this);
+            Debug.Log($"-------------------------------------");
             OnGameOver?.Invoke(this, EventArgs.Empty);
         }
 
@@ -121,136 +114,8 @@ namespace InventoryQuest.Managers
 
         public void MainMenuOpen()
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Initializing : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public bool ManagersLoaded = false;
-
-        public void OnEnter()
-        {
-            ManagersLoaded = false;
-            BeginLoading();
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-        }
-
-        void BeginLoading()
-        {
-
-        }
-    }
-
-    public class InMainMenu : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-        }
-    }
-
-    public class InGame : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-        }
-    }
-
-    public class Paused : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-        }
-    }
-
-    public class GameOver : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-        }
-    }
-
-    public class Victory : IState
-    {
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
+            returnToMainMenu = true;
+            OnGameRestart?.Invoke(this, EventArgs.Empty);
         }
     }
 }

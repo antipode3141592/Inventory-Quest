@@ -1,5 +1,4 @@
-﻿using Data;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +10,7 @@ namespace InventoryQuest.Managers
     {
         IGameStateDataSource _gameStateDataSource;
         IAdventureManager _adventureManager;
+        IGameManager _gameManager;
 
         public event EventHandler RequestShowLoading;
         public event EventHandler RequestHideLoading;
@@ -18,19 +18,37 @@ namespace InventoryQuest.Managers
         string _currentSceneName;
 
         [Inject]
-        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager)
+        public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IGameManager gameManager)
         {
             _gameStateDataSource = gameStateDataSource;
             _adventureManager = adventureManager;
+            _gameManager = gameManager;
         }
 
         void Start()
         {
             _gameStateDataSource.OnCurrentLocationSet += OnLocationSet;
             _adventureManager.Idle.StateExited += OnIdleEnd;
+            //_gameManager.OnGameOver += OnGameOverHandler;
+            //_gameManager.OnGameRestart += OnGameRestartHandler;
+        }
+
+        void OnGameRestartHandler(object sender, EventArgs e)
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        void OnGameOverHandler(object sender, EventArgs e)
+        {
+            UnloadCurrentScene();
         }
 
         void OnIdleEnd(object sender, EventArgs e)
+        {
+            UnloadCurrentScene();
+        }
+
+        private void UnloadCurrentScene()
         {
             if (Debug.isDebugBuild)
                 Debug.Log($"Current Scene: { _currentSceneName}");
@@ -59,11 +77,11 @@ namespace InventoryQuest.Managers
                 Debug.Log($"Scene unloaded");
         }
 
-        void OnLocationSet(object sender, string e)
+        void OnLocationSet(object sender, string sceneName)
         {
             if (Debug.isDebugBuild)
                 Debug.Log($"OnLocationSet handling event from {sender}");
-            StartCoroutine(AwaitLoad(e));
+            StartCoroutine(AwaitLoad(sceneName));
         }
 
         IEnumerator AwaitLoad(string sceneName)

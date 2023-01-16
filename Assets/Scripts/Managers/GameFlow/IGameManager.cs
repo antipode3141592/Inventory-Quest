@@ -1,6 +1,4 @@
-﻿using Data.Items;
-using Data.Shapes;
-using System;
+﻿using System;
 
 namespace InventoryQuest.Managers
 {
@@ -10,17 +8,12 @@ namespace InventoryQuest.Managers
         public event EventHandler OnGameOver;
         public event EventHandler OnGamePause;
         public event EventHandler OnGameWin;
+        public event EventHandler OnGameRestart;
 
-        public GameStates CurrentState { get; }
-        public void ChangeState(GameStates targetState);
         public void GameBegin();
-
         public void GameOver();
-
         public void GameWin();
-
         public void GamePause();
-
         public void MainMenuOpen();
     }
 }
