@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +22,18 @@ namespace InventoryQuest.UI
         public void SetForegroundWidth(float fillPercentage)
         {
             foreground.rectTransform.localScale = new Vector3(x: Mathf.Clamp01(fillPercentage), y: 1f, z: 1f);
+        }
+
+        public void Show()
+        {
+            background.color = backgroundColor;
+            foreground.color = foregroundColor;
+        }
+
+        public void Hide()
+        {
+            background.color = Color.clear;
+            foreground.color = Color.clear;
         }
     }
 }

@@ -12,11 +12,12 @@ namespace InventoryQuest.UI
         [SerializeField] Image background;
         [SerializeField] Image portrait;
         [SerializeField] TextMeshProUGUI nameText;
+        Color nameTextColor;
         [SerializeField] HealthBar healthBar;
 
         ICharacter _character;
 
-        public PartyDisplay PartyDisplay;
+        PartyDisplay partyDisplay;
 
         public string CharacterGuid { get; private set; }
 
@@ -31,6 +32,11 @@ namespace InventoryQuest.UI
             }
         }
 
+        void Awake()
+        {
+            nameTextColor = nameText.color;
+        }
+
         void SetImage(Sprite sprite)
         {
             portrait.sprite = sprite;
@@ -41,13 +47,14 @@ namespace InventoryQuest.UI
             nameText.text = name;
         }
 
-        public void SetupPortrait(string guid, string displayName, Sprite sprite, ICharacter character)
+        public void SetupPortrait(PartyDisplay partyDisplay, string guid, string displayName, Sprite sprite, ICharacter character)
         {
             SetImage(sprite);
             SetName(displayName);
             CharacterGuid = guid;
             _character = character;
             SubscribeToHealthUpdate();
+            this.partyDisplay = partyDisplay;
         }
 
         void SubscribeToHealthUpdate()
@@ -86,7 +93,7 @@ namespace InventoryQuest.UI
         public void SelectPartyMember()
         {
             Debug.Log($"SelectPartyMember() called on character {CharacterGuid}", gameObject);
-            PartyDisplay.PartyMemberSelected(CharacterGuid);
+            partyDisplay.PartyMemberSelected(CharacterGuid);
         }
 
         public void ChangePartyMemberName(string name)
@@ -97,6 +104,22 @@ namespace InventoryQuest.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             SelectPartyMember();
+        }
+
+        public void Show()
+        {
+            background.color = Color.white;
+            portrait.color = Color.white;
+            nameText.color = nameTextColor;
+            healthBar.Show();
+        }
+
+        public void Hide()
+        {
+            background.color = Color.clear;
+            portrait.color = Color.clear;
+            nameText.color = Color.clear;
+            healthBar.Hide();
         }
     }
 }
