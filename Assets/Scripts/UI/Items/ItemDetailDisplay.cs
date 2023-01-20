@@ -38,7 +38,7 @@ namespace InventoryQuest.UI
             ItemNameText.text = item.Stats.Id;
             ItemDescriptionText.text = item.Stats.Description;
             ItemRarityText.text = item.Stats.Rarity.ToString();
-            ItemValueText.text = $"{item.Stats.GoldValue:#,###.#} gp";
+            ItemValueText.text = $"{item.Value:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
 
             for (int i = 0; i < ItemModifiersTexts.Count; i++)

@@ -8,7 +8,7 @@ namespace InventoryQuest.Testing.Stubs
 {
     class ItemStats : IItemStats
     {
-        public ItemStats(string id, string description, IShape shape, Facing defaultFacing, Rarity rarity, float weight, float goldValue, Sprite sprite, bool isQuestItem, IList<IItemComponentStats> components, IList<Tag> tags = null)
+        public ItemStats(string id, string description, IShape shape, Facing defaultFacing, Rarity rarity, float weight, float individualGoldValue, Sprite sprite, bool isQuestItem, IList<IItemComponentStats> components, IList<Tag> tags = null, int maxQuantity = 1, bool isStackable = false)
         {
             Id = id;
             Description = description;
@@ -16,11 +16,13 @@ namespace InventoryQuest.Testing.Stubs
             DefaultFacing = defaultFacing;
             Rarity = rarity;
             Weight = weight;
-            GoldValue = goldValue;
+            IndividualGoldValue = individualGoldValue;
             PrimarySprite = sprite;
             IsQuestItem = isQuestItem;
             Components = components;
             Tags = tags;
+            MaxQuantity = maxQuantity;
+            IsStackable = isStackable;
         }
 
         public string Id { get; }
@@ -29,11 +31,16 @@ namespace InventoryQuest.Testing.Stubs
         public Facing DefaultFacing { get; }
         public Rarity Rarity { get; }
         public float Weight { get; }
-        public float GoldValue { get; }
         public Sprite PrimarySprite { get; }
         public bool IsQuestItem { get; }
 
         public IList<IItemComponentStats> Components { get; }
         public IEnumerable<Tag> Tags { get; }
+
+        public float IndividualGoldValue { get; }
+
+        public bool IsStackable { get; }
+
+        public int MaxQuantity { get; }
     }
 }

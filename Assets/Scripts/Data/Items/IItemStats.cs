@@ -12,7 +12,6 @@ namespace Data.Items
         public Facing DefaultFacing { get; }
         public Rarity Rarity { get; }
         public float Weight { get; }
-        public float GoldValue { get; }
         public float IndividualGoldValue { get; }
         public bool IsStackable { get; }
         public int MaxQuantity { get; }

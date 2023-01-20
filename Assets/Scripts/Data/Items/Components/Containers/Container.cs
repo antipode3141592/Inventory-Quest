@@ -32,11 +32,11 @@ namespace Data.Items
 
         public float InitialWeight => Item.Stats.Weight;
         public float Weight => InitialWeight + Contents.Sum(x => x.Value.Item.Weight);
-        public float Value => Item.Stats.GoldValue;
+        public float Value => Item.Stats.IndividualGoldValue;
         public float TotalWeight => Contents.Sum(x => x.Value.Item.Weight) + Weight;
-        public float TotalWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue) + Value;
+        public float TotalWorth => Contents.Sum(x => x.Value.Item.Value) + Value;
         public float ContainedWeight => Contents.Sum(x => x.Value.Item.Weight);
-        public float ContainedWorth => Contents.Sum(x => x.Value.Item.Stats.GoldValue);
+        public float ContainedWorth => Contents.Sum(x => x.Value.Item.Value);
 
         public event EventHandler<string> OnItemPlaced;
         public event EventHandler<string> OnItemTaken;

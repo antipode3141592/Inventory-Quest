@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data.Items
-
 {
     public class Item : IItem
     {
@@ -17,7 +16,7 @@ namespace Data.Items
         public Sprite Sprite { get; set; }
         public Rarity Rarity { get; }
         public float Weight => CalculateWeight();
-        public float Value => Stats.GoldValue;
+        public float Value => (float)Quantity * Stats.IndividualGoldValue;
         public int Quantity 
         {
             get => quantity;
