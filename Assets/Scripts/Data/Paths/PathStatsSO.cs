@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-
 namespace Data.Encounters
 {
     [CreateAssetMenu(menuName = "InventoryQuest/PathStats", fileName = "Path_")]
@@ -14,11 +13,14 @@ namespace Data.Encounters
         [SerializeField] LocationStatsSO startLocationStats;
         [SerializeField] LocationStatsSO endLocationStats;
         [SerializeField] List<IEncounterStats> encounterStats;
+        [InlineEditor(InlineEditorModes.SmallPreview)]
+        [SerializeField] AudioClip audioClip;
 
         public string Id => id;
         public string Name => _name;
         public string StartLocationId => startLocationStats.Id;
         public string EndLocationId => endLocationStats.Id;
         public List<IEncounterStats> EncounterStats => encounterStats;
+        public AudioClip AudioClip => audioClip;
     }
 }

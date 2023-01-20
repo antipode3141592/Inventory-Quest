@@ -60,3 +60,4 @@ MonoBehaviour:
   _name: The Return to Startington
   startLocationStats: {fileID: 11400000, guid: 19fe18c9602b0864da582ddff71c67aa, type: 2}
   endLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
+  audioClip: {fileID: 8300000, guid: 7afac8788fdea814390940ebaaa7ccf5, type: 3}

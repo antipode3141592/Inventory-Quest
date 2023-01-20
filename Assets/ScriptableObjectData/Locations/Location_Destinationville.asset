@@ -31,3 +31,4 @@ MonoBehaviour:
   - scummy_overseer
   locationIds: []
   isKnown: 1
+  audioClip: {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}

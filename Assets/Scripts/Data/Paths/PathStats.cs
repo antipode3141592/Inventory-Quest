@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Data.Encounters
 {
@@ -22,5 +23,7 @@ namespace Data.Encounters
         public string EndLocationId { get; }
 
         public List<IEncounterStats> EncounterStats { get; }
+
+        public AudioClip AudioClip { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FiniteStateMachine;
+using InventoryQuest.Audio;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.QuestMachine;
 using System;
@@ -7,11 +8,15 @@ namespace InventoryQuest.Managers
 {
     public class GameOver : IState
     {
-        IGameManager _gameManager;
+        readonly IGameManager _gameManager;
+        readonly IAudioManager _audioManager;
+        readonly GameMusicSettings _gameMusicSettings;
 
-        public GameOver(IGameManager gameManager)
+        public GameOver(IGameManager gameManager, IAudioManager audioManager, GameMusicSettings gameMusicSettings)
         {
             _gameManager = gameManager;
+            _audioManager = audioManager;
+            _gameMusicSettings = gameMusicSettings;
         }
 
         public event EventHandler StateEntered;
@@ -20,6 +25,7 @@ namespace InventoryQuest.Managers
         public void OnEnter()
         {
             _gameManager.GameOver();
+            _audioManager.PlayMusicTrack(_gameMusicSettings.GameOverMusic);
             DialogueManager.ResetDatabase(databaseResetOptions: DatabaseResetOptions.RevertToDefault);
             PixelCrushers.SaveSystem.ResetGameState();
             QuestMachine.GetQuestJournal().DestroyQuestInstances();

@@ -28,7 +28,7 @@ namespace InventoryQuest.Managers
         void Start()
         {
             _gameStateDataSource.OnCurrentLocationSet += OnLocationSet;
-            _adventureManager.Idle.StateExited += OnIdleEnd;
+            _adventureManager.InLocation.StateExited += OnIdleEnd;
             //_gameManager.OnGameOver += OnGameOverHandler;
             //_gameManager.OnGameRestart += OnGameRestartHandler;
         }

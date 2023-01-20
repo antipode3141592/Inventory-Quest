@@ -52,7 +52,7 @@ namespace InventoryQuest.Managers
 
         void Awake()
         {
-            _stateMachine = new StateMachine();
+            _stateMachine = new StateMachine(this);
 
             _idle = new Idle();
             _loadingHarvest = new LoadingHarvest(this);

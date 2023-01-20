@@ -16,7 +16,11 @@ namespace Data.Locations
         [SerializeField] List<string> characterIds;
         [SerializeField] List<string> locationIds;
         [SerializeField] bool isKnown;
+
+        [InlineEditor(InlineEditorModes.FullEditor)]
         [SerializeField] AudioClip audioClip;
+        
+
 
         public string Id => id;
         public string Name => _name;

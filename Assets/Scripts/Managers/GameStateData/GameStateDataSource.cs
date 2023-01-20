@@ -17,7 +17,6 @@ namespace InventoryQuest
         ICharacterDataSource _characterDataSource;
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
-        IAudioManager _audioManager;
 
         public IPathStats CurrentPathStats { get; protected set; }
         public ILocation DestinationLocation { get; protected set; }
@@ -33,12 +32,11 @@ namespace InventoryQuest
         public event EventHandler<string> OnCurrentPathSet;
 
         [Inject]
-        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource, IAudioManager audioManager)
+        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
             _characterDataSource = characterDataSource;
-            _audioManager = audioManager;
         }
 
         void Start()
@@ -60,7 +58,7 @@ namespace InventoryQuest
 
             if (Debug.isDebugBuild)
                 Debug.Log($"SetCurrentLocation = {CurrentLocation.Stats.DisplayName} and path = {CurrentLocation.Stats.ScenePath}");
-            _audioManager.PlayMusicTrack(CurrentLocation.Stats.AudioClip);
+            
             OnCurrentLocationSet?.Invoke(this, $"{CurrentLocation.Stats.ScenePath}");
         }
 

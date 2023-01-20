@@ -14,6 +14,11 @@ namespace InventoryQuest.Audio
             _musicAudioSource.Play();
         }
 
+        public void StopMusicTrack()
+        {
+            _musicAudioSource.Stop();
+        }
+
         public void PlaySFX(AudioClip audioClip)
         {
             _sfxAudioSource.clip = audioClip;

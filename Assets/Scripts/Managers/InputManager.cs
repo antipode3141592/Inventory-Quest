@@ -77,7 +77,7 @@ namespace InventoryQuest.Managers
         {
             player = ReInput.players.GetPlayer(playerId);
 
-            _stateMachine = new StateMachine();
+            _stateMachine = new StateMachine(this);
 
             _holdingItem = new HoldingItem(this);
             _normal = new Normal(this);

@@ -1,4 +1,3 @@
-using Data;
 using InventoryQuest.Managers;
 using System;
 using TMPro;
@@ -29,12 +28,12 @@ namespace InventoryQuest.UI.Menus
         {
             base.Awake();
             _gameStateDataSource.OnCurrentLocationSet += OnCurrentLocationLoadedHandler;
-            MainMapButton.OnPointerHoldSuccess += OnWorldMapSelected;
+            MainMapButton.OnPointerHoldSuccess += OnLocationComplete;
         }
 
-        void OnWorldMapSelected(object sender, EventArgs e)
+        void OnLocationComplete(object sender, EventArgs e)
         {
-            _adventureManager.Idle.Continue();
+            _adventureManager.InLocation.Continue();
         }
 
         void OnCurrentLocationLoadedHandler(object sender, string e)

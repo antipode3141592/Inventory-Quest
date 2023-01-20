@@ -132,7 +132,7 @@ namespace InventoryQuest.UI.Menus
 
         public void ChoosePath()
         {
-            _adventureManager.Pathfinding.ChoosePath();
+            _adventureManager.Pathfinding.Continue();
         }
     }
 }

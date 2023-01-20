@@ -44,3 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d4a7045f839104488c0af041a2400b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: startingLocation
+      Entry: 6
+      Data: 
+  gameMusicSettings: {fileID: 11400000, guid: 03d4198ff4b8c074b875d3567ed383f6, type: 2}

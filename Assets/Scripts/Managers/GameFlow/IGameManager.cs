@@ -4,6 +4,9 @@ namespace InventoryQuest.Managers
 {
     public interface IGameManager
     {
+        public bool IsGameOver { get; set; }
+        public bool IsGameBegining { get; set; }
+
         public event EventHandler OnGameBegining;
         public event EventHandler OnGameOver;
         public event EventHandler OnGamePause;

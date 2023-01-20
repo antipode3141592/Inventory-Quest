@@ -1,7 +1,6 @@
 ﻿using Data.Locations;
 using FiniteStateMachine;
-using PixelCrushers.DialogueSystem;
-using PixelCrushers.QuestMachine;
+using InventoryQuest.Audio;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -14,8 +13,10 @@ namespace InventoryQuest.Managers
         IAdventureManager _adventureManager;
         IGameStateDataSource _gameStateDataSource;
         IPartyManager _partyManager;
+        IAudioManager _audioManager;
 
         [SerializeField] ILocationStats startingLocation;
+        [SerializeField] GameMusicSettings gameMusicSettings;
 
         StateMachine _stateMachine;
 
@@ -29,6 +30,9 @@ namespace InventoryQuest.Managers
         bool returnToMainMenu = false;
         bool gaming = false;
 
+        public bool IsGameOver { get; set; }
+        public bool IsGameBegining { get; set; }
+
         public event EventHandler OnGameBegining;
         public event EventHandler OnGameOver;
         public event EventHandler OnGamePause;
@@ -36,22 +40,23 @@ namespace InventoryQuest.Managers
         public event EventHandler OnGameRestart;
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource, IPartyManager partyManager)
+        public void Init(IAdventureManager adventureManager, IGameStateDataSource gameStateDataSource, IPartyManager partyManager, IAudioManager audioManager)
         {
             _adventureManager = adventureManager;
             _gameStateDataSource = gameStateDataSource;
             _partyManager = partyManager;
+            _audioManager = audioManager;
         }
 
         void Awake()
         {
-            _stateMachine = new StateMachine();
+            _stateMachine = new StateMachine(this);
 
             initializing = new Initializing();
-            inMainMenu = new InMainMenu();
+            inMainMenu = new InMainMenu(_audioManager);
             inGame = new InGame();
             paused = new Paused();
-            gameOver = new GameOver(this);
+            gameOver = new GameOver(this, _audioManager, gameMusicSettings);
             victory = new Victory(this);
 
             At(initializing, inMainMenu, AreManagersLoaded());
@@ -71,7 +76,6 @@ namespace InventoryQuest.Managers
         void Start()
         {
             _stateMachine.SetState(initializing);
-            _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
         }
 
         void Update()
@@ -79,17 +83,13 @@ namespace InventoryQuest.Managers
             _stateMachine.Tick();
         }
 
-        void OnAdventureCompletedHandler(object sender, EventArgs e)
-        {
-            _adventureManager.Idle.Continue();
-        }
-
         public void GameBegin()
         {
-            _gameStateDataSource.SetCurrentLocation(startingLocation.Id);
+            _gameStateDataSource.SetDestinationLocation(startingLocation.Id);
             _partyManager.IsPartyDead = false;
             returnToMainMenu = false;
             gaming = true;
+            IsGameBegining = true;
             OnGameBegining?.Invoke(this, EventArgs.Empty);
         }
 
@@ -99,6 +99,7 @@ namespace InventoryQuest.Managers
             Debug.Log($"-------------------------------------");
             Debug.Log($"GameOver(), man!  GameOver()!", this);
             Debug.Log($"-------------------------------------");
+            IsGameOver = true;
             OnGameOver?.Invoke(this, EventArgs.Empty);
         }
 
