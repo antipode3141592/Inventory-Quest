@@ -57,7 +57,7 @@ namespace Data.Items
         protected float CalculateWeight()
         {
             if (!Components.ContainsKey(typeof(IContainer)))
-                return Stats.Weight;
+                return Stats.Weight * (float)Quantity;
             return (Components[typeof(IContainer)] as IContainer).Weight;
         }
     }

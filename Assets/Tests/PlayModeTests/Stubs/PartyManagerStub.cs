@@ -10,6 +10,8 @@ namespace InventoryQuest.Testing
 
         public Party CurrentParty => currentParty;
 
+        public bool IsPartyDead { get; set; }
+
         void Awake()
         {
             currentParty = new Party();
@@ -23,6 +25,11 @@ namespace InventoryQuest.Testing
         public void AddCharacterToParty(ICharacterStats characterStats)
         {
             currentParty.AddCharacter(CharacterFactory.GetCharacter(characterStats));
+        }
+
+        public double CountItemInCharacterInventories(string itemId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

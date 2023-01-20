@@ -76,7 +76,6 @@ namespace InventoryQuest.UI
                     square.GridSquarePointerEntered += GridSquareEntered;
                     square.GridSquarePointerExited += GridSquareExited;
                     squares[r, c] = square;
-                    //squares[r, c].gameObject.SetActive(false);
                 }
             }
         }
@@ -123,7 +122,6 @@ namespace InventoryQuest.UI
             foreach (var square in Squares)
             {
                 square.IsOccupied = false;
-                //square.gameObject.SetActive(false);
                 square.Hide();
             }
 
@@ -178,7 +176,7 @@ namespace InventoryQuest.UI
             int runningTotal = 0;
             foreach(var square in squares)
             {
-                if (!square.gameObject.activeInHierarchy)
+                if (!square.IsActive)
                     continue;
                 runningTotal++;
             }

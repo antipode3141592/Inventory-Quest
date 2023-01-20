@@ -15,7 +15,6 @@ namespace InventoryQuest.Managers
     public class InputManager : MonoBehaviour, IInputManager
     {
         IPartyManager _partyManager;
-        IEncounterManager _encounterManager;
 
         Player player;
         readonly int playerId = 0;
@@ -66,11 +65,12 @@ namespace InventoryQuest.Managers
         public event EventHandler OpenInventoryCommand;
         public event EventHandler CloseInventoryCommand;
 
+        public event EventHandler<EncounterModifier> OnEncounterModifierAdded;
+
         [Inject]
-        public void Init(IPartyManager partyManager, IEncounterManager encounterManager)
+        public void Init(IPartyManager partyManager)
         {
             _partyManager = partyManager;
-            _encounterManager = encounterManager;
         }
 
         void Awake()
@@ -183,7 +183,8 @@ namespace InventoryQuest.Managers
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
                 _usable.TryUse(ref character);
                 if (_usable is EncounterLengthEffect encounterEffect)
-                    _encounterManager.AddEncounterModifier(new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers));
+                    OnEncounterModifierAdded?.Invoke(this, new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers));
+                    
             }
         }
 
@@ -214,64 +215,6 @@ namespace InventoryQuest.Managers
         public void HideItemDetails()
         {
             HideItemDetailsCommand?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    public class Normal : IState 
-    {
-        IInputManager _inputManager;
-
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public Normal(IInputManager inputManager)
-        {
-            _inputManager = inputManager;
-        }
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-            _inputManager.CheckSubmitAction();
-        }
-    }
-
-
-    public class HoldingItem: IState
-    {
-        IInputManager _inputManager;
-
-        public event EventHandler StateEntered;
-        public event EventHandler StateExited;
-
-        public HoldingItem(IInputManager inputManager)
-        {
-            _inputManager = inputManager;
-        }
-
-        public void OnEnter()
-        {
-            StateEntered?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnExit()
-        {
-            StateExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Tick()
-        {
-            _inputManager.CheckRotateAction();
-            _inputManager.CheckSubmitAction();
         }
     }
 }

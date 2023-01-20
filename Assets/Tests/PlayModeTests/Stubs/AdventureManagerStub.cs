@@ -7,10 +7,9 @@ namespace InventoryQuest.Testing
 {
     public class AdventureManagerStub : MonoBehaviour, IAdventureManager
     {
-        public Idle Idle => throw new System.NotImplementedException();
-
-        public Pathfinding Pathfinding => throw new System.NotImplementedException();
-
-        public Adventuring Adventuring => throw new System.NotImplementedException();
+        public AdventureManagerStart AdventureManagerStart { get; }
+        public InLocation InLocation { get; }
+        public Pathfinding Pathfinding { get; }
+        public Adventuring Adventuring { get; }
     }
 }

@@ -18,6 +18,7 @@ namespace InventoryQuest.UI
         Coor coordinates;
         bool _isPointerHovering = false;
 
+        public bool IsActive;
         public bool IsPointerHovering => _isPointerHovering;
 
         bool _isOccupied;
@@ -94,11 +95,13 @@ namespace InventoryQuest.UI
 
         public void Show() 
         {
+            IsActive = true;
             backgroundSprite.color = colorSettings.GridUnoccupiedColor;
         }
 
         public void Hide() 
         {
+            IsActive = false;
             backgroundSprite.color = Color.clear;
         }
 

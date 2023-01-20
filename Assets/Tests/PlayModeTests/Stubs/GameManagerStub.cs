@@ -29,6 +29,9 @@ namespace InventoryQuest.Testing
 
         public GameStates CurrentState { get { return currentState; } }
 
+        public bool IsGameOver { get; set; }
+        public bool IsGameBegining { get; set; }
+
         public event EventHandler OnItemHeld;
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
@@ -37,6 +40,10 @@ namespace InventoryQuest.Testing
         public event EventHandler OnSubmitDown;
         public event EventHandler OnSubmitHold;
         public event EventHandler OnSubmitUp;
+        public event EventHandler OnGameOver;
+        public event EventHandler OnGamePause;
+        public event EventHandler OnGameWin;
+        public event EventHandler OnGameRestart;
 
         void Awake()
         {
@@ -49,9 +56,29 @@ namespace InventoryQuest.Testing
             currentState = targetState;
         }
 
-        public void BeginGame()
+        public void GameBegin()
         {
             OnGameBegining?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void GameOver()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GameWin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GamePause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MainMenuOpen()
+        {
+            throw new NotImplementedException();
         }
     }
 }

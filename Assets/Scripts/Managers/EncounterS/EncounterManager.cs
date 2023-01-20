@@ -104,6 +104,12 @@ namespace InventoryQuest.Managers
             _stateMachine.SetState(Idle);
             //_gameManager.OnGameBegining += OnGameBeginningHandler;
             _gameManager.OnGameOver += OnGameOverHandler;
+            _inputManager.OnEncounterModifierAdded += EncounterModiferAdded;
+        }
+
+        void EncounterModiferAdded(object sender, EncounterModifier modifier)
+        {
+            AddEncounterModifier(modifier);
         }
 
         void OnGameOverHandler(object sender, EventArgs e)
@@ -126,5 +132,7 @@ namespace InventoryQuest.Managers
         {
             encounterModifiers.Enqueue(encounterModifier);
         }
+
+        
     }
 }
