@@ -23,24 +23,24 @@ namespace InventoryQuest.Testing
         IItemStats smallBoxStats;
         //test items
         IItem MyItem;
-        List<IItem> BasicItems;
-        List<IItem> StackableItems;
+        List<IItem> ItemsList;
 
-        IItemStats BasicItemStats;
-        IItemStats StackableItemStats;
+        IItemStats AppleStats;
+        IItemStats IngotStats;
+        IItemStats SwordStats;
 
         void CommonInstall()
         {
-            BasicItems = new List<IItem>();
-            StackableItems = new List<IItem>();
+            ItemsList = new List<IItem>();
         }
 
         void CommonPostSceneLoadInstall()
         {
             itemDataSource = SceneContainer.Resolve<IItemDataSource>();
 
-            BasicItemStats = itemDataSource.GetById("apple_fuji");
-            StackableItemStats = itemDataSource.GetById("ingot_common");
+            AppleStats = itemDataSource.GetById("apple_fuji");
+            IngotStats = itemDataSource.GetById("ingot_common");
+            SwordStats = itemDataSource.GetById("basic_sword_1");
             backpackStats = itemDataSource.GetById("adventure_backpack");
             smallBoxStats = itemDataSource.GetById("small_box");
 
@@ -48,16 +48,10 @@ namespace InventoryQuest.Testing
             smallBox = ItemFactory.GetItem(itemStats: smallBoxStats);
         }
 
-        void CreateStandardItems(IItemStats stats, int qty = 1)
+        void AddItemsToList(ref List<IItem> itemList, IItemStats stats, int qty = 1)
         {
             for (int i = 0; i < qty; i++)
-                BasicItems.Add(ItemFactory.GetItem(itemStats: BasicItemStats));
-        }
-
-        void CreateStackableItems(IItemStats stats, int qty = 2)
-        {
-            for (int i = 0; i < qty; i++)
-                StackableItems.Add(ItemFactory.GetItem(itemStats: StackableItemStats));
+                itemList.Add(ItemFactory.GetItem(itemStats: stats));
         }
 
         [UnityTest]
@@ -93,7 +87,7 @@ namespace InventoryQuest.Testing
 
             CommonPostSceneLoadInstall();
 
-            MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
+            MyItem = ItemFactory.GetItem(itemStats: AppleStats);
             var backpackContainer = backpack.Components[typeof(IContainer)] as IContainer;
             float initialWeight = backpackContainer.InitialWeight;
             backpackContainer.TryPlace(MyItem, new Coor(0, 1));
@@ -110,12 +104,12 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             int qty = 4;
-            CreateStandardItems(BasicItemStats, qty);
+            AddItemsToList(ref ItemsList, AppleStats, qty);
             float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
-            float targetWeight = initialWeight + (BasicItemStats.Weight * (float)qty);
+            float targetWeight = initialWeight + (AppleStats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(0, 1 + i));
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(0, 1 + i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -129,8 +123,7 @@ namespace InventoryQuest.Testing
 
             CommonPostSceneLoadInstall();
 
-            MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
-            CreateStandardItems(BasicItemStats, 1);
+            MyItem = ItemFactory.GetItem(itemStats: AppleStats);
             Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(100, 100)));
         }
 
@@ -142,10 +135,10 @@ namespace InventoryQuest.Testing
             yield return LoadScene(sceneName);
 
             CommonPostSceneLoadInstall();
-
-            MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
-            (backpack.Components[typeof(IContainer)] as IContainer).Grid[new Coor(0,1)].IsOccupied = true;
-            Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(0, 1)));
+            AddItemsToList(ref ItemsList, SwordStats, 2);
+            var container = backpack.Components[typeof(IContainer)] as IContainer;
+            container.TryPlace(ItemsList[0], new Coor(0, 1));
+            Assert.IsFalse(container.TryPlace(ItemsList[1], new Coor(0, 1)));
         }
 
         [UnityTest]
@@ -171,7 +164,7 @@ namespace InventoryQuest.Testing
 
             var coordinate = new Coor(r: 0, c: 1);
 
-            MyItem = ItemFactory.GetItem(itemStats: BasicItemStats);
+            MyItem = ItemFactory.GetItem(itemStats: AppleStats);
             (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, coordinate);
             Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, coordinate));
             Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).IsEmpty);
@@ -187,12 +180,12 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             int qty = 4;
-            CreateStandardItems(BasicItemStats, qty);
+            AddItemsToList(ref ItemsList, AppleStats, qty);
             float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
-            float targetWeight = initialWeight + (BasicItems[0].Stats.Weight * (float)qty);
+            float targetWeight = initialWeight + (ItemsList[0].Stats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(r: 1, c: i));
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(r: 1, c: i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -207,11 +200,11 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             int qty = 3;
-            CreateStandardItems(BasicItemStats, qty);
+            AddItemsToList(ref ItemsList, AppleStats, qty);
             float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
             for (int i = 1; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(BasicItems[i], new Coor(r: i, c: 0));
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(r: i, c: 0));
                 (backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, new Coor(r: i, c: 0));
             }
             Assert.AreEqual(expected: initialWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);

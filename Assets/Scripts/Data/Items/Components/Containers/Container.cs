@@ -75,6 +75,8 @@ namespace Data.Items
         {
             if (!item.Stats.IsStackable)
                 return false;
+            if (!Contents.ContainsKey(Grid[testPoint].storedItemGuId))
+                return false;
             IItem _item = Contents[Grid[testPoint].storedItemGuId].Item;
             if (!String.Equals(_item.Id, item.Id, StringComparison.OrdinalIgnoreCase))
                 return false;

@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Top: 18
     m_Bottom: 18
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 32
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -489,7 +489,16 @@ MonoBehaviour:
       - Mode: 0
         Impact: 1
   customSpacingSizers:
-    items: []
+    items:
+    - screenConfigName: Landscape
+      OptimizedSize: 32
+      MinSize: 0
+      MaxSize: 300
+      Mod:
+        ExponentialScale: 1
+        SizeModifiers:
+        - Mode: 0
+          Impact: 1
   settingsFallback:
     ChildAlignment: 4
     ReverseArrangement: 0
