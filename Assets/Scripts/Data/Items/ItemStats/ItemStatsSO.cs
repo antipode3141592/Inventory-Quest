@@ -17,7 +17,6 @@ namespace Data.Items
         [SerializeField] float weight;
         [SerializeField] bool isStackable = false;
         [SerializeField] int maxQuantity = 1;
-        [SerializeField] float goldValue;
         [SerializeField] float individualGoldValue;
         [SerializeField, PreviewField] Sprite primarySprite;
         [SerializeField] bool isQuestItem;
@@ -33,7 +32,6 @@ namespace Data.Items
         public bool IsStackable => isStackable;
         public int MaxQuantity => maxQuantity;
         public float IndividualGoldValue => individualGoldValue;
-        public float GoldValue => goldValue;
         public Sprite PrimarySprite => primarySprite;
         public bool IsQuestItem => isQuestItem;
         public IList<IItemComponentStats> Components => components;

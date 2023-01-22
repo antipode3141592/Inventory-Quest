@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace InventoryQuest.Managers
 {
@@ -145,7 +146,11 @@ namespace InventoryQuest.Managers
             {
                 Rarity rarity = _lootTable.GetRandomRarity(lootTableId);
                 IItem item = ItemFactory.GetItem(_dataSource.GetItemByRarity(rarity));
+                if (item.Stats.IsStackable)
+                    item.Quantity = Random.Range(1, item.Stats.MaxQuantity);
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container, item);
+                if (Random.Range(0f, 1f) > 0.5f)
+                    break;
             }
         }
         #endregion

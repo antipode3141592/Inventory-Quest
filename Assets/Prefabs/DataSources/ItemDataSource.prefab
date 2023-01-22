@@ -50,6 +50,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 18bf047efa22c0c41ab845f5db587d2f, type: 2}
     - {fileID: 11400000, guid: f62a336f3215004419f819cb1ca36faa, type: 2}
+    - {fileID: 11400000, guid: a3b6d9bf943769e4fa37dd1f2e6096bb, type: 2}
     - {fileID: 11400000, guid: 18c9490eadaf33247915e141940e86fa, type: 2}
     - {fileID: 11400000, guid: 891798d5efa594a449063d55163b32f2, type: 2}
     - {fileID: 11400000, guid: 61cdbb2f6c183de45b2b496d705fca1f, type: 2}
@@ -58,6 +59,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 80bd2041e61dd344d836173677c40bc4, type: 2}
     - {fileID: 11400000, guid: ca325ae06a0a8a043b5aa2424576a52d, type: 2}
     - {fileID: 11400000, guid: 245b29d57f1b5204a827e4dcad82f3aa, type: 2}
+    - {fileID: 11400000, guid: 56dbda1814628e546a60c09237f3931c, type: 2}
     - {fileID: 11400000, guid: e1f7d720614b7d44b8d0936b8574032d, type: 2}
     - {fileID: 11400000, guid: 96dd9e188600da64db488c7a82b71ddd, type: 2}
     - {fileID: 11400000, guid: 7900e740e2803824a80b4c6117750cc0, type: 2}
@@ -67,6 +69,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 10a38b57fc3f258419bcec87a0901335, type: 2}
     - {fileID: 11400000, guid: d5ef8f049a289cb4c85ace6a2d9892d9, type: 2}
     - {fileID: 11400000, guid: ae0729e92f283e747ba648076d29b49f, type: 2}
+    - {fileID: 11400000, guid: 912f573a323bc4341ac1d86d28cbd94b, type: 2}
     - {fileID: 11400000, guid: 7c424243c07562140bfa6ebcf218ce33, type: 2}
     - {fileID: 11400000, guid: d231d266cc1afd14fa4a2bef94521f7b, type: 2}
     - {fileID: 11400000, guid: b80b73c7a37c2b14fa065d5196e8f881, type: 2}
@@ -101,7 +104,7 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 40
+      Data: 43
     - Name: 
       Entry: 10
       Data: 1
@@ -222,6 +225,15 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 39
+    - Name: 
+      Entry: 10
+      Data: 40
+    - Name: 
+      Entry: 10
+      Data: 41
+    - Name: 
+      Entry: 10
+      Data: 42
     - Name: 
       Entry: 13
       Data: 

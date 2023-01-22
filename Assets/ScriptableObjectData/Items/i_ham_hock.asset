@@ -55,6 +55,6 @@ MonoBehaviour:
   isStackable: 0
   maxQuantity: 1
   goldValue: 0.5
-  individualGoldValue: 0
+  individualGoldValue: 0.5
   primarySprite: {fileID: 21300000, guid: 656a5778fcd48fa45aa32f73100aa779, type: 3}
   isQuestItem: 0

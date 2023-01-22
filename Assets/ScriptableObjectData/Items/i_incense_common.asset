@@ -96,7 +96,7 @@ MonoBehaviour:
   weight: 0.01
   isStackable: 1
   maxQuantity: 20
-  goldValue: 0.05
-  individualGoldValue: 0
+  goldValue: 0
+  individualGoldValue: 0.05
   primarySprite: {fileID: 21300000, guid: 46bb9ec99ae2df645ad0efebc55fb69c, type: 3}
   isQuestItem: 0
