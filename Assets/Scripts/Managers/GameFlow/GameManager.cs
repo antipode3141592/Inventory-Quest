@@ -33,7 +33,7 @@ namespace InventoryQuest.Managers
         public bool IsGameOver { get; set; }
         public bool IsGameBegining { get; set; }
 
-        public event EventHandler OnGameBegining;
+        public event EventHandler OnGameBeginning;
         public event EventHandler OnGameOver;
         public event EventHandler OnGamePause;
         public event EventHandler OnGameWin;
@@ -90,7 +90,7 @@ namespace InventoryQuest.Managers
             returnToMainMenu = false;
             gaming = true;
             IsGameBegining = true;
-            OnGameBegining?.Invoke(this, EventArgs.Empty);
+            OnGameBeginning?.Invoke(this, EventArgs.Empty);
         }
 
         public void GameOver()

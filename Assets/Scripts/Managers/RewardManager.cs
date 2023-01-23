@@ -49,7 +49,7 @@ namespace InventoryQuest.Managers
             _lootTable = new LootTable(_lootTableDataSource);
             Lua.RegisterFunction("RewardExperience", this, SymbolExtensions.GetMethodInfo(() => RewardExperience(0)));
 
-            _gameManager.OnGameBegining += OnGameBeginingHandler;
+            _gameManager.OnGameBeginning += OnGameBeginingHandler;
         }
 
         void OnGameBeginingHandler(object sender, EventArgs e)
@@ -149,7 +149,7 @@ namespace InventoryQuest.Managers
                 if (item.Stats.IsStackable)
                     item.Quantity = Random.Range(1, item.Stats.MaxQuantity);
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container, item);
-                if (Random.Range(0f, 1f) > 0.5f)
+                if (Random.Range(0f, 1f) > 0.75f)
                     break;
             }
         }

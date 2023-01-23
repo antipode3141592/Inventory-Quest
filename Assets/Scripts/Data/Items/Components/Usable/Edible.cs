@@ -10,6 +10,8 @@ namespace Data.Items.Components
 
         public bool IsConsumable => true;
 
+        public bool HasBeenUsed => false;
+
         public Edible(EdibleStats edibleStats, IItem parentItem)
         {
             this._edibleStats = edibleStats;

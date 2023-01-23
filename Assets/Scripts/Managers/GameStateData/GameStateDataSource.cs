@@ -17,6 +17,7 @@ namespace InventoryQuest
         ICharacterDataSource _characterDataSource;
         ILocationDataSource _locationDataSource;
         IPathDataSource _pathDataSource;
+        IGameManager _gameManager;
 
         public IPathStats CurrentPathStats { get; protected set; }
         public ILocation DestinationLocation { get; protected set; }
@@ -32,23 +33,34 @@ namespace InventoryQuest
         public event EventHandler<string> OnCurrentPathSet;
 
         [Inject]
-        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource)
+        public void Init(ILocationDataSource locationDataSource, IPathDataSource pathDataSource, ICharacterDataSource characterDataSource, IGameManager gameManager)
         {
             _locationDataSource = locationDataSource;
             _pathDataSource = pathDataSource;
             _characterDataSource = characterDataSource;
+            _gameManager = gameManager;
         }
 
         void Start()
         {
-            //SetCurrentLocation(startingLocation.Id);
-            foreach(var location in _locationDataSource.Locations)
+            Lua.RegisterFunction("RevealLocation", this, SymbolExtensions.GetMethodInfo(() => RevealLocation(string.Empty)));
+
+            _gameManager.OnGameBeginning += GameBeginningHandler;
+            _gameManager.OnGameOver += GameOverHandler;
+        }
+
+        void GameBeginningHandler(object sender, EventArgs e)
+        {
+            foreach (var location in _locationDataSource.Locations)
             {
                 if (location.Value.IsKnown)
                     KnownLocations.Add(location.Value.Id);
             }
+        }
 
-            Lua.RegisterFunction("RevealLocation", this, SymbolExtensions.GetMethodInfo(() => RevealLocation(string.Empty)));
+        void GameOverHandler(object sender, EventArgs e)
+        {
+            KnownLocations.Clear();
         }
 
         public void SetCurrentLocation(string id)

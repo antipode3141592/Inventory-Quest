@@ -34,9 +34,11 @@ namespace InventoryQuest.Managers
         void Start()
         {
             Lua.RegisterFunction("AddCharacterToPartyById", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToPartyById(string.Empty)));
+            Lua.RegisterFunction("RemoveCharacterFromPartyById", this, SymbolExtensions.GetMethodInfo(() => RemoveCharacterFromPartyById(string.Empty)));
+            Lua.RegisterFunction("IsCharacterIdInParty", this, SymbolExtensions.GetMethodInfo(() => IsCharacterIdInParty(string.Empty)));
 
             CurrentParty.OnPartyDeath += PartyDeathHandler;
-            _gameManager.OnGameBegining += OnGameBeginningHandler;
+            _gameManager.OnGameBeginning += OnGameBeginningHandler;
         }
 
         void OnGameBeginningHandler(object sender, EventArgs e)
@@ -68,6 +70,24 @@ namespace InventoryQuest.Managers
         {
             var characterStats = _characterDataSource.GetById(id);
             AddCharacterToParty(characterStats);
+        }
+
+        public void RemoveCharacterFromPartyById(string id)
+        {
+            var character = _party.Characters.Values.FirstOrDefault(x => x.Stats.Id == id);
+            if (character is null)
+                return;
+            if (!_party.Characters.ContainsKey(character.GuId))
+                return;
+            _party.RemoveCharacter(character.GuId);
+        }
+
+        public bool IsCharacterIdInParty(string id)
+        {
+            var character = _party.Characters.Values.FirstOrDefault(x => x.Stats.Id == id);
+            if (character is null)
+                return false;
+            return true;
         }
 
         public void AddCharacterToParty(ICharacterStats characterStats)

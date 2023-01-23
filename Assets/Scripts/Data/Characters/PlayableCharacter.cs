@@ -12,27 +12,28 @@ namespace Data.Characters
     {
         int weaponProficiencyIndex = 0;
 
+
+        public ICharacterStats Stats { get; }
         public string GuId { get; }
         public string DisplayName { get; set; }
         public int CurrentHealth { get; set; }
+        public bool IsIncapacitated => CurrentHealth <= 0;
+        public bool IsDying { get; protected set; } = false;
+        public bool IsDead { get; protected set; } = false;
         public int HealthPerLevel { get; } = 5;
         public int MaximumHealth => StatDictionary[StatTypes.Vitality].CurrentValue + (HealthPerLevel * CurrentLevel);
         public int MagicPerLevel { get; } = 5;
         public int CurrentMagicPool { get; set; }
         public int MaximumMagicPool => StatDictionary[StatTypes.Arcane].CurrentValue + StatDictionary[StatTypes.Spirit].CurrentValue + (MagicPerLevel * CurrentLevel);
-
         public float MaximumEncumbrance => StatDictionary[StatTypes.Strength].CurrentValue * 15;
         public int CurrentExperience { get; set; }
         public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
         public int CurrentLevel { get; set; } = 1;
-
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; } = new List<IWeaponProficiency>();
         public IWeaponProficiency CurrentWeaponProficiency { get; protected set; }
-
-        public ICharacterStats Stats { get; }
 
         public IContainer Backpack
         {
@@ -66,9 +67,7 @@ namespace Data.Characters
         public float CurrentEncumbrance => EquipmentSlots
             .Where(x => x.Value.EquippedItem is not null)
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
-        public bool IsIncapacitated => CurrentHealth <= 0;
-        public bool IsDying { get; protected set; } = false;
-        public bool IsDead { get; protected set; } = false;
+
 
         public event EventHandler OnStatsUpdated;
         public event EventHandler<string> OnItemAddedToBackpack;

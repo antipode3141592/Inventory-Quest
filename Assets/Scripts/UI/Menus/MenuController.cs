@@ -54,7 +54,7 @@ namespace InventoryQuest.UI.Menus
 
         IEnumerator Start()
         {
-            _gameManager.OnGameBegining += OnGameBegining;
+            _gameManager.OnGameBeginning += OnGameBegining;
             _gameManager.OnGameOver += OnGameOver;
             _gameManager.OnGameRestart += OnGameRestart;
 

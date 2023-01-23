@@ -264,7 +264,8 @@ MonoBehaviour:
       Data: 150
     - Name: successMessage
       Entry: 1
-      Data: Smiling, the giant leaves the party in peace.
+      Data: Smiling, the giant leaves the party in peace, leaving behind a cache
+        of goods.
     - Name: failureMessage
       Entry: 1
       Data: The giant shoves the party forcefully aside, continuing his search for
@@ -275,7 +276,16 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 17|Data.Rewards.ItemRewardStats, Data
+    - Name: _itemId
+      Entry: 1
+      Data: rope
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -284,14 +294,14 @@ MonoBehaviour:
       Data: 
     - Name: penalties
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+      Data: 18|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 18|Data.Penalties.DamagePenaltyStats, Data
+      Data: 19|Data.Penalties.DamagePenaltyStats, Data
     - Name: damageType
       Entry: 3
       Data: 0
@@ -315,7 +325,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 19|Data.Encounters.Ignore, Data
+      Data: 20|Data.Encounters.Ignore, Data
     - Name: 
       Entry: 8
       Data: 

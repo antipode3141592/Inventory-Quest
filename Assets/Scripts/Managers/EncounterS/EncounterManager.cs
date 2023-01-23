@@ -107,6 +107,12 @@ namespace InventoryQuest.Managers
             _inputManager.OnEncounterModifierAdded += EncounterModiferAdded;
         }
 
+        void Update()
+        {
+            _deltaTime = Time.deltaTime;
+            _stateMachine.Tick();
+        }
+
         void EncounterModiferAdded(object sender, EncounterModifier modifier)
         {
             AddEncounterModifier(modifier);
@@ -122,11 +128,7 @@ namespace InventoryQuest.Managers
             GameBeginning = true;
         }
 
-        void Update()
-        {
-            _deltaTime = Time.deltaTime;
-            _stateMachine.Tick();
-        }
+        
 
         public void AddEncounterModifier(EncounterModifier encounterModifier)
         {

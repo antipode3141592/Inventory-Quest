@@ -12,6 +12,8 @@ namespace Data.Items.Components
 
         public bool IsConsumable => encounterLengthEffectStats.IsConsumable;
 
+        public bool HasBeenUsed { get; protected set; }
+
         public EncounterLengthEffect(EncounterLengthEffectStats encounterLengthEffectStats, IItem parentItem)
         {
             this.encounterLengthEffectStats = encounterLengthEffectStats;
@@ -20,15 +22,20 @@ namespace Data.Items.Components
 
         public bool TryUse(ref ICharacter usedByCharacter)
         {
+            if (HasBeenUsed)
+                return false;
             usedByCharacter.ApplyModifiers(encounterLengthEffectStats.Modifiers);
+
             if (IsConsumable)
                 Item.Quantity--;
+            else
+                HasBeenUsed = true;
             return true;
         }
 
-        public override string ToString()
+        public void ResetUsage()
         {
-            return $"";
+            HasBeenUsed = false;
         }
     }
 }

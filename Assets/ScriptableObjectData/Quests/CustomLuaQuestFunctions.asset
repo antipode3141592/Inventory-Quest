@@ -32,3 +32,9 @@ MonoBehaviour:
   - functionName: UpdateQuestCounter
     parameters: 0200000002000000
     returnValue: 0
+  - functionName: RemoveCharacterFromPartyById
+    parameters: 02000000
+    returnValue: 0
+  - functionName: IsCharacterIdInParty
+    parameters: 02000000
+    returnValue: 1
