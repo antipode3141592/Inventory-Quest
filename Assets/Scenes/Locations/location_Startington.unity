@@ -569,12 +569,72 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3619836913890299492, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646999121354832893, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4640501351241555961, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: actor
       value: Dispatch
       objectReference: {fileID: 0}
     - target: {fileID: 4640501351241555961, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
       propertyPath: standardDialogueUISettings.setSubtitleColor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642797530035978179, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642797530035978179, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642797530035978179, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705664623755126195, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}
+      propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7561862266982161168, guid: f852358b16f938a4fb38723a90e9cf9c, type: 3}

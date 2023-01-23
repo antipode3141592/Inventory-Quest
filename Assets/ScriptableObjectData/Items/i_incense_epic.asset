@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
-  m_Name: i_rope
+  m_Name: i_incense_epic
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -36,19 +36,34 @@ MonoBehaviour:
       Data: 2|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 3|Data.StatModifier, Data
     - Name: StatType
       Entry: 3
-      Data: 13
+      Data: 10
     - Name: OperatorType
       Entry: 3
       Data: 0
     - Name: AdjustmentValue
       Entry: 3
-      Data: 20
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Data.StatModifier, Data
+    - Name: StatType
+      Entry: 3
+      Data: 15
+    - Name: OperatorType
+      Entry: 3
+      Data: 0
+    - Name: AdjustmentValue
+      Entry: 3
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -60,7 +75,7 @@ MonoBehaviour:
       Data: 
     - Name: isConsumable
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -73,14 +88,14 @@ MonoBehaviour:
     - Name: tags
       Entry: 6
       Data: 
-  id: rope
-  description: Fifty meters of strong rope.  A must have for any adventurer!
-  shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
+  id: incense_epic
+  description: Small cone of very high quality incense.
+  shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
-  rarity: 0
-  weight: 5
-  isStackable: 0
-  maxQuantity: 1
-  individualGoldValue: 5
-  primarySprite: {fileID: 21300000, guid: e0b63e0793380cf41a34527f94e464c3, type: 3}
+  rarity: 3
+  weight: 0.01
+  isStackable: 1
+  maxQuantity: 20
+  individualGoldValue: 0.05
+  primarySprite: {fileID: 21300000, guid: 36dfee73690bd6a4c996417eba5b18fc, type: 3}
   isQuestItem: 0

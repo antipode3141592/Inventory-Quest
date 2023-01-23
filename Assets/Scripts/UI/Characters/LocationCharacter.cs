@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.QuestMachine;
 using UnityEngine;
+using TMPro;
 
 namespace Data.Characters
 {
@@ -9,12 +10,19 @@ namespace Data.Characters
         QuestGiver _questGiver;
         DialogueActor _dialogueActor;
 
+        [SerializeField] TextMeshProUGUI nameText;
+
         public string questGiverId => _questGiver.id.text;
 
         void Awake()
         {
             _questGiver = GetComponent<QuestGiver>();
             _dialogueActor = GetComponent<DialogueActor>();
+        }
+
+        void Start()
+        {
+            nameText.text = _questGiver.id.text;
         }
 
         public void Chat()
