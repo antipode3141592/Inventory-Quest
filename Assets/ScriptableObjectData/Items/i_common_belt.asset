@@ -74,6 +74,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: common_belt
+  _name: Common Belt
   description: A common belt
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -81,7 +82,6 @@ MonoBehaviour:
   weight: 0.25
   isStackable: 0
   maxQuantity: 1
-  goldValue: 0.2
   individualGoldValue: 0.2
   primarySprite: {fileID: 21300000, guid: c356c83e843a2ee48b4918f3e658170a, type: 3}
   isQuestItem: 0

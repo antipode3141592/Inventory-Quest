@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3419776840576792855
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 8}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1693851993404893330}
   - component: {fileID: 5486520965543816260}
   - component: {fileID: 4411958479261876853}
-  - component: {fileID: 7591657450391707352}
+  - component: {fileID: 8621755143704723996}
   m_Layer: 5
   m_Name: DefaultResolveButton
   m_TagString: Untagged
@@ -276,7 +276,7 @@ MonoBehaviour:
   descriptiveText: {fileID: 5957108467142174225}
   rulesText: {fileID: 8546033506581541199}
   button: {fileID: 5486520965543816260}
---- !u!114 &7591657450391707352
+--- !u!114 &8621755143704723996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,16 +289,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 45
-    m_Right: 45
-    m_Top: 22
-    m_Bottom: 22
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -343,10 +343,10 @@ MonoBehaviour:
     items:
     - screenConfigName: Landscape
       OptimizedSize:
-        left: 32
-        right: 32
-        top: 16
-        bottom: 16
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
       MinSize:
         left: 0
         right: 0
@@ -401,8 +401,8 @@ MonoBehaviour:
   settingsFallback:
     ChildAlignment: 0
     ReverseArrangement: 0
-    ChildForceExpandHeight: 0
-    ChildForceExpandWidth: 0
+    ChildForceExpandHeight: 1
+    ChildForceExpandWidth: 1
     ChildScaleWidth: 0
     ChildScaleHeight: 0
     ChildControlWidth: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
       ChildScaleWidth: 0
       ChildScaleHeight: 0
       ChildControlWidth: 1
-      ChildControlHeight: 1
+      ChildControlHeight: 0
       Orientation: 1
       screenConfigName: Landscape
   orientation: 1
@@ -459,7 +459,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1760397199637288860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 8, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

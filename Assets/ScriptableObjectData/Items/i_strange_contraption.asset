@@ -38,14 +38,14 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: strange_contraption
-  description: A contraption of insrutable purpose.
+  _name: Strange Contraption
+  description: A heavy and unwieldy device of insrutable purpose.
   shape: {fileID: 11400000, guid: f01bff7c588b04547a49e22368d33aa8, type: 2}
   defaultFacing: 0
   rarity: 0
   weight: 80
   isStackable: 0
   maxQuantity: 1
-  goldValue: 5000
   individualGoldValue: 5000
   primarySprite: {fileID: 21300000, guid: d057b8ba8ddc6874ba3cb15ca16fedd6, type: 3}
   isQuestItem: 1

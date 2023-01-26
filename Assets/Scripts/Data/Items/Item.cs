@@ -11,6 +11,7 @@ namespace Data.Items
 
         public string GuId { get; }
         public string Id { get; }
+        public string DisplayName { get; protected set; }
         public IShape Shape { get; }
         public Facing CurrentFacing { get; protected set;}
         public Sprite Sprite { get; set; }
@@ -38,6 +39,7 @@ namespace Data.Items
         {
             GuId = Guid.NewGuid().ToString();
             Id = itemStats.Id;
+            DisplayName = itemStats.Name;
             Stats = itemStats;
             Shape = itemStats.Shape;
             CurrentFacing = itemStats.DefaultFacing;

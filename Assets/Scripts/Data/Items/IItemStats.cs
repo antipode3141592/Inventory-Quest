@@ -7,6 +7,7 @@ namespace Data.Items
     public interface IItemStats
     {
         public string Id { get; }
+        public string Name { get; }
         public string Description { get; }
         public IShape Shape { get; }
         public Facing DefaultFacing { get; }

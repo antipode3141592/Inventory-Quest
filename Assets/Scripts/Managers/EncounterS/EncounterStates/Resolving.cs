@@ -87,7 +87,7 @@ namespace InventoryQuest.Managers.States
                 
                 messageDuration = CalculateLength(_message);
 
-                AwardExperience(_partyManager.CurrentParty.Characters);
+                _rewardManager.RewardExperience(_gameStateDataSource.CurrentEncounter.ChosenChoice.Experience);
                 OnEncounterResolveSuccess?.Invoke(this, _gameStateDataSource.CurrentEncounter.Id);
             }
             else
@@ -132,14 +132,6 @@ namespace InventoryQuest.Managers.States
                 timer += _deltaTimeTracker.DeltaTime;
             if (timer > maxTime  && EndState)
                 CompleteResolution();
-        }
-
-        void AwardExperience(IDictionary<string, ICharacter> Characters)
-        {
-            foreach (var character in Characters)
-            {
-                character.Value.CurrentExperience += _gameStateDataSource.CurrentEncounter.ChosenChoice.Experience;
-            }
         }
     }
 }

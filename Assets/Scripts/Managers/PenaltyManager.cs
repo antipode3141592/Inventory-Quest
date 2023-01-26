@@ -60,6 +60,7 @@ namespace InventoryQuest.Managers
             if (damageStats is null) return;
             if (_partyManager.CurrentParty.Characters.Count == 0) return;
             Debug.Log($"Processing DamagePenalty with {damageStats.DamageAmount} pts of {damageStats.DamageType} type damage");
+            QuestLog.Log($"Party takes {damageStats.DamageAmount} points of {damageStats.DamageType} damage!");
             foreach (var character in _partyManager.CurrentParty.Characters)
             {
                 Debug.Log($"...{damageStats.DamageAmount} {damageStats.DamageType} damage to {character.Value.DisplayName}");

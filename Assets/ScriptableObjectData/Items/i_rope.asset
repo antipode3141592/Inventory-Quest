@@ -74,6 +74,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: rope
+  _name: Rope
   description: Fifty meters of strong rope.  A must have for any adventurer!
   shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
   defaultFacing: 0

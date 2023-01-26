@@ -69,6 +69,7 @@ namespace InventoryQuest.Managers
         public void AddCharacterToPartyById(string id)
         {
             var characterStats = _characterDataSource.GetById(id);
+            QuestLog.Log($"{characterStats.Name} has joined the party.");
             AddCharacterToParty(characterStats);
         }
 
@@ -79,6 +80,7 @@ namespace InventoryQuest.Managers
                 return;
             if (!_party.Characters.ContainsKey(character.GuId))
                 return;
+            QuestLog.Log($"{character.DisplayName} has left the party.");
             _party.RemoveCharacter(character.GuId);
         }
 

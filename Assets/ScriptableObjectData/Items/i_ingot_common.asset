@@ -38,6 +38,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: ingot_common
+  _name: Iron Ingot
   description: A useful ingot of iron.
   shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
   defaultFacing: 0
@@ -45,7 +46,6 @@ MonoBehaviour:
   weight: 5
   isStackable: 1
   maxQuantity: 4
-  goldValue: 1
   individualGoldValue: 1
   primarySprite: {fileID: 21300000, guid: b0fe9fc669f5f554e94315471755549c, type: 3}
   isQuestItem: 0

@@ -30,6 +30,7 @@ namespace Data.Items
         {
             GuId = Guid.NewGuid().ToString();
             Id = itemStats.Id;
+            DisplayName = itemStats.Name;
             Stats = itemStats;
             Shape = itemStats.Shape;
             CurrentFacing = itemStats.DefaultFacing;
@@ -54,6 +55,8 @@ namespace Data.Items
         }
 
         IContainer CuttingContainer => Components[typeof(IContainer)] as IContainer;
+
+        public string DisplayName { get; protected set; }
 
         public WoodHarvestSaw SubscribeToContainerEvents()
         {

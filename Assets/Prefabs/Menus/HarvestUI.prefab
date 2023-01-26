@@ -1619,7 +1619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594396064205091064, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_CellSize.y
-      value: 112.5
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3594396064205091064, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_Padding.m_Top
@@ -1744,7 +1744,7 @@ PrefabInstance:
     - target: {fileID: 4941113763551287504, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 4941113763551287504, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5093571633110096171, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_Name
       value: CharacterDetailsUI
@@ -1752,7 +1752,7 @@ PrefabInstance:
     - target: {fileID: 5394185984867563865, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 5394185984867563865, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5559595428210144472, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1876,7 +1876,7 @@ PrefabInstance:
     - target: {fileID: 7133517272793827508, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 7133517272793827508, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 7164669007414815516, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2032,7 +2032,7 @@ PrefabInstance:
     - target: {fileID: 7533496883829705705, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 7533496883829705705, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8030931038546821494, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

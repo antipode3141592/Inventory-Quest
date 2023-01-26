@@ -47,6 +47,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: bread
+  _name: Bread
   description: 'A small loaf of nutritious bread. '
   shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
   defaultFacing: 0
@@ -54,7 +55,6 @@ MonoBehaviour:
   weight: 1
   isStackable: 0
   maxQuantity: 1
-  goldValue: 0.05
   individualGoldValue: 0.05
   primarySprite: {fileID: 21300000, guid: 5382776843978a841aeef9b5a07df001, type: 3}
   isQuestItem: 0

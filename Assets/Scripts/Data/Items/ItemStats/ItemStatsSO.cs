@@ -10,6 +10,7 @@ namespace Data.Items
     public class ItemStatsSO : SerializedScriptableObject, IItemStats
     {
         [SerializeField] string id;
+        [SerializeField] string _name;
         [SerializeField, TextArea(1,5)] string description;
         [SerializeField] ShapeSO shape;
         [SerializeField] Facing defaultFacing;
@@ -24,6 +25,7 @@ namespace Data.Items
         [OdinSerialize] HashSet<Tag> tags;
 
         public string Id => id;
+        public string Name => _name;
         public string Description => description;
         public IShape Shape => shape;
         public Facing DefaultFacing => defaultFacing;

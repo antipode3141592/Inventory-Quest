@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
-  m_Name: i_ring_charisma_5
+  m_Name: i_shield_buckler
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -27,13 +27,13 @@ MonoBehaviour:
         Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 1|Data.Items.EquipableStats, Data
     - Name: _slotType
       Entry: 3
-      Data: 11
+      Data: 10
     - Name: _modifiers
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
@@ -45,13 +45,13 @@ MonoBehaviour:
       Data: 3|Data.StatModifier, Data
     - Name: StatType
       Entry: 3
-      Data: 4
+      Data: 9
     - Name: OperatorType
       Entry: 3
       Data: 0
     - Name: AdjustmentValue
       Entry: 3
-      Data: 5
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -61,6 +61,57 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Data.Items.Components.EncounterLengthEffectStats, Data
+    - Name: modifiers
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 6|Data.StatModifier, Data
+    - Name: StatType
+      Entry: 3
+      Data: 9
+    - Name: OperatorType
+      Entry: 3
+      Data: 0
+    - Name: AdjustmentValue
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|Data.StatModifier, Data
+    - Name: StatType
+      Entry: 3
+      Data: 8
+    - Name: OperatorType
+      Entry: 3
+      Data: 0
+    - Name: AdjustmentValue
+      Entry: 3
+      Data: -4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isConsumable
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
@@ -73,15 +124,15 @@ MonoBehaviour:
     - Name: tags
       Entry: 6
       Data: 
-  id: ring_charisma_5
-  _name: Ring of Charisma
-  description: A simple brass band which is much more interesting than it seems.
-  shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+  id: shield_buckler
+  _name: Shield, Buckler
+  description: Small shield for deflecting light attacks.
+  shape: {fileID: 11400000, guid: e25ef434493e9a94b9dec142ab465008, type: 2}
   defaultFacing: 0
-  rarity: 2
-  weight: 0.1
+  rarity: 0
+  weight: 4
   isStackable: 0
   maxQuantity: 1
-  individualGoldValue: 50
-  primarySprite: {fileID: 21300000, guid: ba5fcda74f02bae49b28ac0d4a0b3608, type: 3}
+  individualGoldValue: 1
+  primarySprite: {fileID: 0}
   isQuestItem: 0

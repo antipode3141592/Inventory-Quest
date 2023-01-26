@@ -18,5 +18,6 @@ namespace InventoryQuest.Managers
         public void EnqueueReward(IRewardStats reward);
         public bool ProcessRewards();
         public void SelectPile(string containerGuid);
+        public void RewardExperience(double experience);
     }
 }

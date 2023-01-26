@@ -35,7 +35,7 @@ namespace InventoryQuest.UI
         {
             itemImage.sprite = item.Sprite;
             itemImage.color = Color.white;
-            ItemNameText.text = item.Stats.Id;
+            ItemNameText.text = item.DisplayName;
             ItemDescriptionText.text = item.Stats.Description;
             ItemRarityText.text = item.Stats.Rarity.ToString();
             ItemValueText.text = $"{item.Value:#,###.#} gp";

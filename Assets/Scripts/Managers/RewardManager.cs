@@ -59,6 +59,7 @@ namespace InventoryQuest.Managers
 
         public void RewardExperience(double experience)
         {
+            QuestLog.Log($"Party members gain {(int)experience} experience.");
             foreach (var character in _partyManager.CurrentParty.Characters)
             {
                 character.Value.CurrentExperience += (int)experience;

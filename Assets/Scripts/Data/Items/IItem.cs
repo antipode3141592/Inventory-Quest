@@ -10,6 +10,7 @@ namespace Data.Items
     {
         public string GuId { get; }  //unique-ish object identifier
         public string Id { get; }    //descriptive name for logging
+        public string DisplayName { get; }
         public float Weight { get; }   //item weight
         public float Value { get; }    //item value
         public IItemStats Stats { get; }

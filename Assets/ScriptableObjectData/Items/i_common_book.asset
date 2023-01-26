@@ -28,6 +28,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: common_book
+  _name: Book
   description: A collection of short stories.
   shape: {fileID: 11400000, guid: e25ef434493e9a94b9dec142ab465008, type: 2}
   defaultFacing: 0
@@ -35,7 +36,6 @@ MonoBehaviour:
   weight: 1
   isStackable: 1
   maxQuantity: 10
-  goldValue: 2
   individualGoldValue: 2
   primarySprite: {fileID: 21300000, guid: 4f3dbc98e3f2a144db08a82961c4e637, type: 3}
   isQuestItem: 0

@@ -47,6 +47,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: apple_fuji
+  _name: Fuji Apple
   description: A delicious fuji apple.
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -54,7 +55,6 @@ MonoBehaviour:
   weight: 0.1
   isStackable: 1
   maxQuantity: 10
-  goldValue: 0
   individualGoldValue: 0.1
   primarySprite: {fileID: 21300000, guid: f7779d6574135b74f90b09cef31512e6, type: 3}
   isQuestItem: 0

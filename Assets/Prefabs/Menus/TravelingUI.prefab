@@ -659,10 +659,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 8
+    m_Bottom: 8
   m_ChildAlignment: 4
-  m_Spacing: 16
+  m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1511,11 +1511,11 @@ PrefabInstance:
       objectReference: {fileID: 3330688101753394652}
     - target: {fileID: 5957108467142174225, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7591657450391707352, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 16
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7591657450391707352, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_Padding.m_Left
@@ -1535,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7591657450391707352, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 16
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7591657450391707352, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_ChildControlWidth
@@ -1555,7 +1555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8546033506581541199, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8562321640945872226, guid: 5fad4d14a4edbe642b038fe3acc809a2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1715,19 +1715,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
       propertyPath: m_Padding.m_Left
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
       propertyPath: m_Padding.m_Right
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6847025706244266087, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3eef7a3c883eae48aa560f2c60dbcf4, type: 3}

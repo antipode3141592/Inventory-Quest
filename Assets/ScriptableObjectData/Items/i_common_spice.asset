@@ -47,6 +47,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: common_spice
+  _name: Spice
   description: A pile of powerfully potent pepper powder.
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -54,7 +55,6 @@ MonoBehaviour:
   weight: 0.1
   isStackable: 1
   maxQuantity: 20
-  goldValue: 5
   individualGoldValue: 5
   primarySprite: {fileID: 21300000, guid: 10cedb43b889ed74b9ca3cc1a88d4d18, type: 3}
   isQuestItem: 0

@@ -77,6 +77,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: small_box
+  _name: Small Box
   description: It's bigger on the inside
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -84,7 +85,6 @@ MonoBehaviour:
   weight: 2
   isStackable: 0
   maxQuantity: 1
-  goldValue: 1
   individualGoldValue: 1
   primarySprite: {fileID: 21300000, guid: 957fa1198e9124a44a2213f3d62a7318, type: 3}
   isQuestItem: 0

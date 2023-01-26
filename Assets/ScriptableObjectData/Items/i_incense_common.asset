@@ -89,6 +89,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: incense_common
+  _name: Common Incense
   description: Small cone of common quality incense.
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -96,7 +97,6 @@ MonoBehaviour:
   weight: 0.01
   isStackable: 1
   maxQuantity: 20
-  goldValue: 0
   individualGoldValue: 0.05
   primarySprite: {fileID: 21300000, guid: 46bb9ec99ae2df645ad0efebc55fb69c, type: 3}
   isQuestItem: 0

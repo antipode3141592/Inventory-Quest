@@ -30,9 +30,12 @@ namespace InventoryQuest.Managers
         {
             var item = ItemFactory.GetItem(_itemDataSource.GetById(itemId));
             if (item is null) return;
-            foreach(var character in _partyManager.CurrentParty.Characters)
+            foreach (var character in _partyManager.CurrentParty.Characters)
                 if (ItemPlacementHelpers.TryAutoPlaceToContainer(character.Value.Backpack, item))
+                {
+                    QuestLog.Log($"{item.DisplayName} added to {character.Value.DisplayName}'s inventory.");
                     return;
+                }
         }
 
         public double CountItemInPartyInventory(string itemId)
@@ -48,6 +51,8 @@ namespace InventoryQuest.Managers
         public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
         {
             _partyManager.CurrentParty.RemoveItemFromPartyInventory(itemId, minToRemove);
+            
+            QuestLog.Log($"{(int)minToRemove}x {_itemDataSource.GetById(itemId).Name} removed from party inventory.");
         }
     }
 }
