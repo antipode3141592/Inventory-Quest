@@ -30,7 +30,6 @@ namespace InventoryQuest.UI
             text.text = "";
             text.color = Color.clear;
             background.color = Color.clear;
-            IsActive = false;
         }
 
         public void SetText(string newsText)

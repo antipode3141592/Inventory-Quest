@@ -21,24 +21,38 @@ namespace InventoryQuest.UI
 
         void Update()
         {
-            if (newsItems.Count > 0)
+            if (newsItems.Count > 0 && ScrollAvailable())
                 StartCoroutine(ScrollNews(newsItems.Dequeue()));
+        }
+
+        bool ScrollAvailable()
+        {
+            for (int i = 0; i < newsItemDisplays.Count; i++)
+                if (!newsItemDisplays[i].IsActive)
+                    return true;
+            return false;
         }
 
         void OnNewsReceivedHandler(object sender, string e)
         {
             newsItems.Enqueue(e);
-            
         }
 
         IEnumerator ScrollNews(string news)
         {
             Debug.Log(news);
-            newsItemDisplays[0].SetText(news);
-            newsItemDisplays[0].Show();
-            yield return new WaitForSeconds((float)news.Length/ scrollCharactersPerSecond);
-            newsItemDisplays[0].Hide();
-            yield return new WaitForSeconds(0.3f);
+            for (int i = 0; i < newsItemDisplays.Count; i++)
+            {
+                if (newsItemDisplays[i].IsActive)
+                    continue;
+                newsItemDisplays[i].SetText(news);
+                newsItemDisplays[i].Show();
+                yield return new WaitForSeconds((float)news.Length / scrollCharactersPerSecond);
+                newsItemDisplays[i].Hide();
+                yield return new WaitForSeconds(0.3f);
+                newsItemDisplays[i].IsActive = false;
+                break;  
+            }
         }
     }
 }
