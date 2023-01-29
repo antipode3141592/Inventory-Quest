@@ -35,6 +35,7 @@ namespace InventoryQuest.UI.Menus
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
             _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
             _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
+            _inputManager.OnItemUsed += OnItemUsedHandler;
         }
 
         public override void Show()
@@ -77,6 +78,11 @@ namespace InventoryQuest.UI.Menus
         void OnRewardsClearedHandler(object sender, EventArgs e)
         {
             lootContainerDisplay.SetContainer(null);
+        }
+
+        void OnItemUsedHandler(object sender, IItem e)
+        {
+            itemDetailDisplay.DisplayItemDetails(e);
         }
 
         public void CloseInventory()

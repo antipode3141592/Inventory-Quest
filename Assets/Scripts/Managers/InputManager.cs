@@ -55,6 +55,7 @@ namespace InventoryQuest.Managers
 
         public event EventHandler<IItem> OnItemHeld;
         public event EventHandler OnItemPlaced;
+        public event EventHandler<IItem> OnItemUsed;
 
         public event EventHandler OnSubmitDown;
         public event EventHandler OnSubmitHold;
@@ -181,9 +182,12 @@ namespace InventoryQuest.Managers
             {
                 var _usable = (container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
-                if(_usable.TryUse(ref character))
+                if (_usable.TryUse(ref character))
+                {
+                    OnItemUsed?.Invoke(this, _usable.Item);
                     if (_usable is EncounterLengthEffect encounterEffect)
                         OnEncounterModifierAdded?.Invoke(this, new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers, encounterEffect));
+                }
                     
             }
         }

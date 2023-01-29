@@ -31,8 +31,13 @@ namespace InventoryQuest.UI
             DisplayItemDetails(item);
         }
 
-        void DisplayItemDetails(IItem item)
+        public void DisplayItemDetails(IItem item)
         {
+            if (item.Quantity == 0)
+            {
+                ClearItemDetails();
+                return;
+            }
             itemImage.sprite = item.Sprite;
             itemImage.color = Color.white;
             ItemNameText.text = item.DisplayName;

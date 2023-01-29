@@ -3290,7 +3290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4821950555951118445
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4865,7 +4865,7 @@ PrefabInstance:
     - target: {fileID: 4941113763551287504, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4941113763551287504, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
     - target: {fileID: 5093571633110096171, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_Name
       value: CharacterDetailsUI
@@ -4873,7 +4873,7 @@ PrefabInstance:
     - target: {fileID: 5394185984867563865, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5394185984867563865, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
     - target: {fileID: 6341879673038366784, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -4885,7 +4885,7 @@ PrefabInstance:
     - target: {fileID: 7133517272793827508, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7133517272793827508, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
     - target: {fileID: 7533496882085668166, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -5145,7 +5145,7 @@ PrefabInstance:
     - target: {fileID: 7533496883829705705, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7533496883829705705, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
     - target: {fileID: 8532977621788273165, guid: 73a2988ae781f4b4f8509fa8f0cb3fa8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

@@ -23,6 +23,7 @@ namespace InventoryQuest.Managers
         public event EventHandler<IItem> ShowItemDetailsCommand;
         public event EventHandler HideItemDetailsCommand;
         public event EventHandler<EncounterModifier> OnEncounterModifierAdded;
+        public event EventHandler<IItem> OnItemUsed;
 
         public void OpenInventory();
         public void CloseInventory();
