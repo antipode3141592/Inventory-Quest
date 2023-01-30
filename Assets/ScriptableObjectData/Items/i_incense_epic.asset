@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 864b41e22f85a8c41b5b9ecf4922600a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -86,7 +87,19 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: tags
-      Entry: 6
+      Entry: 7
+      Data: 5|System.Collections.Generic.HashSet`1[[Tag, Data]], System.Core
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
   id: incense_epic
   _name: High Quality Incense
