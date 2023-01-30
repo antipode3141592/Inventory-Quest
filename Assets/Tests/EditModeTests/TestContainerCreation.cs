@@ -133,7 +133,7 @@ namespace InventoryQuest.Testing
             IContainer container = smallBox.Components[typeof(IContainer)] as IContainer;
             if (container is null)
                 Assert.Fail($"item {smallBox.Id} is missing an IContainer component");
-            Assert.IsTrue(container.TryPlace(simpleItem, new Data.Coor(0, 0)));
+            Assert.IsTrue(container.TryPlace(ref simpleItem, new Data.Coor(0, 0)));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace InventoryQuest.Testing
             if (container is null)
                 Assert.Fail($"item {smallBox.Id} is missing an IContainer component");
 
-            container.TryPlace(simpleItem, new Data.Coor(0, 0));
+            container.TryPlace(ref simpleItem, new Data.Coor(0, 0));
             if (!container.TryTake(out IItem item, new Data.Coor(0, 0)))
             {
                 Assert.Fail($"item {simpleItemStats.Id} could not be taken from container {smallBox.Id}");

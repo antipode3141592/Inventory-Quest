@@ -21,7 +21,7 @@ namespace Data.Items
         public event EventHandler<HashSet<string>> OnMatchingItems;
         public event EventHandler<HashSet<string>> OnStackComplete;
 
-        public bool TryPlace(IItem item, Coor target);
+        public bool TryPlace(ref IItem item, Coor target);
         public bool TryTake(out IItem item, Coor target);
         public bool IsPointInGrid(Coor target);
         public bool IsValidPlacement(IItem item, Coor target);

@@ -27,6 +27,7 @@ namespace InventoryQuest.Testing
         public event EventHandler<IItem> ShowHeldItemDetailsCommand;
         public event EventHandler HideHeldItemDetailsCommand;
         public event EventHandler<EncounterModifier> OnEncounterModifierAdded;
+        public event EventHandler<IItem> OnItemUsed;
 
         public void CheckRotateAction()
         {

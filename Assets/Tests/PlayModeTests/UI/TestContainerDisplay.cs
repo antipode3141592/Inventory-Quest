@@ -89,7 +89,7 @@ namespace InventoryQuest.Testing
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
             containerDisplay.SetContainer(container);
 
-            if (container.TryPlace(MyItem, new(0, 0)))
+            if (container.TryPlace(ref MyItem, new(0, 0)))
             {
                 yield return null;
                 Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == MyItem.GuId) is not null);
@@ -109,7 +109,7 @@ namespace InventoryQuest.Testing
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
             containerDisplay.SetContainer(container);
 
-            if (container.TryPlace(EquipableItem, new(0, 0)))
+            if (container.TryPlace(ref EquipableItem, new(0, 0)))
             {
                 yield return null;
                 Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == EquipableItem.GuId) is not null);
@@ -131,7 +131,7 @@ namespace InventoryQuest.Testing
 
             EquipableItem.Rotate(1);
 
-            if (container.TryPlace(EquipableItem, new(0, 0)))
+            if (container.TryPlace(ref EquipableItem, new(0, 0)))
             {
                 yield return null;
                 Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == EquipableItem.GuId) is not null);

@@ -90,7 +90,7 @@ namespace InventoryQuest.Testing
             MyItem = ItemFactory.GetItem(itemStats: AppleStats);
             var backpackContainer = backpack.Components[typeof(IContainer)] as IContainer;
             float initialWeight = backpackContainer.InitialWeight;
-            backpackContainer.TryPlace(MyItem, new Coor(0, 1));
+            backpackContainer.TryPlace(ref MyItem, new Coor(0, 1));
             Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: backpackContainer.Weight);
         }
 
@@ -109,7 +109,8 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (AppleStats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(0, 1 + i));
+                var item = ItemsList[i];
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ref item, new Coor(0, 1 + i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -124,7 +125,7 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
 
             MyItem = ItemFactory.GetItem(itemStats: AppleStats);
-            Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, new Coor(100, 100)));
+            Assert.IsFalse((backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ref MyItem, new Coor(100, 100)));
         }
 
         [UnityTest]
@@ -137,8 +138,10 @@ namespace InventoryQuest.Testing
             CommonPostSceneLoadInstall();
             AddItemsToList(ref ItemsList, SwordStats, 2);
             var container = backpack.Components[typeof(IContainer)] as IContainer;
-            container.TryPlace(ItemsList[0], new Coor(0, 1));
-            Assert.IsFalse(container.TryPlace(ItemsList[1], new Coor(0, 1)));
+            var item = ItemsList[0];
+            var item2 = ItemsList[1];
+            container.TryPlace(ref item, new Coor(0, 1));
+            Assert.IsFalse(container.TryPlace(ref item2, new Coor(0, 1)));
         }
 
         [UnityTest]
@@ -165,7 +168,7 @@ namespace InventoryQuest.Testing
             var coordinate = new Coor(r: 0, c: 1);
 
             MyItem = ItemFactory.GetItem(itemStats: AppleStats);
-            (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(MyItem, coordinate);
+            (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ref MyItem, coordinate);
             Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, coordinate));
             Assert.IsTrue((backpack.Components[typeof(IContainer)] as IContainer).IsEmpty);
         }
@@ -185,7 +188,8 @@ namespace InventoryQuest.Testing
             float targetWeight = initialWeight + (ItemsList[0].Stats.Weight * (float)qty);
             for (int i = 0; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(r: 1, c: i));
+                var item = ItemsList[i];
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ref item, new Coor(r: 1, c: i));
             }
             Assert.AreEqual(expected: targetWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);
         }
@@ -204,7 +208,8 @@ namespace InventoryQuest.Testing
             float initialWeight = (backpack.Components[typeof(IContainer)] as IContainer).InitialWeight;
             for (int i = 1; i < qty; i++)
             {
-                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ItemsList[i], new Coor(r: i, c: 0));
+                var item = ItemsList[i];
+                (backpack.Components[typeof(IContainer)] as IContainer).TryPlace(ref item, new Coor(r: i, c: 0));
                 (backpack.Components[typeof(IContainer)] as IContainer).TryTake(out _, new Coor(r: i, c: 0));
             }
             Assert.AreEqual(expected: initialWeight, actual: (backpack.Components[typeof(IContainer)] as IContainer).Weight);

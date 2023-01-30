@@ -115,8 +115,8 @@ namespace Data.Items
             var keepItem = ItemFactory.GetItem(cutItemStats[keepSideLength]);
             var wasteItem = ItemFactory.GetItem(cutItemStats[wasteSideLength]);
 
-            CuttingContainer.TryPlace(keepItem, anchor);
-            CuttingContainer.TryPlace(wasteItem, wastePileAnchorPoint);
+            CuttingContainer.TryPlace(ref keepItem, anchor);
+            CuttingContainer.TryPlace(ref wasteItem, wastePileAnchorPoint);
 
             cutting = false;
         }

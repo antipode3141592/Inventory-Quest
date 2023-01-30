@@ -18,6 +18,7 @@ namespace InventoryQuest.Testing.Stubs
                 "apple_fuji",
                 new ItemStats(
                     id: "apple_fuji",
+                    name: "Fuji Apple",
                     weight: .1f,
                     individualGoldValue: .5f,
                     description: "The objectively best apple.",
@@ -31,6 +32,7 @@ namespace InventoryQuest.Testing.Stubs
             {
                 "basic_sword_15",
                 new ItemStats("basic_sword_15",
+                    name: "Sword +15",
                     weight: 3.5f,
                     individualGoldValue: 10000f,
                     description: "a basic sword",
@@ -39,10 +41,10 @@ namespace InventoryQuest.Testing.Stubs
                     shape: new Monomino(),
                     defaultFacing: Facing.Down,
                     isQuestItem: false,
-                    components: new List<IItemComponentStats>(){
+                    components: new List<IItemComponentStats>() {
                         new EquipableStats(
                             slotType: EquipmentSlotType.OneHandedWeapon,
-                            modifiers: new List<StatModifier>(){
+                            modifiers: new List<StatModifier>() {
                                 new(StatTypes.Strength, OperatorType.Add, 15)
                             }
                         )
@@ -53,6 +55,7 @@ namespace InventoryQuest.Testing.Stubs
             {
                 "adventure_backpack",
                 new ItemStats("adventure_backpack",
+                    name: "Adventure Backpack",
                     weight: 2f,
                     individualGoldValue: 5f,
                     description: "a basic adventurer's backpack",
@@ -72,6 +75,7 @@ namespace InventoryQuest.Testing.Stubs
             {
                 "small_box",
                 new ItemStats("small_box",
+                    name: "Small Box",
                     weight: 2f,
                     individualGoldValue: 5f,
                     description: "It's bigger on the inside.",

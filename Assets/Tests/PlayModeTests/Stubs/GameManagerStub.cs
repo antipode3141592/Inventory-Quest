@@ -36,7 +36,7 @@ namespace InventoryQuest.Testing
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
-        public event EventHandler OnGameBegining;
+        public event EventHandler OnGameBeginning;
         public event EventHandler OnSubmitDown;
         public event EventHandler OnSubmitHold;
         public event EventHandler OnSubmitUp;
@@ -58,7 +58,7 @@ namespace InventoryQuest.Testing
 
         public void GameBegin()
         {
-            OnGameBegining?.Invoke(this, EventArgs.Empty);
+            OnGameBeginning?.Invoke(this, EventArgs.Empty);
         }
 
         public void GameOver()

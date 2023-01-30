@@ -210,7 +210,7 @@ namespace Data.Items
         //    return true;
         //}
 
-        public bool TryPlace(IItem item, Coor target)
+        public bool TryPlace(ref IItem item, Coor target)
         {
             if (!IsValidPlacement(item, target))
                 return false;
@@ -242,6 +242,8 @@ namespace Data.Items
                     _item.Quantity += qtyToAdd;
                     item.Quantity -= qtyToAdd;
                     OnItemPlaced?.Invoke(this, item.GuId);
+                    if (item.Quantity <= 0)
+                        item = null;
                     return true;
                 }
             }
@@ -264,6 +266,7 @@ namespace Data.Items
             if (Debug.isDebugBuild)
                 Debug.Log($"item {item.Id} x{item.Quantity} placed into container {Item.Id}");
             AfterItemPlaced(item);
+            item = null;
             return true;
         }
 

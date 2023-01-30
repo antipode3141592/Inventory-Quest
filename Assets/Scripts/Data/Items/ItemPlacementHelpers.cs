@@ -6,14 +6,14 @@
         {
             foreach(var point in container.Grid)
             {
-                if (container.TryPlace(item, point.Key))
+                if (container.TryPlace(ref item, point.Key))
                     return true;
                 if (!item.Shape.IsRotationallySymmetric)
                 {
                     for (int i = 0; i < 3; i++)
                     {
                         item.Rotate(1);
-                        if (container.TryPlace(item, point.Key))
+                        if (container.TryPlace(ref item, point.Key))
                             return true;
                     }
                 }

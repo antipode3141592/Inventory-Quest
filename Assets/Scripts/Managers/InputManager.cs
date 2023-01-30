@@ -203,8 +203,9 @@ namespace InventoryQuest.Managers
             else
             {
                 Debug.Log($"TryPlace()", this);
-                if (container.TryPlace(HoldingItem, clickedCoor))
-                    HoldingItem = null;
+                var item = HoldingItem;
+                container.TryPlace(ref item, clickedCoor);
+                HoldingItem = item;
             }
         }
 
