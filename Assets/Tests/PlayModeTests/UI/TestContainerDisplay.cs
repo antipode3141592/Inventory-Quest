@@ -89,10 +89,11 @@ namespace InventoryQuest.Testing
             if (container is null) Assert.Fail(message: $"item {smallBox.Id} does not have an IContainer component");
             containerDisplay.SetContainer(container);
 
+            string itemGuId = MyItem.GuId;
             if (container.TryPlace(ref MyItem, new(0, 0)))
             {
                 yield return null;
-                Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == MyItem.GuId) is not null);
+                Assert.IsTrue(containerDisplay.ItemImages.Find(x => x.ItemGuId == itemGuId) is not null);
             }
         }
 

@@ -86,12 +86,12 @@ namespace InventoryQuest.Testing
             yield return LoadScene(sceneName);
 
             CommonPostSceneLoadInstall();
-
+            
             MyItem = ItemFactory.GetItem(itemStats: AppleStats);
             var backpackContainer = backpack.Components[typeof(IContainer)] as IContainer;
-            float initialWeight = backpackContainer.InitialWeight;
+            float initialWeight = backpackContainer.InitialWeight + MyItem.Stats.Weight;
             backpackContainer.TryPlace(ref MyItem, new Coor(0, 1));
-            Assert.AreEqual(expected: initialWeight + MyItem.Stats.Weight, actual: backpackContainer.Weight);
+            Assert.AreEqual(expected: initialWeight, actual: backpackContainer.Weight);
         }
 
         [UnityTest]

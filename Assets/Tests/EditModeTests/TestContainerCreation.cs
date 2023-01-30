@@ -143,13 +143,14 @@ namespace InventoryQuest.Testing
             if (container is null)
                 Assert.Fail($"item {smallBox.Id} is missing an IContainer component");
 
+            string simpleItemId = simpleItem.Id;
             container.TryPlace(ref simpleItem, new Data.Coor(0, 0));
             if (!container.TryTake(out IItem item, new Data.Coor(0, 0)))
             {
                 Assert.Fail($"item {simpleItemStats.Id} could not be taken from container {smallBox.Id}");
                 return;
             }
-            Assert.IsTrue(item.Id == simpleItem.Id, message:$"item: {item.Id} placed and taken correctly");
+            Assert.IsTrue(item.Id == simpleItemId, message:$"item: {item.Id} placed and taken correctly");
             
         }
 
