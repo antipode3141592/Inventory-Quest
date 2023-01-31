@@ -155,8 +155,9 @@ namespace InventoryQuest.UI
                 Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
                 int quantity = item.Quantity;
-                itemImage.SetItem(item.GuId, sprite, quantity);
-                ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
+                Vector3 localPosition = squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition;
+                itemImage.SetItem(item.GuId, sprite, quantity, localPosition);
+                ImageUtilities.RotateSprite(facing, itemImage.Image, localPosition);
                 itemImages.Add(itemImage);
             }
         }

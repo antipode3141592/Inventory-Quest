@@ -23,7 +23,7 @@ namespace InventoryQuest.UI
             quantityText.text = "";
         }
 
-        public void SetItem(string itemGuId, Sprite sprite, int quantity = 1)
+        public void SetItem(string itemGuId, Sprite sprite, int quantity = 1, Vector3 anchorPosition = default)
         {
             Image.sprite = sprite;
             this.itemGuId = itemGuId;
@@ -32,6 +32,7 @@ namespace InventoryQuest.UI
 
             if (quantity > 1)
             {
+                quantityImage.rectTransform.anchoredPosition = anchorPosition;
                 quantityImage.color = quantityVisible;
                 quantityText.text = $"{quantity}";
             }
