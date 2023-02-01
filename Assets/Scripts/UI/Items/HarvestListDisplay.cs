@@ -1,6 +1,7 @@
 ﻿using InventoryQuest.Managers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,8 @@ namespace InventoryQuest.UI.Menus
     {
         [SerializeField] ContainerIcon _lootIconPrefab;
         [SerializeField] WoodHarvestSawDisplay _woodHarvestSaw;
+        [SerializeField] Vector3 harvestSawOffset;
+        [SerializeField] ContainerDisplay _containerDisplay;
 
         IHarvestManager _harvestManager;
 
@@ -25,7 +28,6 @@ namespace InventoryQuest.UI.Menus
         {
             _harvestManager.Harvesting.StateEntered += OnHarvestStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
-
         }
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
@@ -47,7 +49,12 @@ namespace InventoryQuest.UI.Menus
                     icon.IsSelected = true;
                     _harvestManager.SelectPile(containerGuid);
                     if (_harvestManager.Piles[containerGuid].Item.Id.Contains("saw"))
+                    {
+                        var location = new Vector3(_containerDisplay.Squares[0, 9].transform.localPosition.x,0,0) + harvestSawOffset;
+                        Debug.Log($"saw initial position: {location}");
+                        _woodHarvestSaw.SetInitialPosition(location);
                         _woodHarvestSaw.Show();
+                    }
                     else
                         _woodHarvestSaw.Hide();
                 }
@@ -63,10 +70,9 @@ namespace InventoryQuest.UI.Menus
             {
                 ContainerIcon icon = Instantiate<ContainerIcon>(_lootIconPrefab, transform);
                 icon.SetContainerIcon(guid: pile.GuId, image: pile.Item.Stats.PrimarySprite, containersDisplay: this);
-                icon.IsSelected = false;
                 pileIcons.Add(icon);
-
             }
+            _harvestManager.SelectPile(_harvestManager.Piles.Values.Last().GuId);
         }
 
         public void DestroyContainers()

@@ -26,6 +26,9 @@ namespace InventoryQuest.UI
         [SerializeField] int rowMax;
         [SerializeField] int columnMax;
 
+        public int RowMax => rowMax;
+        public int ColumnMax => columnMax;
+
         float squareWidth;
 
         [SerializeField] ContactFilter2D _contactFilter;
@@ -61,6 +64,12 @@ namespace InventoryQuest.UI
             itemImages = new List<ItemImage>();
             squareWidth = gridSquarePrefab.Width;
             InitializeGrid();
+        }
+
+        [Button]
+        public void DestroyGridDisplay()
+        {
+
         }
 
         public void InitializeGrid()

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 
@@ -8,7 +9,7 @@ namespace InventoryQuest.Managers
     public class WoodHarvestSawDisplay: MonoBehaviour
     {
         IHarvestManager _harvestManager;
-
+        Image _image;
         Animator _animator;
 
         int __idle;
@@ -26,9 +27,10 @@ namespace InventoryQuest.Managers
         void Awake()
         {
             _animator = GetComponent<Animator>();
+            _image = GetComponent<Image>();
             __idle = Animator.StringToHash("Idle");
             __cut = Animator.StringToHash("Cut");
-            initialPosition = transform.position;
+            initialPosition = _image.rectTransform.position;
             Hide();
         }
 
@@ -42,14 +44,20 @@ namespace InventoryQuest.Managers
             Cut();
         }
 
+        public void SetInitialPosition(Vector3 position)
+        {
+            initialPosition = position;
+        }
+
         public void Show()
         {
-            transform.position = initialPosition;
+            Debug.Log($"setting {this.name} to position: {initialPosition}");
+            _image.rectTransform.localPosition = initialPosition;
         }
 
         public void Hide()
         {
-            transform.position = transform.position + offset;
+            _image.rectTransform.localPosition = _image.rectTransform.position + offset;
         }
 
         public void Cut()
