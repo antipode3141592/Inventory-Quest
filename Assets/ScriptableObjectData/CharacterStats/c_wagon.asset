@@ -117,5 +117,5 @@ MonoBehaviour:
       Data: 
   id: wagon
   _name: Wagon
-  portrait: {fileID: 21300000, guid: e20fe244fcd265944a14694126d55da0, type: 3}
+  portrait: {fileID: 908115051, guid: e20fe244fcd265944a14694126d55da0, type: 3}
   species: {fileID: 11400000, guid: 55a16b7471ba47c41a48e3a5f1548b45, type: 2}

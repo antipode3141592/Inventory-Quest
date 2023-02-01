@@ -59,6 +59,8 @@ namespace InventoryQuest.Managers
 
         public void RewardExperience(double experience)
         {
+            if (experience <= double.Epsilon)
+                return;
             QuestLog.Log($"Party members gain {(int)experience} experience.");
             foreach (var character in _partyManager.CurrentParty.Characters)
             {
