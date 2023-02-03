@@ -15,6 +15,7 @@ namespace InventoryQuest.UI.Menus
         IGameManager _gameManager;
         ISceneController _sceneController;
         IInputManager _inputManager;
+        IContainerManager _containerManager;
 
         [SerializeField] List<Menu> _menuList;
 
@@ -28,7 +29,7 @@ namespace InventoryQuest.UI.Menus
         readonly Type _mainMenuKey = typeof(MainMenu);
 
         [Inject]
-        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager, ISceneController sceneController, IInputManager inputManager)
+        public void Init(IAdventureManager adventureManager, IEncounterManager encounterManager, IHarvestManager harvestManager, IGameManager gameManager, ISceneController sceneController, IInputManager inputManager, IContainerManager containerManager)
         {
             _adventureManager = adventureManager;
             _encounterManager = encounterManager;
@@ -36,6 +37,7 @@ namespace InventoryQuest.UI.Menus
             _gameManager = gameManager;
             _sceneController = sceneController;
             _inputManager = inputManager;
+            _containerManager = containerManager;
         }
 
         void Awake()
@@ -74,9 +76,16 @@ namespace InventoryQuest.UI.Menus
             _inputManager.OpenInventoryCommand += OpenInventoryScreen;
             _inputManager.CloseInventoryCommand += CloseInventoryScreen;
 
+            _containerManager.OnContainersAvailable += OnContainersAvailablerHandler;
+
             yield return new WaitForSeconds(1f);
             _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
+        }
+
+        private void OnContainersAvailablerHandler(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(InventoryMenu));
         }
 
         void OnGameRestart(object sender, EventArgs e)

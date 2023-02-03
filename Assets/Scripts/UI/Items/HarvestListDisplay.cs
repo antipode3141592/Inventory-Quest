@@ -37,7 +37,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnHarvestStartedHandler(object sender, EventArgs e)
         {
-            SetContainers();
+            SetContainerIcons();
         }
 
         public void ContainerSelected(string containerGuid)
@@ -63,7 +63,7 @@ namespace InventoryQuest.UI.Menus
             }
         }
 
-        public void SetContainers()
+        public void SetContainerIcons()
         {
             if (_harvestManager.Piles.Count == 0) return;
             foreach (var pile in _harvestManager.Piles.Values)

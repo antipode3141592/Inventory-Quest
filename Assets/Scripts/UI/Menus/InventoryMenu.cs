@@ -10,22 +10,21 @@ namespace InventoryQuest.UI.Menus
     public class InventoryMenu : Menu
     {
         IPartyManager _partyManager;
-        IRewardManager _rewardManager;
         IInputManager _inputManager;
+        IContainerManager _containerManager;
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
         [SerializeField] ContainerDisplay lootContainerDisplay;
         [SerializeField] Button closeInventoryButton;
-
         [SerializeField] ItemDetailDisplay itemDetailDisplay;
         [SerializeField] ItemDetailDisplay heldItemDetailDisplay;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager, IInputManager inputManager)
+        public void Init(IPartyManager partyManager, IInputManager inputManager, IContainerManager containerManager)
         {
             _partyManager = partyManager;
-            _rewardManager = rewardManager;
             _inputManager = inputManager;
+            _containerManager = containerManager;
         }
 
         void Start()
@@ -33,8 +32,10 @@ namespace InventoryQuest.UI.Menus
             closeInventoryButton.onClick.AddListener(CloseInventory);
 
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
-            _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
-            _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
+
+            _containerManager.OnContainerSelected += OnContainerSelectedHandler;
+            _containerManager.OnContainersDestroyed += OnContainersDestroyedHandler;
+            
             _inputManager.OnItemUsed += OnItemUsedHandler;
         }
 
@@ -70,12 +71,12 @@ namespace InventoryQuest.UI.Menus
             characterContainerDisplay.SetContainer(container);
         }
 
-        void OnLootPileSelectedHandler(object sender, IContainer e)
+        void OnContainerSelectedHandler(object sender, IContainer e)
         {
             lootContainerDisplay.SetContainer(e);
         }
 
-        void OnRewardsClearedHandler(object sender, EventArgs e)
+        void OnContainersDestroyedHandler(object sender, EventArgs e)
         {
             lootContainerDisplay.SetContainer(null);
         }

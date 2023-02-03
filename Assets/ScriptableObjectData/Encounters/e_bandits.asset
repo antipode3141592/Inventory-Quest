@@ -28,7 +28,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 1|Data.Encounters.SkillTest, Data
@@ -210,8 +210,8 @@ MonoBehaviour:
       Entry: 3
       Data: 200
     - Name: successMessage
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: The bandits leave the party in peace.
     - Name: failureMessage
       Entry: 1
       Data: Unimpressed, the bandits beat up the party and take their gold.
@@ -262,6 +262,56 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|Data.Encounters.GiveItems, Data
+    - Name: description
+      Entry: 1
+      Data: Pay "Road Tax"
+    - Name: requiredItem
+      Entry: 10
+      Data: 0
+    - Name: targetQty
+      Entry: 3
+      Data: 100
+    - Name: experience
+      Entry: 3
+      Data: 50
+    - Name: successMessage
+      Entry: 1
+      Data: The bandits let the party pass.
+    - Name: failureMessage
+      Entry: 6
+      Data: 
+    - Name: rewards
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
     - Name: 
       Entry: 13
       Data: 

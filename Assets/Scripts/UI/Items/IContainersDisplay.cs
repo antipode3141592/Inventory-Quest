@@ -4,6 +4,6 @@
     {
         void DestroyContainers();
         void ContainerSelected(string containerGuid);
-        void SetContainers();
+        void SetContainerIcons();
     }
 }

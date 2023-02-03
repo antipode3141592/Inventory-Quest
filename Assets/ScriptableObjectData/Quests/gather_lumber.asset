@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722a17429c6ad18448893e6cfdb4de76, type: 3}
   m_Name: LuaQuestAction
   m_EditorClassIdentifier: 
-  m_luaCode: 'ItemsRetrieved = CountItemInParty("log_standard_length_10");
-
-    SetQuestState("delivery_intro",
-    "unassigned");'
+  m_luaCode: TrackItemQuantity("ItemsRetrieved","log_standard_length_10",4);
 --- !u!114 &-7764992378137652748
 MonoBehaviour:
   m_ObjectHideFlags: 1

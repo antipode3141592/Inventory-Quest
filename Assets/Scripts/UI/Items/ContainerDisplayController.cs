@@ -9,34 +9,35 @@ namespace InventoryQuest.UI
     public class ContainerDisplayController : MonoBehaviour
     {
         IPartyManager _partyManager;
-        IRewardManager _rewardManager;
+        IContainerManager _containerManager;
 
         [SerializeField] ContainerDisplay characterContainerDisplay;
         [SerializeField] ContainerDisplay lootContainerDisplay;
 
 
         [Inject]
-        public void Init(IPartyManager partyManager, IRewardManager rewardManager)
+        public void Init(IPartyManager partyManager, IContainerManager containerManager)
         {
             _partyManager = partyManager;
-            _rewardManager = rewardManager;
+            _containerManager = containerManager;
         }
 
         void Start()
         {
             _partyManager.CurrentParty.OnPartyMemberSelected += OnPartyMemberSelectedHandler;
-            _rewardManager.OnRewardsCleared += OnRewardsClearedHandler;
-            _rewardManager.OnPileSelected += OnLootPileSelectedHandler;
+
+            _containerManager.OnContainerSelected += OnContainerSelectedHandler;
+            _containerManager.OnContainersDestroyed += OnContainersDestroyedHandler;
         }
 
-        void OnLootPileSelectedHandler(object sender, IContainer e)
-        {
-            ConnectLootContainer(e);
-        }
-
-        void OnRewardsClearedHandler(object sender, EventArgs e)
+        void OnContainersDestroyedHandler(object sender, EventArgs e)
         {
             DisconnectLootContainer();
+        }
+
+        void OnContainerSelectedHandler(object sender, IContainer e)
+        {
+            ConnectLootContainer(e);
         }
 
         #region Connect Containers
@@ -49,11 +50,6 @@ namespace InventoryQuest.UI
         public void ConnectLootContainer(IContainer lootContainer)
         {
             lootContainerDisplay.SetContainer(lootContainer);
-        }
-
-        void DisconnectCharacterContainer()
-        {
-            characterContainerDisplay.SetContainer(null);
         }
 
         void DisconnectLootContainer()

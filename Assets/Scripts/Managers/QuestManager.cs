@@ -1,6 +1,8 @@
 ﻿using Data.Items;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
+using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -10,12 +12,16 @@ namespace InventoryQuest.Managers
     {
         IPartyManager _partyManager;
         IItemDataSource _itemDataSource;
+        IContainerManager _containerManager;
+
+        public event EventHandler<IContainer> OnQuestContainerAvailable;
 
         [Inject]
-        public void Init(IPartyManager partyManager, IItemDataSource itemDataSource)
+        public void Init(IPartyManager partyManager, IItemDataSource itemDataSource, IContainerManager containerManager)
         {
             _partyManager = partyManager;
             _itemDataSource = itemDataSource;
+            _containerManager = containerManager;
         }
 
         void Start()
@@ -24,6 +30,8 @@ namespace InventoryQuest.Managers
             Lua.RegisterFunction("CountItemInParty", this, SymbolExtensions.GetMethodInfo(() => CountItemInPartyInventory(string.Empty)));
             Lua.RegisterFunction("RemoveItemFromParty", this, SymbolExtensions.GetMethodInfo(() => RemoveItemFromPartyInventory(string.Empty, 0)));
             Lua.RegisterFunction("UpdateQuestCounter", this, SymbolExtensions.GetMethodInfo(() => UpdateQuestItemCounter(string.Empty, string.Empty)));
+            Lua.RegisterFunction("TrackItemQuantity", this, SymbolExtensions.GetMethodInfo(() => TrackItemQuantity(string.Empty, string.Empty, 0)));
+            Lua.RegisterFunction("OfferQuestContainer", this, SymbolExtensions.GetMethodInfo(() => OfferQuestContainer(string.Empty, string.Empty, 0)));
         }
 
         public void AddItemToPartyInventory(string itemId)
@@ -45,14 +53,44 @@ namespace InventoryQuest.Managers
 
         public void UpdateQuestItemCounter(string itemId, string questCounter)
         {
-            MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, (int)CountItemInPartyInventory(itemId));
+            MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, CountItemInPartyInventory(itemId));
         }
 
         public void RemoveItemFromPartyInventory(string itemId, double minToRemove)
         {
-            _partyManager.CurrentParty.RemoveItemFromPartyInventory(itemId, minToRemove);
+            int qtyRemoved = (int)_partyManager.CurrentParty.RemoveItemFromPartyInventory(itemId, minToRemove);
             
-            QuestLog.Log($"{(int)minToRemove}x {_itemDataSource.GetById(itemId).Name} removed from party inventory.");
+            QuestLog.Log($"{_itemDataSource.GetById(itemId).Name} x{qtyRemoved} removed from party inventory.");
+        }
+
+        public void TrackItemQuantity(string questCounter, string itemId, double targetQuantity)
+        {
+            StartCoroutine(ItemTracking(questCounter, itemId, targetQuantity));
+        }
+
+        IEnumerator ItemTracking(string questCounter, string itemId, double targetQuantity)
+        {
+            double currentQuantity;
+            do
+            {
+                yield return new WaitForSeconds(1f);
+                currentQuantity = CountItemInPartyInventory(itemId);
+                MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, currentQuantity);
+            } while (currentQuantity >= targetQuantity);
+            Debug.Log($"QuestCounter {questCounter} has reached target quantity: {targetQuantity}");
+        }
+
+        public void OfferQuestContainer(string containerItemId, string startingItemId, double startingItemQuantity)
+        {
+            var container = _containerManager.AddContainer(containerItemId);
+            if (startingItemId != string.Empty && startingItemQuantity >= 0)
+            {
+                IItem item = ItemFactory.GetItem(_itemDataSource.GetById(startingItemId));
+                if (item is null) return;
+                if (item.Stats.IsStackable)
+                    item.Quantity = Mathf.Clamp((int)startingItemQuantity, 1, item.Stats.MaxQuantity);
+                ItemPlacementHelpers.TryAutoPlaceToContainer(container, item);
+            }
         }
     }
 }

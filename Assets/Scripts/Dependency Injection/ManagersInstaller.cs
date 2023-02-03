@@ -36,6 +36,8 @@ namespace InventoryQuest
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<ISceneController>().To<SceneController>()
                 .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IContainerManager>().To<ContainerManager>()
+                .FromComponentInHierarchy().AsSingle();
         }
     }
 }
