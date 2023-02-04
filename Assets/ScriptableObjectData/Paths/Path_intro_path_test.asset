@@ -40,6 +40,6 @@ MonoBehaviour:
       Data: 
   id: intro_path
   _name: A Stroll to Destinationville
-  startLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
+  startLocationStats: {fileID: 11400000, guid: 2de467733d39fd74db3b4930aa8d968f, type: 2}
   endLocationStats: {fileID: 11400000, guid: 19fe18c9602b0864da582ddff71c67aa, type: 2}
   audioClip: {fileID: 8300000, guid: d2ce5310591fac8488e99673aa757581, type: 3}

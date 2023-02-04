@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Locations;
+using Sirenix.OdinInspector;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,12 +10,12 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class MapLocationIcon: MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class MapLocationIcon: SerializedMonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         
         ILocationDataSource _locationDataSource;
 
-        [SerializeField] protected string _locationId;
+        [SerializeField] LocationStatsSO _locationStats;
         [SerializeField] Image _icon;
         [SerializeField] Image _highlight;
         [SerializeField] TextMeshProUGUI _locationNameText;
@@ -22,7 +23,7 @@ namespace InventoryQuest.UI
 
         public event EventHandler<string> OnLocationSelected;
 
-        public string LocationId => _locationId;
+        public string LocationId => _locationStats.Id;
 
         [Inject]
         public void Init(ILocationDataSource locationDataSource)
@@ -34,7 +35,7 @@ namespace InventoryQuest.UI
         {
             _locationNameText.text = "";
             _highlight.color = Color.clear;
-            var locationStats = _locationDataSource.GetById(_locationId);
+            var locationStats = _locationDataSource.GetById(_locationStats.Id);
             if (locationStats is null)
                 return;
             _icon.sprite = locationStats.ThumbnailSprite;
@@ -48,7 +49,7 @@ namespace InventoryQuest.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            OnLocationSelected?.Invoke(this, _locationId);
+            OnLocationSelected?.Invoke(this, _locationStats.Id);
         }
 
         public void OnPointerDown(PointerEventData eventData)

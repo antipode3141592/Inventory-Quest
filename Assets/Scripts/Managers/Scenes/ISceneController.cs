@@ -6,5 +6,7 @@ namespace InventoryQuest.Managers
     {
         public event EventHandler RequestShowLoading;
         public event EventHandler RequestHideLoading;
+
+        public void LoadLocation(string location);
     }
 }

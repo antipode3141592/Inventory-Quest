@@ -1,17 +1,18 @@
 using Data.Encounters;
+using Data.Locations;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace InventoryQuest.UI
 {
-    public class MapPathLine : MonoBehaviour
+    public class MapPathLine : SerializedMonoBehaviour
     {
         [SerializeField] Image BackgroundImage;
         [SerializeField] Image encounterIcon;
-
-        [SerializeField] string locationAId;
-        [SerializeField] string locationBId;
+        [SerializeField] LocationStatsSO locationAStats;
+        [SerializeField] LocationStatsSO locationBStats;
 
         [SerializeField] Color inactivePathColor = new Color(0.5f, 0.5f, 0.5f, 1f);
         [SerializeField] Color activePathColor = new Color(1f, 1f, 1f, 1f);
@@ -19,8 +20,8 @@ namespace InventoryQuest.UI
 
         readonly List<Image> encounterBackgroundIcons = new();
 
-        public string LocationAId => locationAId;
-        public string LocationBId => locationBId;
+        public string LocationAId => locationAStats.Id;
+        public string LocationBId => locationBStats.Id;
 
         public void ActivatePath(IPathStats pathStats)
         {

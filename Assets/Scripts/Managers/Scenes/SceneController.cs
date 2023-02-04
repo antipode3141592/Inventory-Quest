@@ -15,7 +15,7 @@ namespace InventoryQuest.Managers
         public event EventHandler RequestShowLoading;
         public event EventHandler RequestHideLoading;
 
-        string _currentSceneName;
+        string _currentSceneName = string.Empty;
 
         [Inject]
         public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IGameManager gameManager)
@@ -48,14 +48,17 @@ namespace InventoryQuest.Managers
             UnloadCurrentScene();
         }
 
-        private void UnloadCurrentScene()
+        void UnloadCurrentScene()
         {
             if (Debug.isDebugBuild)
-                Debug.Log($"Current Scene: { _currentSceneName}");
+                Debug.Log($"Unload Current Scene: { _currentSceneName}");
             int index = SceneUtility.GetBuildIndexByScenePath(_currentSceneName);
-            if (Debug.isDebugBuild)
-                Debug.Log($"...at build index{index}");
-            if (index == -1) return;
+            if (index == -1)
+            {
+                if (Debug.isDebugBuild)
+                    Debug.Log($"build index invalid, unload skipped");
+                return; 
+            }
             var scene = SceneManager.GetSceneByBuildIndex(index);
             if (!scene.IsValid())
             {
@@ -73,6 +76,7 @@ namespace InventoryQuest.Managers
             var awaitUnload = SceneManager.UnloadSceneAsync(index);
             while (!awaitUnload.isDone)
                 yield return null;
+            _currentSceneName = string.Empty;
             if(Debug.isDebugBuild)
                 Debug.Log($"Scene unloaded");
         }
@@ -81,7 +85,8 @@ namespace InventoryQuest.Managers
         {
             if (Debug.isDebugBuild)
                 Debug.Log($"OnLocationSet handling event from {sender}");
-            StartCoroutine(AwaitLoad(sceneName));
+            //StartCoroutine(AwaitLoad(sceneName));
+            StartCoroutine(UnloadThenLoad(sceneName));
         }
 
         IEnumerator AwaitLoad(string sceneName)
@@ -97,7 +102,46 @@ namespace InventoryQuest.Managers
             if (Debug.isDebugBuild)
                 Debug.Log($"Scene Loaded: {sceneName}");
             RequestHideLoading?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void LoadLocation(string locationSceneName)
+        {
+            StartCoroutine(UnloadThenLoad(locationSceneName));
+        }
+
+        IEnumerator UnloadThenLoad(string sceneName)
+        {
+            if (Debug.isDebugBuild)
+                Debug.Log($"Unload Current Scene: { _currentSceneName}, then load {sceneName}");
+            RequestShowLoading?.Invoke(this, EventArgs.Empty);
+            //try unload
+            int index = SceneUtility.GetBuildIndexByScenePath(_currentSceneName);
+            if (index != -1)
+            {
+                var scene = SceneManager.GetSceneByBuildIndex(index);
+                if (scene.IsValid())
+                {
+                    if (Debug.isDebugBuild)
+                        Debug.Log($"Unloading Current Scene: {_currentSceneName}...");
+                    var awaitUnload = SceneManager.UnloadSceneAsync(index);
+                    while (!awaitUnload.isDone)
+                        yield return null;
+                    _currentSceneName = string.Empty;
+                    if (Debug.isDebugBuild)
+                        Debug.Log($"Scene unloaded");
+                }
+            }
             
+            //load
+            if (Debug.isDebugBuild)
+                Debug.Log($"Beginning Scene Load: {sceneName}...");
+            var awaitLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            _currentSceneName = sceneName;
+            while (!awaitLoad.isDone)
+                yield return null;
+            if (Debug.isDebugBuild)
+                Debug.Log($"Scene Loaded: {sceneName}");
+            RequestHideLoading?.Invoke(this, EventArgs.Empty);
         }
     }
 }

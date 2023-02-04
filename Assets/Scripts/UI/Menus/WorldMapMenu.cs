@@ -101,8 +101,6 @@ namespace InventoryQuest.UI.Menus
 
             foreach (var path in _mapPathLines)
             {
-
-                
                 if ((path.LocationAId == currentId || path.LocationBId == currentId)
                     &&(path.LocationAId == destinationId || path.LocationBId == destinationId))
                 {

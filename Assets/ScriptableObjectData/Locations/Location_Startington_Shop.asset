@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2321ee6bf177ec849942a9cad1b68ed2, type: 3}
-  m_Name: Location_Startington_HealingHut
+  m_Name: Location_Startington_Shop
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,12 +21,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  id: startington_healinghut
-  _name: Startington Healing Hut
-  displayName: Healing Hut
-  thumbnailSprite: {fileID: 21300000, guid: 5dd295beb9b2c5f4cb473e4447f0eae7, type: 3}
-  scenePath: Assets/Scenes/Locations/location_Startington_HealingHut.unity
+  id: startington_shop
+  _name: Startington General Store
+  displayName: General Store
+  thumbnailSprite: {fileID: 21300000, guid: fcd0f586fba30944795d326e4d9b3616, type: 3}
+  scenePath: Assets/Scenes/Locations/location_Startington_Shop.unity
   characterIds: []
   locationIds: []
   isKnown: 1
-  audioClip: {fileID: 8300000, guid: 0643908ea2a90c341a1f488fb302af76, type: 3}
+  audioClip: {fileID: 0}

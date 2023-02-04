@@ -194,6 +194,7 @@ namespace InventoryQuest.Managers
 
         void LeftClickRepsonse(IContainer container, Coor clickedCoor)
         {
+            if (container is null) return;
             if (HoldingItem is null)
             {
                 Debug.Log($"TryTake()", this);

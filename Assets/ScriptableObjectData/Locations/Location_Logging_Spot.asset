@@ -30,4 +30,5 @@ MonoBehaviour:
   - logging_manager
   locationIds: []
   isKnown: 0
+  isTravelPoint: 1
   audioClip: {fileID: 0}

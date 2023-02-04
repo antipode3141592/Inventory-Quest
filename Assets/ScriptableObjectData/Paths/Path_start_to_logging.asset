@@ -44,6 +44,6 @@ MonoBehaviour:
       Data: 
   id: start_to_logging
   _name: 
-  startLocationStats: {fileID: 11400000, guid: 26e17334e0ec8124d96a540108ef9a01, type: 2}
+  startLocationStats: {fileID: 11400000, guid: 2de467733d39fd74db3b4930aa8d968f, type: 2}
   endLocationStats: {fileID: 11400000, guid: c7b5923c6bd26c145abcfdc1e728c444, type: 2}
   audioClip: {fileID: 0}

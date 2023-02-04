@@ -49,6 +49,7 @@ namespace InventoryQuest.UI.Menus
             var stats = _gameStateDataSource.CurrentLocation.Stats;
             locationName.text = stats.DisplayName;
             locationThumbnailIcon.sprite = stats.ThumbnailSprite;
+            MainMapButton.gameObject.SetActive(stats.IsTravelPoint);
         }
 
         void Inventory()

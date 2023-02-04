@@ -5,7 +5,7 @@ namespace Data.Locations
 {
     public class LocationStats : ILocationStats
     {
-        public LocationStats(string id, string name, List<string> characterIds = null, List<string> locationIds = null, Sprite thumbnailSprite = null, bool isKnown = false, string scenePath = "", AudioClip audioClip = null)
+        public LocationStats(string id, string name, List<string> characterIds = null, List<string> locationIds = null, Sprite thumbnailSprite = null, bool isKnown = false, bool isTravelPoint = false, string scenePath = "", AudioClip audioClip = null)
         {
             Id = id;
             Name = name;
@@ -14,6 +14,7 @@ namespace Data.Locations
             DisplayName = name;
             ThumbnailSprite = thumbnailSprite;
             IsKnown = isKnown;
+            IsTravelPoint = isTravelPoint;
             ScenePath = scenePath;
             AudioClip = audioClip;
          }
@@ -35,5 +36,7 @@ namespace Data.Locations
         public string ScenePath { get; }
 
         public AudioClip AudioClip { get; }
+
+        public bool IsTravelPoint { get; }
     }
 }

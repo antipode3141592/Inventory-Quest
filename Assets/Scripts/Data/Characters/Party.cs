@@ -9,6 +9,9 @@ namespace Data.Characters
     {
         public Dictionary<string, ICharacter> Characters;
         public List<string> PartyDisplayOrder;
+        public List<string> FrontRow { get; } = new();
+        public List<string> SupportRow { get; } = new();
+
 
         public string SelectedPartyMemberGuId { get; set; }
 
@@ -110,20 +113,22 @@ namespace Data.Characters
 
         }
 
-        public void RemoveItemFromPartyInventory(string itemId, double amountToRemove)
+        public double RemoveItemFromPartyInventory(string itemId, double amountToRemove)
         {
             double runningTotal = 0;
             foreach (var character in Characters)
             {
-                foreach (var content in character.Value.Backpack.Contents)
+                //foreach (var content in character.Value.Backpack.Contents)
+                for (int i = 0; i < character.Value.Backpack.Contents.Count; i++)
                 {
+                    var content = character.Value.Backpack.Contents.ElementAt(i);
                     if (content.Value.Item.Id == itemId)
                     {
                         int clampedAmount = Mathf.Clamp((int)amountToRemove, 0, content.Value.Item.Quantity);
                         content.Value.Item.Quantity -= clampedAmount;
                         runningTotal += clampedAmount;
                         if (runningTotal >= amountToRemove)
-                            return;
+                            return runningTotal;
                     }
                 }
                 foreach (var slot in character.Value.EquipmentSlots)
@@ -136,11 +141,12 @@ namespace Data.Characters
                             runningTotal += equippedItem.Quantity;
                             slot.Value.TryUnequip(out _);
                             if (runningTotal >= amountToRemove)
-                                return;
+                                return runningTotal;
                         }
                     }
                 }
             }
+            return runningTotal;
         }
 
         public double CountItemInParty(string itemId)
