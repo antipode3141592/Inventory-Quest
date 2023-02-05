@@ -28,7 +28,6 @@ namespace InventoryQuest.Managers
         public void Tick()
         {
             _inputManager.CheckRotateAction();
-            _inputManager.CheckSubmitAction();
         }
     }
 }

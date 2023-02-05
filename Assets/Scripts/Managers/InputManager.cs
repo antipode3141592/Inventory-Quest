@@ -43,7 +43,6 @@ namespace InventoryQuest.Managers
                     holdingItem.RequestDestruction += ItemDestructionHandler;
                     OnItemHeld?.Invoke(this, holdingItem);
                 }
-                
             }
         }
 
@@ -57,9 +56,6 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<IItem> OnItemUsed;
 
-        public event EventHandler OnSubmitDown;
-        public event EventHandler OnSubmitHold;
-        public event EventHandler OnSubmitUp;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
 
@@ -123,16 +119,6 @@ namespace InventoryQuest.Managers
                 Debug.Log($"CheckRotateAction() detected CCW action");
                 OnRotateCCW?.Invoke(this, new RotationEventArgs(HoldingItem.CurrentFacing));
             }
-        }
-
-        public void CheckSubmitAction()
-        {
-            if (player.GetButtonDown("UISubmit"))
-                OnSubmitDown?.Invoke(this, EventArgs.Empty);
-            if (player.GetButton("UISubmit"))
-                OnSubmitHold?.Invoke(this, EventArgs.Empty);
-            if (player.GetButtonUp("UISubmit"))
-                OnSubmitUp?.Invoke(this, EventArgs.Empty);
         }
 
         public void OpenInventory()

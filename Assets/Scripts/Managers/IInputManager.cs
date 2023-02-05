@@ -15,9 +15,6 @@ namespace InventoryQuest.Managers
         public event EventHandler OnItemPlaced;
         public event EventHandler<RotationEventArgs> OnRotateCW;
         public event EventHandler<RotationEventArgs> OnRotateCCW;
-        public event EventHandler OnSubmitDown;
-        public event EventHandler OnSubmitHold;
-        public event EventHandler OnSubmitUp;
         public event EventHandler OpenInventoryCommand;
         public event EventHandler CloseInventoryCommand;
         public event EventHandler<IItem> ShowItemDetailsCommand;
@@ -28,7 +25,6 @@ namespace InventoryQuest.Managers
         public void OpenInventory();
         public void CloseInventory();
         public void CheckRotateAction();
-        public void CheckSubmitAction();
         public void ShowItemDetails(IItem item);
         public void HideItemDetails();
         public void ContainerDisplayClickHandler(IContainer container, PointerEventData pointerEventData, Coor clickedCoor);

@@ -10,16 +10,11 @@ using Zenject;
 
 namespace InventoryQuest.UI
 {
-    public class PressAndHoldButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IOnMenuShow, IOnMenuHide
+    public class PressAndHoldButton : MonoBehaviour, IOnMenuShow, IOnMenuHide, IPointerDownHandler, IPointerUpHandler
     {
-        IInputManager _inputManager;
-
-        bool selected = false;
-        bool filling = false;
         float timer = 0f;
         float fillRatio = 0f;
-
-        int holdCount = 0;
+        bool selected = false;
 
         [SerializeField, Range(0f, 1f)] float MinHoldTime = .7f;
         [SerializeField] Color fillColor;
@@ -27,68 +22,50 @@ namespace InventoryQuest.UI
         [SerializeField] Image fillForeground;
         [SerializeField] TextMeshProUGUI buttonText;
 
-
         public event EventHandler OnPointerHoldSuccess;
         public event EventHandler OnTimerStart;
         public event EventHandler OnTimerReset;
 
-        Selectable selectable;
-
-        public void Select() => selectable.Select();
-
-        [Inject]
-        public void Init(IInputManager inputManager)
-        {
-            _inputManager = inputManager;
-        }
-
         void Awake()
         {
             fillForeground.color = fillColor;
-            selectable = GetComponent<Selectable>();
             timer = 0f;
             fillRatio = 0f;
             SetFill(fillRatio);
         }
 
-        void SubmitUpHandler(object sender, EventArgs e)
-        {
-            ResetTimer();
-        }
+        //void Update()
+        //{
+        //    if (!available) return;
+        //    if (Input.GetMouseButton(0) && selected)
+        //    {
+        //        timer += Time.deltaTime;
+        //        if (Debug.isDebugBuild)
+        //            Debug.Log($"timer: {timer} of {MinHoldTime}", this);
+        //    }
+        //    else
+        //        ResetTimer();
+        //    fillRatio = timer / MinHoldTime;
+        //    SetFill(fillRatio);
+        //    if (timer >= MinHoldTime)
+        //    {
+        //        OnPointerHoldSuccess?.Invoke(this, EventArgs.Empty);
+        //        ResetTimer();
+        //    }
+        //}
 
-        void SubmitHoldHandler(object sender, EventArgs e)
-        {
-            if (filling) return;
-            if (!selected) return;
-            if (holdCount < 3)
-            {
-                holdCount++;
-                return;
-            }
-            StartCoroutine(Filling());
-        }
+        //void ResetTimer()
+        //{
+        //    selected = false;
+        //    timer = 0f;
+        //}
 
-        void SubmitDownHandler(object sender, EventArgs e)
-        {
-            
-            
-        }
-
-        IEnumerator Filling()
-        {
-            filling = true;
-            while (timer < MinHoldTime)
-            {
-                timer += Time.deltaTime;
-                fillRatio = timer / MinHoldTime;
-                SetFill(fillRatio);
-                yield return null;
-            }
-            if (filling)
-                OnPointerHoldSuccess?.Invoke(this, EventArgs.Empty);
-            timer = 0f;
-            filling = false;
-        }
+        //void OnMouseDown()
+        //{
+        //    if (Debug.isDebugBuild)
+        //        Debug.Log($"OnMouseDown() on {gameObject.name}", this);
+        //    selected = true;
+        //}
 
         void SetFill(float fillPercentage)
         {
@@ -100,38 +77,50 @@ namespace InventoryQuest.UI
             buttonText.text = text;
         }
 
-        public void OnSelect(BaseEventData eventData)
-        {
-            selected = true;
-        }
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            selected = false;
-            ResetTimer();
-        }
+        bool available;
 
         public void OnShow()
         {
-            _inputManager.OnSubmitDown += SubmitDownHandler;
-            _inputManager.OnSubmitHold += SubmitHoldHandler;
-            _inputManager.OnSubmitUp += SubmitUpHandler;
+            available = true;
         }
 
         public void OnHide()
         {
-            _inputManager.OnSubmitDown -= SubmitDownHandler;
-            _inputManager.OnSubmitHold -= SubmitHoldHandler;
-            _inputManager.OnSubmitUp -= SubmitUpHandler;
+            available = false;
         }
 
-        void ResetTimer()
+        public void OnPointerDown(PointerEventData eventData)
         {
-            StopAllCoroutines();
-            SetFill(0f);
+            if (Debug.isDebugBuild)
+                Debug.Log($"OnPointerDown() on {gameObject.name}", this);
+            filling = true;
+            StartCoroutine(Filling());
+        }
+
+        bool filling;
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
             filling = false;
+        }
+
+        IEnumerator Filling()
+        {
             timer = 0f;
-            holdCount = 0;
+            while(available && filling && Input.GetMouseButton(0))
+            {
+                timer += Time.deltaTime;
+                fillRatio = timer / MinHoldTime;
+                SetFill(fillRatio);
+                if (timer >= MinHoldTime)
+                {
+                    OnPointerHoldSuccess?.Invoke(this, EventArgs.Empty);
+                    timer = 0f;
+                    filling = false;
+                }
+                yield return null;
+            }
+            SetFill(0);
         }
     }
 }

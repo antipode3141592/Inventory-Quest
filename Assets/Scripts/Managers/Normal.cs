@@ -27,7 +27,6 @@ namespace InventoryQuest.Managers
 
         public void Tick()
         {
-            _inputManager.CheckSubmitAction();
         }
     }
 }
