@@ -63,9 +63,10 @@ namespace InventoryQuest.UI.Menus
             _encounterManager.Wayfairing.StateEntered += OnWayfairingStart;
             _encounterManager.Resolving.StateEntered += OnResolvingStart;
 
+            _adventureManager.InLocation.StateEntered += OnLocationEnteredHandler;
             _adventureManager.Pathfinding.StateEntered += OnPathfindingStartedHandler;
             _adventureManager.Adventuring.StateEntered += OnAdventureStartedHandler;
-            _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
+            //_adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
 
             _harvestManager.Harvesting.StateEntered += OnHarvestingStartedHandler;
             _harvestManager.CleaningUpHarvest.StateEntered += OnHarvestCleaningUpStartedHandler;
@@ -81,6 +82,11 @@ namespace InventoryQuest.UI.Menus
             yield return new WaitForSeconds(1f);
             _loadingScreen.FadeOff();
             OpenMenu(_mainMenuKey);
+        }
+
+        private void OnLocationEnteredHandler(object sender, EventArgs e)
+        {
+            OpenMenu(typeof(LocationMenu));
         }
 
         private void OnContainersAvailablerHandler(object sender, EventArgs e)
@@ -154,10 +160,10 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(typeof(TravelingMenu));
         }
 
-        void OnAdventureCompletedHandler(object sender, EventArgs e)
-        {
-            OpenMenu(typeof(LocationMenu));
-        }
+        //void OnAdventureCompletedHandler(object sender, EventArgs e)
+        //{
+        //    OpenMenu(typeof(LocationMenu));
+        //}
 
         void OpenMenu(Type menuType)
         {

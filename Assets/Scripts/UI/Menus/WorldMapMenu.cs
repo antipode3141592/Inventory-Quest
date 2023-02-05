@@ -1,4 +1,3 @@
-using Data;
 using Data.Encounters;
 using Data.Locations;
 using InventoryQuest.Managers;
@@ -25,6 +24,7 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] TextMeshProUGUI _destinationLocationText;
         [SerializeField] TextMeshProUGUI _pathOverviewText;
         [SerializeField] PressAndHoldButton _continueButton;
+        [SerializeField] PressAndHoldButton _returnButton;
 
         [Inject]
         public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource, ILocationDataSource locationDataSource)
@@ -43,9 +43,13 @@ namespace InventoryQuest.UI.Menus
                 location.OnLocationSelected += OnLocationSelectedHandler;
             }
             _continueButton.OnPointerHoldSuccess += OnPathSelected;
+            _returnButton.OnPointerHoldSuccess += OnReturnSelected;
         }
 
-        
+        private void OnReturnSelected(object sender, EventArgs e)
+        {
+            _adventureManager.Pathfinding.Return();
+        }
 
         private void OnPathSelected(object sender, EventArgs e)
         {

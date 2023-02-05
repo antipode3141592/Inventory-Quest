@@ -45,12 +45,13 @@ namespace InventoryQuest.Managers
         {
             _stateMachine = new StateMachine(this);
             _adventureManagerStart = new AdventureManagerStart(_gameManager);
-            _pathfinding = new Pathfinding();
+            _pathfinding = new Pathfinding(_gameStateDataSource);
             _adventuring = new Adventuring(_encounterManager, _gameStateDataSource, _audioManager);
             _inLocation = new InLocation(_gameStateDataSource, _audioManager);
 
             At(AdventureManagerStart, InLocation, IsGameBeginning());
             At(InLocation, Pathfinding, BeginPathfinding());
+            At(Pathfinding, InLocation, ReturnToLocation());
             At(Pathfinding, Adventuring, BeginAdventure());
             At(Adventuring, InLocation, EndAdventure());
             AtAny(AdventureManagerStart, IsGameOver());
@@ -59,6 +60,7 @@ namespace InventoryQuest.Managers
             void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
 
             Func<bool> BeginPathfinding() => () => InLocation.EndState;
+            Func<bool> ReturnToLocation() => () => Pathfinding.ReturnState;
             Func<bool> BeginAdventure() => () => Pathfinding.EndState;
             Func<bool> EndAdventure() => () => Adventuring.EndAdventure;
             Func<bool> IsGameBeginning() => () => _gameManager.IsGameBegining;

@@ -1,25 +1,30 @@
-﻿using Data;
-using Data.Encounters;
-using FiniteStateMachine;
+﻿using FiniteStateMachine;
 using System;
 
 namespace InventoryQuest.Managers.States
 {
     public class Pathfinding : IState
     {
-        public bool EndState = false;
+        IGameStateDataSource _gameStateDataSource;
+
+        bool endState = false;
+        bool returnState = false;
+
+        public bool EndState => endState;
+        public bool ReturnState => returnState;
 
         public event EventHandler StateEntered;
         public event EventHandler StateExited;
 
-        public Pathfinding()
+        public Pathfinding(IGameStateDataSource gameStateDataSource)
         {
-
+            _gameStateDataSource = gameStateDataSource;
         }
 
         public void OnEnter()
         {
-            EndState = false;
+            endState = false;
+            returnState = false;
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 
@@ -35,7 +40,13 @@ namespace InventoryQuest.Managers.States
 
         public void Continue()
         {
-            EndState = true;
+            endState = true;
+        }
+
+        public void Return()
+        {
+            _gameStateDataSource.SetDestinationLocation(_gameStateDataSource.CurrentLocation.Stats.Id);
+            returnState = true;
         }
     }
 }
