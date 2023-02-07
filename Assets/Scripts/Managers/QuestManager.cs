@@ -82,7 +82,7 @@ namespace InventoryQuest.Managers
 
         public void OfferQuestContainer(string containerItemId, string startingItemId, double startingItemQuantity)
         {
-            var container = _containerManager.AddContainer(containerItemId);
+            var container = _containerManager.AddNewContainer(containerItemId);
             if (startingItemId != string.Empty && startingItemQuantity >= 0)
             {
                 IItem item = ItemFactory.GetItem(_itemDataSource.GetById(startingItemId));

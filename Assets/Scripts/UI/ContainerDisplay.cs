@@ -248,7 +248,6 @@ namespace InventoryQuest.UI
             _inputManager.ShowItemDetails(_container.Contents[_container.Grid[coor].storedItemGuId].Item);
         }
 
-
         void ViewDetailsTimerReset()
         {
             _inputManager.HideItemDetails();

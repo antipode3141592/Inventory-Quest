@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -118,35 +119,54 @@ namespace Data.Characters
             double runningTotal = 0;
             foreach (var character in Characters)
             {
-                //foreach (var content in character.Value.Backpack.Contents)
-                for (int i = 0; i < character.Value.Backpack.Contents.Count; i++)
+                foreach (var slot in character.Value.EquipmentSlots)
                 {
-                    var content = character.Value.Backpack.Contents.ElementAt(i);
-                    if (content.Value.Item.Id == itemId)
+                    var equippedItem = slot.Value.EquippedItem;
+                    //advance to next slot if no item is equipped
+                    if (slot.Value.EquippedItem is null)
+                        continue;
+                    //check if equipped item is container
+                    if (equippedItem.Components.ContainsKey(typeof(IContainer)))
                     {
-                        int clampedAmount = Mathf.Clamp((int)amountToRemove, 0, content.Value.Item.Quantity);
-                        content.Value.Item.Quantity -= clampedAmount;
-                        runningTotal += clampedAmount;
+                        var _container = equippedItem.Components[typeof(IContainer)] as IContainer;
+                        runningTotal = RemoveItemInContainer(itemId, runningTotal, amountToRemove, _container);
+                    }
+
+                    if (equippedItem.Id == itemId)
+                    {
+                        runningTotal += equippedItem.Quantity;
+                        slot.Value.TryUnequip(out _);
                         if (runningTotal >= amountToRemove)
                             return runningTotal;
                     }
                 }
-                foreach (var slot in character.Value.EquipmentSlots)
+            }
+            if (Debug.isDebugBuild)
+                Debug.Log($"RemoveItemFromPartyInventory({itemId}, {amountToRemove}) = x{runningTotal} removed");
+            return runningTotal;
+        }
+
+        static double RemoveItemInContainer(string itemId, double runningTotal, double amountToRemove, IContainer container)
+        {
+            double _runningTotal = runningTotal;
+            for (int i = 0; i < container.Contents.Count; i++)
+            {
+                var content = container.Contents.ElementAt(i);
+                if (content.Value.Item.Components.ContainsKey(typeof(IContainer)))
                 {
-                    var equippedItem = slot.Value.EquippedItem;
-                    if (slot.Value.EquippedItem is not null)
-                    {
-                        if (equippedItem.Id == itemId)
-                        {
-                            runningTotal += equippedItem.Quantity;
-                            slot.Value.TryUnequip(out _);
-                            if (runningTotal >= amountToRemove)
-                                return runningTotal;
-                        }
-                    }
+                    var _container = content.Value.Item.Components[typeof(IContainer)] as IContainer;
+                    _runningTotal = RemoveItemInContainer(itemId, _runningTotal, amountToRemove, _container);
+                }
+                if (content.Value.Item.Id == itemId)
+                {
+                    int clampedAmount = Mathf.Clamp((int)amountToRemove, 0, content.Value.Item.Quantity);
+                    content.Value.Item.Quantity -= clampedAmount;
+                    _runningTotal += clampedAmount;
+                    if (_runningTotal >= amountToRemove)
+                        return _runningTotal;
                 }
             }
-            return runningTotal;
+            return _runningTotal;
         }
 
         public double CountItemInParty(string itemId)
@@ -154,27 +174,41 @@ namespace Data.Characters
             double runningTotal = 0;
             foreach (var character in Characters.Values)
             {
-                foreach (var content in character.Backpack.Contents)
-                {
-                    if (content.Value.Item.Id == itemId)
-                    {
-                        runningTotal += content.Value.Item.Quantity;
-                    }
-                }
                 foreach (var slot in character.EquipmentSlots)
                 {
                     var equippedItem = slot.Value.EquippedItem;
-                    if (slot.Value.EquippedItem is not null)
+                    if (slot.Value.EquippedItem is null)
+                        continue;
+                    if (equippedItem.Components.ContainsKey(typeof(IContainer)))
                     {
-                        if (equippedItem.Id == itemId)
-                        {
-                            runningTotal += equippedItem.Quantity;
-                        }
-
+                        var _container = equippedItem.Components[typeof(IContainer)] as IContainer;
+                        runningTotal = CountItemInContainer(itemId, runningTotal, _container);
                     }
+                    if (equippedItem.Id == itemId)
+                        runningTotal += equippedItem.Quantity;   
                 }
             }
+            if (Debug.isDebugBuild)
+                Debug.Log($"CountItemInParty({itemId}) = {runningTotal}");
             return runningTotal;
+        }
+
+        static double CountItemInContainer(string itemId, double runningTotal, IContainer container)
+        {
+            double _runningTotal = runningTotal;
+            foreach (var content in container.Contents)
+            {
+                if (content.Value.Item.Id == itemId)
+                {
+                    _runningTotal += content.Value.Item.Quantity;
+                }
+                if (content.Value.Item.Components.ContainsKey(typeof(IContainer)))
+                {
+                    var _container = content.Value.Item.Components[typeof(IContainer)] as IContainer;
+                    _runningTotal = CountItemInContainer(itemId, _runningTotal, _container);
+                }
+            }
+            return _runningTotal;
         }
     }
 }

@@ -84,12 +84,12 @@ namespace InventoryQuest.UI.Menus
             OpenMenu(_mainMenuKey);
         }
 
-        private void OnLocationEnteredHandler(object sender, EventArgs e)
+        void OnLocationEnteredHandler(object sender, EventArgs e)
         {
             OpenMenu(typeof(LocationMenu));
         }
 
-        private void OnContainersAvailablerHandler(object sender, EventArgs e)
+        void OnContainersAvailablerHandler(object sender, EventArgs e)
         {
             OpenMenu(typeof(InventoryMenu));
         }
@@ -159,11 +159,6 @@ namespace InventoryQuest.UI.Menus
         {
             OpenMenu(typeof(TravelingMenu));
         }
-
-        //void OnAdventureCompletedHandler(object sender, EventArgs e)
-        //{
-        //    OpenMenu(typeof(LocationMenu));
-        //}
 
         void OpenMenu(Type menuType)
         {

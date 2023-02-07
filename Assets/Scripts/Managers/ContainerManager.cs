@@ -24,7 +24,7 @@ namespace InventoryQuest.Managers
             _itemDataSource = itemDataSource;
         }
 
-        public IContainer AddContainer(string itemId)
+        public IContainer AddNewContainer(string itemId)
         {
             var lootPile = ItemFactory.GetItem(_itemDataSource.GetById(itemId));
             var lootContainer = lootPile.Components[typeof(IContainer)] as IContainer;
@@ -33,6 +33,13 @@ namespace InventoryQuest.Managers
             OnContainersAvailable?.Invoke(this, EventArgs.Empty);
             return lootContainer;
         }
+
+        public void AddContainer(IContainer container)
+        {
+            Containers.Add(container.GuId, container);
+            OnContainersAvailable?.Invoke(this, EventArgs.Empty);
+        }
+
         public void DestroyContainers()
         {
             Debug.Log($"Destroying reward piles and items", this);

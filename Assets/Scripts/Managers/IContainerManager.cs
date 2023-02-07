@@ -12,7 +12,8 @@ namespace InventoryQuest.Managers
         public event EventHandler OnContainersDestroyed;
         public event EventHandler<IContainer> OnContainerSelected;
 
-        public IContainer AddContainer(string itemId);
+        public IContainer AddNewContainer(string itemId);
+        public void AddContainer(IContainer container);
         public void DestroyContainers();
         public void SelectContainer(string containerGuid);
     }

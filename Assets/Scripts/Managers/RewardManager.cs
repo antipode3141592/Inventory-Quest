@@ -90,7 +90,7 @@ namespace InventoryQuest.Managers
             ItemRewardStats itemReward = rewardStats as ItemRewardStats;
             if (itemReward is not null)
             {
-                var container = _containerManager.AddContainer("loot_pile_small");
+                var container = _containerManager.AddNewContainer("loot_pile_small");
                 if (container is null) return;
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container, ItemFactory.GetItem(_dataSource.GetById(itemReward.ItemId)));
                 PlaceRandomLootInContainer(container, "common_loot");
@@ -98,7 +98,7 @@ namespace InventoryQuest.Managers
             RandomItemRewardStats randomItemReward = rewardStats as RandomItemRewardStats;
             if (randomItemReward is not null)
             {
-                var container = _containerManager.AddContainer(randomItemReward.LootContainerId);
+                var container = _containerManager.AddNewContainer(randomItemReward.LootContainerId);
                 if (container is null) return;
                 PlaceRandomLootInContainer(container, randomItemReward.LootTableId);
             }

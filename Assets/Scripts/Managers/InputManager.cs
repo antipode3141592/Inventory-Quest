@@ -15,6 +15,7 @@ namespace InventoryQuest.Managers
     public class InputManager : MonoBehaviour, IInputManager
     {
         IPartyManager _partyManager;
+        IContainerManager _containerManager;
 
         Player player;
         readonly int playerId = 0;
@@ -65,9 +66,10 @@ namespace InventoryQuest.Managers
         public event EventHandler<EncounterModifier> OnEncounterModifierAdded;
 
         [Inject]
-        public void Init(IPartyManager partyManager)
+        public void Init(IPartyManager partyManager, IContainerManager containerManager)
         {
             _partyManager = partyManager;
+            _containerManager = containerManager;
         }
 
         void Awake()
@@ -164,7 +166,9 @@ namespace InventoryQuest.Managers
         void RightClickResponse(IContainer container, Coor clickedCoor)
         {
             var itemGuid = container.Grid[clickedCoor].storedItemGuId;
-            if (container.Contents.ContainsKey(itemGuid) && container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
+            if (!container.Contents.ContainsKey(itemGuid)) return;
+
+            if (container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IUsable)))
             {
                 var _usable = (container.Contents[itemGuid].Item.Components[typeof(IUsable)] as IUsable);
                 var character = _partyManager.CurrentParty.Characters[_partyManager.CurrentParty.SelectedPartyMemberGuId];
@@ -174,7 +178,12 @@ namespace InventoryQuest.Managers
                     if (_usable is EncounterLengthEffect encounterEffect)
                         OnEncounterModifierAdded?.Invoke(this, new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers, encounterEffect));
                 }
-                    
+            } 
+            else if (container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IContainer)))
+            {
+                var _container = (container.Contents[itemGuid].Item.Components[typeof(IContainer)] as IContainer);
+                //open container
+                _containerManager.AddContainer(_container);
             }
         }
 
