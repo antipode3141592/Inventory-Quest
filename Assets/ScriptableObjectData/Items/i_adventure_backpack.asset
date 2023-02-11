@@ -139,6 +139,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _canContainContainers
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 

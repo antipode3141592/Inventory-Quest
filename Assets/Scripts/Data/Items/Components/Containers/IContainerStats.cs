@@ -5,5 +5,6 @@ namespace Data.Items
     public interface IContainerStats: IItemComponentStats
     {
         public ICollection<Coor> Grid { get; }
+        public bool CanContainContainers { get; }
     }
 }

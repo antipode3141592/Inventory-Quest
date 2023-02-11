@@ -1,19 +1,20 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace Data.Items
 {
     public class ContainerStats : IContainerStats
     {
         [SerializeField, TableMatrix(Transpose = true)] bool[,] _initialGrid;
+        [SerializeField] bool _canContainContainers;
 
         ICollection<Coor> _grid;
 
-        public ContainerStats(List<Coor> grid)
+        public ContainerStats(List<Coor> grid, bool canContainContainers = false)
         {
             _grid = grid;
+            _canContainContainers = canContainContainers;
         }
 
         public ContainerStats()
@@ -43,5 +44,7 @@ namespace Data.Items
                 return _grid;
             }
         }
+
+        public bool CanContainContainers => _canContainContainers;
     }
 }

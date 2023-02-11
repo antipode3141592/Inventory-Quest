@@ -9,6 +9,7 @@ namespace Data.Items
         public float Weight { get; }
         public bool IsEmpty { get; }
         public bool IsFull { get; }
+        public bool CanContainContainers { get; }
         public float ContainedWeight { get; }
         public float ContainedWorth { get; }
 

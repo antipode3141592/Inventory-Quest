@@ -15,6 +15,7 @@ namespace Data.Items
             Contents = new Dictionary<string, Content>();
             //initialize grid
             Grid = new Dictionary<Coor, GridSquare>();
+            CanContainContainers = stats.CanContainContainers;
             foreach(var point in stats.Grid)
             {
                 Grid.Add(point, new GridSquare());
@@ -29,6 +30,8 @@ namespace Data.Items
         public bool IsEmpty => ContainerIsEmpty();
 
         public bool IsFull => ContainerIsFull();
+
+        public bool CanContainContainers { get; }
 
         public float InitialWeight => Item.Stats.Weight;
         public float Weight => InitialWeight + Contents.Sum(x => x.Value.Item.Weight);
@@ -56,17 +59,26 @@ namespace Data.Items
                     Debug.LogWarning($"no shape found for item {item.Id}");
                 return false;
             }
+            if (!CanContainContainers && item.Components.ContainsKey(typeof(IContainer)))
+                return false;
             var currentItemPoints = item.Shape.Points[item.CurrentFacing];
             foreach (var point in currentItemPoints)
             {
                 Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
-                if (!Grid.ContainsKey(testPoint))
+                if (!IsValidPoint(item, testPoint))
                     return false;
-                if (Grid[testPoint].IsOccupied)
-                {
-                    if (!StackHasSpace(item, testPoint))
-                        return false;
-                }       
+            }
+            return true;
+        }
+
+        bool IsValidPoint(IItem item, Coor target)
+        {
+            if (!Grid.ContainsKey(target))
+                return false;
+            if (Grid[target].IsOccupied)
+            {
+                if (!StackHasSpace(item, target))
+                    return false;
             }
             return true;
         }
@@ -93,122 +105,32 @@ namespace Data.Items
                     Debug.LogWarning($"no shape found for item {item.Id}");
                 return;
             }
-            var currentItemPoints = item.Shape.Points[item.CurrentFacing];
-            foreach (var point in currentItemPoints)
+            bool validPlacement = true;
+            List<Coor> _pointList = ListPool<Coor>.Get();
+            foreach (var point in item.Shape.Points[item.CurrentFacing])
             {
                 Coor testPoint = new(r: target.row + point.row, c: target.column + point.column);
                 if (!Grid.ContainsKey(testPoint))
                 {
-                    pointList.Clear();
-                    return;
+                    validPlacement = false;
+                    continue;
                 }
-                if (Grid[testPoint].IsOccupied)
-                    if (StackHasSpace(item, testPoint))
-                        pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Highlight, testPoint));
-                    else
-                        pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Incorrect, testPoint));
-                else
-                    pointList.Add(new Tuple<HighlightState, Coor>(HighlightState.Highlight, testPoint));
+                validPlacement = 
+                    validPlacement 
+                    && IsValidPoint(item, testPoint) 
+                    && !(!CanContainContainers && item.Components.ContainsKey(typeof(IContainer)));
+                _pointList.Add(testPoint);
             }
-        }
+            foreach(var point in _pointList)
+                pointList.Add(new(validPlacement ? HighlightState.Highlight : HighlightState.Incorrect, point));
+            ListPool<Coor>.Release(_pointList);
 
-        void AfterItemPlaced(IItem item)
-        {
-            //HashSet<string> _neighboors = HashSetPool<string>.Get(); // new();
-            //if (MatchingNeighboors(item, _neighboors))
-            //{
-            //    if (_neighboors.Count >= stackable.MinStackSize)
-            //    {
-            //        OnStackComplete?.Invoke(this, _neighboors);
-            //        CreateStack(_neighboors.ToList(), Contents[item.GuId].AnchorPosition, Contents[item.GuId].Item.Shape.CurrentFacing);
-            //    }
-            //    else
-            //        OnMatchingItems?.Invoke(this, _neighboors);
-            //}
-            //HashSetPool<string>.Release(_neighboors);
         }
-
-        //void CreateStack(List<string> items, Coor anchorPosition, Facing facing)
-        //{
-        //    StackableItemStats itemStats = Contents[items[0]].Item.Stats as StackableItemStats;
-        //    if (itemStats is null)
-        //        return;
-        //    IItem item = ItemFactory.GetItem(itemStats);
-        //    item.Shape.CurrentFacing = facing;
-        //    int total = 0;
-        //    foreach(var _item in items)
-        //        total += Contents[_item].Item.Quantity;
-        //    Debug.Log($"CreateStack:  qty {total}");
-        //    item.Quantity = total;
-        //    for (int i = 0; i < items.Count; i++)
-        //        TryTake(item: out _, target: Contents[items[i]].GridSpaces[0]);
-        //    TryPlace(item, anchorPosition);
-        //    Debug.Log($"ItemQty: {item.Quantity}");
-        //}
 
         public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
         {
             return false;
         }
-        //public bool MatchingNeighboors(IItem item, HashSet<string> matchingNeighboors)
-        //{
-        //    IStackable stackable = item as IStackable;
-        //    if (stackable is null)
-        //        return false;
-        //    matchingNeighboors.Add(item.GuId);
-        //    int startingCount = matchingNeighboors.Count;
-        //    Shape shape = item.Shape;
-        //    Coor startingCoor = Contents[item.GuId].AnchorPosition;
-
-        //    for (int r = 0; r < shape.Size.row; r++)
-        //    {
-        //        for (int c = 0; c < shape.Size.column; c++)
-        //        {
-        //            if (!shape.CurrentMask.Map[r, c])
-        //                break;
-
-        //            //check orthogonal only
-        //            Check(r - 1 + startingCoor.row, c + startingCoor.column);
-        //            Check(r + 1 + startingCoor.row, c + startingCoor.column);
-        //            Check(r + startingCoor.row, c + 1 + startingCoor.column);
-        //            Check(r + startingCoor.row, c - 1 + startingCoor.column);
-
-        //            void Check(int r, int c)
-        //            {
-        //                if (!IsPointInGrid(new(r, c)))
-        //                    return;
-        //                if (!Grid[r, c].IsOccupied)
-        //                    return;
-        //                string storedGuId = Grid[r, c].storedItemId;
-        //                string storedItemId = Contents[storedGuId].Item.Id;
-        //                if (storedItemId != item.Id)
-        //                    return;
-        //                if (matchingNeighboors.Count > 0 && matchingNeighboors.Contains(storedGuId))
-        //                    return;
-
-        //                matchingNeighboors.Add(storedGuId);
-        //            }
-        //        }
-        //    }
-
-        //    if (matchingNeighboors.Count == startingCount)  //no adjacent 
-        //        return false;
-
-        //    HashSet<string> _addList = HashSetPool<string>.Get();// new();
-        //    foreach (var _item in matchingNeighboors)
-        //    {
-        //        HashSet<string> _matchingNeighboors = new();
-        //        foreach (var match in matchingNeighboors)
-        //            _matchingNeighboors.Add(match);
-        //        if (MatchingNeighboors(Contents[_item].Item, _matchingNeighboors))
-        //            foreach (var __item in _matchingNeighboors)
-        //                _addList.Add(__item);
-        //    }
-        //    foreach (var addition in _addList)
-        //        matchingNeighboors.Add(addition);
-        //    HashSetPool<string>.Release(_addList);
-        //    return true;
-        //}
 
         public bool TryPlace(ref IItem item, Coor target)
         {
@@ -265,7 +187,6 @@ namespace Data.Items
             OnItemPlaced?.Invoke(this, item.GuId);
             if (Debug.isDebugBuild)
                 Debug.Log($"item {item.Id} x{item.Quantity} placed into container {Item.Id}");
-            AfterItemPlaced(item);
             item = null;
             return true;
         }

@@ -55,8 +55,9 @@ namespace InventoryQuest.UI.Menus
         void Inventory()
         {
             Debug.Log($"TravelingMenu.Inventory() called");
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+            //UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             _inputManager.OpenInventory();
+
         }
     }
 }
