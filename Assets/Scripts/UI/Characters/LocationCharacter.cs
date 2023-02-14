@@ -2,15 +2,17 @@ using PixelCrushers.DialogueSystem;
 using PixelCrushers.QuestMachine;
 using UnityEngine;
 using TMPro;
+using InventoryQuest.UI;
 
 namespace Data.Characters
 {
-    public class LocationCharacter : MonoBehaviour
+    public class LocationCharacter : MonoBehaviour, IEnableable
     {
         QuestGiver _questGiver;
         DialogueActor _dialogueActor;
 
         [SerializeField] TextMeshProUGUI nameText;
+        bool isAvailable;
 
         public string questGiverId => _questGiver.id.text;
 
@@ -23,6 +25,7 @@ namespace Data.Characters
         void Start()
         {
             nameText.text = _questGiver.id.text;
+            Enable();
         }
 
         public void Chat()
@@ -32,7 +35,19 @@ namespace Data.Characters
 
         void OnMouseUpAsButton()
         {
+            if (!isAvailable)
+                return;
             Chat();
+        }
+
+        public void Disable()
+        {
+            isAvailable = false;
+        }
+
+        public void Enable()
+        {
+            isAvailable = true;
         }
     }
 }

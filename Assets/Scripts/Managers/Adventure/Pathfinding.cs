@@ -45,7 +45,7 @@ namespace InventoryQuest.Managers.States
 
         public void Return()
         {
-            _gameStateDataSource.SetDestinationLocation(_gameStateDataSource.CurrentLocation.Stats.Id);
+            _gameStateDataSource.SetDestinationLocation(_gameStateDataSource.CurrentLocation.Id);
             returnState = true;
         }
     }

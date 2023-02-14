@@ -28,6 +28,6 @@ namespace Data.Locations
         public List<string> LocationIds => locationIds;
         public bool IsKnown => isKnown;
         public bool IsTravelPoint => isTravelPoint;
-        public AudioClip AudioClip => audioClip;
+        public AudioClip LocationMusic => audioClip;
     }
 }

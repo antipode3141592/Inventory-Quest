@@ -88,8 +88,8 @@ namespace InventoryQuest.UI.Components
 
             }
 
-            startingLocationIcon.Set(_gameStateDataSource.CurrentLocation.Stats.ThumbnailSprite, _gameStateDataSource.CurrentLocation.Stats.DisplayName);
-            endingLocationIcon.Set(_gameStateDataSource.DestinationLocation.Stats.ThumbnailSprite, _gameStateDataSource.DestinationLocation.Stats.DisplayName);
+            startingLocationIcon.Set(_gameStateDataSource.CurrentLocation.ThumbnailSprite, _gameStateDataSource.CurrentLocation.DisplayName);
+            endingLocationIcon.Set(_gameStateDataSource.DestinationLocation.ThumbnailSprite, _gameStateDataSource.DestinationLocation.DisplayName);
         }
 
         void OnEncounterResolveFailureHandler(object sender, string e)

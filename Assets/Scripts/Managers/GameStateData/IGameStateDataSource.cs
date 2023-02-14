@@ -8,8 +8,8 @@ namespace InventoryQuest
     public interface IGameStateDataSource
     {
         public IPathStats CurrentPathStats { get; }
-        public ILocation DestinationLocation { get; }
-        public ILocation CurrentLocation { get; }
+        public ILocationStats DestinationLocation { get; }
+        public ILocationStats CurrentLocation { get; }
 
         public IEncounter CurrentEncounter { get; }
 

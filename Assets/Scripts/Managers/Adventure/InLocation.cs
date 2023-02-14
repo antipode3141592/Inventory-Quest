@@ -23,9 +23,9 @@ namespace InventoryQuest.Managers
         public void OnEnter()
         {
             EndState = false;
-            _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Stats.Id);
+            _gameStateDataSource.SetCurrentLocation(_gameStateDataSource.DestinationLocation.Id);
             _gameStateDataSource.SetDestinationLocation("");
-            _audioManager.PlayMusicTrack(_gameStateDataSource.CurrentLocation.Stats.AudioClip);
+            _audioManager.PlayMusicTrack(_gameStateDataSource.CurrentLocation.LocationMusic);
             StateEntered?.Invoke(this, EventArgs.Empty);
         }
 

@@ -16,7 +16,7 @@ namespace Data.Locations
             IsKnown = isKnown;
             IsTravelPoint = isTravelPoint;
             ScenePath = scenePath;
-            AudioClip = audioClip;
+            LocationMusic = audioClip;
          }
 
         public string Id { get; }
@@ -35,7 +35,7 @@ namespace Data.Locations
 
         public string ScenePath { get; }
 
-        public AudioClip AudioClip { get; }
+        public AudioClip LocationMusic { get; }
 
         public bool IsTravelPoint { get; }
     }

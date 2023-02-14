@@ -3,14 +3,16 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace InventoryQuest.UI
+namespace InventoryQuest.UI.Locations
 {
-    public class HealingHut : MonoBehaviour
+    public class HealingHut : MonoBehaviour, IEnableable
     {
         IPartyManager _partymanager;
 
         [SerializeField] double goldCost = 5;
         [SerializeField] TextMeshProUGUI descriptionText;
+
+        bool isAvailable = true;
 
         [Inject]
         public void Init(IPartyManager partyManager)
@@ -25,7 +27,7 @@ namespace InventoryQuest.UI
 
         public void OnMouseUpAsButton()
         {
-            if (_partymanager.CountItemInCharacterInventories("gold") < goldCost)
+            if (!isAvailable || _partymanager.CountItemInCharacterInventories("gold") < goldCost)
                 return;
             _partymanager.CurrentParty.RemoveItemFromPartyInventory("gold", goldCost);
             foreach(var character in _partymanager.CurrentParty.Characters.Values)
@@ -34,6 +36,16 @@ namespace InventoryQuest.UI
                 character.CurrentHealth = character.MaximumHealth;
                 character.CurrentMagicPool = character.MaximumMagicPool;
             }
+        }
+
+        public void Disable()
+        {
+            isAvailable = false;
+        }
+
+        public void Enable()
+        {
+            isAvailable = true;
         }
     }
 }

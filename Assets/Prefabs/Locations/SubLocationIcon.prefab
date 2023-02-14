@@ -525,5 +525,8 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   locationStats: {fileID: 0}
-  locationImage: {fileID: 9114782963738957211}
+  locationIconImage: {fileID: 9114782963738957211}
+  locationSpriteRenderer: {fileID: 8855353001140490441}
+  locationNameBackground: {fileID: 8754229829354889108}
   locationNameText: {fileID: 169212832950932326}
+  textColor: {r: 0, g: 0, b: 0, a: 0}

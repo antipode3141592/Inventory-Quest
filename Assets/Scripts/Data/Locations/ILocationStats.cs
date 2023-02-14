@@ -12,8 +12,8 @@ namespace Data.Locations
         public List<string> CharacterIds { get; }
         public List<string> LocationIds { get; }
         public bool IsKnown { get; }
-        public bool IsTravelPoint { get; }
-        public AudioClip AudioClip { get; }
+        public bool IsTravelPoint { get; }  //can access world map
+        public AudioClip LocationMusic { get; }
         public string ScenePath { get; }
     }
 }

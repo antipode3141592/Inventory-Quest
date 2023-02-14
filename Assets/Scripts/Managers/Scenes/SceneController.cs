@@ -85,8 +85,7 @@ namespace InventoryQuest.Managers
         {
             if (Debug.isDebugBuild)
                 Debug.Log($"OnLocationSet handling event from {sender}");
-            //StartCoroutine(AwaitLoad(sceneName));
-            StartCoroutine(UnloadThenLoad(sceneName));
+            LoadLocation(sceneName);
         }
 
         IEnumerator AwaitLoad(string sceneName)

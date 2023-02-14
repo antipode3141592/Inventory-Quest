@@ -368,6 +368,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8736287325673667469, guid: 7e082b570e679474e90e5624c7882064, type: 3}
   m_PrefabInstance: {fileID: 346798307}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &346798309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8262471633366981328, guid: 7e082b570e679474e90e5624c7882064, type: 3}
+  m_PrefabInstance: {fileID: 346798307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decf7f5b3de4b2a4faf38f737422fbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &678932003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -506,6 +517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1314284387}
   - component: {fileID: 1314284386}
+  - component: {fileID: 1314284388}
   m_Layer: 0
   m_Name: LocationBackground
   m_TagString: Untagged
@@ -581,3 +593,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1314284388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314284385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34dd1669ef2cde4db5070bb20a51651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationStats: {fileID: 11400000, guid: 7e5fc7f4601af2347be00de4f5b302f3, type: 2}
+  subLocationIcons:
+  - {fileID: 346798309}

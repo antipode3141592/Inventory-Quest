@@ -60,9 +60,9 @@ namespace InventoryQuest.UI.Menus
         {
             base.Show();
             _continueButton.gameObject.SetActive(false);
-            _currentLocationText.text = $"Current: {_gameStateDataSource.CurrentLocation?.Stats.DisplayName}";
+            _currentLocationText.text = $"Current: {_gameStateDataSource.CurrentLocation?.DisplayName}";
             _destinationLocationText.text = "Destination: ...";
-            var currentLocationID = _gameStateDataSource.CurrentLocation.Stats.Id;
+            var currentLocationID = _gameStateDataSource.CurrentLocation.Id;
             foreach (var location in _mapLocations)
             {
                 if (location)
@@ -87,7 +87,7 @@ namespace InventoryQuest.UI.Menus
         bool debounce = false;
         void OnLocationSelectedHandler(object sender, string e)
         {
-            if (debounce || _gameStateDataSource.CurrentLocation.Stats.Id == e) return;
+            if (debounce || _gameStateDataSource.CurrentLocation.Id == e) return;
             debounce = true;
             _pathOverviewText.text = "";
             _destinationLocationText.text = $"Destination: {e}";
@@ -95,12 +95,12 @@ namespace InventoryQuest.UI.Menus
             if (Debug.isDebugBuild)
                 Debug.Log($"Destination selected : {e}");
 
-            string currentId = _gameStateDataSource.CurrentLocation.Stats.Id;
-            string destinationId = _gameStateDataSource.DestinationLocation.Stats.Id;
+            string currentId = _gameStateDataSource.CurrentLocation.Id;
+            string destinationId = _gameStateDataSource.DestinationLocation.Id;
             foreach (var location in _mapLocations)
             {
-                location.SetHighlight(location.LocationId == _gameStateDataSource.CurrentLocation.Stats.Id
-                    || location.LocationId == _gameStateDataSource.DestinationLocation.Stats.Id);
+                location.SetHighlight(location.LocationId == _gameStateDataSource.CurrentLocation.Id
+                    || location.LocationId == _gameStateDataSource.DestinationLocation.Id);
             }
 
             foreach (var path in _mapPathLines)

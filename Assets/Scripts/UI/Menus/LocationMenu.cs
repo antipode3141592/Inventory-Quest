@@ -46,7 +46,7 @@ namespace InventoryQuest.UI.Menus
 
         void OnCurrentLocationLoadedHandler(object sender, string e)
         {
-            var stats = _gameStateDataSource.CurrentLocation.Stats;
+            var stats = _gameStateDataSource.CurrentLocation;
             locationName.text = stats.DisplayName;
             locationThumbnailIcon.sprite = stats.ThumbnailSprite;
             MainMapButton.gameObject.SetActive(stats.IsTravelPoint);
@@ -57,7 +57,6 @@ namespace InventoryQuest.UI.Menus
             Debug.Log($"TravelingMenu.Inventory() called");
             //UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             _inputManager.OpenInventory();
-
         }
     }
 }

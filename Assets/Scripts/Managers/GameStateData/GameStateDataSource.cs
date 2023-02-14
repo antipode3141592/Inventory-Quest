@@ -20,8 +20,8 @@ namespace InventoryQuest
         IGameManager _gameManager;
 
         public IPathStats CurrentPathStats { get; protected set; }
-        public ILocation DestinationLocation { get; protected set; }
-        public ILocation CurrentLocation { get; protected set; }
+        public ILocationStats DestinationLocation { get; protected set; }
+        public ILocationStats CurrentLocation { get; protected set; }
         public IEncounter CurrentEncounter { get; protected set; }
         public ICollection<string> KnownLocations { get; } = new HashSet<string>();
 
@@ -65,13 +65,10 @@ namespace InventoryQuest
 
         public void SetCurrentLocation(string id)
         {
-            CurrentLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
-            CurrentLocation.InitializeLocation(_characterDataSource, _locationDataSource);
-
+            CurrentLocation = _locationDataSource.GetById(id);
             if (Debug.isDebugBuild)
-                Debug.Log($"SetCurrentLocation = {CurrentLocation.Stats.DisplayName} and path = {CurrentLocation.Stats.ScenePath}");
-            
-            OnCurrentLocationSet?.Invoke(this, $"{CurrentLocation.Stats.ScenePath}");
+                Debug.Log($"SetCurrentLocation = {CurrentLocation.DisplayName} and path = {CurrentLocation.ScenePath}");
+            OnCurrentLocationSet?.Invoke(this, $"{CurrentLocation.ScenePath}");
         }
 
         public void SetDestinationLocation(string id)
@@ -81,7 +78,7 @@ namespace InventoryQuest
                 DestinationLocation = null;
                 return;
             }
-            DestinationLocation = LocationFactory.GetLocation(_locationDataSource.GetById(id));
+            DestinationLocation = _locationDataSource.GetById(id);
             OnDestinationLocationSet?.Invoke(this, id);
         }
 
@@ -89,8 +86,8 @@ namespace InventoryQuest
         {
             Debug.Log($"SetCurrentPath()", this);
             var stats = _pathDataSource.GetPathForStartAndEndLocations(
-                startLocationId: CurrentLocation.Stats.Id,
-                endLocationId: DestinationLocation.Stats.Id);
+                startLocationId: CurrentLocation.Id,
+                endLocationId: DestinationLocation.Id);
             if (stats == null)
             {
                 Debug.LogWarning($"path stats are blank!", this);
