@@ -113,13 +113,15 @@ namespace InventoryQuest.Managers
             }
             foreach(var _item in characterStats.StartingInventory)
             {
-                int stacksToMake = Mathf.CeilToInt((float)_item.Item2 / (float)_item.Item1.MaxQuantity);
-                Debug.Log($"Adding {_item.Item1.Id} x{_item.Item2} (x{stacksToMake} stacks) to backpack...");
-                for (int i = 0; i < stacksToMake; i++)
+                int quantityRemaining = _item.Item2;
+                int stackCount = 1;
+                while (quantityRemaining > 0)
                 {
                     var __item = ItemFactory.GetItem(_item.Item1);
-                    __item.Quantity =  i < stacksToMake - 1 ? __item.Stats.MaxQuantity : (_item.Item2 % __item.Stats.MaxQuantity);
-                    Debug.Log($"... stack {i}, quantity {__item.Quantity}");
+                    int quantity = quantityRemaining < _item.Item1.MaxQuantity ? quantityRemaining : _item.Item1.MaxQuantity;
+                    __item.Quantity = quantity;
+                    quantityRemaining -= quantity;
+                    Debug.Log($"... stack {stackCount++}, quantity {__item.Quantity}");
                     startingInventory.Add(__item);
                 }
             }

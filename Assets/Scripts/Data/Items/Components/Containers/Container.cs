@@ -240,8 +240,8 @@ namespace Data.Items
         {
             if (sender is not IItem item) return;
             if (!Contents.ContainsKey(item.GuId)) return;
-            var anchor = Contents[item.GuId].AnchorPosition;
-            TryTake(out _, anchor);
+            var primaryPoint = Contents[item.GuId].GridSpaces[0];
+            TryTake(out _, primaryPoint);
         }
 
         public void QuanityChangedHandler(object sender, EventArgs e)

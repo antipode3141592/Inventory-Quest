@@ -94,6 +94,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _canContainContainers
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -107,6 +110,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: loot_pile_small
+  _name: 
   description: Loot Pile, Small
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -114,7 +118,6 @@ MonoBehaviour:
   weight: 1
   isStackable: 0
   maxQuantity: 1
-  goldValue: 0
   individualGoldValue: 0
   primarySprite: {fileID: 21300000, guid: 90f4e1e0a6deb534480f292c1ae52d6a, type: 3}
   isQuestItem: 1

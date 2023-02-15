@@ -34,7 +34,7 @@ MonoBehaviour:
     - Name: _slotType
       Entry: 3
       Data: 11
-    - Name: _modifiers
+    - Name: _statModifiers
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
     - Name: 
@@ -60,6 +60,9 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 8
+      Data: 
+    - Name: _resistanceModifiers
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8

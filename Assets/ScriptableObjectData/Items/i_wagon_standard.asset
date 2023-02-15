@@ -286,6 +286,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _canContainContainers
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -295,7 +298,10 @@ MonoBehaviour:
     - Name: _slotType
       Entry: 3
       Data: 14
-    - Name: _modifiers
+    - Name: _statModifiers
+      Entry: 6
+      Data: 
+    - Name: _resistanceModifiers
       Entry: 6
       Data: 
     - Name: 
@@ -311,6 +317,7 @@ MonoBehaviour:
       Entry: 6
       Data: 
   id: wagon_standard
+  _name: 
   description: A small wagon.
   shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
   defaultFacing: 0
@@ -318,7 +325,6 @@ MonoBehaviour:
   weight: 0
   isStackable: 0
   maxQuantity: 1
-  goldValue: 0
   individualGoldValue: 0
   primarySprite: {fileID: 0}
   isQuestItem: 1

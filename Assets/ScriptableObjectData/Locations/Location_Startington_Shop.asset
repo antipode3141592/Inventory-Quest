@@ -28,5 +28,6 @@ MonoBehaviour:
   scenePath: Assets/Scenes/Locations/location_Startington_Shop.unity
   characterIds: []
   locationIds: []
-  isKnown: 1
+  isKnown: 0
+  isTravelPoint: 0
   audioClip: {fileID: 0}

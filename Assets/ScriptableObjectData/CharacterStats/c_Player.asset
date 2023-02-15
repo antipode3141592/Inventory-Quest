@@ -23,9 +23,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ae0729e92f283e747ba648076d29b49f, type: 2}
     - {fileID: 11400000, guid: d231d266cc1afd14fa4a2bef94521f7b, type: 2}
     - {fileID: 11400000, guid: b80b73c7a37c2b14fa065d5196e8f881, type: 2}
+    - {fileID: 11400000, guid: 19ca8de69c1b2ad4bb7440b26dc255eb, type: 2}
     - {fileID: 11400000, guid: e1f7d720614b7d44b8d0936b8574032d, type: 2}
     - {fileID: 11400000, guid: 18bf047efa22c0c41ab845f5db587d2f, type: 2}
     - {fileID: 11400000, guid: 7900e740e2803824a80b4c6117750cc0, type: 2}
+    - {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -119,7 +121,7 @@ MonoBehaviour:
       Data: 5|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 10
       Data: 2
@@ -136,6 +138,9 @@ MonoBehaviour:
       Entry: 10
       Data: 6
     - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -147,17 +152,17 @@ MonoBehaviour:
         Data],[System.Int32, mscorlib]], mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 7|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
         mscorlib
     - Name: m_Item1
       Entry: 10
-      Data: 7
+      Data: 8
     - Name: m_Item2
       Entry: 3
-      Data: 10
+      Data: 525
     - Name: 
       Entry: 8
       Data: 
@@ -167,7 +172,7 @@ MonoBehaviour:
         mscorlib
     - Name: m_Item1
       Entry: 10
-      Data: 8
+      Data: 9
     - Name: m_Item2
       Entry: 3
       Data: 3
@@ -180,10 +185,23 @@ MonoBehaviour:
         mscorlib
     - Name: m_Item1
       Entry: 10
-      Data: 9
+      Data: 10
     - Name: m_Item2
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 10
+      Data: 11
+    - Name: m_Item2
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
