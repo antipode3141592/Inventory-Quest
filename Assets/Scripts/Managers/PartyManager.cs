@@ -133,7 +133,7 @@ namespace InventoryQuest.Managers
             _party.AddCharacter(_character);
         }
 
-        public double CountItemInCharacterInventories(string itemId)
+        public double CountItemInParty(string itemId)
         {
             double runningTotal = 0;
             foreach (var character in CurrentParty.Characters.Values)
@@ -151,6 +151,8 @@ namespace InventoryQuest.Managers
                             runningTotal += equippedItem.Quantity;
                 }
             }
+            if (Debug.isDebugBuild)
+                Debug.Log($"counted {runningTotal} {itemId} items in party inventory");
             return runningTotal;
         }
     }

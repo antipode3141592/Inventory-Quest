@@ -27,7 +27,7 @@ namespace InventoryQuest.Testing
             currentParty.AddCharacter(CharacterFactory.GetCharacter(characterStats));
         }
 
-        public double CountItemInCharacterInventories(string itemId)
+        public double CountItemInParty(string itemId)
         {
             throw new System.NotImplementedException();
         }

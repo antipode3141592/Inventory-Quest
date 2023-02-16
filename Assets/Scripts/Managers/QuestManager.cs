@@ -48,7 +48,7 @@ namespace InventoryQuest.Managers
 
         public double CountItemInPartyInventory(string itemId)
         {
-            return _partyManager.CountItemInCharacterInventories(itemId);
+            return _partyManager.CountItemInParty(itemId);
         }
 
         public void UpdateQuestItemCounter(string itemId, string questCounter)
@@ -65,6 +65,7 @@ namespace InventoryQuest.Managers
 
         public void TrackItemQuantity(string questCounter, string itemId, double targetQuantity)
         {
+            Debug.Log($"Begin tracking {itemId} to quest counter id {questCounter}, target quantity: {targetQuantity}");
             StartCoroutine(ItemTracking(questCounter, itemId, targetQuantity));
         }
 

@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Characters;
 using Data.Items;
 using Data.Shapes;
 using System.Collections.Generic;
@@ -44,9 +45,10 @@ namespace InventoryQuest.Testing.Stubs
                     components: new List<IItemComponentStats>() {
                         new EquipableStats(
                             slotType: EquipmentSlotType.OneHandedWeapon,
-                            modifiers: new List<StatModifier>() {
+                            statModifiers: new List<StatModifier>() {
                                 new(StatTypes.Strength, OperatorType.Add, 15)
-                            }
+                            },
+                            resistanceModifiers: new List<ResistanceModifier>()
                         )
                     }
 
@@ -67,7 +69,8 @@ namespace InventoryQuest.Testing.Stubs
                     components: new List<IItemComponentStats>()
                     {
                         new EquipableStats(EquipmentSlotType.Backpack,
-                            new List<StatModifier>()),
+                            new List<StatModifier>(),
+                            new List<ResistanceModifier>()),
                         new ContainerStats(GenerateSimpleGrid(4,6))
                     }
                 )

@@ -8,6 +8,6 @@ namespace InventoryQuest.Managers
         public bool IsPartyDead { get; set; }
         public void AddCharacterToPartyById(string id);
         public void AddCharacterToParty(ICharacterStats characterStats);
-        public double CountItemInCharacterInventories(string itemId);
+        public double CountItemInParty(string itemId);
     }
 }
