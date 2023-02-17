@@ -1,4 +1,3 @@
-using Data;
 using Data.Encounters;
 using Data.Locations;
 using InventoryQuest.Managers;
@@ -24,7 +23,8 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] TextMeshProUGUI _currentLocationText;
         [SerializeField] TextMeshProUGUI _destinationLocationText;
         [SerializeField] TextMeshProUGUI _pathOverviewText;
-        [SerializeField] PressAndHoldButton _pressAndHoldButton;
+        [SerializeField] PressAndHoldButton _continueButton;
+        [SerializeField] PressAndHoldButton _returnButton;
 
         [Inject]
         public void Init(IGameStateDataSource gameStateDataSource, IAdventureManager adventureManager, IPathDataSource pathDataSource, ILocationDataSource locationDataSource)
@@ -42,7 +42,13 @@ namespace InventoryQuest.UI.Menus
             {
                 location.OnLocationSelected += OnLocationSelectedHandler;
             }
-            _pressAndHoldButton.OnPointerHoldSuccess += OnPathSelected;
+            _continueButton.OnPointerHoldSuccess += OnPathSelected;
+            _returnButton.OnPointerHoldSuccess += OnReturnSelected;
+        }
+
+        private void OnReturnSelected(object sender, EventArgs e)
+        {
+            _adventureManager.Pathfinding.Return();
         }
 
         private void OnPathSelected(object sender, EventArgs e)
@@ -53,10 +59,10 @@ namespace InventoryQuest.UI.Menus
         public override void Show()
         {
             base.Show();
-            
-            _currentLocationText.text = $"Current: {_gameStateDataSource.CurrentLocation?.Stats.DisplayName}";
+            _continueButton.gameObject.SetActive(false);
+            _currentLocationText.text = $"Current: {_gameStateDataSource.CurrentLocation?.DisplayName}";
             _destinationLocationText.text = "Destination: ...";
-            var currentLocationID = _gameStateDataSource.CurrentLocation.Stats.Id;
+            var currentLocationID = _gameStateDataSource.CurrentLocation.Id;
             foreach (var location in _mapLocations)
             {
                 if (location)
@@ -81,7 +87,7 @@ namespace InventoryQuest.UI.Menus
         bool debounce = false;
         void OnLocationSelectedHandler(object sender, string e)
         {
-            if (debounce || _gameStateDataSource.CurrentLocation.Stats.Id == e) return;
+            if (debounce || _gameStateDataSource.CurrentLocation.Id == e) return;
             debounce = true;
             _pathOverviewText.text = "";
             _destinationLocationText.text = $"Destination: {e}";
@@ -89,18 +95,16 @@ namespace InventoryQuest.UI.Menus
             if (Debug.isDebugBuild)
                 Debug.Log($"Destination selected : {e}");
 
-            string currentId = _gameStateDataSource.CurrentLocation.Stats.Id;
-            string destinationId = _gameStateDataSource.DestinationLocation.Stats.Id;
+            string currentId = _gameStateDataSource.CurrentLocation.Id;
+            string destinationId = _gameStateDataSource.DestinationLocation.Id;
             foreach (var location in _mapLocations)
             {
-                location.SetHighlight(location.LocationId == _gameStateDataSource.CurrentLocation.Stats.Id
-                    || location.LocationId == _gameStateDataSource.DestinationLocation.Stats.Id);
+                location.SetHighlight(location.LocationId == _gameStateDataSource.CurrentLocation.Id
+                    || location.LocationId == _gameStateDataSource.DestinationLocation.Id);
             }
 
             foreach (var path in _mapPathLines)
             {
-
-                
                 if ((path.LocationAId == currentId || path.LocationBId == currentId)
                     &&(path.LocationAId == destinationId || path.LocationBId == destinationId))
                 {
@@ -108,8 +112,9 @@ namespace InventoryQuest.UI.Menus
                         startLocationId: currentId,
                         endLocationId: destinationId);
                     if (stats == null) return;
-                    _pathOverviewText.text = $"Projected Length: {stats.EncounterIds.Count} Encounters";
-                    path.DisplayPath(stats);
+                    _pathOverviewText.text = $"Projected Length: {stats.EncounterStats.Count} Encounters";
+                    path.ActivatePath(stats);
+                    _continueButton.gameObject.SetActive(true);
                 }
                 else
                 {
@@ -129,7 +134,7 @@ namespace InventoryQuest.UI.Menus
 
         public void ChoosePath()
         {
-            _adventureManager.Pathfinding.ChoosePath();
+            _adventureManager.Pathfinding.Continue();
         }
     }
 }

@@ -1,96 +1,159 @@
 ﻿using Data.Characters;
 using Data.Items;
 using PixelCrushers.DialogueSystem;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest.Managers
 {
-    public class PartyManager : MonoBehaviour, IPartyManager
+    public class PartyManager : SerializedMonoBehaviour, IPartyManager
     {
-        ICharacterDataSource _characterDataSource;
-        IItemDataSource _itemDataSource;
+        [SerializeField] List<ICharacterStats> InitialPartyMembers;
 
-        Party _party = new();
+        ICharacterDataSource _characterDataSource;
+        IGameManager _gameManager;
+
+        readonly Party _party = new();
 
         public Party CurrentParty => _party;
 
+        public bool IsPartyDead { get; set; }
+
         [Inject]
-        public void Init(ICharacterDataSource characterDataSource, IItemDataSource itemDataSource)
+        public void Init(ICharacterDataSource characterDataSource, IGameManager gameManager)
         {
-            _itemDataSource = itemDataSource;
             _characterDataSource = characterDataSource;
+            _gameManager = gameManager;
         }
 
-        void Awake()
+        void Start()
         {
-            AddCharacterWithEquipmentToParty("Player", 
-                startingEquipment: new List<string>
-                {
-                    "adventure backpack",
-                    "sandal_1",
-                    "shirt_1",
-                    "pants_1"
-                },
-                startingInventory: new List<string>
-                {
-                    "apple_fuji",
-                    "apple_fuji",
-                    "apple_fuji",
-                    "ore_bloom_common",
-                    "ore_bloom_common",
-                    "ore_bloom_common"
-                }
-            );
+            Lua.RegisterFunction("AddCharacterToPartyById", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToPartyById(string.Empty)));
+            Lua.RegisterFunction("RemoveCharacterFromPartyById", this, SymbolExtensions.GetMethodInfo(() => RemoveCharacterFromPartyById(string.Empty)));
+            Lua.RegisterFunction("IsCharacterIdInParty", this, SymbolExtensions.GetMethodInfo(() => IsCharacterIdInParty(string.Empty)));
 
-            Lua.RegisterFunction("AddCharacterToParty", this, SymbolExtensions.GetMethodInfo(() => AddCharacterToParty(string.Empty)));
+            CurrentParty.OnPartyDeath += PartyDeathHandler;
+            _gameManager.OnGameBeginning += OnGameBeginningHandler;
         }
 
-        public void AddCharacterToParty(string id)
+        void OnGameBeginningHandler(object sender, EventArgs e)
         {
-            List<string> equipment = new();
-            List<string> inventory = new();
-            if (id == "wagon")
-            {
-                equipment.Add("wagon_standard");
-                AddCharacterWithEquipmentToParty(id,
-                    startingEquipment: equipment,
-                    startingInventory: inventory);
+            InitializeParty();
+        }
+
+        void InitializeParty()
+        {
+            for (int i = 0; i < InitialPartyMembers.Count; i++)
+                AddCharacterToParty(InitialPartyMembers[i]);
+        }
+
+        IEnumerator DestroyParty()
+        {
+            yield return null;
+            IsPartyDead = true;
+            while (CurrentParty.Characters.Count > 0)
+                CurrentParty.RemoveCharacter(CurrentParty.Characters.First().Key);
+        }
+
+        void PartyDeathHandler(object sender, EventArgs e)
+        {
+            Debug.Log($"PartyDeathHandler on {gameObject.name}...", this);
+            StartCoroutine(DestroyParty());
+        }
+
+        public void AddCharacterToPartyById(string id)
+        {
+            var characterStats = _characterDataSource.GetById(id);
+            QuestLog.Log($"{characterStats.Name} has joined the party.");
+            AddCharacterToParty(characterStats);
+        }
+
+        public void RemoveCharacterFromPartyById(string id)
+        {
+            var character = _party.Characters.Values.FirstOrDefault(x => x.Stats.Id == id);
+            if (character is null)
                 return;
-            }
-            AddCharacterWithEquipmentToParty(id);
-
-
+            if (!_party.Characters.ContainsKey(character.GuId))
+                return;
+            QuestLog.Log($"{character.DisplayName} has left the party.");
+            _party.RemoveCharacter(character.GuId);
         }
 
-        void AddCharacterWithEquipmentToParty(string id, IList<string> startingEquipment = null, IList<string> startingInventory = null)
+        public bool IsCharacterIdInParty(string id)
         {
-            List<IEquipable> equipment = new();
-            List<IItem> items = new();
+            var character = _party.Characters.Values.FirstOrDefault(x => x.Stats.Id == id);
+            if (character is null)
+                return false;
+            return true;
+        }
 
-            
+        public void AddCharacterToParty(ICharacterStats characterStats)
+        {
+            List<IItem> equipment = UnityEngine.Pool.ListPool<IItem>.Get();
+            List<IItem> inventory = UnityEngine.Pool.ListPool<IItem>.Get();
 
-            if (startingEquipment is not null)
+            AddCharacterWithEquipmentToParty(characterStats, equipment, inventory);
+
+            UnityEngine.Pool.ListPool<IItem>.Release(equipment);
+            UnityEngine.Pool.ListPool<IItem>.Release(inventory);
+        }
+
+        void AddCharacterWithEquipmentToParty(ICharacterStats characterStats, List<IItem> startingEquipment, List<IItem> startingInventory)
+        {
+            Debug.Log($"Adding Character {characterStats.Id} to party...");
+            foreach(var _equipment in characterStats.StartingEquipment)
             {
-                foreach(var _equipment in startingEquipment)
+                Debug.Log($"Equipping {_equipment.Id}...");
+                startingEquipment.Add(ItemFactory.GetItem(_equipment));
+            }
+            foreach(var _item in characterStats.StartingInventory)
+            {
+                int quantityRemaining = _item.Item2;
+                int stackCount = 1;
+                while (quantityRemaining > 0)
                 {
-                    equipment.Add((IEquipable)ItemFactory.GetItem(_itemDataSource.GetItemStats(_equipment)));
+                    var __item = ItemFactory.GetItem(_item.Item1);
+                    int quantity = quantityRemaining < _item.Item1.MaxQuantity ? quantityRemaining : _item.Item1.MaxQuantity;
+                    __item.Quantity = quantity;
+                    quantityRemaining -= quantity;
+                    Debug.Log($"... stack {stackCount++}, quantity {__item.Quantity}");
+                    startingInventory.Add(__item);
                 }
             }
-            if (startingInventory is not null)
-            {
-                foreach(var _item in startingInventory)
-                {
-                    items.Add(ItemFactory.GetItem(_itemDataSource.GetItemStats(_item)));
-                }
-            }
-
-            var _character = (PlayableCharacter)CharacterFactory.GetCharacter(baseStats: _characterDataSource.GetById(id),
-                startingEquipment: equipment,
-                startingInventory: items
+            var _character = (PlayableCharacter)CharacterFactory.GetCharacter(
+                baseStats: characterStats,
+                startingEquipment: startingEquipment,
+                startingInventory: startingInventory
             );
             _party.AddCharacter(_character);
+        }
+
+        public double CountItemInParty(string itemId)
+        {
+            double runningTotal = 0;
+            foreach (var character in CurrentParty.Characters.Values)
+            {
+                foreach (var content in character.Backpack.Contents)
+                {
+                    if (content.Value.Item.Id == itemId)
+                        runningTotal += content.Value.Item.Quantity;
+                }
+                foreach (var slot in character.EquipmentSlots)
+                {
+                    var equippedItem = slot.Value.EquippedItem as IItem;
+                    if (slot.Value.EquippedItem is not null)
+                        if (equippedItem.Id == itemId)
+                            runningTotal += equippedItem.Quantity;
+                }
+            }
+            if (Debug.isDebugBuild)
+                Debug.Log($"counted {runningTotal} {itemId} items in party inventory");
+            return runningTotal;
         }
     }
 }

@@ -5,7 +5,9 @@ namespace InventoryQuest.Managers
     public interface IPartyManager
     {
         Party CurrentParty { get; }
-
-        public void AddCharacterToParty(string id);
+        public bool IsPartyDead { get; set; }
+        public void AddCharacterToPartyById(string id);
+        public void AddCharacterToParty(ICharacterStats characterStats);
+        public double CountItemInParty(string itemId);
     }
 }

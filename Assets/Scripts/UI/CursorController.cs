@@ -1,36 +1,42 @@
+using Data.Items;
 using Data.Shapes;
 using InventoryQuest.Managers;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace InventoryQuest.UI
 {
     public class CursorController : MonoBehaviour
     {
+        IInputManager _inputManager;
+
         [SerializeField] Cursor cursorPrefab;
         [SerializeField] bool hardwareCursorEnable;
         [SerializeField] Transform cursorParentTransform;
         [SerializeField] Canvas canvas;
-        IGameManager _gameManager;
+        
         Cursor _cursor;
 
         [Inject]
-        public void Init(IGameManager gameManager)
+        public void Init(IInputManager inputManager)
         {
-            _gameManager = gameManager;
+            _inputManager = inputManager;
         }
 
-        private void Awake()
+        void Awake()
         {
-            _cursor = Instantiate<Cursor>(cursorPrefab, cursorParentTransform);
-            _gameManager.OnItemHeld += OnItemHeldHandler;
-            _gameManager.OnItemPlaced += OnItemPlacedHandler;
-            _gameManager.OnRotateCW += OnItemRotateCW;
-            _gameManager.OnRotateCCW += OnItemRotateCCW;
+            _cursor = Instantiate(cursorPrefab, cursorParentTransform);
             UnityEngine.Cursor.visible = hardwareCursorEnable;
             HideItemSprite();
+        }
+
+        void Start()
+        {
+            _inputManager.OnItemHeld += OnItemHeldHandler;
+            _inputManager.OnItemPlaced += OnItemPlacedHandler;
+            _inputManager.OnRotateCW += OnItemRotateCW;
+            _inputManager.OnRotateCCW += OnItemRotateCCW;
         }
 
         void Update()
@@ -38,9 +44,9 @@ namespace InventoryQuest.UI
             _cursor.RectTransform.position = Input.mousePosition;
         }
 
-        public void OnItemHeldHandler(object sender, EventArgs e)
+        public void OnItemHeldHandler(object sender, IItem item)
         {
-            ShowItemSprite();
+            ShowItemSprite(item);
         }
 
         public void OnItemPlacedHandler(object sender, EventArgs e)
@@ -58,20 +64,12 @@ namespace InventoryQuest.UI
             ImageUtilities.RotateSprite(e.TargetFacing, _cursor.itemIcon);
         }
 
-        public void ShowItemSprite()
+        public void ShowItemSprite(IItem item)
         {
-            var item = _gameManager.HoldingItem;
             _cursor.itemIcon.sprite = item.Sprite;
-            //set scale
             _cursor.itemIcon.SetNativeSize();
-            //var itemPPU = item.Sprite.pixelsPerUnit;
-            //float scaleFactor = itemPPU / canvas.referencePixelsPerUnit;
-            //Debug.Log($"scaleFactor : {scaleFactor}");
-            //_cursor.itemIcon.rectTransform.sizeDelta = new(canvas.referencePixelsPerUnit, canvas.referencePixelsPerUnit);
-
-
-            _cursor.itemIcon.color = Color.white;
-            ImageUtilities.RotateSprite(item.Shape.CurrentFacing, _cursor.itemIcon);
+            _cursor.itemIcon.color = new Color(1f, 1f, 1f, 0.75f);
+            ImageUtilities.RotateSprite(item.CurrentFacing, _cursor.itemIcon);
         }
 
         public void HideItemSprite()

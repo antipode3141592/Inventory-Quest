@@ -1,3 +1,4 @@
+using InventoryQuest.Audio;
 using InventoryQuest.Health;
 using InventoryQuest.Managers;
 using InventoryQuest.Traveling;
@@ -9,8 +10,6 @@ namespace InventoryQuest
     {
         public override void InstallBindings()
         {
-            Container.Bind<IGroundController>().To<GroundController>()
-                .FromComponentInHierarchy().AsSingle();
             Container.Bind<IPartyController>().To<TravelingPartyController>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IPartyManager>().To<PartyManager>()
@@ -30,6 +29,14 @@ namespace InventoryQuest
             Container.Bind<IQuestManager>().To<QuestManager>()
                 .FromComponentInHierarchy().AsSingle();
             Container.Bind<IHarvestManager>().To<HarvestManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IInputManager>().To<InputManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IAudioManager>().To<AudioManager>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<ISceneController>().To<SceneController>()
+                .FromComponentInHierarchy().AsSingle();
+            Container.Bind<IContainerManager>().To<ContainerManager>()
                 .FromComponentInHierarchy().AsSingle();
         }
     }

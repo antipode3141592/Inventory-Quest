@@ -29,3 +29,18 @@ MonoBehaviour:
   - functionName: RevealLocation
     parameters: 02000000
     returnValue: 0
+  - functionName: UpdateQuestCounter
+    parameters: 0200000002000000
+    returnValue: 0
+  - functionName: RemoveCharacterFromPartyById
+    parameters: 02000000
+    returnValue: 0
+  - functionName: IsCharacterIdInParty
+    parameters: 02000000
+    returnValue: 1
+  - functionName: TrackItemQuantity
+    parameters: 020000000200000001000000
+    returnValue: 0
+  - functionName: OfferQuestContainer
+    parameters: 020000000200000001000000
+    returnValue: 0

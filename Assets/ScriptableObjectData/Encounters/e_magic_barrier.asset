@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
+  m_Name: e_magic_barrier
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: choices
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IChoice, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Encounters.SkillTest, Data
+    - Name: description
+      Entry: 1
+      Data: Dispel
+    - Name: targetValue
+      Entry: 3
+      Data: 30
+    - Name: partyTargetValue
+      Entry: 3
+      Data: 0
+    - Name: StatTypes
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 11
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SkillTypes
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Data.StatTypes, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: experience
+      Entry: 3
+      Data: 200
+    - Name: successMessage
+      Entry: 1
+      Data: The barrier is disenchanted, leaving behind a cache of goods.
+    - Name: failureMessage
+      Entry: 1
+      Data: The barrier repels the party with an icy blast.
+    - Name: rewards
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 5|Data.Rewards.RandomItemRewardStats, Data
+    - Name: _lootContainerId
+      Entry: 1
+      Data: loot_pile_small
+    - Name: _lootTableId
+      Entry: 1
+      Data: common_loot
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Data.Rewards.RandomItemRewardStats, Data
+    - Name: _lootContainerId
+      Entry: 1
+      Data: loot_pile_small
+    - Name: _lootTableId
+      Entry: 1
+      Data: common_loot
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|Data.Penalties.DamagePenaltyStats, Data
+    - Name: damageType
+      Entry: 3
+      Data: 2
+    - Name: penaltyType
+      Entry: 3
+      Data: 0
+    - Name: damageAmount
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Data.Encounters.Ignore, Data
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: e_magic_barrier
+  _name: 
+  description: An enchanted dome of ice protects a chest.

@@ -21,12 +21,13 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  id: Startington
-  _name: Startington
+  id: startington
+  _name: startington
   displayName: Startington
-  thumbnailSpritePath: Locations/town_icon_1
-  scenePath: Assets/Scenes/Locations/location_Startington.unity
-  characterIds:
-  - messenger_dispatcher
+  thumbnailSprite: {fileID: 21300000, guid: 20d406b1c7aaa934ebda6343c8a4069c, type: 3}
+  scenePath: Assets/00_Scenes/Locations/location_Startington.unity
+  characterIds: []
   locationIds: []
   isKnown: 1
+  isTravelPoint: 1
+  audioClip: {fileID: 0}

@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 95fb7ab74b4454245ae20bdc496793e0, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -23,11 +24,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: initialStats
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Data.Characters.StatTypes,
-        Data],[System.Int32, mscorlib]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[Data.StatTypes, Data],[System.Int32,
+        mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.Characters.StatTypes,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.StatTypes,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -49,11 +50,11 @@ MonoBehaviour:
       Data: 
     - Name: resistances
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[Data.DamageType, Data],[Data.Characters.DamageResistance,
+      Data: 2|System.Collections.Generic.Dictionary`2[[Data.Health.DamageType, Data],[Data.Characters.DamageResistance,
         Data]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.DamageType,
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.Health.DamageType,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -86,7 +87,35 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: startingEquipment
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: startingInventory
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[System.Tuple`2[[Data.Items.IItemStats,
+        Data],[System.Int32, mscorlib]], mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: wagon
   _name: Wagon
-  portraitPath: Portraits/WagonPortrait
+  portrait: {fileID: 908115051, guid: e20fe244fcd265944a14694126d55da0, type: 3}
   species: {fileID: 11400000, guid: 55a16b7471ba47c41a48e3a5f1548b45, type: 2}

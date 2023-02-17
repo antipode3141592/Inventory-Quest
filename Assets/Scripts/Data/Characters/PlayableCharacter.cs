@@ -3,17 +3,21 @@ using Data.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Data.Characters
 {
     //characters 
-    public class PlayableCharacter : ICharacter
+    public class PlayableCharacter : ICharacter, IDamagable
     {
         int weaponProficiencyIndex = 0;
-
+        public ICharacterStats Stats { get; }
         public string GuId { get; }
         public string DisplayName { get; set; }
         public int CurrentHealth { get; set; }
+        public bool IsIncapacitated => CurrentHealth <= 0;
+        public bool IsDying { get; protected set; } = false;
+        public bool IsDead { get; protected set; } = false;
         public int HealthPerLevel { get; } = 5;
         public int MaximumHealth => StatDictionary[StatTypes.Vitality].CurrentValue + (HealthPerLevel * CurrentLevel);
         public int MagicPerLevel { get; } = 5;
@@ -22,26 +26,54 @@ namespace Data.Characters
         public float MaximumEncumbrance => StatDictionary[StatTypes.Strength].CurrentValue * 15;
         public int CurrentExperience { get; set; }
         public int NextLevelExperience => (CurrentLevel ^ 2) * 250 + CurrentLevel * 750;
-        public int CurrentLevel { get; set; }
-
+        public int CurrentLevel { get; set; } = 1;
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; } = new List<IWeaponProficiency>();
         public IWeaponProficiency CurrentWeaponProficiency { get; protected set; }
 
-        public ICharacterStats Stats { get; }
-
-        public ContainerBase Backpack => (ContainerBase)EquipmentSlots.Values.FirstOrDefault(x => x.SlotType == EquipmentSlotType.Backpack).EquippedItem;
+        public IContainer Backpack
+        {
+            get
+            {
+                if (!EquipmentSlots.ContainsKey("backpack"))
+                {
+                    Debug.LogWarning($"character {DisplayName} does not have a backpack slot!");
+                    return null;
+                }
+                IItem equippedItem = EquipmentSlots["backpack"].EquippedItem;
+                if (equippedItem is null)
+                {
+                    Debug.LogWarning($"backpack equipment slot does not have an equipped item");
+                    return null;
+                }
+                if (!equippedItem.Components.ContainsKey(typeof(IContainer)))
+                {
+                    Debug.LogWarning($"backpack equipped item {equippedItem.Id} does not contain a IContainer key");
+                    return null;
+                }
+                IContainer container = (IContainer)equippedItem.Components[typeof(IContainer)];
+                if (container is null)
+                {
+                    Debug.LogWarning($"equipped item {equippedItem.Id} does not have a container component");
+                    return null;
+                }
+                return container;
+            }
+        }
         public float CurrentEncumbrance => EquipmentSlots
             .Where(x => x.Value.EquippedItem is not null)
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
-        public bool IsIncapacitated => CurrentHealth <= 0;
 
         public event EventHandler OnStatsUpdated;
         public event EventHandler<string> OnItemAddedToBackpack;
+        public event EventHandler OnDying;
+        public event EventHandler OnDead;
+        public event EventHandler<int> DamageTaken;
+        public event EventHandler<int> DamageHealed;
 
-        public PlayableCharacter(ICharacterStats characterStats, IList<IEquipable> initialEquipment, IList<IItem> initialInventory = null)
+        public PlayableCharacter(ICharacterStats characterStats, IList<IItem> initialEquipment, IList<IItem> initialInventory = null)
         {
             GuId = Guid.NewGuid().ToString();
             DisplayName = characterStats.Name;
@@ -115,10 +147,21 @@ namespace Data.Characters
             StatDictionary.Add(persuade.Id, persuade);
             StatDictionary.Add(intimidate.Id, intimidate);
 
+            CurrentHealth = MaximumHealth;
+            CurrentMagicPool = MaximumMagicPool;
+
             foreach (EquipmentSlotType slotType in characterStats.EquipmentSlotsTypes)
             {
                 AddEquipmentSlot(slotType);
             }
+
+            Resistances = new Dictionary<DamageType, DamageResistance>();
+            Resistances.Add(DamageType.Normal, new DamageResistance(DamageType.Normal, 0));
+            Resistances.Add(DamageType.Fire, new DamageResistance(DamageType.Fire, 0));
+            Resistances.Add(DamageType.Ice, new DamageResistance(DamageType.Ice, 0));
+            Resistances.Add(DamageType.Electric, new DamageResistance(DamageType.Electric, 0));
+            Resistances.Add(DamageType.Acid, new DamageResistance(DamageType.Acid, 0));
+            Resistances.Add(DamageType.Poison, new DamageResistance(DamageType.Poison, 0));
 
             foreach (var prof in characterStats.WeaponProficiencies)
             {
@@ -132,17 +175,23 @@ namespace Data.Characters
             CurrentWeaponProficiency = WeaponProficiencies.Count > 0 ? WeaponProficiencies[weaponProficiencyIndex] : null;
 
             if (initialEquipment is null) return;
-            foreach (IEquipable item in initialEquipment)
+            foreach (var item in initialEquipment)
             {
                 //iterate through slots, equip to first available valid placement for each piece of equipment
-                foreach (var slot in EquipmentSlots)
-                {
-                    if (slot.Value.IsValidPlacement(item))
+                if (item.Components.ContainsKey(typeof(IEquipable)))
+                    foreach (var slot in EquipmentSlots)
                     {
-                        if (slot.Value.TryEquip(out _, item))
-                            break;
+                        if (slot.Value.IsValidPlacement(item))
+                        {
+                            if (slot.Value.TryEquip(out _, item))
+                            {
+                                if (Debug.isDebugBuild)
+                                    Debug.Log($"tryequip success on item {item.Id}");
+                                break;
+                            }
+                            Debug.LogWarning($"tryequip fail on item {item.Id}");
+                        }
                     }
-                }
             }
 
             //if backpack present (some characters have no backpack), subscribe to container events
@@ -151,18 +200,18 @@ namespace Data.Characters
 
             // add any initial Inventory to backpack
             if (initialInventory is null) return;
-            foreach (IItem item in initialInventory)
+            foreach (var item in initialInventory)
             {
                 ItemPlacementHelpers.TryAutoPlaceToContainer(container: Backpack, item: item); //no special failure path for now
             }
 
             void AddEquipmentSlot(EquipmentSlotType slotType)
             {
+
                 int matchCount = EquipmentSlots.Count(x => x.Value.SlotType == slotType);
                 string id = slotType.ToString().ToLower();
                 if (matchCount > 0)
                     id += $"_{matchCount}";
-
                 var slot = new EquipmentSlot(slotType, id);
                 EquipmentSlots.Add(key: slot.Id, value: slot);
                 slot.OnEquip += OnEquipHandler;
@@ -173,22 +222,14 @@ namespace Data.Characters
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            //Debug.Log($"OnEquipHandler: {sender} with {e.Modifiers.Count} modifiers");
-            foreach (StatModifier mod in e.Modifiers)
-            {
-                ApplyModifier(mod);
-            }
-            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+            ApplyModifiers(e.StatModifiers);
+            ApplyModifiers(e.ResistanceModifiers);
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
         {
-            //Debug.Log($"OnUnEquipHandler: {sender}");
-            foreach (var mod in e.Modifiers)
-            {
-                RemoveModifier(mod);
-            }
-            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+            RemoveModifiers(e.StatModifiers);
+            RemoveModifiers(e.ResistanceModifiers);
         }
 
         public void OnBackpackContentsChangedHandler(object sender, string e)
@@ -196,8 +237,16 @@ namespace Data.Characters
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-
+        #region Modifiers
         //applying modifiers
+        public void ApplyModifiers(IList<StatModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (StatModifier mod in modifiers)
+                ApplyModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
         void ApplyModifier(StatModifier mod)
         {
             switch (mod.OperatorType)
@@ -211,6 +260,14 @@ namespace Data.Characters
                 default:
                     break;
             }
+        }
+
+        public void RemoveModifiers(IList<StatModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (StatModifier mod in modifiers)
+                RemoveModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         void RemoveModifier(StatModifier mod)
@@ -228,10 +285,59 @@ namespace Data.Characters
             }
         }
 
+        public void ApplyModifiers(IList<ResistanceModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0)
+                return;
+            foreach(var modifier in modifiers)
+            {
+                ApplyModifier(modifier);
+            }
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        void ApplyModifier(ResistanceModifier mod)
+        {
+            switch (mod.OperatorType)
+            {
+                case OperatorType.Add:
+                    Resistances[mod.ResistanceType].Modifier += mod.AdjustmentValue;
+                    break;
+                case OperatorType.Multiply:
+                    Resistances[mod.ResistanceType].Modifier *= mod.AdjustmentValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void RemoveModifiers(IList<ResistanceModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (var mod in modifiers)
+                RemoveModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RemoveModifier(ResistanceModifier mod)
+        {
+            switch (mod.OperatorType)
+            {
+                case OperatorType.Add:
+                    Resistances[mod.ResistanceType].Modifier -= mod.AdjustmentValue;
+                    break;
+                case OperatorType.Multiply:
+                    Resistances[mod.ResistanceType].Modifier /= mod.AdjustmentValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
+
         public void ChangeToNextWeapon()
         {
-            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++%WeaponProficiencies.Count];
-
+            CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++ % WeaponProficiencies.Count];
         }
 
         void SubscribeToBackpackEvents()
@@ -244,6 +350,53 @@ namespace Data.Characters
         {
             Backpack.OnItemPlaced -= OnBackpackContentsChangedHandler;
             Backpack.OnItemTaken -= OnBackpackContentsChangedHandler;
+        }
+
+        public void DealDamage(int damageAmount, DamageType damageType)
+        {
+            if (Debug.isDebugBuild)
+                Debug.Log($"DealDamage({damageAmount}, {damageType}) on {DisplayName}");
+            if (IsDead || IsDying) return;
+            int adjustedAmount = damageAmount - Resistances[damageType].CurrentValue;
+            if (adjustedAmount <= 0) 
+            {
+                if (Debug.isDebugBuild)
+                    Debug.Log($"Damage reduced to 0!");
+                return; 
+            }
+            CurrentHealth -= adjustedAmount;
+
+            if (Debug.isDebugBuild)
+                Debug.Log($"{DisplayName} took {adjustedAmount} {damageType} damage after adjustments.  Current health: {CurrentHealth}");
+
+            DamageTaken?.Invoke(this, adjustedAmount);
+            DeathCheck();
+        }
+
+        public void HealDamage(int healAmount)
+        {
+            if (Debug.isDebugBuild)
+                Debug.Log($"HealDamage on {DisplayName}");
+            if (IsDead || IsDying) return;
+            if (CurrentHealth >= MaximumHealth) return;
+            int adjustedAmount = Math.Clamp(healAmount, 0, MaximumHealth - CurrentHealth);
+            if (adjustedAmount <= 0) return;
+            CurrentHealth += adjustedAmount;
+            DamageHealed?.Invoke(this, adjustedAmount);
+        }
+
+        void DeathCheck()
+        {
+            if (IsDying || IsDead) return;
+
+            if (CurrentHealth > 0) return;
+
+            if (Debug.isDebugBuild)
+                Debug.Log($"{DisplayName} is dying!");
+            IsDying = true;
+            IsDead = true;
+            OnDying?.Invoke(this, EventArgs.Empty);
+            OnDead?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace InventoryQuest.UI
             _character = character;
 
             characterNameText.text = character.DisplayName;
-            characterPortrait.sprite = Resources.Load<Sprite>(character.Stats.PortraitPath);
+            characterPortrait.sprite = character.Stats.Portrait;
         }
 
         public void OnPointerDown(PointerEventData eventData)

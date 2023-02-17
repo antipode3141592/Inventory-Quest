@@ -1,51 +1,44 @@
 using Data;
-using Data.Items;
-using InventoryQuest.Managers;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 using HighlightState = Data.HighlightState;
 
 namespace InventoryQuest.UI
 {
     public class ContainerGridSquareDisplay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        IGameManager _gameManager;
-        IContainer _container;
-
         [SerializeField] Image backgroundSprite;
         [SerializeField] Image highlightSprite;
         [SerializeField] Image matchingHighlightSprite;
         [SerializeField] ColorSettings colorSettings;
 
+        Coor coordinates;
+        bool _isPointerHovering = false;
+
+        public bool IsActive;
+        public bool IsPointerHovering => _isPointerHovering;
 
         bool _isOccupied;
-        public bool IsOccupied { 
-            get { return _isOccupied; } 
-            set { 
+        public bool IsOccupied
+        {
+            get { return _isOccupied; }
+            set
+            {
                 backgroundSprite.color = value ? colorSettings.GridOccupiedColor : colorSettings.GridUnoccupiedColor;
                 _isOccupied = value;
-            } 
+            }
         }
 
         public float Width => 32f;
 
-        HighlightState _highlightState;
-        public HighlightState CurrentState {
-            get { return _highlightState; }
-            set {
-                SetHighlightColor(value);
-                _highlightState = value;
-            } 
-        }
-        public Coor Coordinates { get; set; }
+        public Coor Coordinates { get => coordinates; set => coordinates = value; }
 
-        void Awake()
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-        }
+        public event EventHandler<PointerEventData> GridSquarePointerEntered;
+        public event EventHandler<PointerEventData> GridSquarePointerExited;
+        public event EventHandler<PointerEventData> GridSquarePointerClicked;
 
         public void SetHighlightColor(HighlightState state, float timer = 0f)
         {
@@ -83,44 +76,34 @@ namespace InventoryQuest.UI
             image.color = Color.clear;
         }
 
-        public void SetContainer(IContainer container)
-        {
-            _container = container;
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_gameManager.CurrentState != GameStates.ItemHolding) return;
-            var squareState = _container.IsValidPlacement(_gameManager.HoldingItem, Coordinates) ? HighlightState.Highlight : HighlightState.Incorrect;
-            SetHighlightColor(squareState);
+            _isPointerHovering = true;
+            GridSquarePointerEntered?.Invoke(this, eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            SetHighlightColor(HighlightState.Normal);
+            _isPointerHovering = false;
+            GridSquarePointerExited?.Invoke(this, eventData);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            switch (_gameManager.CurrentState)
-            {
-                case GameStates.Encounter:
-                    if (_container.TryTake(out var item, Coordinates))
-                    {
-                        _gameManager.HoldingItem = item;
-                        _gameManager.ChangeState(GameStates.ItemHolding);
-                    }
-                    break;
-                case GameStates.ItemHolding:
-                    if (_container.TryPlace(_gameManager.HoldingItem, Coordinates))
-                    {
-                        _gameManager.HoldingItem = null;
-                        _gameManager.ChangeState(GameStates.Encounter);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            GridSquarePointerClicked?.Invoke(this, eventData);
         }
+
+        public void Show() 
+        {
+            IsActive = true;
+            backgroundSprite.color = colorSettings.GridUnoccupiedColor;
+        }
+
+        public void Hide() 
+        {
+            IsActive = false;
+            backgroundSprite.color = Color.clear;
+        }
+
     }
 }

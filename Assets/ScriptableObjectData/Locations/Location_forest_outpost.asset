@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2321ee6bf177ec849942a9cad1b68ed2, type: 3}
   m_Name: Location_forest_outpost
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   id: forest_outpost
-  displayName: Forest Outpost
-  thumbnailSpritePath: Locations/temple_icon_1
   _name: Forest Outpost
+  displayName: Forest Outpost
+  thumbnailSprite: {fileID: 21300000, guid: b272070a4ae2677459e83e6a148fb535, type: 3}
+  scenePath: 
   characterIds: []
   locationIds: []
   isKnown: 0
+  isTravelPoint: 1
+  audioClip: {fileID: 0}

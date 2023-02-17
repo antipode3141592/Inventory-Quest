@@ -10,6 +10,8 @@ namespace FiniteStateMachine
     /// </summary>
     public class StateMachine
     {
+        object _parentObject;
+
         IState _currentState;
 
         public string CurrentStateName => _currentState.GetType().Name;
@@ -22,6 +24,11 @@ namespace FiniteStateMachine
         static List<Transition> EmptyTransitions = new List<Transition>(capacity: 0);
 
         public float TimeInState = 0f;
+
+        public StateMachine(object parentObject)
+        {
+            this._parentObject = parentObject;
+        }
 
         public void Tick()
         {
@@ -40,7 +47,7 @@ namespace FiniteStateMachine
 
             _currentState?.OnExit();
             _currentState = state;
-            Debug.Log($"setting new state:  {_currentState}");
+            Debug.Log($"{_parentObject} setting state to:  {CurrentStateName}");
             _transitions.TryGetValue(_currentState.GetType(), out _currentTransitions);
             if (_currentTransitions == null)
                 _currentTransitions = EmptyTransitions;

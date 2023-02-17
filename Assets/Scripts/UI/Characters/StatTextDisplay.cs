@@ -4,6 +4,7 @@ using UnityEngine;
 using Data.Characters;
 using Sirenix.OdinInspector;
 using System;
+using Data;
 
 namespace InventoryQuest.UI
 {

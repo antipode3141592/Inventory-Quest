@@ -1,38 +1,36 @@
 ﻿using Data.Characters;
-using Data.Penalties;
-using Data.Rewards;
 using System;
-using System.Collections.Generic;
-
 
 namespace Data.Encounters
 {
-    public abstract class Encounter : IEncounter
+    public class Encounter : IEncounter
     {
-        protected Encounter(IEncounterStats encounterStats)
-        {
-            GuId = Guid.NewGuid().ToString();
-            Rewards = encounterStats.Rewards;
-            Penalties = encounterStats.Penalties;
-            Stats = encounterStats;
-        }
+        IChoice chosenChoice;
 
         public string GuId { get; }
-
         public string Id => Stats.Id;
-
         public string Name => Stats.Name;
-
-        public string Description => Stats.Description;
-
-        public int Experience => Stats.Experience;
-
         public IEncounterStats Stats { get; }
 
-        public IList<IRewardStats> Rewards { get; }
+        public virtual IChoice ChosenChoice => chosenChoice;
 
-        public IList<IPenaltyStats> Penalties { get; }
+        public Encounter(IEncounterStats encounterStats)
+        {
+            GuId = Guid.NewGuid().ToString();
+            Stats = encounterStats;
+            chosenChoice = Stats.Choices[0];
+        }
 
-        public abstract bool Resolve(Party party);
+        public void SetRequirement(IChoice choice)
+        {
+            chosenChoice = choice;
+        }
+
+        public virtual bool Resolve(Party party)
+        {
+            if (chosenChoice.Resolve(party))
+                return true;
+            return false;
+        }
     }
 }

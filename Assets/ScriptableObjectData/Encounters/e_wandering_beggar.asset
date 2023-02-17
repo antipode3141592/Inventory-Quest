@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017fe7aaa2d2a4749b2429fadeba7651, type: 3}
+  m_Name: e_wandering_beggar
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: choices
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IChoice, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Encounters.GiveItems, Data
+    - Name: description
+      Entry: 1
+      Data: Give Food
+    - Name: requiredItem
+      Entry: 10
+      Data: 0
+    - Name: targetQty
+      Entry: 3
+      Data: 1
+    - Name: experience
+      Entry: 3
+      Data: 0
+    - Name: successMessage
+      Entry: 6
+      Data: 
+    - Name: failureMessage
+      Entry: 6
+      Data: 
+    - Name: rewards
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Data.Encounters.GiveItems, Data
+    - Name: description
+      Entry: 1
+      Data: Give Coin
+    - Name: requiredItem
+      Entry: 6
+      Data: 
+    - Name: targetQty
+      Entry: 3
+      Data: 0
+    - Name: experience
+      Entry: 3
+      Data: 0
+    - Name: successMessage
+      Entry: 6
+      Data: 
+    - Name: failureMessage
+      Entry: 6
+      Data: 
+    - Name: rewards
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Rewards.IRewardStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: penalties
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Data.Penalties.IPenaltyStats, Data]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: e_wandering_beggar
+  _name: 
+  description: 

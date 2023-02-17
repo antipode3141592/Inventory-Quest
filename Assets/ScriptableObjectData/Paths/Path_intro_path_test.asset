@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133a414ef9d381f4b8b6e4947ad5a4ce, type: 3}
+  m_Name: Path_intro_path_test
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 8eab7b7e0d4ef6a46bacbddf9d1faa5a, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: encounterStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Encounters.IEncounterStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: intro_path
+  _name: A Stroll to Destinationville
+  startLocationStats: {fileID: 11400000, guid: 2de467733d39fd74db3b4930aa8d968f, type: 2}
+  endLocationStats: {fileID: 11400000, guid: 19fe18c9602b0864da582ddff71c67aa, type: 2}
+  audioClip: {fileID: 8300000, guid: d2ce5310591fac8488e99673aa757581, type: 3}

@@ -1,3 +1,5 @@
+using Data.Characters;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,14 +9,15 @@ namespace InventoryQuest.UI
 {
     public class CharacterPortrait : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField]
-        Image background;
-        [SerializeField]
-        Image portrait;
-        [SerializeField]
-        TextMeshProUGUI nameText;
+        [SerializeField] Image background;
+        [SerializeField] Image portrait;
+        [SerializeField] TextMeshProUGUI nameText;
+        Color nameTextColor;
+        [SerializeField] HealthBar healthBar;
 
-        public PartyDisplay PartyDisplay;
+        ICharacter _character;
+
+        PartyDisplay partyDisplay;
 
         public string CharacterGuid { get; private set; }
 
@@ -29,10 +32,14 @@ namespace InventoryQuest.UI
             }
         }
 
-        //ex path: Portraits/Enemy 01-1  (exclude leading slash and filetype)
-        void SetImage(string path)
+        void Awake()
         {
-            portrait.sprite = Resources.Load<Sprite>(path);
+            nameTextColor = nameText.color;
+        }
+
+        void SetImage(Sprite sprite)
+        {
+            portrait.sprite = sprite;
         }
 
         void SetName(string name)
@@ -40,18 +47,53 @@ namespace InventoryQuest.UI
             nameText.text = name;
         }
 
-        public void SetupPortrait(string guid, string displayName, string imagePath)
+        public void SetupPortrait(PartyDisplay partyDisplay, string guid, string displayName, Sprite sprite, ICharacter character)
         {
-            SetImage(imagePath);
+            SetImage(sprite);
             SetName(displayName);
             CharacterGuid = guid;
+            _character = character;
+            SubscribeToHealthUpdate();
+            this.partyDisplay = partyDisplay;
+        }
+
+        void SubscribeToHealthUpdate()
+        {
+            _character.DamageTaken += CharacterDamaged;
+            _character.DamageHealed += CharacterHealed;
+            UpdateHealthBar(_character);
+        }
+
+        void UnsubscribeFromHealthUpdate()
+        {
+            _character.DamageTaken -= CharacterDamaged;
+            _character.DamageHealed -= CharacterHealed;
+        }
+
+        void CharacterDamaged(object sender, int e)
+        {
+            UpdateHealthBar(_character);
+        }
+
+        void CharacterHealed(object sender, int e)
+        {
+            UpdateHealthBar(_character);
+        }
+        
+        void UpdateHealthBar(ICharacter character)
+        {
+            SetHealthBar((float)character.CurrentHealth / (float)character.MaximumHealth);
+        }
+
+        void SetHealthBar(float percentage)
+        {
+            healthBar.SetForegroundWidth(percentage);
         }
 
         public void SelectPartyMember()
         {
             Debug.Log($"SelectPartyMember() called on character {CharacterGuid}", gameObject);
-            PartyDisplay.PartyMemberSelected(CharacterGuid);
-
+            partyDisplay.PartyMemberSelected(CharacterGuid);
         }
 
         public void ChangePartyMemberName(string name)
@@ -62,6 +104,22 @@ namespace InventoryQuest.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             SelectPartyMember();
+        }
+
+        public void Show()
+        {
+            background.color = Color.white;
+            portrait.color = Color.white;
+            nameText.color = nameTextColor;
+            healthBar.Show();
+        }
+
+        public void Hide()
+        {
+            background.color = Color.clear;
+            portrait.color = Color.clear;
+            nameText.color = Color.clear;
+            healthBar.Hide();
         }
     }
 }

@@ -1,16 +1,14 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
-using InventoryQuest;
-using InventoryQuest.Managers;
+﻿using InventoryQuest.Managers;
+using PixelCrushers.DialogueSystem;
+using System;
 using TMPro;
+using UnityEngine;
+using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
     public class MainMenu : Menu
     {
-        IAdventureManager _adventureManager;
         IPartyManager _partyManager;
         IGameManager _gameManager;
 
@@ -20,10 +18,8 @@ namespace InventoryQuest.UI.Menus
         [SerializeField] PressAndHoldButton continueButton;
 
         [Inject]
-
-        public void Init(IAdventureManager adventureManager, IPartyManager partyManager, IGameManager gameManager)
+        public void Init(IPartyManager partyManager, IGameManager gameManager)
         {
-            _adventureManager = adventureManager;
             _partyManager = partyManager;
             _gameManager = gameManager;
         }
@@ -48,17 +44,18 @@ namespace InventoryQuest.UI.Menus
 
         void OnContinueButtonHeld(object sender, EventArgs e)
         {
-
             Continue();
         }
 
-
-
         public void Continue()
         {
-            _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.SelectedPartyMemberGuId).DisplayName = characterName.text;
-
-            _gameManager.BeginGame();
+            _gameManager.GameBegin();
+            if (characterName.text != string.Empty)
+            {
+                _partyManager.CurrentParty.SelectCharacter(_partyManager.CurrentParty.PartyDisplayOrder[0]).DisplayName = characterName.text;
+                DialogueManager.ChangeActorName("Player", characterName.text);
+            }
+            
         }
     }
 }

@@ -18,6 +18,15 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 8f109abf93b8b854089f920863045e1c, type: 2}
     - {fileID: 11400000, guid: e994927958015f449b656f2d6fc9177b, type: 2}
+    - {fileID: 11400000, guid: f62a336f3215004419f819cb1ca36faa, type: 2}
+    - {fileID: 11400000, guid: b80b73c7a37c2b14fa065d5196e8f881, type: 2}
+    - {fileID: 11400000, guid: d231d266cc1afd14fa4a2bef94521f7b, type: 2}
+    - {fileID: 11400000, guid: ae0729e92f283e747ba648076d29b49f, type: 2}
+    - {fileID: 11400000, guid: 18c9490eadaf33247915e141940e86fa, type: 2}
+    - {fileID: 11400000, guid: 52cc6e518abc9e94ea4177ec5ec44d9f, type: 2}
+    - {fileID: 11400000, guid: 18bf047efa22c0c41ab845f5db587d2f, type: 2}
+    - {fileID: 11400000, guid: ca325ae06a0a8a043b5aa2424576a52d, type: 2}
+    - {fileID: 11400000, guid: 56dbda1814628e546a60c09237f3931c, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,11 +34,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: initialStats
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Data.Characters.StatTypes,
-        Data],[System.Int32, mscorlib]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[Data.StatTypes, Data],[System.Int32,
+        mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.Characters.StatTypes,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.StatTypes,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -42,7 +51,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -80,6 +89,30 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 3
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -87,11 +120,11 @@ MonoBehaviour:
       Data: 
     - Name: resistances
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[Data.DamageType, Data],[Data.Characters.DamageResistance,
+      Data: 2|System.Collections.Generic.Dictionary`2[[Data.Health.DamageType, Data],[Data.Characters.DamageResistance,
         Data]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.DamageType,
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Data.Health.DamageType,
         Data]], mscorlib
     - Name: 
       Entry: 12
@@ -130,7 +163,99 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: startingEquipment
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: startingInventory
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[System.Tuple`2[[Data.Items.IItemStats,
+        Data],[System.Int32, mscorlib]], mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 7|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 10
+      Data: 7
+    - Name: m_Item2
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 10
+      Data: 8
+    - Name: m_Item2
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 10
+      Data: 9
+    - Name: m_Item2
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|System.Tuple`2[[Data.Items.IItemStats, Data],[System.Int32, mscorlib]],
+        mscorlib
+    - Name: m_Item1
+      Entry: 10
+      Data: 10
+    - Name: m_Item2
+      Entry: 3
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   id: stanley
   _name: Stanley
-  portraitPath: Portraits/Enemy 05-1
+  portrait: {fileID: -523132473, guid: 9f34329aa4c9b82499acc4ab32020689, type: 3}
   species: {fileID: 11400000, guid: c31ee4ceb06eeab418ce7b725e60709a, type: 2}

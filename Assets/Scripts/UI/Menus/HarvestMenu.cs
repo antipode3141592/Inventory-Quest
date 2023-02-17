@@ -36,17 +36,17 @@ namespace InventoryQuest.UI.Menus
             _harvestManager.OnPileSelected += OnHarvestPileSelected;
         }
 
-        void OnHarvestPileSelected(object sender, Container e)
+        void OnHarvestPileSelected(object sender, IContainer e)
         {
             if (e is null) return;
-            harvestContainerDisplay.MyContainer = e;
+            harvestContainerDisplay.SetContainer(e);
         }
 
         void OnPartyMemberSelectedHandler(object sender, string e)
         {
             var container = _partyManager.CurrentParty.Characters[e].Backpack;
             if (container is null) return;
-            characterContainerDisplay.MyContainer = container;
+            characterContainerDisplay.SetContainer(container);
         }
 
         void OnContinueRequested(object sender, EventArgs e)

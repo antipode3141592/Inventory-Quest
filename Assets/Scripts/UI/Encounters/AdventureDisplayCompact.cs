@@ -15,9 +15,8 @@ namespace InventoryQuest.UI.Components
 
         [SerializeField] Transform markerDisplayParentTransform;
 
-
         [SerializeField] AdventureEncounterMarker encounterMarkerPrefab;
-        List<AdventureEncounterMarker> adventureEncounterMarkers = new();
+        readonly List<AdventureEncounterMarker> adventureEncounterMarkers = new();
 
         [SerializeField] LocationIcon startingLocationIcon;
         [SerializeField] LocationIcon endingLocationIcon;
@@ -37,7 +36,6 @@ namespace InventoryQuest.UI.Components
             _encounterManager.Loading.OnEncounterLoaded += OnEncounterLoadedHandler;
             _encounterManager.Resolving.OnEncounterResolveSuccess += OnEncounterResolveSuccessHandler;
             _encounterManager.Resolving.OnEncounterResolveFailure += OnEncounterResolveFailureHandler;
-
 
             _adventureManager.Adventuring.StateEntered += OnEncounterListGeneratedHandler;
             _adventureManager.Adventuring.StateExited += OnAdventureCompletedHandler;
@@ -61,8 +59,6 @@ namespace InventoryQuest.UI.Components
             }
         }
 
-        
-
         void OnAdventureCompletedHandler(object sender, EventArgs e)
         {
             if (Debug.isDebugBuild)
@@ -75,61 +71,53 @@ namespace InventoryQuest.UI.Components
 
         void OnEncounterListGeneratedHandler(object sender, EventArgs e)
         {
-            for (int i = 0; i < _gameStateDataSource.CurrentPath.EncounterIds.Count; i++)
+            for (int i = 0; i < _gameStateDataSource.CurrentPathStats.EncounterStats.Count; i++)
             {
                 if (i >= adventureEncounterMarkers.Count)
                 {
                     var go = Instantiate<AdventureEncounterMarker>(encounterMarkerPrefab, markerDisplayParentTransform);
+                    go.Init(encounterManager: _encounterManager);
                     adventureEncounterMarkers.Add(go);
-                } else
+                } 
+                else
                     adventureEncounterMarkers[i].gameObject.SetActive(true);
-                adventureEncounterMarkers[i].EncounterId = _gameStateDataSource.CurrentPath.EncounterIds[i];
+
+                adventureEncounterMarkers[i].EncounterId = _gameStateDataSource.CurrentPathStats.EncounterStats[i].Id;
                 adventureEncounterMarkers[i].HighlightIcon.color = Color.clear;
                 adventureEncounterMarkers[i].AdventureIcon.color = Color.gray;
 
             }
 
-            startingLocationIcon.Set(Resources.Load<Sprite>(_gameStateDataSource.CurrentLocation.Stats.ThumbnailSpritePath), _gameStateDataSource.CurrentLocation.Stats.DisplayName);
-            endingLocationIcon.Set(Resources.Load<Sprite>(_gameStateDataSource.DestinationLocation.Stats.ThumbnailSpritePath), _gameStateDataSource.DestinationLocation.Stats.DisplayName);
+            startingLocationIcon.Set(_gameStateDataSource.CurrentLocation.ThumbnailSprite, _gameStateDataSource.CurrentLocation.DisplayName);
+            endingLocationIcon.Set(_gameStateDataSource.DestinationLocation.ThumbnailSprite, _gameStateDataSource.DestinationLocation.DisplayName);
         }
 
         void OnEncounterResolveFailureHandler(object sender, string e)
         {
-            foreach (var marker in adventureEncounterMarkers)
+            for (int i = 0; i < adventureEncounterMarkers.Count; i++)
             {
-                if (marker.EncounterId == e)
-                    marker.AdventureIcon.color = UIPreferences.TextDeBuffColor;
+                if (i == _gameStateDataSource.CurrentIndex)
+                    adventureEncounterMarkers[i].AdventureIcon.color = UIPreferences.TextDeBuffColor;
             }
         }
 
         void OnEncounterResolveSuccessHandler(object sender, string e)
         {
-            foreach (var marker in adventureEncounterMarkers)
+            for (int i = 0; i < adventureEncounterMarkers.Count; i++)
             {
-                if (marker.EncounterId == e)
-                    marker.AdventureIcon.color = UIPreferences.TextBuffColor;
+                if (i == _gameStateDataSource.CurrentIndex)
+                    adventureEncounterMarkers[i].AdventureIcon.color = UIPreferences.TextBuffColor;
             }
         }
 
         void OnEncounterLoadedHandler(object sender, string e)
         {
-            if (Debug.isDebugBuild)
-                Debug.Log($"OnEncounterLoadedHandler for {e}");
-            foreach (var marker in adventureEncounterMarkers)
+            for (int i = 0; i < adventureEncounterMarkers.Count; i++)
             {
-                if (marker.EncounterId == e)
-                {
-                    
-                    marker.HighlightIcon.color = Color.white;
-                    if (Debug.isDebugBuild)
-                        Debug.Log($"setting highlight for {marker.EncounterId}");
-                }
+                if (i == _gameStateDataSource.CurrentIndex)
+                    adventureEncounterMarkers[i].HighlightIcon.color = Color.white;
                 else
-                {
-                    marker.HighlightIcon.color = Color.clear;
-                    if (Debug.isDebugBuild)
-                        Debug.Log($"clearing highlight for {marker.EncounterId}");
-                }
+                    adventureEncounterMarkers[i].HighlightIcon.color = Color.clear;
             }
         }
     }

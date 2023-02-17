@@ -5,11 +5,13 @@ namespace Data.Characters
 {
     public class ModifierEventArgs : EventArgs
     {
-        public IList<StatModifier> Modifiers;
+        public IList<StatModifier> StatModifiers;
+        public IList<ResistanceModifier> ResistanceModifiers;
 
-        public ModifierEventArgs(IList<StatModifier> modifiers)
+        public ModifierEventArgs(IList<StatModifier> statModifiers, IList<ResistanceModifier> resistanceModifiers)
         {
-            Modifiers = modifiers;
+            StatModifiers = statModifiers;
+            ResistanceModifiers = resistanceModifiers;
         }
     }
 }

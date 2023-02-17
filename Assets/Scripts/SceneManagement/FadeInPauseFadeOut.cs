@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class FadeInPauseFadeOut : MonoBehaviour
 {
-    public List<Image> fadeList = new List<Image>();
+    public List<Image> fadeList = new();
 
     public float FadeInDuration;
     public float PauseDuration;

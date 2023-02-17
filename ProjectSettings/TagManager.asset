@@ -16,8 +16,8 @@ TagManager:
   - PartyMembers
   - Loot
   - temp
-  - 
-  - 
+  - Menus
+  - DialogueSystem
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3702709139
+    locked: 0
+  - name: Player
+    uniqueID: 1822299807
+    locked: 0
+  - name: Foreground
+    uniqueID: 2796279769
+    locked: 0
+  - name: UI
+    uniqueID: 2260629429
     locked: 0

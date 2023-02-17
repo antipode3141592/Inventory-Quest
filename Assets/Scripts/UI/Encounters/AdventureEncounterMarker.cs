@@ -1,25 +1,27 @@
-﻿using InventoryQuest.Traveling;
-using System;
+﻿using InventoryQuest.Managers;
+using InventoryQuest.Traveling;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace InventoryQuest.UI.Components
 {
     public class AdventureEncounterMarker: MonoBehaviour
     {
+        IEncounterManager _encounterManager;
+
         [SerializeField] Color fillColor;
         [SerializeField] Image fillBackground;
         [SerializeField] Image fillForeground;
-
-        TravelingPartyController travelingPartyController;
 
         public Image AdventureIcon;
         public Image HighlightIcon;
         public string EncounterId;
 
-        void Awake()
+        [Inject]
+        public void Init(IEncounterManager encounterManager)
         {
-            travelingPartyController = FindObjectOfType<TravelingPartyController>();
+            _encounterManager = encounterManager;
         }
 
         void OnEnable()
@@ -35,14 +37,14 @@ namespace InventoryQuest.UI.Components
 
         public void SubscribeToTravel()
         {
-            travelingPartyController.TravelPercentageUpdate += TravelUpdateHandler;
+            _encounterManager.Wayfairing.TimerPercentComplete += TravelUpdateHandler;
         }
 
         
 
         public void UnsubscribeToTravel()
         {
-            travelingPartyController.TravelPercentageUpdate -= TravelUpdateHandler;
+            _encounterManager.Wayfairing.TimerPercentComplete -= TravelUpdateHandler;
             fillForeground.rectTransform.localScale = new Vector3(1,1,1);
         }
 

@@ -13,7 +13,7 @@ namespace InventoryQuest
         IPartyManager _partyManager;
         IQuestManager _questManager;
 
-        List<QuestItemCounter> _questItemCounterList = new();
+        readonly List<QuestItemCounter> _questItemCounterList = new();
 
         [Inject]
         public void Init(IPartyManager partyManager, IQuestManager questManager)

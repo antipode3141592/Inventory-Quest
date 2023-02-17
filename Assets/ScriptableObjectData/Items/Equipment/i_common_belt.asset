@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
+  m_Name: i_common_belt
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: components
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemComponentStats,
+        Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|Data.Items.EquipableStats, Data
+    - Name: _slotType
+      Entry: 3
+      Data: 4
+    - Name: _modifiers
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Data.StatModifier, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|Data.StatModifier, Data
+    - Name: StatType
+      Entry: 3
+      Data: 9
+    - Name: OperatorType
+      Entry: 3
+      Data: 0
+    - Name: AdjustmentValue
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: tags
+      Entry: 6
+      Data: 
+  id: common_belt
+  _name: Common Belt
+  description: A common belt
+  shape: {fileID: 11400000, guid: 58709f495351a0c49aad795f6145a59e, type: 2}
+  defaultFacing: 0
+  rarity: 0
+  weight: 0.25
+  isStackable: 0
+  maxQuantity: 1
+  individualGoldValue: 0.2
+  primarySprite: {fileID: 21300000, guid: c356c83e843a2ee48b4918f3e658170a, type: 3}
+  isQuestItem: 0

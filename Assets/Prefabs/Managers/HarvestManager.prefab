@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7295794154033253116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2222592624156637762}
+  - component: {fileID: 6383679662474613456}
+  m_Layer: 0
+  m_Name: HarvestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2222592624156637762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295794154033253116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 746.9771, y: 370.75314, z: -0.15488863}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6383679662474613456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295794154033253116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0103b0c2054c8914098ab32cc7c4c21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 0dc74b0e851f1ff4299c8a044035cf31, type: 2}
+    - {fileID: 11400000, guid: 77c9ad58d3418e043bdd9c3590d69da1, type: 2}
+    - {fileID: 11400000, guid: 8c7bbce2c0853d7428a58f63502afe5a, type: 2}
+    - {fileID: 11400000, guid: 547fbbb789398fd4098d1699bd2bcdc6, type: 2}
+    - {fileID: 11400000, guid: a8effd4d5219c844b9c12d91f950a671, type: 2}
+    - {fileID: 11400000, guid: 864ee93128569554bbb10e9ea9945ade, type: 2}
+    - {fileID: 11400000, guid: 2005faebd5391c640881ec0a11bc20fa, type: 2}
+    - {fileID: 11400000, guid: 0d01ece3a29bd2c45ae32d8e5eda8463, type: 2}
+    - {fileID: 11400000, guid: 41ba2b49638cb3d45bdc74ad16941437, type: 2}
+    - {fileID: 11400000, guid: b718327c7fbc26149ad2c0dee21ed666, type: 2}
+    - {fileID: 11400000, guid: 909d5f62faf745f4a8c1c7ca8525c771, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: woodHarvestSawStats
+      Entry: 10
+      Data: 0
+    - Name: woodHarvestCutItemStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Data.Items.IItemStats, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  SelectedPileId: 

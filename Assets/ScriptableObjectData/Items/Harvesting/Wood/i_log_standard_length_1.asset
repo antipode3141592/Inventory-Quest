@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f1845624f7bc3439acf6d56463500f, type: 3}
+  m_Name: i_log_standard_length_1
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 4158d240e1edfad44ac49e1435aa4ef6, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: components
+      Entry: 6
+      Data: 
+    - Name: tags
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Tag, Data]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  id: log_standard_length_1
+  description: A full horizontal slice of a common softwood log.
+  shape: {fileID: 11400000, guid: 90cb6366a138a54439f4fac63209967b, type: 2}
+  defaultFacing: 1
+  rarity: 0
+  weight: 0
+  goldValue: 0
+  primarySprite: {fileID: 21300000, guid: 2667752b16179144e89a8ba6190fbc0b, type: 3}
+  isQuestItem: 1

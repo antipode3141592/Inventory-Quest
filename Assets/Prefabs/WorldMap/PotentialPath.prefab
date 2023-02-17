@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5310845055012469612}
   - component: {fileID: 5610108571534675700}
   - component: {fileID: 1706703235563331824}
+  - component: {fileID: 2261868784738049544}
   m_Layer: 0
   m_Name: PotentialPath
   m_TagString: Untagged
@@ -92,6 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackgroundImage: {fileID: 5310845055012469612}
   encounterIcon: {fileID: 5563248040162216414, guid: c5e5baf242c6ceb428c429e5315fee98, type: 3}
+  locationAId: 
+  locationBId: 
 --- !u!114 &1706703235563331824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +113,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 16
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -118,3 +121,16 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2261868784738049544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114200603528328480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1

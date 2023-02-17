@@ -1,5 +1,6 @@
 ﻿using Data.Items;
 using System;
+using UnityEngine;
 
 namespace Data.Characters
 {
@@ -9,7 +10,7 @@ namespace Data.Characters
 
         public EquipmentSlotType SlotType { get; }
 
-        public IEquipable EquippedItem { get; set; }
+        public IItem EquippedItem { get; set; }
 
         public EquipmentSlot(EquipmentSlotType slotType, string id = null)
         {
@@ -20,33 +21,57 @@ namespace Data.Characters
         public EventHandler<ModifierEventArgs> OnEquip;
         public EventHandler<ModifierEventArgs> OnUnequip;
 
-        public bool TryEquip(out IEquipable previousItem, IEquipable item)
+        public bool TryEquip(out IItem previousItem, IItem item)
         {
             previousItem = null;
-            if (item is null) return false;
-            if (IsValidPlacement(item))
+            if (item is null)
+                return false;
+            IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            if (equipable is null)
             {
-                TryUnequip(out previousItem);
-                EquippedItem = item;
-                OnEquip?.Invoke(this, new ModifierEventArgs(EquippedItem.Modifiers));
-                return true;
+                Debug.Log($"could not find equipable component of item {item.Id}");
+                return false;
             }
-            return false;
-        }
+            if (equipable.SlotType != SlotType)
+            {
+                Debug.Log($"item {item.Id} has slot type {EquipmentSlotTypeExtensions.PrettyPrintSlotType(equipable.SlotType)} which does not match {EquipmentSlotTypeExtensions.PrettyPrintSlotType(SlotType)}");
+                return false;
+            }
+            Debug.Log($"{equipable.Item.Id} is an equipable component of item {item.Id}");
+            if (TryUnequip(out previousItem))
+            {
+                Debug.Log($"TryUnequip success, output item {previousItem.Id}");
+            }
+            Debug.Log($"TryUnequip did not find an item to unequip");
+            EquippedItem = item;
+            Debug.Log($"EquippedItem = {EquippedItem.Id}");
 
-        public bool TryUnequip(out IEquipable item)
-        {
-            item = null;
-            if (EquippedItem == null) return false;
-            item = EquippedItem;
-            EquippedItem = null;
-            OnUnequip?.Invoke(this, new ModifierEventArgs(item.Modifiers));
+            OnEquip?.Invoke(this, new ModifierEventArgs(equipable.StatModifiers, equipable.ResistanceModifiers));
             return true;
         }
 
-        public bool IsValidPlacement(IEquipable item)
+        public bool TryUnequip(out IItem item)
         {
-            return item.SlotType == SlotType;
+            item = null;
+            if (EquippedItem is null)
+            {
+                Debug.Log($"EquippedItem is Null, exiting TryUnequip");
+                return false; 
+            }
+            item = EquippedItem;
+            EquippedItem = null;
+            IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
+            if (equipable is null) return false;
+            OnUnequip?.Invoke(this, new ModifierEventArgs(equipable.StatModifiers, equipable.ResistanceModifiers));
+            return true;
+        }
+
+        public bool IsValidPlacement(IItem item)
+        {
+            if (!item.Components.ContainsKey(typeof(IEquipable))) return false;
+            var equipable = (IEquipable)item.Components[typeof(IEquipable)];
+            if (equipable is null) return false;
+            return equipable.SlotType == SlotType;
         }
     }
 }

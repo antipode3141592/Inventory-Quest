@@ -1,20 +1,22 @@
 ﻿using InventoryQuest.Managers;
-using InventoryQuest.UI.Menus;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace InventoryQuest.UI.Menus
 {
-    public class HarvestListDisplay: MonoBehaviour, IItemPileDisplay, IOnMenuShow
+    public class HarvestListDisplay: MonoBehaviour, IContainersDisplay, IOnMenuShow
     {
+        [SerializeField] ContainerIcon _lootIconPrefab;
+        [SerializeField] WoodHarvestSawDisplay _woodHarvestSaw;
+        [SerializeField] Vector3 harvestSawOffset;
+        [SerializeField] ContainerDisplay _containerDisplay;
+
         IHarvestManager _harvestManager;
 
-        readonly List<LootIcon> pileIcons = new();
-
-        [SerializeField]
-        LootIcon _lootIconPrefab;
+        readonly List<ContainerIcon> pileIcons = new();
 
         [Inject]
         public void Init(IHarvestManager harvestManager)
@@ -30,15 +32,15 @@ namespace InventoryQuest.UI.Menus
 
         void OnHarvestCleaningUpStartedHandler(object sender, EventArgs e)
         {
-            DestroyPiles();
+            DestroyContainers();
         }
 
         void OnHarvestStartedHandler(object sender, EventArgs e)
         {
-            SetPiles();
+            SetContainerIcons();
         }
 
-        public void PileSelected(string containerGuid)
+        public void ContainerSelected(string containerGuid)
         {
             foreach (var icon in pileIcons)
             {
@@ -46,28 +48,34 @@ namespace InventoryQuest.UI.Menus
                 {
                     icon.IsSelected = true;
                     _harvestManager.SelectPile(containerGuid);
+                    if (_harvestManager.Piles[containerGuid].Item.Id.Contains("saw"))
+                    {
+                        var location = new Vector3(_containerDisplay.Squares[0, 9].transform.localPosition.x,0,0) + harvestSawOffset;
+                        Debug.Log($"saw initial position: {location}");
+                        _woodHarvestSaw.SetInitialPosition(location);
+                        _woodHarvestSaw.Show();
+                    }
+                    else
+                        _woodHarvestSaw.Hide();
                 }
                 else
                     icon.IsSelected = false;
             }
         }
 
-        public void SetPiles()
+        public void SetContainerIcons()
         {
             if (_harvestManager.Piles.Count == 0) return;
             foreach (var pile in _harvestManager.Piles.Values)
             {
-                LootIcon icon = Instantiate<LootIcon>(_lootIconPrefab, transform);
-                icon.PileDisplay = this;
-                icon.SetupLootIcon(guid: pile.GuId, imagePath: pile.Stats.SpritePath);
-                icon.IsSelected = false;
+                ContainerIcon icon = Instantiate<ContainerIcon>(_lootIconPrefab, transform);
+                icon.SetContainerIcon(guid: pile.GuId, image: pile.Item.Stats.PrimarySprite, containersDisplay: this);
                 pileIcons.Add(icon);
-
             }
-
+            _harvestManager.SelectPile(_harvestManager.Piles.Values.Last().GuId);
         }
 
-        public void DestroyPiles()
+        public void DestroyContainers()
         {
             for (int i = 0; i < pileIcons.Count; i++)
             {

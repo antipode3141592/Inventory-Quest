@@ -1,3 +1,4 @@
+using Data;
 using Data.Characters;
 using InventoryQuest.Managers;
 using Sirenix.OdinInspector;
@@ -12,14 +13,12 @@ namespace InventoryQuest.UI
 {
     public class CharacterStatsDisplay : SerializedMonoBehaviour
     {
-        [OdinSerialize] Dictionary<StatTypes, StatTextDisplay> statTexts;
+        [OdinSerialize] readonly Dictionary<StatTypes, StatTextDisplay> statTexts;
         [SerializeField] CharacterCurrentMaxStatDisplay healthText;
         [SerializeField] CharacterCurrentMaxStatDisplay magicText;
         [SerializeField] CharacterCurrentMaxStatDisplay encumberanceText; 
         [SerializeField] CharacterCurrentMaxStatDisplay experienceText;
         [SerializeField] TextMeshProUGUI nameText;
-
-        [SerializeField] TextMeshProUGUI speciesText; 
 
         ICharacter _character;
 
@@ -40,7 +39,6 @@ namespace InventoryQuest.UI
             if (_character is null) return;
             _character.OnStatsUpdated += OnCharacterStatsUpdatedHandler;
             nameText.text = _character.DisplayName;
-            speciesText.text = _character.Stats.SpeciesId;
         }
 
         void OnCharacterStatsUpdatedHandler(object sender, EventArgs e)
@@ -54,7 +52,6 @@ namespace InventoryQuest.UI
 
             _character.OnStatsUpdated -= OnCharacterStatsUpdatedHandler;
             nameText.text = "";
-            speciesText.text = "";
         }
 
         void UpdateStatBlock()
@@ -70,12 +67,6 @@ namespace InventoryQuest.UI
             magicText.UpdateText(_character.CurrentMagicPool, _character.MaximumMagicPool);
             encumberanceText.UpdateText(_character.CurrentEncumbrance, _character.MaximumEncumbrance);
             experienceText.UpdateText(_character.CurrentExperience, _character.NextLevelExperience);
-        }
-
-
-        void OnStatsUpdatedHandler (object sender, string e)
-        {
-            UpdateStatBlock();
         }
     }
 }

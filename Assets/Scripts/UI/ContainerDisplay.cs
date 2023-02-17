@@ -1,20 +1,23 @@
 ﻿using Data;
 using Data.Items;
 using Data.Shapes;
+using InventoryQuest.Managers;
+using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
+using UnityEngine.EventSystems;
+using Zenject;
 
 namespace InventoryQuest.UI
 {
     public class ContainerDisplay : MonoBehaviour
     {
-        [SerializeField] Transform _panelTransform;
-        
-        [SerializeField] Transform _itemPanelTransform;
-        
-        [SerializeField] ItemImage itemImagePrefab;
+        IInputManager _inputManager;
 
+        [SerializeField] Transform _panelTransform;
+        [SerializeField] Transform _itemPanelTransform;
+        [SerializeField] ItemImage itemImagePrefab;
         [SerializeField] ContainerGridSquareDisplay gridSquarePrefab; //square prefab
 
         ContainerGridSquareDisplay[,] squares;
@@ -23,27 +26,34 @@ namespace InventoryQuest.UI
         [SerializeField] int rowMax;
         [SerializeField] int columnMax;
 
+        public int RowMax => rowMax;
+        public int ColumnMax => columnMax;
+
         float squareWidth;
 
         [SerializeField] ContactFilter2D _contactFilter;
 
-        IContainer myContainer;
-        public IContainer MyContainer 
+        public ContainerGridSquareDisplay[,] Squares => squares;
+        public List<ItemImage> ItemImages => itemImages;
+
+        IContainer _container;
+        public IContainer Container => _container;
+
+        [Inject]
+        public void Init(IInputManager inputManager)
         {
-            get { return myContainer; } 
-            set 
-            {
-                DestroyGrid();
-                RemoveAllItemSprites();
-                myContainer = value;
-                SetupGrid();
-                SetItemSprites();
-            }
+            _inputManager = inputManager;
         }
 
         void Awake()
         {
             InitializeDisplay();
+        }
+
+        void Start()
+        {
+            _inputManager.OnRotateCCW += ItemRotationHandler;
+            _inputManager.OnRotateCW += ItemRotationHandler;
         }
 
         #region Grid Creation and Destruction
@@ -56,6 +66,12 @@ namespace InventoryQuest.UI
             InitializeGrid();
         }
 
+        [Button]
+        public void DestroyGridDisplay()
+        {
+
+        }
+
         public void InitializeGrid()
         {
             for (int r = 0; r < rowMax; r++)
@@ -64,53 +80,63 @@ namespace InventoryQuest.UI
                 {
                     ContainerGridSquareDisplay square = Instantiate(original: gridSquarePrefab, parent: _panelTransform);
                     square.transform.localPosition = new Vector2((float)c * squareWidth, -(float)r * squareWidth);
-                    square.SetContainer(MyContainer);
                     square.Coordinates = new Coor(r, c);
+                    square.GridSquarePointerClicked += GridSquareClicked;
+                    square.GridSquarePointerEntered += GridSquareEntered;
+                    square.GridSquarePointerExited += GridSquareExited;
                     squares[r, c] = square;
-                    squares[r, c].gameObject.SetActive(false);
                 }
             }
         }
 
-        public void SetupGrid()
+        public void SetContainer(IContainer container)
         {
-            if (MyContainer is null) return;
-            for (int r = 0; r < MyContainer.Dimensions.row; r++)
+            DestroyGrid();
+            RemoveAllItemSprites();
+            _container = container;
+            SetupGrid();
+            SetItemSprites();
+        }
+
+        void SetupGrid()
+        {
+            if (Container is null)
             {
-                for (int c = 0; c < MyContainer.Dimensions.column; c++)
-                {
-                    squares[r, c].SetContainer(MyContainer);
-                    squares[r, c].gameObject.SetActive(true);
-                    squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
-                }
+                if (Debug.isDebugBuild)
+                    Debug.LogWarning($"MyContainer is null for this ContainerDisplay", this);
+                return; 
+            }
+            foreach(var point in Container.Grid) 
+            {
+                Squares[point.Key.row, point.Key.column].Show();
+                Squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
             }
 
-            MyContainer.OnItemPlaced += OnItemChangeHandler;
-            MyContainer.OnItemTaken += OnItemChangeHandler;
-            MyContainer.OnMatchingItems += MatchedItems;
+            Container.OnItemPlaced += OnItemChangeHandler;
+            Container.OnItemTaken += OnItemChangeHandler;
+            Container.OnMatchingItems += MatchedItems;
         }
 
         void MatchedItems(object sender, HashSet<string> e)
         {
             foreach (var itemGuid in e)
             {
-                foreach (var coor in MyContainer.Contents[itemGuid].GridSpaces)
-                    squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
+                foreach (var coor in Container.Contents[itemGuid].GridSpaces)
+                    Squares[coor.row, coor.column].SetHighlightColor(HighlightState.Match, 2f);
             }
         }
 
         public void DestroyGrid()
         {
-            foreach (var square in squares)
+            foreach (var square in Squares)
             {
                 square.IsOccupied = false;
-                square.SetContainer(null);
-                square.gameObject.SetActive(false);
+                square.Hide();
             }
 
-            if (MyContainer is null) return;
-            MyContainer.OnItemPlaced -= OnItemChangeHandler;
-            MyContainer.OnItemTaken -= OnItemChangeHandler;
+            if (Container is null) return;
+            Container.OnItemPlaced -= OnItemChangeHandler;
+            Container.OnItemTaken -= OnItemChangeHandler;
         }
 
         public void OnItemChangeHandler(object sender, string e)
@@ -119,34 +145,28 @@ namespace InventoryQuest.UI
             RemoveAllItemSprites();
             SetItemSprites();
         }
-
         #endregion
-
 
         public void UpdateGridState()
         {
-            for (int r = 0; r < MyContainer.Dimensions.row; r++)
-            {
-                for (int c = 0; c < MyContainer.Dimensions.column; c++)
-                {
-                    squares[r, c].IsOccupied = MyContainer.Grid[r, c].IsOccupied;
-                }
-            }
+            foreach (var point in Container.Grid)
+                Squares[point.Key.row, point.Key.column].IsOccupied = point.Value.IsOccupied;
         }
 
         public void SetItemSprites()
         {
-            if (MyContainer is null) return;
-            foreach(var content in MyContainer.Contents)
+            if (Container is null) return;
+            foreach(var content in Container.Contents)
             {
                 IItem item = content.Value.Item;
-                Facing facing = item.Shape.CurrentFacing;
+                Facing facing = item.CurrentFacing;
                 Coor AnchorPosition = content.Value.AnchorPosition;
                 Sprite sprite = item.Sprite;
                 ItemImage itemImage = Instantiate<ItemImage>(original: itemImagePrefab, parent: _itemPanelTransform);
                 int quantity = item.Quantity;
-                itemImage.SetItem(sprite, quantity);
-                ImageUtilities.RotateSprite(facing, itemImage.Image, squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition);
+                Vector3 localPosition = squares[AnchorPosition.row, AnchorPosition.column].transform.localPosition;
+                itemImage.SetItem(item.GuId, sprite, quantity, localPosition);
+                ImageUtilities.RotateSprite(facing, itemImage.Image, localPosition);
                 itemImages.Add(itemImage);
             }
         }
@@ -159,6 +179,78 @@ namespace InventoryQuest.UI
                 Destroy(itemImages[i].gameObject);
             }
             itemImages.Clear();
+        }
+
+        public int GetContainerGridCount()
+        {
+            int runningTotal = 0;
+            foreach(var square in squares)
+            {
+                if (!square.IsActive)
+                    continue;
+                runningTotal++;
+            }
+            return runningTotal;
+        }
+
+        void GridSquareEntered(object sender, PointerEventData e)
+        {
+            var coor = (sender as ContainerGridSquareDisplay).Coordinates;
+            HighlightGrid(coor);
+            ViewDetailsTimerStart(coor);
+        }
+
+        void HighlightGrid(Coor anchorPoint)
+        {
+            if (_inputManager.HoldingItem is null || _container is null) return;
+
+            List<Tuple<HighlightState, Coor>> tempPointList = UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Get();
+            _container.GetPointHighlights(ref tempPointList, _inputManager.HoldingItem, anchorPoint);
+            for (int i = 0; i < tempPointList.Count; i++)
+                Squares[tempPointList[i].Item2.row, tempPointList[i].Item2.column].SetHighlightColor(tempPointList[i].Item1);
+            UnityEngine.Pool.ListPool<Tuple<HighlightState, Coor>>.Release(tempPointList);
+        }
+
+        void GridSquareExited(object sender, PointerEventData e)
+        {
+            ResetGrid();
+            ViewDetailsTimerReset();
+        }
+
+        void ResetGrid()
+        {
+            foreach (var square in Squares)
+                square.SetHighlightColor(HighlightState.Normal);
+        }
+
+        void GridSquareClicked(object sender, PointerEventData e)
+        {
+            var clickedCoor = (sender as ContainerGridSquareDisplay).Coordinates;
+            _inputManager.ContainerDisplayClickHandler(_container, e, clickedCoor);
+        }
+
+        void ItemRotationHandler(object sender, RotationEventArgs e)
+        {
+            ResetGrid();
+            foreach(var square in Squares)
+                if (square.IsPointerHovering)
+                {
+                    HighlightGrid(square.Coordinates);
+                    break;
+                }
+        }
+
+        void ViewDetailsTimerStart(Coor coor)
+        {
+            if (_container is null) return;
+            if (!_container.Grid.ContainsKey(coor)) return;
+            if (!_container.Grid[coor].IsOccupied) return;
+            _inputManager.ShowItemDetails(_container.Contents[_container.Grid[coor].storedItemGuId].Item);
+        }
+
+        void ViewDetailsTimerReset()
+        {
+            _inputManager.HideItemDetails();
         }
     }
 }

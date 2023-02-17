@@ -24,10 +24,12 @@ MonoBehaviour:
   id: Destinationville
   _name: Destinationville
   displayName: Destinationville
-  thumbnailSpritePath: Locations/town_icon_2
-  scenePath: Assets/Scenes/Locations/location_Destinationville.unity
+  thumbnailSprite: {fileID: 21300000, guid: f0ec91856cc70e94d95b8998471f97ef, type: 3}
+  scenePath: Assets/00_Scenes/Locations/location_Destinationville.unity
   characterIds:
   - stanley
   - scummy_overseer
   locationIds: []
   isKnown: 1
+  isTravelPoint: 1
+  audioClip: {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}

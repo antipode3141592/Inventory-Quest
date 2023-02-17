@@ -1,6 +1,8 @@
 ﻿using Data.Items;
 using Data.Health;
 using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 namespace Data.Characters
 {
@@ -8,7 +10,7 @@ namespace Data.Characters
     {
         public string Id { get; }
         public string Name { get; }
-        public string PortraitPath { get; }
+        public Sprite Portrait { get; }
         public string SpeciesId { get; }
 
         public IList<IWeaponProficiency> WeaponProficiencies { get; }
@@ -16,5 +18,8 @@ namespace Data.Characters
         public IDictionary<StatTypes, int> InitialStats { get; }
         public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IList<EquipmentSlotType> EquipmentSlotsTypes { get; }
+
+        public List<IItemStats> StartingEquipment { get; }
+        public List<Tuple<IItemStats,int>> StartingInventory { get; }
     }
 }
