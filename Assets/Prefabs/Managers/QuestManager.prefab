@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5394058803413014281}
   - component: {fileID: 5394058803413014282}
+  - component: {fileID: 2627627847147910902}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -44,3 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547fe51a45c0e984f92f707e315c068b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2627627847147910902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394058803413014283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a08e3352b83ad248a7659179e1bcfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_dataSourceName: ItemsRetrieved
+  m_onRequestDataSourceChangeValue:
+    m_PersistentCalls:
+      m_Calls: []

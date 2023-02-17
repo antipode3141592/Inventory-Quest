@@ -76,9 +76,10 @@ namespace InventoryQuest.Managers
             {
                 yield return new WaitForSeconds(1f);
                 currentQuantity = CountItemInPartyInventory(itemId);
-                MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, currentQuantity);
-            } while (currentQuantity >= targetQuantity);
-            Debug.Log($"QuestCounter {questCounter} has reached target quantity: {targetQuantity}");
+            } while (currentQuantity < targetQuantity);
+
+            MessageSystem.SendMessage(this, DataSynchronizer.DataSourceValueChangedMessage, questCounter, currentQuantity);
+            Debug.Log($"QuestCounter {questCounter} has reached quantity: {currentQuantity} of {targetQuantity}");
         }
 
         public void OfferQuestContainer(string containerItemId, string startingItemId, double startingItemQuantity)

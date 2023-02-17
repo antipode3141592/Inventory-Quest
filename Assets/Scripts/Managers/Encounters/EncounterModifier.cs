@@ -7,15 +7,17 @@ namespace InventoryQuest.Managers
 {
     public class EncounterModifier
     {
-        public EncounterModifier(ICharacter character, List<StatModifier> modifiers, EncounterLengthEffect encounterLengthEffect)
+        public EncounterModifier(ICharacter character, List<StatModifier> statModifiers, List<ResistanceModifier> resistanceModifiers, EncounterLengthEffect encounterLengthEffect)
         {
             Character = character;
-            Modifiers = modifiers;
+            StatModifiers = statModifiers;
+            ResistanceModifiers = resistanceModifiers;
             EncounterLengthEffect = encounterLengthEffect;
         }
 
         public EncounterLengthEffect EncounterLengthEffect { get; }
         public ICharacter Character { get; }
-        public List<StatModifier> Modifiers { get; } = new();
+        public List<StatModifier> StatModifiers { get; } = new();
+        public List<ResistanceModifier> ResistanceModifiers { get; } = new();
     }
 }

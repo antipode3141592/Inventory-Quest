@@ -25,7 +25,7 @@ MonoBehaviour:
   _name: Destinationville
   displayName: Destinationville
   thumbnailSprite: {fileID: 21300000, guid: f0ec91856cc70e94d95b8998471f97ef, type: 3}
-  scenePath: Assets/Scenes/Locations/location_Destinationville.unity
+  scenePath: Assets/00_Scenes/Locations/location_Destinationville.unity
   characterIds:
   - stanley
   - scummy_overseer

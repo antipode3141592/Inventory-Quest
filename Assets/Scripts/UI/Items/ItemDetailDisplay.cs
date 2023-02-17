@@ -17,7 +17,7 @@ namespace InventoryQuest.UI
         [SerializeField] TextMeshProUGUI ItemRarityText;
         [SerializeField] TextMeshProUGUI ItemValueText;
         [SerializeField] TextMeshProUGUI ItemWeightText;
-        [SerializeField] List<TextMeshProUGUI> ItemModifiersTexts;
+        [SerializeField] TextMeshProUGUI ItemModifiersText;
         [SerializeField] TextMeshProUGUI QuantityText;
         [SerializeField] TextMeshProUGUI TypesText;
 
@@ -46,27 +46,37 @@ namespace InventoryQuest.UI
             ItemValueText.text = $"{item.Value:#,###.#} gp";
             ItemWeightText.text = $"{item.Weight:#,###.#} kg";
 
-            for (int i = 0; i < ItemModifiersTexts.Count; i++)
-                ItemModifiersTexts[i].text = "";
+            ItemModifiersText.text = "";
 
             var equipable = item.Components.ContainsKey(typeof(IEquipable)) ? item.Components[typeof(IEquipable)] as IEquipable : null;
             var usable = item.Components.ContainsKey(typeof(IUsable)) ? item.Components[typeof(IUsable)] as IUsable : null;
+            string modifiersText = "";
             if (equipable is not null)
-                if (equipable.Modifiers is not null && equipable.Modifiers.Count > 0)
-                    for (int i = 0; i < equipable.Modifiers.Count; i++)
-                        ItemModifiersTexts[i].text = equipable.Modifiers[i].ToString();
-            if (usable is not null)
+            {
+                if (equipable.StatModifiers is not null)
+                {
+
+                    if (equipable.StatModifiers.Count > 0)
+                        for (int i = 0; i < equipable.StatModifiers.Count; i++)
+                            modifiersText += $"{equipable.StatModifiers[i]}\n";
+                    if (equipable.ResistanceModifiers.Count > 0)
+                        for (int j = 0; j < equipable.ResistanceModifiers.Count; j++)
+                            modifiersText += $"{equipable.ResistanceModifiers[j]}\n";
+                    ItemModifiersText.text = modifiersText;
+                }
+            }
+            else if (usable is not null)
             {
                 if (usable is Edible edible)
                 {
-                    ItemModifiersTexts[0].text = edible.ToString();
+                    ItemModifiersText.text = edible.ToString();
                 }
                 else if (usable is EncounterLengthEffect encounterLengthEffect)
                 {
-                    for(int i = 0; i < encounterLengthEffect.EncounterLengthEffectStats.Modifiers.Count; i++)
-                    {
-                        ItemModifiersTexts[i].text = $"{encounterLengthEffect.EncounterLengthEffectStats.Modifiers[i]} when used";
-                    }
+                    modifiersText = "";
+                    for (int i = 0; i < encounterLengthEffect.EncounterLengthEffectStats.StatModifiers.Count; i++)
+                        modifiersText += $"{encounterLengthEffect.EncounterLengthEffectStats.StatModifiers[i]} when used\n";
+                    ItemModifiersText.text = modifiersText;
                 }
             }
 
@@ -92,8 +102,7 @@ namespace InventoryQuest.UI
             ItemRarityText.text = "";
             ItemValueText.text = "";
             ItemWeightText.text = "";
-            for (int i = 0; i < ItemModifiersTexts.Count; i++)
-                ItemModifiersTexts[i].text = "";
+            ItemModifiersText.text = "";
             QuantityText.text = "";
             TypesText.text = "";
         }

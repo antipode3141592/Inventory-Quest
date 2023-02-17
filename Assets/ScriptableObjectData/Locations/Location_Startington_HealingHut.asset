@@ -25,8 +25,9 @@ MonoBehaviour:
   _name: Startington Healing Hut
   displayName: Healing Hut
   thumbnailSprite: {fileID: 21300000, guid: 5dd295beb9b2c5f4cb473e4447f0eae7, type: 3}
-  scenePath: Assets/Scenes/Locations/location_Startington_HealingHut.unity
+  scenePath: Assets/00_Scenes/Locations/location_Startington_HealingHut.unity
   characterIds: []
   locationIds: []
   isKnown: 1
+  isTravelPoint: 0
   audioClip: {fileID: 8300000, guid: 0643908ea2a90c341a1f488fb302af76, type: 3}

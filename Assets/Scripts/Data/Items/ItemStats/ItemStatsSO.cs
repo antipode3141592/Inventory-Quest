@@ -21,7 +21,7 @@ namespace Data.Items
         [SerializeField] float individualGoldValue;
         [SerializeField, PreviewField] Sprite primarySprite;
         [SerializeField] bool isQuestItem;
-        [OdinSerialize] IList<IItemComponentStats> components;
+        [OdinSerialize] List<IItemComponentStats> components;
         [OdinSerialize] HashSet<Tag> tags;
 
         public string Id => id;

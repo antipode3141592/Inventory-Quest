@@ -159,7 +159,7 @@ namespace Data.Characters
                 }
                 if (content.Value.Item.Id == itemId)
                 {
-                    int clampedAmount = Mathf.Clamp((int)amountToRemove, 0, content.Value.Item.Quantity);
+                    int clampedAmount = Mathf.Clamp((int)amountToRemove, 1, content.Value.Item.Quantity);
                     content.Value.Item.Quantity -= clampedAmount;
                     _runningTotal += clampedAmount;
                     if (_runningTotal >= amountToRemove)

@@ -25,7 +25,7 @@ MonoBehaviour:
   _name: startington
   displayName: Startington
   thumbnailSprite: {fileID: 21300000, guid: 20d406b1c7aaa934ebda6343c8a4069c, type: 3}
-  scenePath: Assets/Scenes/Locations/location_Startington.unity
+  scenePath: Assets/00_Scenes/Locations/location_Startington.unity
   characterIds: []
   locationIds: []
   isKnown: 1

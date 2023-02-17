@@ -11,8 +11,6 @@ namespace Data.Characters
     public class PlayableCharacter : ICharacter, IDamagable
     {
         int weaponProficiencyIndex = 0;
-
-
         public ICharacterStats Stats { get; }
         public string GuId { get; }
         public string DisplayName { get; set; }
@@ -67,7 +65,6 @@ namespace Data.Characters
         public float CurrentEncumbrance => EquipmentSlots
             .Where(x => x.Value.EquippedItem is not null)
             .Sum(x => (x.Value.EquippedItem as IItem).Weight);
-
 
         public event EventHandler OnStatsUpdated;
         public event EventHandler<string> OnItemAddedToBackpack;
@@ -159,8 +156,12 @@ namespace Data.Characters
             }
 
             Resistances = new Dictionary<DamageType, DamageResistance>();
-
-
+            Resistances.Add(DamageType.Normal, new DamageResistance(DamageType.Normal, 0));
+            Resistances.Add(DamageType.Fire, new DamageResistance(DamageType.Fire, 0));
+            Resistances.Add(DamageType.Ice, new DamageResistance(DamageType.Ice, 0));
+            Resistances.Add(DamageType.Electric, new DamageResistance(DamageType.Electric, 0));
+            Resistances.Add(DamageType.Acid, new DamageResistance(DamageType.Acid, 0));
+            Resistances.Add(DamageType.Poison, new DamageResistance(DamageType.Poison, 0));
 
             foreach (var prof in characterStats.WeaponProficiencies)
             {
@@ -184,7 +185,8 @@ namespace Data.Characters
                         {
                             if (slot.Value.TryEquip(out _, item))
                             {
-                                Debug.Log($"tryequip success on item {item.Id}");
+                                if (Debug.isDebugBuild)
+                                    Debug.Log($"tryequip success on item {item.Id}");
                                 break;
                             }
                             Debug.LogWarning($"tryequip fail on item {item.Id}");
@@ -220,12 +222,14 @@ namespace Data.Characters
         //equipping functions
         public void OnEquipHandler(object sender, ModifierEventArgs e)
         {
-            ApplyModifiers(e.Modifiers);
+            ApplyModifiers(e.StatModifiers);
+            ApplyModifiers(e.ResistanceModifiers);
         }
 
         public void OnUnequipHandler(object sender, ModifierEventArgs e)
         {
-            RemoveModifiers(e.Modifiers);
+            RemoveModifiers(e.StatModifiers);
+            RemoveModifiers(e.ResistanceModifiers);
         }
 
         public void OnBackpackContentsChangedHandler(object sender, string e)
@@ -233,7 +237,7 @@ namespace Data.Characters
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-
+        #region Modifiers
         //applying modifiers
         public void ApplyModifiers(IList<StatModifier> modifiers)
         {
@@ -242,7 +246,6 @@ namespace Data.Characters
                 ApplyModifier(mod);
             OnStatsUpdated?.Invoke(this, EventArgs.Empty);
         }
-        
 
         void ApplyModifier(StatModifier mod)
         {
@@ -282,10 +285,59 @@ namespace Data.Characters
             }
         }
 
+        public void ApplyModifiers(IList<ResistanceModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0)
+                return;
+            foreach(var modifier in modifiers)
+            {
+                ApplyModifier(modifier);
+            }
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        void ApplyModifier(ResistanceModifier mod)
+        {
+            switch (mod.OperatorType)
+            {
+                case OperatorType.Add:
+                    Resistances[mod.ResistanceType].Modifier += mod.AdjustmentValue;
+                    break;
+                case OperatorType.Multiply:
+                    Resistances[mod.ResistanceType].Modifier *= mod.AdjustmentValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void RemoveModifiers(IList<ResistanceModifier> modifiers)
+        {
+            if (modifiers is null || modifiers.Count == 0) return;
+            foreach (var mod in modifiers)
+                RemoveModifier(mod);
+            OnStatsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RemoveModifier(ResistanceModifier mod)
+        {
+            switch (mod.OperatorType)
+            {
+                case OperatorType.Add:
+                    Resistances[mod.ResistanceType].Modifier -= mod.AdjustmentValue;
+                    break;
+                case OperatorType.Multiply:
+                    Resistances[mod.ResistanceType].Modifier /= mod.AdjustmentValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
+
         public void ChangeToNextWeapon()
         {
             CurrentWeaponProficiency = WeaponProficiencies[weaponProficiencyIndex++ % WeaponProficiencies.Count];
-
         }
 
         void SubscribeToBackpackEvents()
@@ -302,22 +354,29 @@ namespace Data.Characters
 
         public void DealDamage(int damageAmount, DamageType damageType)
         {
-            Debug.Log($"DealDamage on {DisplayName}");
+            if (Debug.isDebugBuild)
+                Debug.Log($"DealDamage({damageAmount}, {damageType}) on {DisplayName}");
             if (IsDead || IsDying) return;
-            int adjustedAmount = damageAmount - (Resistances.ContainsKey(damageType) ? Resistances[damageType].CurrentValue : 0);
-            if (adjustedAmount <= 0) return;
+            int adjustedAmount = damageAmount - Resistances[damageType].CurrentValue;
+            if (adjustedAmount <= 0) 
+            {
+                if (Debug.isDebugBuild)
+                    Debug.Log($"Damage reduced to 0!");
+                return; 
+            }
             CurrentHealth -= adjustedAmount;
 
-            Debug.Log($"{DisplayName} took {adjustedAmount} {damageType} damage after adjustments.  Current health: {CurrentHealth}");
+            if (Debug.isDebugBuild)
+                Debug.Log($"{DisplayName} took {adjustedAmount} {damageType} damage after adjustments.  Current health: {CurrentHealth}");
 
             DamageTaken?.Invoke(this, adjustedAmount);
-
             DeathCheck();
         }
 
         public void HealDamage(int healAmount)
         {
-            Debug.Log($"HealDamage on {DisplayName}");
+            if (Debug.isDebugBuild)
+                Debug.Log($"HealDamage on {DisplayName}");
             if (IsDead || IsDying) return;
             if (CurrentHealth >= MaximumHealth) return;
             int adjustedAmount = Math.Clamp(healAmount, 0, MaximumHealth - CurrentHealth);
@@ -332,7 +391,8 @@ namespace Data.Characters
 
             if (CurrentHealth > 0) return;
 
-            Debug.Log($"{DisplayName} is dying!");
+            if (Debug.isDebugBuild)
+                Debug.Log($"{DisplayName} is dying!");
             IsDying = true;
             IsDead = true;
             OnDying?.Invoke(this, EventArgs.Empty);

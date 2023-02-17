@@ -24,8 +24,8 @@ namespace Data.Items.Components
         {
             if (HasBeenUsed)
                 return false;
-            usedByCharacter.ApplyModifiers(encounterLengthEffectStats.Modifiers);
-
+            usedByCharacter.ApplyModifiers(encounterLengthEffectStats.StatModifiers);
+            usedByCharacter.ApplyModifiers(encounterLengthEffectStats.ResistanceModifiers);
             if (IsConsumable)
                 Item.Quantity--;
             else

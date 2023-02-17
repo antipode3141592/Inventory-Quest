@@ -133,7 +133,7 @@ MonoBehaviour:
     m_randomizeInitialValue: 0
     m_minValue: 0
     m_maxValue: 999
-    m_updateMode: 1
+    m_updateMode: 0
     m_messageEventList: []
   m_nodeList:
   - m_id:
@@ -183,7 +183,7 @@ MonoBehaviour:
       width: 120
       height: 48
   - m_id:
-      m_text: RetrieveLumber
+      m_text: Retrieve Lumber
       m_stringAsset: {fileID: 0}
       m_textTable: {fileID: 0}
       m_textTableFieldID: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
     m_canvasRect:
       serializedVersion: 2
       x: 200
-      y: 88
+      y: 85.96907
       width: 120
       height: 48
   - m_id:
@@ -276,7 +276,7 @@ MonoBehaviour:
     m_canvasRect:
       serializedVersion: 2
       x: 199
-      y: 156
+      y: 155
       width: 120
       height: 48
   - m_id:

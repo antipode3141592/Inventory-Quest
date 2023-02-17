@@ -25,7 +25,7 @@ MonoBehaviour:
   _name: Logging Spot
   displayName: Designated Logging Area
   thumbnailSprite: {fileID: 21300000, guid: b272070a4ae2677459e83e6a148fb535, type: 3}
-  scenePath: Assets/Scenes/Locations/location_logging_stand.unity
+  scenePath: Assets/00_Scenes/Locations/location_logging_stand.unity
   characterIds:
   - logging_manager
   locationIds: []

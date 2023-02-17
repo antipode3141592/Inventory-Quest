@@ -176,7 +176,11 @@ namespace InventoryQuest.Managers
                 {
                     OnItemUsed?.Invoke(this, _usable.Item);
                     if (_usable is EncounterLengthEffect encounterEffect)
-                        OnEncounterModifierAdded?.Invoke(this, new EncounterModifier(character, encounterEffect.EncounterLengthEffectStats.Modifiers, encounterEffect));
+                        OnEncounterModifierAdded?.Invoke(this, new EncounterModifier(
+                            character,
+                            encounterEffect.EncounterLengthEffectStats.StatModifiers,
+                            encounterEffect.EncounterLengthEffectStats.ResistanceModifiers,
+                            encounterEffect));
                 }
             } 
             else if (container.Contents[itemGuid].Item.Components.ContainsKey(typeof(IContainer)))

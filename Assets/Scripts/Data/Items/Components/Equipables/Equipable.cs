@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Data.Characters;
+using System.Collections.Generic;
 
 namespace Data.Items
 {
@@ -7,14 +8,17 @@ namespace Data.Items
         public Equipable(IEquipableStats equipableStats, IItem itemParent)
         {
             SlotType = equipableStats.SlotType;
-            Modifiers = equipableStats.Modifiers;
+            StatModifiers = equipableStats.StatModifiers;
+            ResistanceModifiers = equipableStats.ResistanceModifiers;
             Item = itemParent;
         }
 
         public EquipmentSlotType SlotType { get; protected set; }
 
-        public IList<StatModifier> Modifiers { get ; }
+        public IList<StatModifier> StatModifiers { get ; }
 
         public IItem Item { get; }
+
+        public IList<ResistanceModifier> ResistanceModifiers { get; }
     }
 }

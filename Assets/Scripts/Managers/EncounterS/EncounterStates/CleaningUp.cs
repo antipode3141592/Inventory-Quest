@@ -75,7 +75,8 @@ namespace InventoryQuest.Managers.States
             while (_encounterManager.EncounterModifiers.Count > 0)
             {
                 var modifier = _encounterManager.EncounterModifiers.Dequeue();
-                modifier.Character.RemoveModifiers(modifier.Modifiers);
+                modifier.Character.RemoveModifiers(modifier.StatModifiers);
+                modifier.Character.RemoveModifiers(modifier.ResistanceModifiers);
                 if (modifier.EncounterLengthEffect is null)
                     return;
                 modifier.EncounterLengthEffect.ResetUsage();

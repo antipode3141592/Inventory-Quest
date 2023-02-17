@@ -1,9 +1,7 @@
 using Data.Characters;
-using Data.Items;
 using InventoryQuest.Managers;
 using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -65,7 +63,7 @@ namespace InventoryQuest.Testing
 
             if (harvestManager.Piles.Count == 0) Assert.Fail($"incorrect pile count in harvest");
 
-            Debug.Log($"harvet pile contains {harvestManager.Piles[harvestPileKey].Contents.Count} objects");
+            Debug.Log($"harvest pile contains {harvestManager.Piles[harvestPileKey].Contents.Count} objects");
             Assert.IsTrue(harvestManager.Piles[harvestPileKey].Contents.Count == 10);
             Assert.IsTrue(harvestManager.Piles[harvestPileKey].IsFull);
 

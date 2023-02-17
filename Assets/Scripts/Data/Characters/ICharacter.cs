@@ -1,5 +1,4 @@
-﻿using Data.Health;
-using Data.Items;
+﻿using Data.Items;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +8,6 @@ namespace Data.Characters
     {
         public string GuId { get; }
         public string DisplayName { get; set; }
-        public IDictionary<DamageType, DamageResistance> Resistances { get; }
         public IDictionary<StatTypes, IStat> StatDictionary { get; }
         public IDictionary<string, EquipmentSlot> EquipmentSlots { get; }
         public IList<IWeaponProficiency> WeaponProficiencies { get; }

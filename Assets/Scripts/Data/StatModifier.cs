@@ -1,5 +1,4 @@
-﻿using Data.Characters;
-using System;
+﻿using System;
 
 namespace Data
 {

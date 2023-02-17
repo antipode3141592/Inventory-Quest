@@ -46,7 +46,7 @@ namespace Data.Characters
             EquippedItem = item;
             Debug.Log($"EquippedItem = {EquippedItem.Id}");
 
-            OnEquip?.Invoke(this, new ModifierEventArgs(equipable.Modifiers));
+            OnEquip?.Invoke(this, new ModifierEventArgs(equipable.StatModifiers, equipable.ResistanceModifiers));
             return true;
         }
 
@@ -62,7 +62,7 @@ namespace Data.Characters
             EquippedItem = null;
             IEquipable equipable = item.Components[typeof(IEquipable)] as IEquipable;
             if (equipable is null) return false;
-            OnUnequip?.Invoke(this, new ModifierEventArgs(equipable.Modifiers));
+            OnUnequip?.Invoke(this, new ModifierEventArgs(equipable.StatModifiers, equipable.ResistanceModifiers));
             return true;
         }
 

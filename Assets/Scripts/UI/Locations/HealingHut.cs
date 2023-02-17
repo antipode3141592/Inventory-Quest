@@ -27,7 +27,7 @@ namespace InventoryQuest.UI.Locations
 
         public void OnMouseUpAsButton()
         {
-            if (!isAvailable || _partymanager.CountItemInCharacterInventories("gold") < goldCost)
+            if (!isAvailable || _partymanager.CountItemInParty("gold") < goldCost)
                 return;
             _partymanager.CurrentParty.RemoveItemFromPartyInventory("gold", goldCost);
             foreach(var character in _partymanager.CurrentParty.Characters.Values)

@@ -25,9 +25,10 @@ MonoBehaviour:
   _name: Liam's Logistics
   displayName: Liam's Logistics
   thumbnailSprite: {fileID: 21300000, guid: fee0e09dacae60340afb423e36c92263, type: 3}
-  scenePath: Assets/Scenes/Locations/location_Startington_LiamsLogistics.unity
+  scenePath: Assets/00_Scenes/Locations/location_Startington_LiamsLogistics.unity
   characterIds:
   - messenger_dispatcher
   locationIds: []
   isKnown: 1
+  isTravelPoint: 0
   audioClip: {fileID: 8300000, guid: 0643908ea2a90c341a1f488fb302af76, type: 3}
